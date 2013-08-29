@@ -1,4 +1,4 @@
-package com.lynx.peleus.location;
+package com.lynx.service.location;
 
 import android.location.Location;
 import com.lynx.lib.location.LocationService;
@@ -20,11 +20,11 @@ public class LocationDexService implements LocationService {
 
     @Override
     public Location locate() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
     @Override
     public Location rgc(double lat, double lng, Coord.CoordType type) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 }
