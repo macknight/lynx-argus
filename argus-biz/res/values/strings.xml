@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">peleus-biz</string>
+    <string name="app_name">argus</string>
+    <string name="lint_btn_main_load_apk_a">载入动态更新包A</string>
+    <string name="lint_btn_main_load_apk_b">载入动态更新包B</string>
 </resources>

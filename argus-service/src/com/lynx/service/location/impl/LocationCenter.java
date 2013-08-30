@@ -1,4 +1,4 @@
-package com.lynx.peleus.location.impl;
+package com.lynx.service.location.impl;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -8,14 +8,14 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
-import com.lynx.lib.location.entity.Cell;
 import com.lynx.lib.location.LocationListener;
 import com.lynx.lib.location.entity.Address;
+import com.lynx.lib.location.entity.Cell;
 import com.lynx.lib.location.entity.Coord;
 import com.lynx.lib.location.entity.Wifi;
-import com.lynx.peleus.location.impl.core.CellInfoManager;
-import com.lynx.peleus.location.impl.core.LocateManager;
-import com.lynx.peleus.location.impl.core.WifiInfoManager;
+import com.lynx.service.location.impl.core.CellInfoManager;
+import com.lynx.service.location.impl.core.LocateManager;
+import com.lynx.service.location.impl.core.WifiInfoManager;
 
 import java.util.ArrayList;
 import java.util.List;

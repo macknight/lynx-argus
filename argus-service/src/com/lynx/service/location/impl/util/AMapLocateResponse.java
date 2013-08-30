@@ -1,4 +1,4 @@
-package com.lynx.peleus.location.impl.util;
+package com.lynx.service.location.impl.util;
 
 import com.lynx.lib.location.entity.Coord;
 import org.xml.sax.Attributes;

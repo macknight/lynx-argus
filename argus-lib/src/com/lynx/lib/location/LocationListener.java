@@ -6,5 +6,5 @@ package com.lynx.lib.location;
  * Date: 8/27/13 5:53 PM
  */
 public interface LocationListener {
-    public void onLocationChanged(int status);
+    void onLocationChanged(int status);
 }

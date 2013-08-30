@@ -1,4 +1,4 @@
-package com.lynx.peleus.location.impl.core;
+package com.lynx.service.location.impl.core;
 
 import android.content.Context;
 import android.os.Handler;
@@ -6,10 +6,10 @@ import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import com.lynx.lib.location.entity.Cell;
 import com.lynx.lib.location.entity.CDMACell;
+import com.lynx.lib.location.entity.Cell;
 import com.lynx.lib.location.entity.GSMCell;
-import com.lynx.peleus.location.impl.LocationCenter;
+import com.lynx.service.location.impl.LocationCenter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

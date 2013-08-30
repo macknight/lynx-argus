@@ -1,4 +1,4 @@
-package com.lynx.peleus.location.impl.core;
+package com.lynx.service.location.impl.core;
 
 import android.content.Context;
 import android.net.DhcpInfo;
@@ -7,7 +7,7 @@ import android.net.wifi.WifiInfo;
 import com.lynx.lib.dataservice.NetworkManager;
 import com.lynx.lib.dataservice.NetworkManager.NetworkState;
 import com.lynx.lib.location.entity.Wifi;
-import com.lynx.peleus.location.impl.LocationCenter;
+import com.lynx.service.location.impl.LocationCenter;
 
 import java.util.ArrayList;
 import java.util.List;

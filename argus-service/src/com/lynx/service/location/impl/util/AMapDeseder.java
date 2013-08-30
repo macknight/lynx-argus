@@ -1,4 +1,4 @@
-package com.lynx.peleus.location.impl.util;
+package com.lynx.service.location.impl.util;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;

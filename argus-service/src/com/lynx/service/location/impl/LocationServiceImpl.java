@@ -1,5 +1,6 @@
-package com.lynx.peleus.location.impl;
+package com.lynx.service.location.impl;
 
+import android.content.Context;
 import android.location.Location;
 import com.lynx.lib.location.LocationService;
 import com.lynx.lib.location.entity.Coord.CoordType;
@@ -11,8 +12,23 @@ import com.lynx.lib.location.entity.Coord.CoordType;
  */
 public class LocationServiceImpl implements LocationService {
 
+    private Context context;
     private LocationStatus status;
 
+
+    public LocationServiceImpl(Context context) {
+        this.context = context;
+    }
+
+    @Override
+    public boolean start() {
+        return false;
+    }
+
+    @Override
+    public boolean stop() {
+        return false;
+    }
 
     @Override
     public LocationStatus status() {
