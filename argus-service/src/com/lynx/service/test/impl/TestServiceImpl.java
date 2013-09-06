@@ -1,5 +1,6 @@
 package com.lynx.service.test.impl;
 
+import android.content.Context;
 import com.lynx.service.test.TestService;
 
 /**
@@ -8,6 +9,10 @@ import com.lynx.service.test.TestService;
  * Date: 13-9-5 下午6:00
  */
 public class TestServiceImpl implements TestService{
+
+    public TestServiceImpl(Context context) {
+
+    }
 
     @Override
     public String hello(String name) {

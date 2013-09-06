@@ -21,16 +21,6 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public boolean start() {
-        return false;
-    }
-
-    @Override
-    public boolean stop() {
-        return false;
-    }
-
-    @Override
     public LocationStatus status() {
         return status;
     }

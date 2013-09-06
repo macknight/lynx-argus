@@ -1,32 +1,15 @@
 package com.lynx.lib.dataservice.impl;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.zip.GZIPInputStream;
-
-import org.apache.http.Header;
-import org.apache.http.HeaderElement;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpRequestInterceptor;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpResponseInterceptor;
-import org.apache.http.HttpVersion;
+import com.lynx.lib.dataservice.HttpService;
+import com.lynx.lib.dataservice.core.HttpParam;
+import com.lynx.lib.dataservice.handler.HttpCallback;
+import com.lynx.lib.dataservice.handler.HttpHandler;
+import com.lynx.lib.dataservice.handler.RetryHandler;
+import com.lynx.lib.dataservice.handler.SyncRequestHandler;
+import org.apache.http.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpDelete;
-import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpPut;
-import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.*;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
@@ -45,12 +28,16 @@ import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.protocol.SyncBasicHttpContext;
 
-import com.lynx.lib.dataservice.HttpService;
-import com.lynx.lib.dataservice.core.HttpParam;
-import com.lynx.lib.dataservice.handler.HttpCallback;
-import com.lynx.lib.dataservice.handler.HttpHandler;
-import com.lynx.lib.dataservice.handler.RetryHandler;
-import com.lynx.lib.dataservice.handler.SyncRequestHandler;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.zip.GZIPInputStream;
 
 /**
  * 
@@ -198,7 +185,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	/**
 	 * 配置错误重试次数
 	 * 
-	 * @param retry
+	 * @param count
 	 */
 	public void configRequestExecutionRetryCount(int count) {
 		this.httpClient.setHttpRequestRetryHandler(new RetryHandler(count));

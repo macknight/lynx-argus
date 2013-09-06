@@ -1,19 +1,19 @@
 package com.lynx.lib.dataservice;
 
-import java.io.File;
-
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-
 import com.lynx.lib.dataservice.core.HttpParam;
 import com.lynx.lib.dataservice.handler.HttpCallback;
 import com.lynx.lib.dataservice.handler.HttpHandler;
+import org.apache.http.Header;
+import org.apache.http.HttpEntity;
+
+import java.io.File;
 
 /**
  * 
  * @author chris.liu
  * @name HttpService.java
  * @update 2013-4-17 下午11:03:01
+ * from afinal
  * 
  */
 public interface HttpService {

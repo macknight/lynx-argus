@@ -1,7 +1,6 @@
 package com.lynx.lib.location;
 
 import android.location.Location;
-import com.lynx.lib.core.Service;
 import com.lynx.lib.location.entity.Coord.CoordType;
 
 /**
@@ -9,7 +8,7 @@ import com.lynx.lib.location.entity.Coord.CoordType;
  * User: zhufeng.liu
  * Date: 8/27/13 5:53 PM
  */
-public interface LocationService extends Service {
+public interface LocationService {
 
     LocationStatus status();
 
