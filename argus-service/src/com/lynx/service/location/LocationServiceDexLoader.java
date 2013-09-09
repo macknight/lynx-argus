@@ -21,6 +21,17 @@ public class LocationServiceDexLoader<LocationService> extends ServiceDexLoader 
     }
 
     @Override
+    protected void loadService() {
+        try {
+            if (clazz != null) {
+                service = (LocationService) clazz.getConstructor(Context.class).newInstance(context);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void afterLoad() {
 
     }

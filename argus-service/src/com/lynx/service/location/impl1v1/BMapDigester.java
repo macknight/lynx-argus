@@ -1,4 +1,4 @@
-package com.lynx.service.location.impl.util;
+package com.lynx.service.location.impl1v1;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

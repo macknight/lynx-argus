@@ -1,4 +1,4 @@
-package com.lynx.service.location.impl.core;
+package com.lynx.service.location.impl1v1;
 
 import android.content.Context;
 import android.os.Handler;
@@ -6,45 +6,75 @@ import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
+import android.util.Log;
 import com.lynx.lib.location.entity.CDMACell;
 import com.lynx.lib.location.entity.Cell;
 import com.lynx.lib.location.entity.GSMCell;
-import com.lynx.service.location.impl.LocationCenter;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @author chris.liu
  */
 public class CellInfoManager extends Handler {
-    private LocationCenter locCenter;
+    private static final String Tag = "CellInfoManager";
+    private static final int INTERVAL_CELL = 200;
+    private static final int INTERVAL_COUNT = 6;
+
+    private LocationCenter locationCenter;
     private TelephonyManager telManager;
     private final List<Cell> cells = new ArrayList<Cell>();
     private int asu = 0;
+    private AtomicInteger loop;
 
-    public CellInfoManager(LocationCenter loc_center) {
-        this.locCenter = loc_center;
-        telManager = (TelephonyManager) loc_center.getContext()
+    private static Timer timer;
+    private static TimerTask timerTask;
+
+    public CellInfoManager(Context context) {
+        this.locationCenter = null;
+        telManager = (TelephonyManager) locationCenter.context()
                 .getSystemService(Context.TELEPHONY_SERVICE);
-
     }
 
-    public List<Cell> getCells() {
-        return this.cells;
+    public CellInfoManager(LocationCenter locationCenter) {
+        this(locationCenter.context());
+        this.locationCenter = locationCenter;
     }
 
     public void start() {
-        cellScan();
+        Log.d(Tag, "start cell info scan");
+        stop();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (loop.intValue() >= INTERVAL_COUNT) {
+                    stop();
+                    return;
+                }
+
+                if (loop == null) {
+                    loop = new AtomicInteger(1);
+                } else {
+                    loop.set(loop.intValue() + 1);
+                }
+                cellScan();
+            }
+        };
+
+        timer = new Timer();
+        timer.schedule(timerTask, INTERVAL_CELL, INTERVAL_CELL);
     }
 
     public void cellScan() {
         int mcc = 0, mnc = 0, cid = 0, lac = 0, bid = 0, sid = 0, nid = 0;
-        CellLocation cell_loc = telManager.getCellLocation();
+        CellLocation cellLocation = telManager.getCellLocation();
 
-        if (cell_loc == null) {
-            locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
+        if (cellLocation == null) {
             return;
         }
 
@@ -65,37 +95,35 @@ public class CellInfoManager extends Handler {
                         mcc = Integer.parseInt(s.substring(0, 3));
                     }
 
-                    Method mBid = cell_loc.getClass().getMethod("getBaseStationId",
+                    Method mBid = cellLocation.getClass().getMethod("getBaseStationId",
                             new Class[0]);
-                    Method mSid = cell_loc.getClass().getMethod("getSystemId",
+                    Method mSid = cellLocation.getClass().getMethod("getSystemId",
                             new Class[0]);
-                    Method mNid = cell_loc.getClass().getMethod("getNetworkId",
+                    Method mNid = cellLocation.getClass().getMethod("getNetworkId",
                             new Class[0]);
-                    bid = (Integer) mBid.invoke(cell_loc, new Object[0]);
-                    sid = (Integer) mSid.invoke(cell_loc, new Object[0]);
-                    nid = (Integer) mNid.invoke(cell_loc, new Object[0]);
-                    Method mLat = cell_loc.getClass().getMethod(
+                    bid = (Integer) mBid.invoke(cellLocation, new Object[0]);
+                    sid = (Integer) mSid.invoke(cellLocation, new Object[0]);
+                    nid = (Integer) mNid.invoke(cellLocation, new Object[0]);
+                    Method mLat = cellLocation.getClass().getMethod(
                             "getBaseStationLatitude", new Class[0]);
-                    Method mLng = cell_loc.getClass().getMethod(
+                    Method mLng = cellLocation.getClass().getMethod(
                             "getBaseStationLongitude", new Class[0]);
-                    int lat = (Integer) mLat.invoke(cell_loc, new Object[0]);
-                    int lng = (Integer) mLng.invoke(cell_loc, new Object[0]);
+                    int lat = (Integer) mLat.invoke(cellLocation, new Object[0]);
+                    int lng = (Integer) mLng.invoke(cellLocation, new Object[0]);
 
                     cells.clear();
                     Cell cell = new CDMACell(mcc, sid, bid, nid, lat, lng);
                     cells.add(cell);
-                    locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
                 } catch (Exception e) {
                     cells.clear();
-                    locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
                 }
                 break;
             case TelephonyManager.PHONE_TYPE_GSM:
                 // this is a GSM Cell Phone.
                 cells.clear();
-                if (cell_loc instanceof GsmCellLocation) {
+                if (cellLocation instanceof GsmCellLocation) {
                     try {
-                        GsmCellLocation gsm_cell_loc = (GsmCellLocation) cell_loc;
+                        GsmCellLocation gsm_cell_loc = (GsmCellLocation) cellLocation;
                         cid = gsm_cell_loc.getCid();
                         lac = gsm_cell_loc.getLac();
                         if (!(cid <= 0 || cid == 0xFFFF)) {
@@ -110,7 +138,6 @@ public class CellInfoManager extends Handler {
 
                             if (mcc == 0 && mnc == 0) {
                                 cells.clear();
-                                locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
                                 return;
                             }
 
@@ -148,21 +175,36 @@ public class CellInfoManager extends Handler {
                                 cells.add(cell);
                             }
                         }
-                        locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
                     }
                 } catch (Exception e) {
                     cells.clear();
-                    locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
                 }
                 break;
             default:
                 cells.clear();
-                locCenter.sendEmptyMessage(LocationCenter.CELL_SCAN_FIN);
         }
     }
 
     public void stop() {
-        // do nothing now.
+        Log.d(Tag, "stop cell info scan");
+        // 还原状态
+        loop = null;
+        if (timerTask != null) {
+            timerTask.cancel();
+            timerTask = null;
+        }
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+
+        if (locationCenter != null) {
+            locationCenter.cellScanFin();
+        }
+    }
+
+    public List<Cell> cells() {
+        return cells;
     }
 
     public static int dbm(int asu) {

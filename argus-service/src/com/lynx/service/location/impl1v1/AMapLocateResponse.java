@@ -1,4 +1,4 @@
-package com.lynx.service.location.impl.util;
+package com.lynx.service.location.impl1v1;
 
 import com.lynx.lib.location.entity.Coord;
 import org.xml.sax.Attributes;
@@ -109,7 +109,7 @@ public class AMapLocateResponse {
 				if (coord != null) {
 					try {
 						double lng = Double.parseDouble(str_buf.toString());
-						coord.setLng(LocationUtil.format(lng, 5));
+						coord.setLng(com.lynx.service.location.impl1v1.LocationUtil.format(lng, 5));
 					}
 					catch (Exception e) {
 						e.printStackTrace();
@@ -120,7 +120,7 @@ public class AMapLocateResponse {
 				if (coord != null) {
 					try {
 						double lat = Double.parseDouble(str_buf.toString());
-						coord.setLng(LocationUtil.format(lat, 5));
+						coord.setLng(com.lynx.service.location.impl1v1.LocationUtil.format(lat, 5));
 					}
 					catch (Exception e) {
 						e.printStackTrace();

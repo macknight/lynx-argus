@@ -25,8 +25,6 @@ import java.util.jar.JarFile;
  * Date: 8/30/13 11:29 AM
  */
 public abstract class ServiceDexLoader<T> {
-
-
     public static final String K_VERSION = "version"; // service版本
     public static final String K_URL = "url"; // service包下载地址
     public static final String K_MD5 = "md5"; // service包md5摘要
@@ -37,7 +35,8 @@ public abstract class ServiceDexLoader<T> {
     private final File dir;
     private final String tag;
     private JSONObject config;
-    private T service;
+    protected Class<?> clazz;
+    protected T service;
 
     public ServiceDexLoader(Context context, String tag) {
         this.context = context;
@@ -51,7 +50,13 @@ public abstract class ServiceDexLoader<T> {
             Log.e(tag, "unable to read config at " + new File(dir, "config"), e);
         }
         if (config != null) {
-            loadService();
+            try {
+                clazz = loadClass(config.getInt(K_VERSION),
+                        config.getString(K_MD5), config.getString(K_CLASS));
+                loadService();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -91,9 +96,15 @@ public abstract class ServiceDexLoader<T> {
                             public void onSuccess(File file) {
                                 super.onSuccess(file);
                                 Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
-                                beforeLoad();
-                                loadService();
-                                afterLoad();
+                                try {
+                                    beforeLoad();
+                                    clazz = loadClass(config.getInt(K_VERSION),
+                                            config.getString(K_MD5), config.getString(K_CLASS));
+                                    loadService();
+                                    afterLoad();
+                                } catch (Exception e) {
+                                    // TODO: roll back to the default service
+                                }
                             }
 
                             @Override
@@ -104,7 +115,7 @@ public abstract class ServiceDexLoader<T> {
                         });
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 
@@ -116,19 +127,7 @@ public abstract class ServiceDexLoader<T> {
     /**
      * 读取本地config，载入service
      */
-    protected boolean loadService() {
-        try {
-            Class<?> clazz = loadClass(config.getInt(K_VERSION),
-                    config.getString(K_MD5), config.getString(K_CLASS));
-            if (clazz != null) {
-                service = (T) clazz.newInstance();
-                return true;
-            }
-        } catch (Exception e) {
-
-        }
-        return false;
-    }
+    protected abstract void loadService();
 
     /**
      * 在载入service之后调用，恢复现场

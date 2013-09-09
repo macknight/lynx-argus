@@ -22,5 +22,10 @@
             android:layout_height="0dp"
             android:layout_weight="0.1"
             android:text="@string/lint_btn_main_load_apk_b"/>
+    <Button android:id="@+id/btn_main_load_apk_c"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1"
+            android:text="@string/lint_btn_main_load_apk_c"/>
 </LinearLayout>
 

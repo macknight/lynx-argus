@@ -16,9 +16,10 @@ public interface LocationService {
      * get the best coordinate by server, if can be decided, return only one
      * coordinate result, else, return a coordinate list
      *
+     * @param refresh
      * @return
      */
-    Location locate();
+    void locate(boolean refresh);
 
     /**
      * reverse geo-coding

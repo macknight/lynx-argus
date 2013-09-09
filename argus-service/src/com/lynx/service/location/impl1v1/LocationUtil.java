@@ -1,4 +1,4 @@
-package com.lynx.service.location.impl.util;
+package com.lynx.service.location.impl1v1;
 
 
 import com.lynx.lib.location.entity.Coord;

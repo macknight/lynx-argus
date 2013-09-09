@@ -23,6 +23,17 @@ public class TestServiceDexLoader<TestService> extends ServiceDexLoader {
     }
 
     @Override
+    protected void loadService() {
+        try {
+            if (clazz != null) {
+                service = (TestService) clazz.newInstance();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     protected void afterLoad() {
 
     }
