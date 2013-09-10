@@ -1,7 +1,8 @@
 package com.lynx.service.test;
 
 import android.content.Context;
-import com.lynx.service.core.ServiceDexLoader;
+import com.lynx.lib.core.ServiceDexLoader;
+import com.lynx.service.test.impl1v1.TestServiceImpl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,9 +13,7 @@ public class TestServiceDexLoader<TestService> extends ServiceDexLoader {
     private static final String Tag = "test";
 
     public TestServiceDexLoader(Context context) {
-        super(context, Tag);
-
-
+        super(context, Tag, 102, TestServiceImpl.class);
     }
 
     @Override

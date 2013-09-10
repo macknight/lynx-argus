@@ -2,6 +2,9 @@ package com.lynx.lib.util;
 
 import android.text.TextUtils;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -195,5 +198,15 @@ public class StringUtils {
             }
             return false;
         }
+    }
+
+    public static String stream2string(InputStream instream, String encoding)
+            throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int i = -1;
+        while ((i = instream.read()) != -1) {
+            baos.write(i);
+        }
+        return new String(baos.toByteArray(), encoding);
     }
 }
