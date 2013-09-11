@@ -38,12 +38,12 @@ public class BMapApiUtil {
                 JSONObject jo = new JSONObject(tmp);
                 if (jo.getInt("status") == 0) {
                     JSONObject joAddr = jo.getJSONObject("result").getJSONObject("addressComponent");
-                    Address addr = new Address();
-                    addr.setProvince(joAddr.getString("province"));
-                    addr.setCity(joAddr.getString("city"));
-                    addr.setRegion(joAddr.getString("region"));
-                    addr.setStreet(joAddr.getString("street"));
-                    addr.setNumber(joAddr.getString("street_number"));
+                    String province = joAddr.getString("province");
+                    String city = joAddr.getString("city");
+                    String region = joAddr.getString("region");
+                    String street = joAddr.getString("street");
+                    String number = joAddr.getString("number");
+                    Address addr = new Address(province, city, region, street, number);
                     return addr;
                 }
             }

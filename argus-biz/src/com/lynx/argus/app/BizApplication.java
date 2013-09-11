@@ -1,6 +1,9 @@
 package com.lynx.argus.app;
 
+import com.lynx.lib.core.DexServiceLoader;
 import com.lynx.lib.core.LFApplication;
+
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,15 +15,20 @@ public class BizApplication extends LFApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        try {
-            this.serviceManager = new BizServiceManager(this);
-        }   catch (Exception e) {
-            e.printStackTrace();
-        }
+    }
+
+    @Override
+    protected void initServiceManager() {
+        serviceManager = new BizServiceManager(this);
     }
 
     @Override
     public Object service(String name) {
         return serviceManager.getService(name);
+    }
+
+    @Override
+    public Map<String, DexServiceLoader> services() {
+        return serviceManager.dexServices();
     }
 }

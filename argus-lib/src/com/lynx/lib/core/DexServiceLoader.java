@@ -24,19 +24,21 @@ import java.util.jar.JarFile;
  * User: zhufeng.liu
  * Date: 8/30/13 11:29 AM
  */
-public abstract class ServiceDexLoader<T> {
+public abstract class DexServiceLoader {
     public static final String K_VERSION = "version"; // service版本
     public static final String K_URL = "url"; // service包下载地址
     public static final String K_MD5 = "md5"; // service包md5摘要
-    public static final String K_CLASS = "clazz"; // service实现类名
+    public static final String K_CLAZZ = "clazz"; // service实现类名
 
     protected Context context;
     private static final HttpService httpService = new DefaultHttpServiceImpl();
     private final File dir;
     private final String tag;
-    private JSONObject config;
-    protected Class<T> clazz;
-    protected T service;
+    protected Class<?> clazz;
+    protected DexService service;
+
+    private String clazzName = null;
+    private String md5 = null;
     private int curVersion = -1;
 
     /**
@@ -45,31 +47,39 @@ public abstract class ServiceDexLoader<T> {
      * @param minVersion   最小动态服务包版本
      * @param defaultClazz 默认服务版本
      */
-    public ServiceDexLoader(Context context, String tag, int minVersion, Class<T> defaultClazz) {
+    public DexServiceLoader(Context context, String tag, int minVersion, Class<?> defaultClazz)
+            throws Exception {
         this.context = context;
         this.tag = tag;
+        this.curVersion = minVersion;
         deleteOldDex();
         dir = new File(context.getFilesDir(), tag);
         dir.mkdir();
         try {
-            config = loadLocalConfig();
+            JSONObject config = loadLocalConfig();
+            if (config != null) {
+                int version = config.getInt(K_VERSION);
+                if (version > minVersion) {
+                    curVersion = version;
+                    clazzName = config.getString(K_CLAZZ);
+                    md5 = config.getString(K_MD5);
+                    loadClass(curVersion, md5, clazzName);
+                }
+            }
+
         } catch (Exception e) {
             Log.e(tag, "unable to read config at " + new File(dir, "config"), e);
         }
-        if (config != null) {
-            try {
-                curVersion = config.getInt(K_VERSION);
-                if (curVersion > minVersion) {
-                    clazz = loadClass(config.getInt(K_VERSION),
-                            config.getString(K_MD5), config.getString(K_CLASS));
-                } else {
-                    curVersion = minVersion;
-                    clazz = defaultClazz;
-                }
-                loadService();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+
+        if (clazz == null) {
+            clazz = defaultClazz;
+            clazzName = defaultClazz.getName();
+        }
+
+        try {
+            loadService();
+        } catch (Exception e) {
+            throw new Exception("loading service exception");
         }
     }
 
@@ -77,56 +87,52 @@ public abstract class ServiceDexLoader<T> {
     /**
      * 根据新config配置，下载并载入新版本service
      *
-     * @param newConfig
+     * @param config
      */
-    public void updateService(JSONObject newConfig) {
+    public void updateService(JSONObject config) {
         try {
-            if (config != null) {
-                int curVersion = config.getInt(K_VERSION);
-                int newVersion = newConfig.getInt(K_VERSION);
-                if (curVersion >= newVersion) {
-                    return;
-                }
+            int newVersion = config.getInt(K_VERSION);
+            if (curVersion >= newVersion) {
+                return;
             }
 
             // 版本升级
-            config = new JSONObject(newConfig.toString());
-            if (config != null) {
-                saveConfig(config);
-                File dex = new File(dir, "" + config.getInt(K_VERSION));
-                dex.mkdir();
-                String filePath = String.format("%s/%s.jar", dex.getAbsolutePath(),
-                        config.getString(K_MD5));
-                httpService.download(config.getString(K_URL), filePath, true,
-                        new HttpCallback<File>() {
-                            @Override
-                            public void onStart() {
-                                super.onStart();
-                                Toast.makeText(context, "开始下载动态更新包", Toast.LENGTH_SHORT).show();
-                            }
+            saveConfig(config);
+            File dex = new File(dir, "" + config.getInt(K_VERSION));
+            dex.mkdir();
 
-                            @Override
-                            public void onSuccess(File file) {
-                                super.onSuccess(file);
-                                Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
-                                try {
-                                    beforeLoad();
-                                    clazz = loadClass(config.getInt(K_VERSION),
-                                            config.getString(K_MD5), config.getString(K_CLASS));
-                                    loadService();
-                                    afterLoad();
-                                } catch (Exception e) {
-                                    // TODO: roll back to the default service
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Throwable t, String strMsg) {
-                                super.onFailure(t, strMsg);
-                                Toast.makeText(context, strMsg, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+            try {
+                clazzName = config.getString(K_CLAZZ);
+                curVersion = config.getInt(K_VERSION);
+                md5 = config.getString(K_MD5);
+            } catch (Exception e) {
+                return;
             }
+
+            String filePath = String.format("%s/%s.jar", dex.getAbsolutePath(), md5);
+            httpService.download(config.getString(K_URL), filePath, true,
+                    new HttpCallback<File>() {
+                        @Override
+                        public void onStart() {
+                            super.onStart();
+                            Toast.makeText(context, "开始下载动态更新包", Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSuccess(File file) {
+                            super.onSuccess(file);
+                            // TODO: md5校验
+                            Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
+
+                            replaceService();
+                        }
+
+                        @Override
+                        public void onFailure(Throwable t, String strMsg) {
+                            super.onFailure(t, strMsg);
+                            Toast.makeText(context, strMsg, Toast.LENGTH_SHORT).show();
+                        }
+                    });
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,7 +146,7 @@ public abstract class ServiceDexLoader<T> {
     /**
      * 读取本地config，载入service
      */
-    protected abstract void loadService();
+    protected abstract void loadService() throws Exception;
 
     /**
      * 在载入service之后调用，恢复现场
@@ -148,20 +154,50 @@ public abstract class ServiceDexLoader<T> {
     protected abstract void afterLoad();
 
 
-    public T service() {
+    /**
+     * 服务名
+     *
+     * @return
+     */
+    public abstract String name();
+
+    /**
+     * 当前服务版本
+     *
+     * @return
+     */
+    public int curVersion() {
+        return curVersion;
+    }
+
+    public DexService service() {
         return service;
     }
 
-    private Class<T> loadClass(int version, String md5, String className)
+    private void replaceService() {
+        beforeLoad();
+        try {
+            loadClass(curVersion, md5, clazzName);
+        } catch (Exception e) {
+            // TODO: roll back to the default service
+        }
+        try {
+            loadService();
+        } catch (Exception e) {
+
+        }
+        afterLoad();
+    }
+
+    private void loadClass(int version, String md5, String className)
             throws Exception {
         File dexFolder = new File(dir, version + "");
         File dexFile = new File(dexFolder, md5 + ".jar");
         File dexOut = new File(dexFolder, "dex");
         dexOut.mkdir();
         DexClassLoader cl = new DexClassLoader(dexFile.getAbsolutePath(),
-                dexOut.getAbsolutePath(), null,
-                context.getClassLoader());
-        return (Class<T>) cl.loadClass(className);
+                dexOut.getAbsolutePath(), null, context.getClassLoader());
+        clazz = (Class<DexService>) cl.loadClass(className);
     }
 
     private JSONObject loadLocalConfig() throws Exception {

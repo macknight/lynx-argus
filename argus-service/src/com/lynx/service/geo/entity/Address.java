@@ -6,23 +6,18 @@ package com.lynx.service.geo.entity;
  * Date: 8/27/13 5:53 PM
  */
 public class Address {
-    private String country;
     private String province;
     private String city;
     private String region;
     private String street;
     private String number;
 
-    public Address() {
-
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
+    public Address(String province, String city, String region, String street, String number) {
+        this.province = province;
+        this.city = city;
+        this.region = region;
+        this.street = street;
+        this.number = number;
     }
 
     public String getProvince() {

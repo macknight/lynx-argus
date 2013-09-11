@@ -1,16 +1,22 @@
 package com.lynx.argus.biz;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.service.geo.GeoService;
+import com.lynx.service.geo.GeoService.LocationStatus;
 import com.lynx.service.geo.LocationListener;
-import com.lynx.service.test.TestService;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,52 +24,89 @@ import com.lynx.service.test.TestService;
  * Date: 8/29/13 11:27 AM
  */
 public class MainActivity extends Activity {
-    private TextView tvConsole = null;
-
-    private TestService testService;
     private GeoService geoService;
 
-    private LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(GeoService.LocationStatus status) {
-            Toast.makeText(MainActivity.this, geoService.coord().toString(), Toast.LENGTH_SHORT).show();
-        }
-    };
+    private Animation animRotate;
+    private AnimationDrawable adIndicator;
+    private TextView tvLocAddr;
+    private ImageView ivLocIndicator, ivLocRefresh;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        testService = (TestService) BizApplication.instance().service(TestService.class.getSimpleName());
+        animRotate = AnimationUtils.loadAnimation(this, R.anim.anim_rotate);
+        animRotate.setInterpolator(new LinearInterpolator());
+        animRotate.setRepeatMode(Animation.RESTART);
+
         geoService = (GeoService) BizApplication.instance().service(GeoService.class.getSimpleName());
 
-        if (geoService != null) {
-            geoService.addListener(locationListener);
-        }
-
-        tvConsole = (TextView) findViewById(R.id.tv_main_console);
+        ivLocIndicator = (ImageView) findViewById(R.id.iv_main_loc_indicator);
+        tvLocAddr = (TextView) findViewById(R.id.tv_main_loc_addr);
+        ivLocRefresh = (ImageView) findViewById(R.id.iv_main_loc_refresh);
 
         Button btn = (Button) findViewById(R.id.btn_main_load_apk_a);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tvConsole.setText(testService.hello("chris"));
+
             }
         });
 
-        btn = (Button) findViewById(R.id.btn_main_load_apk_b);
-        btn.setOnClickListener(new View.OnClickListener() {
+        ImageView ivIndicator = (ImageView) findViewById(R.id.iv_main_loc_indicator);
+        ivIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    geoService.locate(false);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                Intent intent = new Intent();
+                intent.setClass(MainActivity.this, SysInfoActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        initLocationModule();
+    }
+
+    /**
+     * 初始化定位相关模块
+     */
+    private void initLocationModule() {
+        if (geoService == null) {
+            Toast.makeText(this, "定位模块不可用", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        ivLocRefresh.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                ivLocRefresh.startAnimation(animRotate);
+                tvLocAddr.setText("正在定位ing");
+                ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
+                adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
+                adIndicator.setOneShot(false);
+                if (adIndicator.isRunning()) {
+                    adIndicator.stop();
+                }
+                adIndicator.start();
+                geoService.locate(false);
+            }
+        });
+
+        geoService.addListener(new LocationListener() {
+            @Override
+            public void onLocationChanged(LocationStatus status) {
+                adIndicator.stop();
+                switch (status) {
+                    case FAIL:
+                        ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
+                        tvLocAddr.setText("定位失败");
+                        break;
+                    case SUCCESS:
+                        ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+                        tvLocAddr.setText(geoService.address());
+                        break;
                 }
             }
         });
-
-
     }
+
 }

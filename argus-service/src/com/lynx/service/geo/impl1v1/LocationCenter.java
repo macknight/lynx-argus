@@ -66,6 +66,12 @@ public class LocationCenter {
         locationManager = (LocationManager) context
                 .getSystemService(Context.LOCATION_SERVICE);
 
+        try {
+            Method getService = context.getClass().getMethod("service", String.class);
+            httpService = (HttpService) getService.invoke(context, "http");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void start() {
@@ -176,16 +182,6 @@ public class LocationCenter {
      * 完成信息收集步骤后开始定位
      */
     private void locate() {
-        try {
-            // 反射有问题,需要研究一下
-            Method getService = context.getClass().getMethod("service", String.class);
-            httpService = (HttpService) getService.invoke(context, "http");
-//            LFApplication application = (LFApplication) context;
-//            httpService = (HttpService) application.service("http");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
         HttpParam param = new HttpParam();
 
         if (cellInfoManager.cells2str() != null) {
@@ -206,10 +202,16 @@ public class LocationCenter {
                     int acc = jo.getInt("acc");
                     long elapse = System.nanoTime();
                     coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, elapse);
+                    JSONObject joAddr = jo.getJSONObject("address");
+                    String province = joAddr.getString("province");
+                    String city = joAddr.getString("city");
+                    String region = joAddr.getString("region");
+                    String street = joAddr.getString("street");
+                    addr = new Address(province, city, region, street, null);
                     geoService.onLocationChanged(LocationStatus.SUCCESS);
                     return;
                 } catch (Exception e) {
-
+                     e.printStackTrace();
                 }
                 geoService.onLocationChanged(LocationStatus.FAIL);
             }

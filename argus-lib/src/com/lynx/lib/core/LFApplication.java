@@ -3,6 +3,8 @@ package com.lynx.lib.core;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: chris
@@ -27,6 +29,9 @@ public abstract class LFApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        initServiceManager();
+        serviceManager.initDexLoader();
+        serviceManager.updateServiceConfig();
     }
 
     @Override
@@ -49,5 +54,20 @@ public abstract class LFApplication extends Application {
         super.onTrimMemory(level);
     }
 
+    protected abstract void initServiceManager();
+
+    /**
+     * 列举所有服务
+     *
+     * @return
+     */
+    public abstract Map<String, DexServiceLoader> services();
+
+    /**
+     * 根据服务获取对应服务
+     *
+     * @param name
+     * @return
+     */
     public abstract Object service(String name);
 }

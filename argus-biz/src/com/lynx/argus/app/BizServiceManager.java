@@ -1,6 +1,7 @@
 package com.lynx.argus.app;
 
 import android.content.Context;
+import android.widget.Toast;
 import com.lynx.lib.core.ServiceManager;
 import com.lynx.service.geo.GeoService;
 import com.lynx.service.geo.GeoServiceDexLoader;
@@ -22,10 +23,18 @@ public class BizServiceManager extends ServiceManager {
     }
 
     @Override
-    protected void initDexLoader() {
-        testServiceDexLoader = new TestServiceDexLoader(context);
-        geoServiceDexLoader = new GeoServiceDexLoader(context);
-        SERVICE_DEX_LOADERS.put(TestService.class.getSimpleName(), testServiceDexLoader);
-        SERVICE_DEX_LOADERS.put(GeoService.class.getSimpleName(), geoServiceDexLoader);
+    public void initDexLoader() {
+        try {
+            testServiceDexLoader = new TestServiceDexLoader(context);
+            dsLoaders.put(TestService.class.getSimpleName(), testServiceDexLoader);
+        } catch (Exception e) {
+            Toast.makeText(context, "create TestService Exception", Toast.LENGTH_SHORT).show();
+        }
+        try {
+            geoServiceDexLoader = new GeoServiceDexLoader(context);
+            dsLoaders.put(GeoService.class.getSimpleName(), geoServiceDexLoader);
+        } catch (Exception e) {
+            Toast.makeText(context, "create GeoService Exception", Toast.LENGTH_SHORT).show();
+        }
     }
 }

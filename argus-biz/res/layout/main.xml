@@ -5,27 +5,35 @@
               android:layout_height="match_parent"
               android:background="@drawable/bg">
 
-    <TextView android:id="@+id/tv_main_console"
-              android:layout_width="match_parent"
-              android:layout_height="0dp"
-              android:layout_weight="0.8"
-              android:textColor="@color/DeepSkyBlue"
-              android:textSize="@dimen/font_size_default"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/tips_bar">
+        <ImageView android:id="@+id/iv_main_loc_indicator"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="15dp"
+                   android:layout_centerVertical="true"
+                   android:background="@drawable/gray_point"/>
+
+        <TextView android:id="@+id/tv_main_loc_addr"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:textSize="@dimen/font_size_small"
+                  android:textColor="@color/LightCyan"/>
+
+        <ImageView android:id="@+id/iv_main_loc_refresh"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginRight="10dp"
+                   android:layout_centerVertical="true"
+                   android:layout_alignParentRight="true"
+                   android:src="@drawable/refresh"/>
+    </RelativeLayout>
 
     <Button android:id="@+id/btn_main_load_apk_a"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
+            android:layout_height="wrap_content"
             android:text="@string/lint_btn_main_load_apk_a"/>
-    <Button android:id="@+id/btn_main_load_apk_b"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
-            android:text="@string/lint_btn_main_load_apk_b"/>
-    <Button android:id="@+id/btn_main_load_apk_c"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1"
-            android:text="@string/lint_btn_main_load_apk_c"/>
 </LinearLayout>
 

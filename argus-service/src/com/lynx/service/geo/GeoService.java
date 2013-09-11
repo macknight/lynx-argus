@@ -1,15 +1,17 @@
 package com.lynx.service.geo;
 
-import com.lynx.service.geo.entity.Address;
+import com.lynx.lib.core.DexService;
 import com.lynx.service.geo.entity.Coord;
 import com.lynx.service.geo.entity.Coord.CoordType;
+
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: zhufeng.liu
  * Date: 8/27/13 5:53 PM
  */
-public interface GeoService {
+public interface GeoService extends DexService {
 
     public LocationStatus status();
 
@@ -34,9 +36,13 @@ public interface GeoService {
 
     public void addListener(LocationListener listener);
 
+    public void removeListener(LocationListener listener);
+
+    public List<LocationListener> listeners();
+
     public Coord coord();
 
-    public Address address();
+    public String address();
 
     public enum LocationStatus {
         IDLE,

@@ -8,6 +8,17 @@ import com.lynx.service.test.TestService;
  * Date: 13-9-5 下午6:13
  */
 public class TestServiceImpl implements TestService {
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
+    }
+
     @Override
     public String hello(String name) {
         return name + " hello world";

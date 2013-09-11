@@ -3,11 +3,11 @@ package com.lynx.service.geo.impl1v1;
 import android.content.Context;
 import com.lynx.service.geo.GeoService;
 import com.lynx.service.geo.LocationListener;
-import com.lynx.service.geo.entity.Address;
 import com.lynx.service.geo.entity.Coord;
 import com.lynx.service.geo.entity.Coord.CoordType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,6 +24,16 @@ public class GeoServiceImpl implements GeoService, LocationListener {
     public GeoServiceImpl(Context context) {
         this.context = context;
         locationCenter = new LocationCenter(this);
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void stop() {
+
     }
 
     @Override
@@ -47,13 +57,23 @@ public class GeoServiceImpl implements GeoService, LocationListener {
     }
 
     @Override
+    public void removeListener(LocationListener listener) {
+        listeners.remove(listener);
+    }
+
+    @Override
+    public List<LocationListener> listeners() {
+        return listeners;
+    }
+
+    @Override
     public Coord coord() {
         return locationCenter.coord();
     }
 
     @Override
-    public Address address() {
-        return locationCenter.address();
+    public String address() {
+        return locationCenter.address().getStreet() + "v101";
     }
 
     @Override

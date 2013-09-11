@@ -23,33 +23,34 @@ public abstract class ServiceManager {
 
     protected Context context;
     protected HttpService httpService;
-    protected Map<String, ServiceDexLoader> SERVICE_DEX_LOADERS = new HashMap<String, ServiceDexLoader>();
-    protected JSONObject JO_CONFIG = null;
+    protected Map<String, DexServiceLoader> dsLoaders = new HashMap<String, DexServiceLoader>();
+    protected JSONObject joConfig = null;
 
     public ServiceManager(Context context) {
         this.context = context;
         httpService = new DefaultHttpServiceImpl();
-        initDexLoader();
-        updateServiceConfig();
     }
 
-    protected abstract void initDexLoader();
+    /**
+     * 在ServiceManager初始化完成后加载所定制的service
+     */
+    public abstract void initDexLoader();
 
     /**
      * 更新service配置
      */
-    private void updateServiceConfig() {
+    public void updateServiceConfig() {
         httpService.get(URL_SERVICE_CONFIG, null, new HttpCallback<Object>() {
             @Override
             public void onSuccess(Object o) {
                 super.onSuccess(o);
                 try {
-                    JO_CONFIG = new JSONObject(o.toString());
-                    JSONArray ja_service = JO_CONFIG.getJSONArray(K_SERVICES);
+                    joConfig = new JSONObject(o.toString());
+                    JSONArray ja_service = joConfig.getJSONArray(K_SERVICES);
                     for (int i = 0; i < ja_service.length(); ++i) {
                         JSONObject config = ja_service.getJSONObject(i);
                         String service = config.getString(K_SERVICE);
-                        ServiceDexLoader dexLoader = SERVICE_DEX_LOADERS.get(service);
+                        DexServiceLoader dexLoader = dsLoaders.get(service);
                         if (dexLoader != null) {
                             // service 有新的动态更新
                             dexLoader.updateService(config);
@@ -69,6 +70,14 @@ public abstract class ServiceManager {
     }
 
     /**
+     * 获取所有动态服务
+     * @return
+     */
+    public Map<String, DexServiceLoader> dexServices() {
+         return dsLoaders;
+    }
+
+    /**
      * 根据service名获取服务
      *
      * @param name
@@ -78,7 +87,7 @@ public abstract class ServiceManager {
         if ("http".equals(name)) {
             return httpService;
         }
-        ServiceDexLoader dexLoader = SERVICE_DEX_LOADERS.get(name);
+        DexServiceLoader dexLoader = dsLoaders.get(name);
         if (dexLoader != null) {
             return dexLoader.service();
         }
