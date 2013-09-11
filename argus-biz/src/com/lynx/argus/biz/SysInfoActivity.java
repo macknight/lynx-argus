@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import com.lynx.argus.R;
+
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.core.DexServiceLoader;
 
@@ -35,8 +36,8 @@ public class SysInfoActivity extends Activity {
 
         SimpleAdapter adapter = new SimpleAdapter(this, servicesInfo,
                 R.layout.layout_sys_info_item,
-                new String[]{"name", "clazz", "version"},
-                new int[]{R.id.tv_sys_info_item_name, R.id.tv_sys_info_item_clazz, R.id.tv_sys_info_item_version}
+                new String[]{"icon", "name", "clazz", "version"},
+                new int[]{R.id.iv_sys_info_item_indicator, R.id.tv_sys_info_item_name, R.id.tv_sys_info_item_clazz, R.id.tv_sys_info_item_version}
         );
         lvServiceInfo.setAdapter(adapter);
     }
@@ -48,11 +49,21 @@ public class SysInfoActivity extends Activity {
             for (String name : loaders.keySet()) {
                 DexServiceLoader loader = loaders.get(name);
                 Map<String, Object> serviceInfo = new HashMap<String, Object>();
+                serviceInfo.put("icon", getResId(name) + "");
                 serviceInfo.put("name", name);
                 serviceInfo.put("clazz", loader.service().getClass().getName());
                 serviceInfo.put("version", loader.curVersion() + "");
                 servicesInfo.add(serviceInfo);
             }
         }
+    }
+
+    private int getResId(String name) {
+        if ("GeoService".equals(name)) {
+            return com.lynx.service.R.drawable.service_item_geo;
+        } else if ("TestService".equals(name)) {
+            return com.lynx.service.R.drawable.service_item_test;
+        }
+        return -1;
     }
 }
