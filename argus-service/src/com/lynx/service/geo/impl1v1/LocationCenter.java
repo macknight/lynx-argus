@@ -14,6 +14,7 @@ import com.lynx.service.geo.GeoService.LocationStatus;
 import com.lynx.service.geo.entity.Address;
 import com.lynx.service.geo.entity.Cell;
 import com.lynx.service.geo.entity.Coord;
+import com.lynx.service.geo.entity.Coord.CoordSource;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
@@ -45,7 +46,7 @@ public class LocationCenter {
     private WifiInfoManager wifiInfoManager = null;
     private LocationManager locationManager = null;
 
-    private static List<Coord> coords = new ArrayList<Coord>();
+    private static List<Coord> coords3thPart = new ArrayList<Coord>(); // 第三方定位服务获取到的经纬度
 
     // 定位结果
     private static Coord coord = null;
@@ -77,12 +78,12 @@ public class LocationCenter {
     public void start() {
         stop();
         Log.d(Tag, "start location center");
-        coords.clear();
+        coords3thPart.clear();
         timerTask = new TimerTask() {
             @Override
             public void run() {
                 if (loop.intValue() >= INTERVAL_COUNT || status.intValue() >= 0x1111) {
-                    stop();
+                    stopPrv();
                     locate();
                     return;
                 }
@@ -97,9 +98,14 @@ public class LocationCenter {
         // 监听数据
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
                 10000, 500, locationListener);
+
+        geoService.onLocationChanged(LocationStatus.ONGOING);
     }
 
-    public void stop() {
+    /**
+     * 停止预处理阶段的task
+     */
+    private void stopPrv() {
         Log.d(Tag, "stop location center");
         status.set(0x0000);
         loop.set(0);
@@ -123,22 +129,29 @@ public class LocationCenter {
         }
     }
 
+    public void stop() {
+        stopPrv();
+        if (geoService.status() == LocationStatus.ONGOING) {
+            geoService.onLocationChanged(LocationStatus.FAIL);
+        }
+    }
+
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             double lat = LocationUtil.format(location.getLatitude(), 5);
             double lng = LocationUtil.format(location.getLongitude(), 5);
-            Coord coord = new Coord(Coord.CoordSource.GPS, lat, lng,
+            Coord coord = new Coord(CoordSource.GPS, lat, lng,
                     (int) location.getAccuracy(), System.currentTimeMillis()
                     - location.getTime());
             if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
-                coord.setSource(Coord.CoordSource.NETWORK);
-                coords.add(coord);
+                coord.setSource(CoordSource.NETWORK);
+                coords3thPart.add(coord);
                 status.set(status.intValue() | NETWORK_LOC_FIN);
                 return;
             }
-            coords.add(coord);
-            coord.setSource(Coord.CoordSource.GPS);
+            coords3thPart.add(coord);
+            coord.setSource(CoordSource.GPS);
             status.set(status.intValue() | GPS_LOC_FIN);
         }
 
@@ -183,7 +196,6 @@ public class LocationCenter {
      */
     private void locate() {
         HttpParam param = new HttpParam();
-
         if (cellInfoManager.cells2str() != null) {
             Cell.CellType type = cellInfoManager.cells().get(0).type();
             param.put(type.name(), cellInfoManager.cells2str());
@@ -226,15 +238,6 @@ public class LocationCenter {
 
     public Context context() {
         return context;
-    }
-
-    /**
-     * get current coordinate of your cell phone.
-     *
-     * @return
-     */
-    public List<Coord> coords() {
-        return coords;
     }
 
     public Coord coord() {

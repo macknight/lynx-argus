@@ -138,24 +138,24 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	}
 
-	public HttpClient getHttpClient() {
+	public HttpClient httpClient() {
 		return this.httpClient;
 	}
 
-	public HttpContext getHttpContext() {
+	public HttpContext httpContext() {
 		return this.httpContext;
 	}
 
-	public void configCharset(String charSet) {
+	public void setCharset(String charSet) {
 		if (charSet != null && charSet.trim().length() != 0)
 			this.charset = charSet;
 	}
 
-	public void configCookieStore(CookieStore cookieStore) {
+	public void setCookieStore(CookieStore cookieStore) {
 		httpContext.setAttribute(ClientContext.COOKIE_STORE, cookieStore);
 	}
 
-	public void configUserAgent(String userAgent) {
+	public void setUserAgent(String userAgent) {
 		HttpProtocolParams.setUserAgent(this.httpClient.getParams(), userAgent);
 	}
 
@@ -164,7 +164,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	 * 
 	 * @param timeout
 	 */
-	public void configTimeout(int timeout) {
+	public void setTimeout(int timeout) {
 		final HttpParams httpParams = this.httpClient.getParams();
 		ConnManagerParams.setTimeout(httpParams, timeout);
 		HttpConnectionParams.setSoTimeout(httpParams, timeout);
@@ -176,7 +176,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	 * 
 	 * @param sslSocketFactory
 	 */
-	public void configSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
+	public void setSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
 		Scheme scheme = new Scheme("https", sslSocketFactory, 443);
 		this.httpClient.getConnectionManager().getSchemeRegistry()
 				.register(scheme);
@@ -187,7 +187,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	 * 
 	 * @param count
 	 */
-	public void configRequestExecutionRetryCount(int count) {
+	public void setRequestExecutionRetryCount(int count) {
 		this.httpClient.setHttpRequestRetryHandler(new RetryHandler(count));
 	}
 

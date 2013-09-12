@@ -25,7 +25,7 @@
                  android:label="@string/app_name"
                  android:icon="@drawable/icon"
                  android:theme="@style/AppTheme">
-        <activity android:name=".biz.MainActivity"
+        <activity android:name=".biz.MainTabActivity"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

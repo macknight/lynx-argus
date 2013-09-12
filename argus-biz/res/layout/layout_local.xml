@@ -19,8 +19,8 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:layout_centerInParent="true"
-                  android:textSize="@dimen/font_size_small"
-                  android:textColor="@color/LightCyan"/>
+                  android:textSize="@dimen/font_size_default"
+                  android:textColor="@color/LavenderBlush"/>
 
         <ImageView android:id="@+id/iv_main_loc_refresh"
                    android:layout_width="wrap_content"

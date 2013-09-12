@@ -22,9 +22,9 @@ public abstract class ServiceManager {
     public static final String K_SERVICE = "service"; // service名
 
     protected Context context;
-    protected HttpService httpService;
-    protected Map<String, DexServiceLoader> dsLoaders = new HashMap<String, DexServiceLoader>();
-    protected JSONObject joConfig = null;
+    private HttpService httpService;
+    private Map<String, DexServiceLoader> loaders = new HashMap<String, DexServiceLoader>();
+    private JSONObject joConfig = null;
 
     public ServiceManager(Context context) {
         this.context = context;
@@ -50,7 +50,7 @@ public abstract class ServiceManager {
                     for (int i = 0; i < ja_service.length(); ++i) {
                         JSONObject config = ja_service.getJSONObject(i);
                         String service = config.getString(K_SERVICE);
-                        DexServiceLoader dexLoader = dsLoaders.get(service);
+                        DexServiceLoader dexLoader = loaders.get(service);
                         if (dexLoader != null) {
                             // service 有新的动态更新
                             dexLoader.updateService(config);
@@ -74,7 +74,11 @@ public abstract class ServiceManager {
      * @return
      */
     public Map<String, DexServiceLoader> dexServices() {
-         return dsLoaders;
+         return loaders;
+    }
+
+    public void addService(DexServiceLoader loader) {
+        loaders.put(loader.name(), loader);
     }
 
     /**
@@ -87,7 +91,7 @@ public abstract class ServiceManager {
         if ("http".equals(name)) {
             return httpService;
         }
-        DexServiceLoader dexLoader = dsLoaders.get(name);
+        DexServiceLoader dexLoader = loaders.get(name);
         if (dexLoader != null) {
             return dexLoader.service();
         }

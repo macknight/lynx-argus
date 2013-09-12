@@ -24,6 +24,7 @@ public class GeoServiceImpl implements GeoService, LocationListener {
     public GeoServiceImpl(Context context) {
         this.context = context;
         locationCenter = new LocationCenter(this);
+        status = LocationStatus.IDLE;
     }
 
     @Override
@@ -33,7 +34,9 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
     @Override
     public void stop() {
-
+       if (locationCenter != null) {
+           locationCenter.stop();
+       }
     }
 
     @Override
@@ -73,7 +76,7 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
     @Override
     public String address() {
-        return locationCenter.address().getStreet() + "v101";
+        return locationCenter.address().getStreet() + "(impl1v1)";
     }
 
     @Override

@@ -37,7 +37,8 @@ public class SysInfoActivity extends Activity {
         SimpleAdapter adapter = new SimpleAdapter(this, servicesInfo,
                 R.layout.layout_sys_info_item,
                 new String[]{"icon", "name", "clazz", "version"},
-                new int[]{R.id.iv_sys_info_item_indicator, R.id.tv_sys_info_item_name, R.id.tv_sys_info_item_clazz, R.id.tv_sys_info_item_version}
+                new int[]{R.id.iv_sys_info_item_indicator, R.id.tv_sys_info_item_name,
+                        R.id.tv_sys_info_item_clazz, R.id.tv_sys_info_item_version}
         );
         lvServiceInfo.setAdapter(adapter);
     }
