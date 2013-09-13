@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@drawable/bg">
+              android:layout_height="match_parent">
 
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:background="@drawable/tips_bar">
         <ImageView android:id="@+id/iv_main_loc_indicator"
                    android:layout_width="wrap_content"
@@ -31,9 +31,16 @@
                    android:src="@drawable/refresh"/>
     </RelativeLayout>
 
-    <Button android:id="@+id/btn_main_load_apk_a"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/lint_btn_main_load_apk_a"/>
+    <com.lynx.lib.widget.PullToRefreshListView
+            android:id="@+id/prlv_local_idx"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/local_bg"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/horizontal_divider"
+            android:listSelector="@null"
+            android:scrollbars="none">
+    </com.lynx.lib.widget.PullToRefreshListView>
+
 </LinearLayout>
 

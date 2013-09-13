@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="66dp"
+                android:orientation="horizontal">
+
+    <ImageView android:id="@+id/iv_local_idx_item_icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="15dp"
+               android:src="@drawable/food_u"/>
+
+    <TextView android:id="@+id/tv_local_idx_item_title"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="5dp"
+              android:layout_marginLeft="10dp"
+              android:layout_toRightOf="@+id/iv_local_idx_item_icon"
+              android:textColor="@color/Grey"
+              android:textSize="@dimen/font_size_large"
+              android:text="food"/>
+
+    <TextView android:id="@+id/tv_local_idx_item_desc"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginLeft="10dp"
+              android:layout_marginTop="5dp"
+              android:layout_toRightOf="@+id/iv_local_idx_item_icon"
+              android:layout_below="@+id/tv_local_idx_item_title"
+              android:textColor="@color/Thistle"
+              android:textSize="@dimen/font_size_default"
+              android:text="foodasdfsdfdd"/>
+</RelativeLayout>
