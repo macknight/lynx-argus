@@ -8,50 +8,50 @@ import android.widget.ExpandableListView;
 
 public class PullToRefreshExpandableListView extends PullToRefreshAdapterViewBase<ExpandableListView> {
 
-	public PullToRefreshExpandableListView(Context context) {
-		super(context);
-	}
+    public PullToRefreshExpandableListView(Context context) {
+        super(context);
+    }
 
-	public PullToRefreshExpandableListView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-	}
+    public PullToRefreshExpandableListView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
 
-	public PullToRefreshExpandableListView(Context context, Mode mode) {
-		super(context, mode);
-	}
+    public PullToRefreshExpandableListView(Context context, Mode mode) {
+        super(context, mode);
+    }
 
-	@Override
-	public ContextMenuInfo getContextMenuInfo() {
-		return ((InternalExpandableListView) getRefreshableView()).getContextMenuInfo();
-	}
+    @Override
+    public ContextMenuInfo getContextMenuInfo() {
+        return ((InternalExpandableListView) getRefreshableView()).getContextMenuInfo();
+    }
 
-	@Override
-	protected final ExpandableListView createRefreshableView(Context context, AttributeSet attrs) {
-		ExpandableListView lv = new InternalExpandableListView(context, attrs);
+    @Override
+    protected final ExpandableListView createRefreshableView(Context context, AttributeSet attrs) {
+        ExpandableListView lv = new InternalExpandableListView(context, attrs);
 
-		// Set it to this so it can be used in ListActivity/ListFragment
-		lv.setId(android.R.id.list);
-		return lv;
-	}
+        // Set it to this so it can be used in ListActivity/ListFragment
+        lv.setId(android.R.id.list);
+        return lv;
+    }
 
-	class InternalExpandableListView extends ExpandableListView implements EmptyViewMethodAccessor {
+    class InternalExpandableListView extends ExpandableListView implements EmptyViewMethodAccessor {
 
-		public InternalExpandableListView(Context context, AttributeSet attrs) {
-			super(context, attrs);
-		}
+        public InternalExpandableListView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
 
-		public ContextMenuInfo getContextMenuInfo() {
-			return super.getContextMenuInfo();
-		}
+        public ContextMenuInfo getContextMenuInfo() {
+            return super.getContextMenuInfo();
+        }
 
-		@Override
-		public void setEmptyView(View emptyView) {
-			PullToRefreshExpandableListView.this.setEmptyView(emptyView);
-		}
+        @Override
+        public void setEmptyView(View emptyView) {
+            PullToRefreshExpandableListView.this.setEmptyView(emptyView);
+        }
 
-		@Override
-		public void setEmptyViewInternal(View emptyView) {
-			super.setEmptyView(emptyView);
-		}
-	}
+        @Override
+        public void setEmptyViewInternal(View emptyView) {
+            super.setEmptyView(emptyView);
+        }
+    }
 }

@@ -12,6 +12,8 @@ import java.util.Map;
  */
 public class BizApplication extends LFApplication {
 
+    public static final String BMAP_AK = "EAaacd071ed10ccc5653a49b9fbd2923";
+
     @Override
     public void onCreate() {
         super.onCreate();

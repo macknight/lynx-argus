@@ -5,5 +5,28 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme"></style>
 
+    <style name="overall_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
+        <item name="android:minHeight">32dp</item>
+        <item name="android:maxHeight">32dp</item>
+    </style>
+
+    <style name="taste_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">15dip</item>
+    </style>
+
+    <style name="service_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">15dip</item>
+    </style>
+
+    <style name="environment_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
+        <item name="android:minHeight">15dip</item>
+        <item name="android:maxHeight">15dip</item>
+    </style>
 
 </resources>

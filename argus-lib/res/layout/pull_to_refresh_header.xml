@@ -5,36 +5,33 @@
                 android:paddingBottom="10dip"
                 android:paddingTop="10dp">
 
-    <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:gravity="center"
-            android:orientation="vertical">
+    <LinearLayout android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_centerInParent="true"
+                  android:gravity="center"
+                  android:orientation="vertical">
 
-        <TextView
-                android:id="@+id/pull_to_refresh_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textStyle="bold"/>
+        <TextView android:id="@+id/pull_to_refresh_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:textColor="#111"
+                  android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <TextView
-                android:id="@+id/pull_to_refresh_sub_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone"/>
+        <TextView android:id="@+id/pull_to_refresh_sub_text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_gravity="center"
+                  android:textColor="#555"
+                  android:textAppearance="?android:attr/textAppearanceSmall"
+                  android:visibility="gone"/>
     </LinearLayout>
 
-    <ImageView
-            android:id="@+id/pull_to_refresh_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dip"
-            android:layout_marginRight="20dip"/>
+    <ImageView android:id="@+id/pull_to_refresh_image"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_marginLeft="30dip"
+               android:layout_marginRight="20dip"/>
 
 </RelativeLayout>

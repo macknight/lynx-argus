@@ -9,4 +9,6 @@ import com.lynx.argus.app.BasicFragment;
  */
 public class PhotoFragment extends BasicFragment {
 
+    public static final String Tag = "Photo";
+
 }

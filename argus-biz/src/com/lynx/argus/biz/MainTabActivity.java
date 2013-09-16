@@ -49,9 +49,9 @@ public class MainTabActivity extends FragmentActivity {
             public void onTabChanged(String tabId) {
                 curTab = tabId;
                 if (stacks.get(tabId).size() == 0) {
-                    if (tabId.equals("Local")) {
+                    if (tabId.equals(LocalFragment.Tag)) {
                         pushFragments(tabId, new LocalFragment(), false, true);
-                    } else if (tabId.equals("Photo")) {
+                    } else if (tabId.equals(PhotoFragment.Tag)) {
                         pushFragments(tabId, new PhotoFragment(), false, true);
                     } else if (tabId.equals("Message")) {
 
@@ -70,7 +70,7 @@ public class MainTabActivity extends FragmentActivity {
     }
 
     private void initTabs() {
-        TabHost.TabSpec spec = tabHost.newTabSpec("Local");
+        TabHost.TabSpec spec = tabHost.newTabSpec(LocalFragment.Tag);
         tabHost.setCurrentTab(-3);
         spec.setContent(new TabHost.TabContentFactory() {
             @Override
@@ -81,7 +81,7 @@ public class MainTabActivity extends FragmentActivity {
         spec.setIndicator(createTabView(R.drawable.tab_local_def));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec("Photo");
+        spec = tabHost.newTabSpec(PhotoFragment.Tag);
         spec.setContent(new TabHost.TabContentFactory() {
             @Override
             public View createTabContent(String tag) {
