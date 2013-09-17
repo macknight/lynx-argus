@@ -1,11 +1,13 @@
 package com.lynx.service.geo.entity;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: chris
  * Date: 13-9-10 下午1:54
  */
-public class GeoPoint {
+public class GeoPoint implements Serializable {
     private double lat;
     private double lng;
 

@@ -5,6 +5,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public class ShopListFragment extends BasicFragment {
         prlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
         prlvShop.getRefreshableView().setAdapter(adapter);
 
-        getLocalShop();
+//        getLocalShop();
 
         prlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             @Override
@@ -191,15 +192,23 @@ public class ShopListFragment extends BasicFragment {
                     tvLocAddr.setText("正在定位...");
                     break;
                 case 1:  // 定位成功
-                    adIndicator.stop();
-                    animRotate.cancel();
+                    if (adIndicator != null) {
+                        adIndicator.stop();
+                    }
+                    if (animRotate != null) {
+                        animRotate.cancel();
+                    }
                     ivLocIndicator.setBackgroundResource(R.drawable.green_point);
                     tvLocAddr.setText(geoService.address());
                     getLocalShop();
                     break;
                 case 2:
-                    adIndicator.stop();
-                    animRotate.cancel();
+                    if (adIndicator != null) {
+                        adIndicator.stop();
+                    }
+                    if (animRotate != null) {
+                        animRotate.cancel();
+                    }
                     ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
                     tvLocAddr.setText("定位失败");
                     break;
@@ -208,6 +217,7 @@ public class ShopListFragment extends BasicFragment {
     };
 
     private void getLocalShop() {
+        Log.d("chris", "http req");
         try {
             if (geoService == null) {
                 Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();

@@ -1,11 +1,13 @@
 package com.lynx.service.geo.entity;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhufeng.liu
  * Date: 8/27/13 5:53 PM
  */
-public class Wifi {
+public class Wifi implements Serializable {
     private String ssid;
     private String mac;
     private int dBm;

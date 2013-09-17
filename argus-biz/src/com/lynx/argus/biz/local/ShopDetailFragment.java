@@ -29,6 +29,15 @@ public class ShopDetailFragment extends BasicFragment {
     private static final String BMAP_SHOP_DETAIL = "http://api.map.baidu.com/place/v2/detail?uid=%S&ak=%s&output=json&scope=2";
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        uid = getArguments().getString("uid");
+        String url = String.format(BMAP_SHOP_DETAIL, uid, BizApplication.BMAP_AK);
+        httpService.get(url, null, httpCallback);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.layout_shop_detail, container, false);
         try {
@@ -38,10 +47,6 @@ public class ShopDetailFragment extends BasicFragment {
         }
 
         initUI(v);
-
-        uid = getArguments().getString("uid");
-        String url = String.format(BMAP_SHOP_DETAIL, uid, BizApplication.BMAP_AK);
-        httpService.get(url, null, httpCallback);
 
         return v;
     }

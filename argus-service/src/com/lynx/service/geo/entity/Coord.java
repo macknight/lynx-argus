@@ -1,11 +1,13 @@
 package com.lynx.service.geo.entity;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: zhufeng.liu
  * Date: 8/27/13 5:53 PM
  */
-public class Coord {
+public class Coord implements Serializable {
     private CoordSource source;
     private double lat;
     private double lng;

@@ -15,7 +15,7 @@ public class GeoServiceDexLoader extends DexServiceLoader {
     public static final String Tag = "geo";
 
     private List<LocationListener> listeners = null;
-    private static final int minVersion = 101;
+    private static final int minVersion = 102;
 
     public GeoServiceDexLoader(Context context) throws Exception {
         super(context, Tag, minVersion, GeoServiceImpl.class);

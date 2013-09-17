@@ -28,7 +28,7 @@ public class WifiInfoManager {
     private NetworkManager networkManager = null;
     private DhcpInfo dhcpInfo = null;
     private List<Wifi> wifis = null;
-    private boolean isEnable = false; // wifi是否打开了
+    private boolean isEnable; // wifi是否打开了
 
     private AtomicInteger loop = new AtomicInteger(0);
     private static Timer timer;
@@ -50,10 +50,6 @@ public class WifiInfoManager {
 
     public void start() {
         Log.d(Tag, "start wifi info scan");
-        if (!isEnable) {
-            wifiManager.setWifiEnabled(true);
-        }
-
         stop();
         timerTask = new TimerTask() {
             @Override
@@ -78,10 +74,6 @@ public class WifiInfoManager {
 
     public void stop() {
         Log.d(Tag, "stop wifi info scan");
-        // 还原状态
-        if (!isEnable) {
-            wifiManager.setWifiEnabled(isEnable);
-        }
         loop.set(0);
         if (timerTask != null) {
             timerTask.cancel();
