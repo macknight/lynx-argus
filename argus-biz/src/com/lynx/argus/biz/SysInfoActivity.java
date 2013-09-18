@@ -1,17 +1,9 @@
 package com.lynx.argus.biz;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import com.lynx.argus.R;
-
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.core.DexServiceLoader;
+import com.lynx.service.activity.BasicInfoActivity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,50 +13,11 @@ import java.util.Map;
  * User: chris
  * Date: 13-9-11 下午1:35
  */
-public class SysInfoActivity extends Activity {
-
-    private List<Map<String, Object>> servicesInfo = new ArrayList<Map<String, Object>>();
-    private ListView lvServiceInfo;
+public class SysInfoActivity extends BasicInfoActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_sys_info);
-        lvServiceInfo = (ListView) findViewById(R.id.lv_sys_info_service);
-
-        init();
-
-        SimpleAdapter adapter = new SimpleAdapter(this, servicesInfo,
-                R.layout.layout_sys_info_item,
-                new String[]{"icon", "name", "clazz", "version"},
-                new int[]{R.id.iv_sys_info_item_indicator, R.id.tv_sys_info_item_name,
-                        R.id.tv_sys_info_item_clazz, R.id.tv_sys_info_item_version}
-        );
-        lvServiceInfo.setAdapter(adapter);
-    }
-
-
-    private void init() {
+    protected void setDexLoaders() {
         Map<String, DexServiceLoader> loaders = BizApplication.instance().services();
-        if (loaders != null && loaders.size() > 0) {
-            for (String name : loaders.keySet()) {
-                DexServiceLoader loader = loaders.get(name);
-                Map<String, Object> serviceInfo = new HashMap<String, Object>();
-                serviceInfo.put("icon", getResId(name) + "");
-                serviceInfo.put("name", name);
-                serviceInfo.put("clazz", loader.service().getClass().getName());
-                serviceInfo.put("version", loader.curVersion() + "");
-                servicesInfo.add(serviceInfo);
-            }
-        }
-    }
-
-    private int getResId(String name) {
-        if ("GeoService".equals(name)) {
-            return com.lynx.service.R.drawable.service_item_geo;
-        } else if ("TestService".equals(name)) {
-            return com.lynx.service.R.drawable.service_item_test;
-        }
-        return -1;
+        this.loaders = loaders;
     }
 }

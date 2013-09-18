@@ -5,10 +5,4 @@
     <string name="lint_btn_main_load_apk_b">载入定位动态更新包</string>
     <string name="lint_btn_main_load_apk_c">载入动态更新包C</string>
 
-    <string name="lint_sys_info_nav_title">系统信息</string>
-    <string name="lint_sys_info_basic">系统信息</string>
-    <string name="lint_sys_info_service">Service信息</string>
-    <string name="lint_sys_info_service_name">服务名:</string>
-    <string name="lint_sys_info_service_clazz">实现类:</string>
-    <string name="lint_sys_info_service_version">版本:</string>
 </resources>

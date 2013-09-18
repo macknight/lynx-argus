@@ -13,62 +13,87 @@ public class CacheServiceImpl implements CacheService {
     private static final String Tag = "cache";
     private MemoryCache memoryCache;
     private FileCache fileCache;
+    private DBCache dbCache;
 
 
     public CacheServiceImpl(Context context) {
         try {
             memoryCache = new MemoryCache();
             fileCache = new FileCache(context);
+            dbCache = new DBCache(context);
         } catch (Exception e) {
             Log.e(Tag, "init cache service error", e);
         }
     }
 
     @Override
-    public void put(String key, Object value, CacheType cacheType) {
+    public void start() {
 
+    }
 
+    @Override
+    public void stop() {
+
+    }
+
+    @Override
+    public void put(String key, Object value, CacheType[] cacheTypes) {
+
+        for (CacheType cacheType : cacheTypes) {
+            switch (cacheType) {
+                case Memory:
+                    memoryCache.put(key, value);
+                    break;
+                case File:
+                    fileCache.put(key, value);
+                    break;
+                case DB:
+                    dbCache.put(key, value);
+                    break;
+            }
+        }
     }
 
     @Override
     public Object get(String key) {
         Object obj = memoryCache.get(key);
         if (obj == null) {
-            fileCache.getFile(key);
+            obj = fileCache.get(key);
         }
-
-        return null;
+        return obj;
     }
 
     @Override
-    public void remove(String key, CacheType cacheType) {
-         if (cacheType == CacheType.Memory) {
-
-         }
-
-        switch (cacheType) {
-            case Memory:
-                memoryCache.remove(key);
-                break;
-            case File:
-                fileCache.remove(key);
-                break;
+    public void remove(String key, CacheType[] cacheTypes) {
+        for (CacheType cacheType : cacheTypes) {
+            switch (cacheType) {
+                case Memory:
+                    memoryCache.remove(key);
+                    break;
+                case File:
+                    fileCache.remove(key);
+                    break;
+                case DB:
+                    dbCache.remove(key);
+                    break;
+            }
         }
     }
 
     @Override
-    public void clear(CacheType cacheType) {
-        switch (cacheType) {
-            case Memory:
-                memoryCache.clear();
-                break;
-            case File:
-                fileCache.clear();
-                break;
-            case BOTH:
-                memoryCache.clear();
-                fileCache.clear();
-                break;
+    public void clear(CacheType[] cacheTypes) {
+        for (CacheType cacheType : cacheTypes) {
+            switch (cacheType) {
+                case Memory:
+                    memoryCache.clear();
+                    break;
+                case File:
+                    fileCache.clear();
+                    break;
+                case DB:
+                    dbCache.clear();
+                    break;
+            }
         }
     }
 }

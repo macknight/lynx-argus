@@ -224,19 +224,38 @@ public abstract class DexServiceLoader {
     }
 
     private void saveConfig(JSONObject json) throws Exception {
-        File path = new File(dir, "config");
-        File tmp = new File(dir, "config_tmp");
+        File config = new File(dir, "config");
+        File configTmp = new File(dir, "config_tmp");
+        File configOld = new File(dir, "config_old");
         FileOutputStream fos = null;
+
+        if (configOld.exists()) {
+            configOld.delete();
+        }
+        if (config.exists()) {
+            config.renameTo(configOld);
+        }
+
         try {
             byte[] bytes = json.toString().getBytes("UTF-8");
-            fos = new FileOutputStream(tmp);
+            fos = new FileOutputStream(configTmp);
             fos.write(bytes);
             fos.close();
             fos = null;
-            if (!tmp.renameTo(path)) {
-                throw new Exception("unable to move config from " + tmp
-                        + " to " + path);
+            config.delete();
+            if (!configTmp.renameTo(config)) {
+                throw new Exception("unable to move config from " + configTmp
+                        + " to " + config);
+            } else {
+                // revert to old config file
+                if (config.exists()) {
+                    config.delete();
+                }
+                configOld.renameTo(config);
             }
+        } catch (Exception e) {
+            config.delete();
+            configOld.renameTo(config);
         } finally {
             if (fos != null) {
                 try {
@@ -244,7 +263,8 @@ public abstract class DexServiceLoader {
                 } catch (Exception e) {
                 }
             }
-            tmp.delete();
+            configTmp.delete();
+            configOld.delete();
         }
     }
 

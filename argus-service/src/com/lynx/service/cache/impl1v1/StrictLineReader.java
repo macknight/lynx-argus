@@ -1,5 +1,7 @@
 package com.lynx.service.cache.impl1v1;
 
+import com.lynx.lib.util.IOUtil;
+
 import java.io.*;
 import java.nio.charset.Charset;
 

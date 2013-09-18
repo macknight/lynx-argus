@@ -5,8 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BasicFragment;
 import com.lynx.lib.http.core.AsyncTask;
@@ -26,23 +26,26 @@ public class LocalFragment extends BasicFragment {
     public static final String Tag = "Local";
 
     private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
-
+    private List<Map<String, Object>> categories = new ArrayList<Map<String, Object>>();
+    private Spinner spinnerCategory;
     private PullToRefreshListView prlvIdx;
+    private SimpleAdapter idxAdapter;
+    private SimpleAdapter categoryAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initIdx();
+        initCategory();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_local, container, false);
+        View v = inflater.inflate(R.layout.layout_local, container, false);
 
-        prlvIdx = (PullToRefreshListView) view.findViewById(R.id.prlv_local_idx);
-
-        initIdx();
-        ListAdapter adapter = new SimpleAdapter(this.getActivity(), idxInfos,
-                R.layout.layout_local_idx_item,
-                new String[]{"icon", "title", "desc"},
-                new int[]{R.id.iv_local_idx_item_icon, R.id.tv_local_idx_item_title, R.id.tv_local_idx_item_desc}
-        );
-        prlvIdx.getRefreshableView().setAdapter(adapter);
-
+        prlvIdx = (PullToRefreshListView) v.findViewById(R.id.prlv_local_idx);
+        prlvIdx.setShowIndicator(false);
+        prlvIdx.getRefreshableView().setAdapter(idxAdapter);
         prlvIdx.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,7 +65,10 @@ public class LocalFragment extends BasicFragment {
             }
         });
 
-        return view;
+        spinnerCategory = (Spinner) v.findViewById(R.id.spinner_local_category);
+        spinnerCategory.setAdapter(categoryAdapter);
+
+        return v;
     }
 
     private void initIdx() {
@@ -127,6 +133,34 @@ public class LocalFragment extends BasicFragment {
         idxInfo.put("title", "停车场");
         idxInfo.put("desc", "asdfasd.fadsf");
         idxInfos.add(idxInfo);
+
+        idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
+                R.layout.layout_local_idx_item,
+                new String[]{"icon", "title", "desc"},
+                new int[]{R.id.iv_local_idx_item_icon, R.id.tv_local_idx_item_title,
+                        R.id.tv_local_idx_item_desc}
+        );
+    }
+
+    private void initCategory() {
+        categories.clear();
+
+        Map<String, Object> category = new HashMap<String, Object>();
+        category.put("icon", R.drawable.category_tuan + "");
+        category.put("title", "团购");
+        categories.add(category);
+
+        category = new HashMap<String, Object>();
+        category.put("icon", R.drawable.category_all + "");
+        category.put("title", "所有");
+        categories.add(category);
+
+        categoryAdapter = new SimpleAdapter(tabActivity, categories,
+                R.layout.layout_local_category_spinner_item,
+                new String[]{"icon", "title"},
+                new int[]{R.id.iv_local_spinner_category_item_icon, R.id.tv_local_spinner_category_item_name}
+        );
+        categoryAdapter.setDropDownViewResource(R.layout.layout_local_category_spinner_item);
     }
 
     private class GetDataTask extends AsyncTask<Void, Void, String[]> {
@@ -148,6 +182,4 @@ public class LocalFragment extends BasicFragment {
             super.onPostExecute(result);
         }
     }
-
-
 }

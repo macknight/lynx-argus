@@ -1,11 +1,11 @@
 package com.lynx.argus.biz.local;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,24 +53,35 @@ public class ShopListFragment extends BasicFragment {
     private String query = "美食";
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         try {
             httpService = (HttpService) BizApplication.instance().service("http");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        query = getArguments().getString("query");
+
+        adapter = new ShopListAdapter(tabActivity, shops);
+
+        animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        animRotate.setDuration(1500);
+        animRotate.setRepeatCount(-1);
+        animRotate.setRepeatMode(Animation.RESTART);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.layout_shop_list, container, false);
 
-        query = getArguments().getString("query");
 
         initLocationModule(v);
 
-        adapter = new ShopListAdapter(inflater, shops);
+
         prlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
         prlvShop.getRefreshableView().setAdapter(adapter);
-
-//        getLocalShop();
 
         prlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             @Override
@@ -104,11 +115,12 @@ public class ShopListFragment extends BasicFragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.setClass(ShopListFragment.this.getActivity(), SysInfoActivity.class);
+                intent.setClass(tabActivity, SysInfoActivity.class);
                 startActivity(intent);
             }
         });
 
+        //        getLocalShop();
 
         return v;
     }
@@ -216,40 +228,11 @@ public class ShopListFragment extends BasicFragment {
         }
     };
 
-    private void getLocalShop() {
-        Log.d("chris", "http req");
-        try {
-            if (geoService == null) {
-                Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (geoService.coord() == null) {
-                geoService.locate(false);
-                return;
-            } else {
-                double lat = geoService.coord().getLat();
-                double lng = geoService.coord().getLng();
-                String url = String.format(BMAP_PLACE, URLEncoder.encode(query, "utf-8"),
-                        lat, lng, BizApplication.BMAP_AK);
-                httpService.get(url, null, httpCallback);
-
-                prlvShop.setRefreshing();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     /**
      * 初始化定位相关模块
      */
     private void initLocationModule(View v) {
         geoService = (GeoService) BizApplication.instance().service(GeoService.class.getSimpleName());
-
-        animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        animRotate.setDuration(1500);
-        animRotate.setRepeatCount(-1);
-        animRotate.setRepeatMode(Animation.RESTART);
 
         ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
         tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
@@ -287,13 +270,35 @@ public class ShopListFragment extends BasicFragment {
         });
     }
 
+    private void getLocalShop() {
+        try {
+            if (geoService == null) {
+                Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+                return;
+            } else if (geoService.coord() == null) {
+                geoService.locate(false);
+                return;
+            } else {
+                double lat = geoService.coord().getLat();
+                double lng = geoService.coord().getLng();
+                String url = String.format(BMAP_PLACE, URLEncoder.encode(query, "utf-8"),
+                        lat, lng, BizApplication.BMAP_AK);
+                httpService.get(url, null, httpCallback);
+
+                prlvShop.setRefreshing();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private class ShopListAdapter extends BaseAdapter {
         private LayoutInflater inflater;
         private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
 
 
-        private ShopListAdapter(LayoutInflater inflater, List<Map<String, Object>> data) {
-            this.inflater = inflater;
+        private ShopListAdapter(Context context, List<Map<String, Object>> data) {
+            this.inflater = LayoutInflater.from(context);
             this.data = data;
         }
 

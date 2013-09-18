@@ -3,6 +3,7 @@ package com.lynx.argus.app;
 import android.content.Context;
 import android.widget.Toast;
 import com.lynx.lib.core.ServiceManager;
+import com.lynx.service.cache.CacheServiceDexLoader;
 import com.lynx.service.geo.GeoServiceDexLoader;
 import com.lynx.service.test.TestServiceDexLoader;
 
@@ -15,6 +16,7 @@ public class BizServiceManager extends ServiceManager {
     // 根据项目需求定制不同的service管理器
     private TestServiceDexLoader testServiceDexLoader;
     private GeoServiceDexLoader geoServiceDexLoader;
+    private CacheServiceDexLoader cacheServiceDexLoader;
 
     public BizServiceManager(Context context) {
         super(context);
@@ -33,6 +35,13 @@ public class BizServiceManager extends ServiceManager {
             addService(geoServiceDexLoader);
         } catch (Exception e) {
             Toast.makeText(context, "create GeoService Exception", Toast.LENGTH_SHORT).show();
+        }
+
+        try {
+            cacheServiceDexLoader = new CacheServiceDexLoader(context);
+            addService(cacheServiceDexLoader);
+        } catch (Exception e) {
+            Toast.makeText(context, "create CacheService Exception", Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -9,13 +9,16 @@
                android:layout_height="wrap_content"
                android:layout_gravity="center_vertical"
                android:layout_marginLeft="20dp"
+               android:layout_marginTop="8dp"
+               android:layout_marginBottom="8dp"
                android:contentDescription="@null"
                android:gravity="center_vertical"
-               android:src="@drawable/star_green"/>
+               android:src="@drawable/service_item_geo"/>
 
     <LinearLayout android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:layout_marginLeft="5dp"
+                  android:layout_gravity="center_vertical"
                   android:orientation="vertical">
         <!-- name -->
         <LinearLayout android:layout_width="match_parent"
@@ -26,7 +29,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.12"
                       android:gravity="right"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="@string/lint_sys_info_service_name"/>
 
@@ -35,7 +38,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.8"
                       android:layout_marginLeft="5dp"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="GeoService"/>
         </LinearLayout>
@@ -48,7 +51,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.12"
                       android:gravity="right"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="@string/lint_sys_info_service_clazz"/>
 
@@ -57,7 +60,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.8"
                       android:layout_marginLeft="5dp"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="com.lynx.service.geo.impl1v1.GeoServiceImpl"/>
         </LinearLayout>
@@ -70,7 +73,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.12"
                       android:gravity="right"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="@string/lint_sys_info_service_version"/>
 
@@ -79,7 +82,7 @@
                       android:layout_height="wrap_content"
                       android:layout_weight="0.8"
                       android:layout_marginLeft="5dp"
-                      android:textColor="@color/Grey"
+                      android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
                       android:text="110"/>
         </LinearLayout>

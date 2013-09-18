@@ -1,4 +1,4 @@
-package com.lynx.service.cache.impl1v1;
+package com.lynx.lib.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -12,10 +12,10 @@ import java.nio.charset.Charset;
  * Date: 13-9-17 上午11:39
  */
 public class IOUtil {
-    static final Charset US_ASCII = Charset.forName("US-ASCII");
-    static final Charset UTF_8 = Charset.forName("UTF-8");
+    public static final Charset US_ASCII = Charset.forName("US-ASCII");
+    public static final Charset UTF_8 = Charset.forName("UTF-8");
 
-    static String readFully(Reader reader) throws IOException {
+    public static String readFully(Reader reader) throws IOException {
         try {
             StringWriter writer = new StringWriter();
             char[] buffer = new char[1024];
@@ -33,7 +33,7 @@ public class IOUtil {
      * Deletes the contents of {@code dir}. Throws an IOException if any file
      * could not be deleted, or if {@code dir} is not a readable directory.
      */
-    static void deleteContents(File file) throws IOException {
+    public static void deleteFile(File file) throws IOException {
         if (file.exists()) {
             if (file.isDirectory()) {
                 File[] files = file.listFiles();
@@ -42,7 +42,7 @@ public class IOUtil {
                 }
                 for (File f : files) {
                     if (f.isDirectory()) {
-                        deleteContents(f);
+                        deleteFile(f);
                     }
                     if (!f.delete()) {
                         throw new IOException("failed to delete file: " + f);
@@ -56,7 +56,7 @@ public class IOUtil {
 
     }
 
-    static void closeQuietly(Closeable closeable) {
+    public static void closeQuietly(Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -73,10 +73,10 @@ public class IOUtil {
      * @param data
      * @return
      */
-    public static boolean saveFile(Object data) {
+    public static boolean saveFile(File file, Object data) {
         // TODO 完成对象固化
         if (data instanceof Bitmap) {
-
+            saveBitmap(file, (Bitmap) data);
         } else if (data instanceof byte[]) {
 
         }
@@ -84,15 +84,54 @@ public class IOUtil {
         return false;
     }
 
-    public static boolean saveBitmap(File file, Bitmap bitmap) {
-        if (file == null || bitmap == null)
+    public static boolean saveBitmap(File file, Bitmap data) {
+        if (file == null || data == null)
             return false;
         try {
             BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
-            return bitmap.compress(CompressFormat.JPEG, 100, out);
+            return data.compress(CompressFormat.PNG, 100, out);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    private static boolean saveByteArray(File file, byte[] data) {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        try {
+            String parent = file.getParent();
+            File dir = new File(parent);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            if (file.exists()) {
+                file.delete();
+            }
+
+            fos = new FileOutputStream(file);
+            fos.write(data);
+            fos.close();
+            fos = null;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return false;
     }
 }
