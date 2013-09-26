@@ -13,7 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
 import com.lynx.argus.R;
-import com.lynx.argus.app.BasicFragment;
+import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.biz.SysInfoActivity;
 import com.lynx.lib.http.HttpService;
@@ -35,7 +35,7 @@ import java.util.Map;
  * User: chris
  * Date: 13-9-16 上午10:29
  */
-public class ShopListFragment extends BasicFragment {
+public class ShopListFragment extends BizFragment {
     private GeoService geoService;
     private HttpService httpService;
 

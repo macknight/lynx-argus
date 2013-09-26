@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import com.lynx.argus.R;
-import com.lynx.argus.app.BasicFragment;
+import com.lynx.argus.app.BizFragment;
 import com.lynx.lib.http.core.AsyncTask;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
 
@@ -22,7 +22,7 @@ import java.util.Map;
  * User: chris
  * Date: 13-9-12 下午6:18
  */
-public class LocalFragment extends BasicFragment {
+public class LocalFragment extends BizFragment {
     public static final String Tag = "Local";
 
     private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();

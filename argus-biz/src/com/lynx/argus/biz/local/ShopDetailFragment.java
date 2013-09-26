@@ -8,7 +8,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lynx.argus.R;
-import com.lynx.argus.app.BasicFragment;
+import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -19,7 +19,7 @@ import org.json.JSONObject;
  * User: chris
  * Date: 13-9-16 下午2:00
  */
-public class ShopDetailFragment extends BasicFragment {
+public class ShopDetailFragment extends BizFragment {
     private HttpService httpService;
     private String uid;
 
