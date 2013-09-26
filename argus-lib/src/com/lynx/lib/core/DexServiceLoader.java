@@ -25,6 +25,7 @@ import java.util.jar.JarFile;
  * Date: 8/30/13 11:29 AM
  */
 public abstract class DexServiceLoader {
+    private static final String PREFIX = "service/";
     public static final String K_VERSION = "version"; // service版本
     public static final String K_URL = "url"; // service包下载地址
     public static final String K_MD5 = "md5"; // service包md5摘要
@@ -53,8 +54,8 @@ public abstract class DexServiceLoader {
         this.tag = tag;
         this.curVersion = minVersion;
         deleteOldDex();
-        dir = new File(context.getFilesDir(), tag);
-        dir.mkdir();
+        dir = new File(context.getFilesDir(), PREFIX + tag);
+        dir.mkdirs();
         try {
             JSONObject config = loadLocalConfig();
             if (config != null) {
@@ -244,14 +245,13 @@ public abstract class DexServiceLoader {
             fos = null;
             config.delete();
             if (!configTmp.renameTo(config)) {
-                throw new Exception("unable to move config from " + configTmp
-                        + " to " + config);
-            } else {
                 // revert to old config file
                 if (config.exists()) {
                     config.delete();
                 }
                 configOld.renameTo(config);
+                throw new Exception("unable to move config from " + configTmp
+                        + " to " + config);
             }
         } catch (Exception e) {
             config.delete();
