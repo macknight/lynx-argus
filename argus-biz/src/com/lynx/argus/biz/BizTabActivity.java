@@ -25,7 +25,6 @@ public class BizTabActivity extends LFTabActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // do custom init here
-
     }
 
     @Override

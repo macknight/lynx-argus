@@ -33,7 +33,7 @@
             </intent-filter>
 
             <intent-filter>
-                <action android:name="com.dianping.intent.action.LOAD_FRAGMENT"/>
+                <action android:name="com.lynx.argus.biz.intent.action.LOAD_FRAGMENT"/>
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
         </activity>
