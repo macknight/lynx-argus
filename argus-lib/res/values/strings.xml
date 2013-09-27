@@ -11,4 +11,6 @@
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/pull_to_refresh_refreshing_label</string>
 
 
+    <string name="error">页面载入失败@_@</string>
+
 </resources>
