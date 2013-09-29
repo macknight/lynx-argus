@@ -5,19 +5,11 @@ import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
-import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
-import com.lynx.lib.util.StringUtils;
+import com.lynx.lib.util.IOUtil;
 import dalvik.system.DexClassLoader;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.security.cert.Certificate;
-import java.util.Enumeration;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,15 +24,16 @@ public abstract class DexServiceLoader {
     public static final String K_CLAZZ = "clazz"; // service实现类名
 
     protected Context context;
-    private static final HttpService httpService = new DefaultHttpServiceImpl();
+    private final HttpService httpService;
     private final File dir;
     private final String tag;
-    protected Class<?> clazz;
-    protected DexService service;
-
     private String clazzName = null;
     private String md5 = null;
     private int curVersion = -1;
+
+    protected Class<?> clazz;
+    protected DexService service;
+
 
     /**
      * @param context
@@ -53,11 +46,13 @@ public abstract class DexServiceLoader {
         this.context = context;
         this.tag = tag;
         this.curVersion = minVersion;
+        this.httpService = (HttpService) ((LFApplication) context).service("http");
+
         deleteOldDex();
         dir = new File(context.getFilesDir(), PREFIX + tag);
         dir.mkdirs();
         try {
-            JSONObject config = loadLocalConfig();
+            JSONObject config = IOUtil.loadLocalConfig(dir);
             if (config != null) {
                 int version = config.getInt(K_VERSION);
                 if (version > minVersion) {
@@ -98,7 +93,7 @@ public abstract class DexServiceLoader {
             }
 
             // 版本升级
-            saveConfig(config);
+            IOUtil.saveConfig(dir, config);
             File dex = new File(dir, "" + config.getInt(K_VERSION));
             dex.mkdir();
 
@@ -201,128 +196,20 @@ public abstract class DexServiceLoader {
         clazz = (Class<DexService>) cl.loadClass(className);
     }
 
-    private JSONObject loadLocalConfig() throws Exception {
-        File path = new File(dir, "config");
-        if (path.length() == 0)
-            return null;
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(path);
-            byte[] bytes = new byte[fis.available()];
-            fis.read(bytes);
-            fis.close();
-            String str = new String(bytes, "UTF-8");
-            JSONObject json = new JSONObject(str);
-            return json;
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (Exception e) {
-                }
-            }
-        }
-    }
-
-    private void saveConfig(JSONObject json) throws Exception {
-        File config = new File(dir, "config");
-        File configTmp = new File(dir, "config_tmp");
-        File configOld = new File(dir, "config_old");
-        FileOutputStream fos = null;
-
-        if (configOld.exists()) {
-            configOld.delete();
-        }
-        if (config.exists()) {
-            config.renameTo(configOld);
-        }
-
-        try {
-            byte[] bytes = json.toString().getBytes("UTF-8");
-            fos = new FileOutputStream(configTmp);
-            fos.write(bytes);
-            fos.close();
-            fos = null;
-            config.delete();
-            if (!configTmp.renameTo(config)) {
-                // revert to old config file
-                if (config.exists()) {
-                    config.delete();
-                }
-                configOld.renameTo(config);
-                throw new Exception("unable to move config from " + configTmp
-                        + " to " + config);
-            }
-        } catch (Exception e) {
-            config.delete();
-            configOld.renameTo(config);
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (Exception e) {
-                }
-            }
-            configTmp.delete();
-            configOld.delete();
-        }
-    }
-
-    private boolean verify(File file) {
-        try {
-            JarFile jarFile = new JarFile(file);
-            Enumeration<JarEntry> entries = jarFile.entries();
-            while (entries.hasMoreElements()) {
-                JarEntry je = (JarEntry) entries.nextElement();
-                if (!je.getName().equals("classes.dex"))
-                    continue;
-
-                byte[] readBuffer = new byte[8192];
-                // We must read the stream for the JarEntry to retrieve
-                // its certificates.
-                InputStream is = jarFile.getInputStream(je);
-                while (is.read(readBuffer, 0, readBuffer.length) != -1) {
-                    // not using
-                }
-                is.close();
-
-                for (Certificate cert : je.getCertificates()) {
-                    String hash = StringUtils.byteArrayToHexString(cert
-                            .getEncoded());
-                    final int releaseHash = 0xac6fc3fe;
-                    if (hash.hashCode() == releaseHash)
-                        return true;
-                }
-            }
-        } catch (Exception e) {
-            Log.w(tag, "fail to verify " + file, e);
-        }
-        return false;
-    }
-
     private void deleteOldDex() {
         File dex = context.getDir("dex", Context.MODE_PRIVATE);
         if (dex.exists()) {
             try {
-                deleteDir(dex);
+                IOUtil.deleteFile(dex);
             } catch (Exception e) {
             }
         }
         File dexout = context.getDir("dexout", Context.MODE_PRIVATE);
         if (dexout.exists()) {
             try {
-                deleteDir(dexout);
+                IOUtil.deleteFile(dexout);
             } catch (Exception e) {
             }
         }
-    }
-
-    private void deleteDir(File dir) {
-        if (dir.isDirectory()) {
-            for (File f : dir.listFiles()) {
-                deleteDir(f);
-            }
-        }
-        dir.delete();
     }
 }

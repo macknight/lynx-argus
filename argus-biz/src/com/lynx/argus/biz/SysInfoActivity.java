@@ -19,5 +19,6 @@ public class SysInfoActivity extends BasicInfoActivity {
     protected void setDexLoaders() {
         Map<String, DexServiceLoader> loaders = BizApplication.instance().services();
         this.loaders = loaders;
+
     }
 }

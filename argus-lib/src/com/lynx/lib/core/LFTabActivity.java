@@ -1,10 +1,10 @@
 package com.lynx.lib.core;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.widget.TabHost;
 import com.lynx.lib.R;
 
@@ -17,13 +17,12 @@ import java.util.Stack;
  * Date: 9/26/13 3:08 PM
  */
 public abstract class LFTabActivity extends LFActivity {
-
     protected TabHost tabHost;
     protected Map<String, Stack<Fragment>> stacks;
     protected String curTab;
     protected int resContent = -1; // fragment根容器ID
-    private int animResPushIn = R.anim.slide_in_right, animResPushOut = R.anim.slide_out_left;
-    private int animResPopIn = R.anim.slide_in_left, animResPopOut = R.anim.slide_out_right;
+    private int animResPushIn = R.animator.slide_in_right, animResPushOut = R.animator.slide_out_left;
+    private int animResPopIn = R.animator.slide_in_left, animResPopOut = R.animator.slide_out_right;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public abstract class LFTabActivity extends LFActivity {
         if (shouldAdd) {
             stacks.get(tag).push(fragment);
         }
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         if (shouldAnimate) {
             ft.setCustomAnimations(animResPushIn, animResPushOut);
@@ -68,10 +67,11 @@ public abstract class LFTabActivity extends LFActivity {
 
         stacks.get(curTab).pop();
 
-        FragmentManager fm = getSupportFragmentManager();
+        FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setCustomAnimations(animResPopIn, animResPopOut);
         ft.replace(resContent, fragment);
+
         ft.commit();
     }
 

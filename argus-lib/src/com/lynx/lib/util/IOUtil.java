@@ -2,9 +2,15 @@ package com.lynx.lib.util;
 
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.util.Log;
+import org.json.JSONObject;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.security.cert.Certificate;
+import java.util.Enumeration;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,6 +20,74 @@ import java.nio.charset.Charset;
 public class IOUtil {
     public static final Charset US_ASCII = Charset.forName("US-ASCII");
     public static final Charset UTF_8 = Charset.forName("UTF-8");
+
+
+    public static JSONObject loadLocalConfig(File dir) throws Exception {
+        File path = new File(dir, "config");
+        if (path.length() == 0)
+            return null;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(path);
+            byte[] bytes = new byte[fis.available()];
+            fis.read(bytes);
+            fis.close();
+            String str = new String(bytes, "UTF-8");
+            JSONObject json = new JSONObject(str);
+            return json;
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+
+    public static void saveConfig(File dir, JSONObject json) throws Exception {
+        File config = new File(dir, "config");
+        File configTmp = new File(dir, "config_tmp");
+        File configOld = new File(dir, "config_old");
+        FileOutputStream fos = null;
+
+        if (configOld.exists()) {
+            configOld.delete();
+        }
+        if (config.exists()) {
+            config.renameTo(configOld);
+        }
+
+        try {
+            byte[] bytes = json.toString().getBytes("UTF-8");
+            fos = new FileOutputStream(configTmp);
+            fos.write(bytes);
+            fos.close();
+            fos = null;
+            config.delete();
+            if (!configTmp.renameTo(config)) {
+                // revert to old config file
+                if (config.exists()) {
+                    config.delete();
+                }
+                configOld.renameTo(config);
+                throw new Exception("unable to move config from " + configTmp
+                        + " to " + config);
+            }
+        } catch (Exception e) {
+            config.delete();
+            configOld.renameTo(config);
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (Exception e) {
+                }
+            }
+            configTmp.delete();
+            configOld.delete();
+        }
+    }
 
     public static String readFully(Reader reader) throws IOException {
         try {
@@ -131,6 +205,39 @@ public class IOUtil {
                     e1.printStackTrace();
                 }
             }
+        }
+        return false;
+    }
+
+
+    public static boolean verifyDexFile(File file) {
+        try {
+            JarFile jarFile = new JarFile(file);
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                JarEntry je = (JarEntry) entries.nextElement();
+                if (!je.getName().equals("classes.dex"))
+                    continue;
+
+                byte[] readBuffer = new byte[8192];
+                // We must read the stream for the JarEntry to retrieve
+                // its certificates.
+                InputStream is = jarFile.getInputStream(je);
+                while (is.read(readBuffer, 0, readBuffer.length) != -1) {
+                    // not using
+                }
+                is.close();
+
+                for (Certificate cert : je.getCertificates()) {
+                    String hash = StringUtils.byteArrayToHexString(cert
+                            .getEncoded());
+                    final int releaseHash = 0xac6fc3fe;
+                    if (hash.hashCode() == releaseHash)
+                        return true;
+                }
+            }
+        } catch (Exception e) {
+            Log.w("IOUtil", "fail to verify " + file, e);
         }
         return false;
     }

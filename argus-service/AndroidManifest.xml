@@ -3,7 +3,7 @@
           package="com.lynx.service"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="10"/>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="18"/>
 
     <!--网络-->
     <uses-permission android:name="android.permission.INTERNET"/>

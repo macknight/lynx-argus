@@ -61,7 +61,9 @@ public abstract class LFApplication extends Application {
      *
      * @return
      */
-    public abstract Map<String, DexServiceLoader> services();
+    public Map<String, DexServiceLoader> services() {
+        return serviceManager.dexServices();
+    }
 
     /**
      * 根据服务获取对应服务
@@ -69,5 +71,7 @@ public abstract class LFApplication extends Application {
      * @param name
      * @return
      */
-    public abstract Object service(String name);
+    public Object service(String name) {
+        return serviceManager.getService(name);
+    }
 }

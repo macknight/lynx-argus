@@ -1,9 +1,9 @@
 package com.lynx.argus.biz.photo;
 
+import android.app.Fragment;
+import android.content.Intent;
 import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +11,6 @@ import android.widget.Button;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.lib.core.ErrorFragment;
-import com.lynx.lib.core.LFApplication;
-import dalvik.system.DexClassLoader;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -45,14 +39,16 @@ public class PhotoFragment extends BizFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 try {
                     AssetManager asset = tabActivity.getAssets();
                     String path = "apk/" + asset.list("apk")[0];
                     String clazz = "com.lynx.argus.biz.plugin.test.DemoFragment";
-                    contextInit(path);
-                    loadFragment(clazz);
-                } catch (Exception e) {
+
+                    Intent i = new Intent("com.lynx.argus.intent.action.LOAD_FRAGMENT");
+                    i.putExtra("path", path);
+                    i.putExtra("class", clazz);
+                    startActivity(i);
+                } catch (Throwable e) {
                     e.printStackTrace();
                     Fragment fragment = new ErrorFragment();
                     tabActivity.pushFragments(Tag, fragment, true, true);
@@ -61,60 +57,6 @@ public class PhotoFragment extends BizFragment {
         });
 
         return v;
-    }
-
-    private void contextInit(String path) {
-        try {
-            InputStream ins = LFApplication.instance().getAssets()
-                    .open(path);
-            byte[] bytes = new byte[ins.available()];
-            ins.read(bytes);
-            ins.close();
-
-            File f = new File(LFApplication.instance().getFilesDir(), "ui/");
-            if (!f.exists()) {
-                f.mkdirs();
-            }
-            f = new File(f, "FL_" + Integer.toHexString(path.hashCode()) + ".apk");
-            FileOutputStream fos = new FileOutputStream(f);
-            fos.write(bytes);
-            fos.close();
-
-            File fo = new File(LFApplication.instance().getFilesDir(), "ui/dexout");
-            if (!fo.exists()) {
-                fo.mkdirs();
-            }
-
-            DexClassLoader dcl = new DexClassLoader(f.getAbsolutePath(),
-                    fo.getAbsolutePath(), null, tabActivity.getClassLoader());
-            tabActivity.setClassLoader(dcl);
-
-            AssetManager asm = null;
-            try {
-                asm = (AssetManager) AssetManager.class.newInstance();
-
-                asm.getClass().getMethod("addAssetPath", String.class)
-                        .invoke(asm, f.getAbsolutePath());
-                tabActivity.setAssetManager(asm);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
-            Resources superRes = super.getResources();
-
-            Resources res = new Resources(asm, superRes.getDisplayMetrics(),
-                    superRes.getConfiguration());
-
-            Resources.Theme thm = res.newTheme();
-            thm.setTo(tabActivity.getTheme());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void loadFragment(String clazz) throws Exception {
-        Fragment fragment = (Fragment) tabActivity.getClassLoader().loadClass(clazz).newInstance();
-        tabActivity.pushFragments(Tag, fragment, true, true);
     }
 
 }

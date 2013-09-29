@@ -3,7 +3,7 @@
           package="com.lynx.argus"
           android:versionCode="1"
           android:versionName="1.0">
-    <uses-sdk android:minSdkVersion="10"/>
+    <uses-sdk android:minSdkVersion="14" android:targetSdkVersion="18"/>
 
     <!--网络-->
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -31,13 +31,15 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-
-            <intent-filter>
-                <action android:name="com.lynx.argus.biz.intent.action.LOAD_FRAGMENT"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
         <activity android:name=".biz.SysInfoActivity"/>
+
+        <activity android:name="com.lynx.lib.core.DexUILoader">
+            <intent-filter>
+                <action android:name="com.lynx.argus.intent.action.LOAD_FRAGMENT"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>
