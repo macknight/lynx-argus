@@ -14,6 +14,7 @@ public abstract class LFApplication extends Application {
 
     protected static LFApplication instance;
     protected ServiceManager serviceManager;
+    protected UIModuleManager uiModuleManager;
 
     public static LFApplication instance() {
         if (instance == null) {
@@ -31,8 +32,12 @@ public abstract class LFApplication extends Application {
         super.onCreate();
         initServiceManager();
         serviceManager.initDexLoader();
-        serviceManager.updateServiceConfig();
+        serviceManager.updateConfig();
+
+        initUIMoudleManager();
+        uiModuleManager.updateConfig();
     }
+
 
     @Override
     public void onTerminate() {
@@ -56,6 +61,8 @@ public abstract class LFApplication extends Application {
 
     protected abstract void initServiceManager();
 
+    protected abstract void initUIMoudleManager();
+
     /**
      * 列举所有服务
      *
@@ -73,5 +80,9 @@ public abstract class LFApplication extends Application {
      */
     public Object service(String name) {
         return serviceManager.getService(name);
+    }
+
+    public DexUIModuleLoader moduleLoader(String name) {
+        return uiModuleManager.getDexUIModuleLoader(name);
     }
 }

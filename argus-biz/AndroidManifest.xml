@@ -35,7 +35,7 @@
 
         <activity android:name=".biz.SysInfoActivity"/>
 
-        <activity android:name="com.lynx.lib.core.DexUILoader">
+        <activity android:name="com.lynx.lib.core.DexUIModuleLoader">
             <intent-filter>
                 <action android:name="com.lynx.argus.intent.action.LOAD_FRAGMENT"/>
                 <category android:name="android.intent.category.DEFAULT"/>

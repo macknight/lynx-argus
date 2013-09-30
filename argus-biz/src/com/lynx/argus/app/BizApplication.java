@@ -1,6 +1,7 @@
 package com.lynx.argus.app;
 
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.UIModuleManager;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,5 +20,15 @@ public class BizApplication extends LFApplication {
     @Override
     protected void initServiceManager() {
         serviceManager = new BizServiceManager(this);
+    }
+
+    @Override
+    protected void initUIMoudleManager() {
+        uiModuleManager = new UIModuleManager(this) {
+            @Override
+            public void initDexLoader() {
+                //To change body of implemented methods use File | Settings | File Templates.
+            }
+        };
     }
 }

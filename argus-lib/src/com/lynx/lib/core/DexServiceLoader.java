@@ -50,7 +50,9 @@ public abstract class DexServiceLoader {
 
         deleteOldDex();
         dir = new File(context.getFilesDir(), PREFIX + tag);
-        dir.mkdirs();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
         try {
             JSONObject config = IOUtil.loadLocalConfig(dir);
             if (config != null) {
@@ -62,7 +64,6 @@ public abstract class DexServiceLoader {
                     loadClass(curVersion, md5, clazzName);
                 }
             }
-
         } catch (Exception e) {
             Log.e(tag, "unable to read config at " + new File(dir, "config"), e);
         }
@@ -85,7 +86,7 @@ public abstract class DexServiceLoader {
      *
      * @param config
      */
-    public void updateService(JSONObject config) {
+    public void update(JSONObject config) {
         try {
             int newVersion = config.getInt(K_VERSION);
             if (curVersion >= newVersion) {
@@ -189,7 +190,7 @@ public abstract class DexServiceLoader {
             throws Exception {
         File dexFolder = new File(dir, version + "");
         File dexFile = new File(dexFolder, md5 + ".jar");
-        File dexOut = new File(dexFolder, "dex");
+        File dexOut = new File(dir, "dex");
         dexOut.mkdir();
         DexClassLoader cl = new DexClassLoader(dexFile.getAbsolutePath(),
                 dexOut.getAbsolutePath(), null, context.getClassLoader());
