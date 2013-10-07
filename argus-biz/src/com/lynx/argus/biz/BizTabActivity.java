@@ -28,11 +28,6 @@ public class BizTabActivity extends LFTabActivity {
     }
 
     @Override
-    public void initDexContext() {
-
-    }
-
-    @Override
     protected void initUI() {
         setContentView(R.layout.layout_main_tab);
     }

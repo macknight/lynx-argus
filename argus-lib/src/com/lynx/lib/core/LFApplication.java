@@ -35,6 +35,7 @@ public abstract class LFApplication extends Application {
         serviceManager.updateConfig();
 
         initUIMoudleManager();
+        uiModuleManager.initDexLoader();
         uiModuleManager.updateConfig();
     }
 

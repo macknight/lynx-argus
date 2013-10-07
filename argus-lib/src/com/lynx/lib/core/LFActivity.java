@@ -15,11 +15,8 @@ public abstract class LFActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        initDexContext();
         super.onCreate(savedInstanceState);
     }
-
-    public abstract void initDexContext();
 
 
 }

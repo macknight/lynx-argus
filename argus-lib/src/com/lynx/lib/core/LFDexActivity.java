@@ -19,7 +19,7 @@ import java.io.File;
  * User: zhufeng.liu
  * Date: 9/30/13 10:10 AM
  */
-public abstract class LFDexActivity extends LFActivity {
+public class LFDexActivity extends LFActivity {
     protected AssetManager dexAssetManager;
     protected Resources dexResources;
     protected Resources.Theme dexTheme;

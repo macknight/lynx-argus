@@ -17,7 +17,7 @@ import java.util.Map;
  * Date: 13-9-10 下午2:39
  */
 public abstract class ServiceManager {
-    private static final String URL_SERVICE_CONFIG = "http://192.168.33.130/service_config.php";
+    private static final String URL_SERVICE_CONFIG = "/service_config.php";
     public static final String K_SERVICES = "services";
     public static final String K_SERVICE = "service"; // service名
 
@@ -40,41 +40,43 @@ public abstract class ServiceManager {
      * 更新service配置
      */
     public void updateConfig() {
-        httpService.get(URL_SERVICE_CONFIG, null, new HttpCallback<Object>() {
-            @Override
-            public void onSuccess(Object o) {
-                super.onSuccess(o);
-                try {
-                    joConfig = new JSONObject(o.toString());
-                    JSONArray ja_service = joConfig.getJSONArray(K_SERVICES);
-                    for (int i = 0; i < ja_service.length(); ++i) {
-                        JSONObject config = ja_service.getJSONObject(i);
-                        String service = config.getString(K_SERVICE);
-                        DexServiceLoader dexLoader = loaders.get(service);
-                        if (dexLoader != null) {
-                            // service 有新的动态更新
-                            dexLoader.update(config);
+        httpService.get(String.format("%s%s", Const.PRODUCT_DOMAIN, URL_SERVICE_CONFIG), null,
+                new HttpCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        super.onSuccess(o);
+                        try {
+                            joConfig = new JSONObject(o.toString());
+                            JSONArray ja_service = joConfig.getJSONArray(K_SERVICES);
+                            for (int i = 0; i < ja_service.length(); ++i) {
+                                JSONObject config = ja_service.getJSONObject(i);
+                                String service = config.getString(K_SERVICE);
+                                DexServiceLoader dexLoader = loaders.get(service);
+                                if (dexLoader != null) {
+                                    // service 有新的动态更新
+                                    dexLoader.update(config);
+                                }
+                            }
+                        } catch (Exception e) {
+                            Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                         }
                     }
-                } catch (Exception e) {
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            }
 
-            @Override
-            public void onFailure(Throwable t, String strMsg) {
-                super.onFailure(t, strMsg);
-                Toast.makeText(context, strMsg, Toast.LENGTH_LONG).show();
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable t, String strMsg) {
+                        super.onFailure(t, strMsg);
+                        Toast.makeText(context, strMsg, Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     /**
      * 获取所有动态服务
+     *
      * @return
      */
     public Map<String, DexServiceLoader> dexServices() {
-         return loaders;
+        return loaders;
     }
 
     public void addService(DexServiceLoader loader) {

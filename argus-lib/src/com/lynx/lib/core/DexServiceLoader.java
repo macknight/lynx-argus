@@ -132,6 +132,7 @@ public abstract class DexServiceLoader {
                     });
         } catch (Exception e) {
             e.printStackTrace();
+            Log.d(tag, e.getLocalizedMessage());
         }
     }
 

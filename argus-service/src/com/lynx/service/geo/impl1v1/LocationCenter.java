@@ -7,6 +7,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import com.lynx.lib.core.Const;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -30,8 +31,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class LocationCenter {
     public static final String Tag = "LocationCenter";
 
-    private static final String URL_LOCATE = "http://192.168.33.130/locate.php";
-    private static final String URL_RGC = "http://192.168.33.130/rgc.php";
+
+    private static final String URL_LOCATE = "/locate.php";
+    private static final String URL_RGC = "/rgc.php";
 
     private static final int INTERVAL_PRE = 1000; // 预处理状态check时间间隔
     private static final int INTERVAL_COUNT = 8;
@@ -203,37 +205,38 @@ public class LocationCenter {
         if (wifiInfoManager.wifis2str() != null) {
             param.put("wifi", wifiInfoManager.wifis2str());
         }
-        httpService.post(URL_LOCATE, null, new HttpCallback<Object>() {
-            @Override
-            public void onSuccess(Object o) {
-                super.onSuccess(o);
-                try {
-                    JSONObject jo = new JSONObject(o.toString());
-                    double lat = jo.getDouble("lat");
-                    double lng = jo.getDouble("lng");
-                    int acc = jo.getInt("acc");
-                    long elapse = System.nanoTime();
-                    coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, elapse);
-                    JSONObject joAddr = jo.getJSONObject("address");
-                    String province = joAddr.getString("province");
-                    String city = joAddr.getString("city");
-                    String region = joAddr.getString("region");
-                    String street = joAddr.getString("street");
-                    addr = new Address(province, city, region, street, null);
-                    geoService.onLocationChanged(LocationStatus.SUCCESS);
-                    return;
-                } catch (Exception e) {
-                     e.printStackTrace();
-                }
-                geoService.onLocationChanged(LocationStatus.FAIL);
-            }
+        httpService.post(String.format("%s%s", Const.PRODUCT_DOMAIN, URL_LOCATE), null,
+                new HttpCallback<Object>() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        super.onSuccess(o);
+                        try {
+                            JSONObject jo = new JSONObject(o.toString());
+                            double lat = jo.getDouble("lat");
+                            double lng = jo.getDouble("lng");
+                            int acc = jo.getInt("acc");
+                            long elapse = System.nanoTime();
+                            coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, elapse);
+                            JSONObject joAddr = jo.getJSONObject("address");
+                            String province = joAddr.getString("province");
+                            String city = joAddr.getString("city");
+                            String region = joAddr.getString("region");
+                            String street = joAddr.getString("street");
+                            addr = new Address(province, city, region, street, null);
+                            geoService.onLocationChanged(LocationStatus.SUCCESS);
+                            return;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        geoService.onLocationChanged(LocationStatus.FAIL);
+                    }
 
-            @Override
-            public void onFailure(Throwable t, String strMsg) {
-                super.onFailure(t, strMsg);
-                geoService.onLocationChanged(LocationStatus.FAIL);
-            }
-        });
+                    @Override
+                    public void onFailure(Throwable t, String strMsg) {
+                        super.onFailure(t, strMsg);
+                        geoService.onLocationChanged(LocationStatus.FAIL);
+                    }
+                });
     }
 
     public Context context() {

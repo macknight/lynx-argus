@@ -34,9 +34,9 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
     @Override
     public void stop() {
-       if (locationCenter != null) {
-           locationCenter.stop();
-       }
+        if (locationCenter != null) {
+            locationCenter.stop();
+        }
     }
 
     @Override
@@ -76,7 +76,11 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
     @Override
     public String address() {
-        return locationCenter.address().getStreet() + "(impl1v1)";
+        if (locationCenter.address() != null) {
+            return locationCenter.address().getStreet() + "(impl1v1)";
+        } else {
+            return null;
+        }
     }
 
     @Override

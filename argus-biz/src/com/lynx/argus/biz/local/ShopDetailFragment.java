@@ -32,6 +32,12 @@ public class ShopDetailFragment extends BizFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        try {
+            httpService = (HttpService) BizApplication.instance().service("http");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         uid = getArguments().getString("uid");
         String url = String.format(BMAP_SHOP_DETAIL, uid, BizApplication.BMAP_AK);
         httpService.get(url, null, httpCallback);
@@ -40,11 +46,6 @@ public class ShopDetailFragment extends BizFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.layout_shop_detail, container, false);
-        try {
-            httpService = (HttpService) BizApplication.instance().service("http");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         initUI(v);
 

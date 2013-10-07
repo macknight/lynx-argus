@@ -16,8 +16,9 @@ import java.io.File;
  * User: zhufeng.liu
  * Date: 9/29/13 4:12 PM
  */
-public abstract class DexUIModuleLoader {
+public class DexUIModuleLoader {
     private static final String PREFIX = "ui/";
+    public static final String K_MODULE = "module";
     public static final String K_CLAZZ = "clazz"; // 入口类名
     public static final String K_VERSION = "version"; // 版本
     public static final String K_URL = "url"; // module包下载地址
@@ -33,11 +34,15 @@ public abstract class DexUIModuleLoader {
     private String md5 = null;
     private String desc;
 
+    public DexUIModuleLoader(Context context, String tag) {
+        this(context, tag, 0);
+    }
+
     public DexUIModuleLoader(Context context, String tag, int minVersion) {
-        this.httpService = (HttpService) ((LFApplication) context).service("http");
         this.context = context;
         this.tag = tag;
         this.curVersion = minVersion;
+        this.httpService = (HttpService) ((LFApplication) context).service("http");
 
         dir = new File(context.getFilesDir(), PREFIX + tag);
         if (!dir.exists()) {
@@ -85,7 +90,7 @@ public abstract class DexUIModuleLoader {
                 return;
             }
 
-            String filePath = String.format("%s/%s.jar", dex.getAbsolutePath(), md5);
+            String filePath = String.format("%s/%s.apk", dex.getAbsolutePath(), md5);
             httpService.download(config.getString(K_URL), filePath, true,
                     new HttpCallback<File>() {
                         @Override
@@ -99,7 +104,6 @@ public abstract class DexUIModuleLoader {
                             super.onSuccess(file);
                             // TODO: md5校验
                             Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
-
                         }
 
                         @Override
@@ -114,7 +118,9 @@ public abstract class DexUIModuleLoader {
         }
     }
 
-    public abstract String name();
+    public String name() {
+        return tag;
+    }
 
     /**
      * 动态模块类名

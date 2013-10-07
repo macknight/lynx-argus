@@ -10,7 +10,7 @@ import com.lynx.lib.core.DexService;
 public interface CacheService extends DexService {
 
     /**
-     * 以指定方式将数据放入CacheService中
+     * 以指定方式将数据放入CacheService中,默认放入内存缓存
      *
      * @param key
      * @param value

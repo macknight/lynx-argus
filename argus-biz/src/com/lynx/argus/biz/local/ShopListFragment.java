@@ -101,7 +101,7 @@ public class ShopListFragment extends BizFragment {
         prlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> shop = shops.get(position);
+                Map<String, Object> shop = shops.get(position - 1);
                 ShopDetailFragment sdf = new ShopDetailFragment();
                 Bundle bundle = new Bundle();
                 bundle.putString("uid", shop.get("uid").toString());
@@ -119,8 +119,6 @@ public class ShopListFragment extends BizFragment {
                 startActivity(intent);
             }
         });
-
-        //        getLocalShop();
 
         return v;
     }
@@ -244,6 +242,11 @@ public class ShopListFragment extends BizFragment {
         if (geoService == null) {
             Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
             return;
+        }
+
+        if (geoService.address() != null) {
+            tvLocAddr.setText(geoService.address());
+            ivLocIndicator.setBackgroundResource(R.drawable.green_point);
         }
 
         ivLocRefresh.setOnClickListener(new View.OnClickListener() {
