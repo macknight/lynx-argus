@@ -1,7 +1,6 @@
 package com.lynx.lib.core;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -17,7 +16,7 @@ import java.util.Map;
  * Date: 9/30/13 10:25 AM
  */
 public abstract class UIModuleManager {
-    private static final String URL_SERVICE_CONFIG = "/ui_config.php";
+    private static final String URL_UI_CONFIG = "/ui_config.php";
     public static final String K_MODULES = "modules";
 
     protected Context context;
@@ -39,12 +38,11 @@ public abstract class UIModuleManager {
      * 更新service配置
      */
     public void updateConfig() {
-        httpService.get(String.format("%s%s", Const.PRODUCT_DOMAIN, URL_SERVICE_CONFIG), null,
+        httpService.get(String.format("%s%s", Const.PRODUCT_DOMAIN, URL_UI_CONFIG), null,
                 new HttpCallback<Object>() {
                     @Override
                     public void onSuccess(Object o) {
                         super.onSuccess(o);
-                        Log.d("chris", o.toString());
                         try {
                             joConfig = new JSONObject(o.toString());
                             JSONArray jaModule = joConfig.getJSONArray(K_MODULES);

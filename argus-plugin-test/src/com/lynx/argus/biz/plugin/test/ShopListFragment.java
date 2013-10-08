@@ -1,7 +1,7 @@
-package com.lynx.argus.biz.local;
+package com.lynx.argus.biz.plugin.test;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,12 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.*;
-import com.lynx.argus.R;
-import com.lynx.argus.app.BizApplication;
-import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.SysInfoActivity;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.lynx.lib.core.Const;
+import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
@@ -34,9 +34,9 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  * User: chris
- * Date: 13-9-16 上午10:29
+ * Date: 13-10-8 下午4:26
  */
-public class ShopListFragment extends BizFragment {
+public class ShopListFragment extends Fragment {
     private GeoService geoService;
     private HttpService httpService;
 
@@ -57,14 +57,14 @@ public class ShopListFragment extends BizFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            httpService = (HttpService) BizApplication.instance().service("http");
+            httpService = (HttpService) LFApplication.instance().service("http");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         query = getArguments().getString("query");
 
-        adapter = new ShopListAdapter(tabActivity, shops);
+        adapter = new ShopListAdapter(getActivity(), shops);
 
         animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
@@ -88,7 +88,7 @@ public class ShopListFragment extends BizFragment {
             @Override
             public void onRefresh() {
                 if (geoService == null) {
-                    Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (geoService.coord() == null) {
                     geoService.locate(false);
@@ -99,27 +99,8 @@ public class ShopListFragment extends BizFragment {
             }
         });
 
-        prlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> shop = shops.get(position - 1);
-                ShopDetailFragment sdf = new ShopDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("uid", shop.get("uid").toString());
-                sdf.setArguments(bundle);
-                tabActivity.pushFragments(LocalFragment.Tag, sdf, true, true);
-            }
-        });
 
         ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-        ivIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(tabActivity, SysInfoActivity.class);
-                startActivity(intent);
-            }
-        });
 
         return v;
     }
@@ -172,7 +153,7 @@ public class ShopListFragment extends BizFragment {
                     }
                     adapter.setData(shops);
                 } else {
-                    Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -183,7 +164,7 @@ public class ShopListFragment extends BizFragment {
         public void onFailure(Throwable t, String strMsg) {
             super.onFailure(t, strMsg);
             prlvShop.onRefreshComplete();
-            Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -231,7 +212,7 @@ public class ShopListFragment extends BizFragment {
      * 初始化定位相关模块
      */
     private void initLocationModule(View v) {
-        geoService = (GeoService) BizApplication.instance().service(GeoService.class.getSimpleName());
+        geoService = (GeoService) LFApplication.instance().service(GeoService.class.getSimpleName());
 
         ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
         tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
@@ -277,7 +258,7 @@ public class ShopListFragment extends BizFragment {
     private void getLocalShop() {
         try {
             if (geoService == null) {
-                Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
                 return;
             } else if (geoService.coord() == null) {
                 geoService.locate(false);

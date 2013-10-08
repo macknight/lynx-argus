@@ -1,7 +1,6 @@
 package com.lynx.argus.app;
 
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.UIModuleManager;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,8 +8,6 @@ import com.lynx.lib.core.UIModuleManager;
  * Date: 8/29/13 6:15 PM
  */
 public class BizApplication extends LFApplication {
-
-    public static final String BMAP_AK = "EAaacd071ed10ccc5653a49b9fbd2923";
 
     @Override
     public void onCreate() {
@@ -24,11 +21,6 @@ public class BizApplication extends LFApplication {
 
     @Override
     protected void initUIMoudleManager() {
-        uiModuleManager = new UIModuleManager(this) {
-            @Override
-            public void initDexLoader() {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-        };
+        uiModuleManager = new BizUIModuleManager(this);
     }
 }

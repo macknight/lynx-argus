@@ -37,8 +37,11 @@ public class PhotoFragment extends BizFragment {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent("com.lynx.argus.intent.action.LOAD_FRAGMENT");
-                i.putExtra("module", "photo");
+                i.putExtra("module", "test");
                 startActivity(i);
+//                tabActivity.overridePendingTransition(com.lynx.lib.R.anim.slide_in_left,
+//                        com.lynx.lib.R.anim.slide_out_right);
+
             }
         });
 

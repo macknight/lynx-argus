@@ -12,8 +12,6 @@ import android.widget.Toast;
 import com.lynx.lib.R;
 import dalvik.system.DexClassLoader;
 
-import java.io.File;
-
 /**
  * Created with IntelliJ IDEA.
  * User: zhufeng.liu
@@ -37,7 +35,6 @@ public class LFDexActivity extends LFActivity {
         try {
             if ("com.lynx.argus.intent.action.LOAD_FRAGMENT".equals(getIntent()
                     .getAction())) {
-                // we need to setup environment before super.onCreate
                 try {
                     String module = getIntent().getStringExtra("module");
 
@@ -47,20 +44,15 @@ public class LFDexActivity extends LFActivity {
                         Toast.makeText(this, "模块加载失败@_@", Toast.LENGTH_SHORT).show();
                     }
 
-                    File fo = new File(moduleLoader.moduleDir(), "dex");
-                    if (!fo.exists()) {
-                        fo.mkdirs();
-                    }
-
-                    DexClassLoader dcl = new DexClassLoader(moduleLoader.dexPath().getAbsolutePath(),
-                            fo.getAbsolutePath(), null, super.getClassLoader());
+                    DexClassLoader dcl = new DexClassLoader(moduleLoader.apkPath(),
+                            moduleLoader.dexPath(), null, super.getClassLoader());
                     dexClassLoader = dcl;
 
                     try {
                         AssetManager am = (AssetManager) AssetManager.class
                                 .newInstance();
                         am.getClass().getMethod("addAssetPath", String.class)
-                                .invoke(am, moduleLoader.dexPath().getAbsolutePath());
+                                .invoke(am, moduleLoader.apkPath());
                         dexAssetManager = am;
                     } catch (Exception e) {
                         throw new RuntimeException(e);
@@ -70,6 +62,8 @@ public class LFDexActivity extends LFActivity {
                     dexResources = new Resources(getAssets(), superRes.getDisplayMetrics(),
                             superRes.getConfiguration());
 
+                    dexTheme = dexResources.newTheme();
+                    dexTheme.setTo(super.getTheme());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -82,7 +76,6 @@ public class LFDexActivity extends LFActivity {
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT));
             rootView.setId(android.R.id.primary);
-            rootView.setBackgroundColor(android.R.color.white);
             setContentView(rootView);
 
             if (savedInstanceState != null)
@@ -130,5 +123,13 @@ public class LFDexActivity extends LFActivity {
     @Override
     public ClassLoader getClassLoader() {
         return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left,
+                R.anim.slide_out_right);
     }
 }

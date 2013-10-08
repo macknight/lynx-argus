@@ -32,15 +32,15 @@ public class IndicatorLayout extends FrameLayout
         int inAnimResId, outAnimResId;
         switch (mode) {
             case PULL_UP_TO_REFRESH:
-                inAnimResId = R.anim.slide_in_from_bottom;
-                outAnimResId = R.anim.slide_out_to_bottom;
+                inAnimResId = R.anim.slide_in_left;
+                outAnimResId = R.anim.slide_out_left;
                 setBackgroundResource(R.drawable.indicator_bg_bottom);
                 mArrowImageView.setImageResource(R.drawable.arrow_up);
                 break;
             default:
             case PULL_DOWN_TO_REFRESH:
-                inAnimResId = R.anim.slide_in_from_top;
-                outAnimResId = R.anim.slide_out_to_top;
+                inAnimResId = R.anim.slide_in_right;
+                outAnimResId = R.anim.slide_out_right;
                 setBackgroundResource(R.drawable.indicator_bg_top);
                 mArrowImageView.setImageResource(R.drawable.arrow_down);
                 break;

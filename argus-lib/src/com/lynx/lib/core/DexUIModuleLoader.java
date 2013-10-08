@@ -9,6 +9,7 @@ import com.lynx.lib.util.IOUtil;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * 动态Fragment加载器
@@ -25,10 +26,22 @@ public class DexUIModuleLoader {
     public static final String K_MD5 = "md5"; // module包md5摘要
     public static final String K_DESC = "desc"; // module描述
 
+    /**
+     * on the disk the dex ui module file dir looks like:
+     * /data/data/app.name/files/ui/test/
+     * -version/
+     * --test.jar
+     * -config
+     * -dex/
+     * --test.dex
+     */
+
     private HttpService httpService;
     private Context context;
-    private File dir;
-    private String tag;
+    private File basicPath; // /data/data/app.name/files/ui/module
+    private String dexPath; // data/data/app.name/files/ui/module/dex
+    private String apkPath; // data/data/app.name/files/ui/module/version/
+    private String moduleName;
     private String clazzName = null;
     private int curVersion = -1;
     private String md5 = null;
@@ -38,18 +51,25 @@ public class DexUIModuleLoader {
         this(context, tag, 0);
     }
 
-    public DexUIModuleLoader(Context context, String tag, int minVersion) {
+    public DexUIModuleLoader(Context context, String moduleName, int minVersion) {
         this.context = context;
-        this.tag = tag;
+        this.moduleName = moduleName;
         this.curVersion = minVersion;
         this.httpService = (HttpService) ((LFApplication) context).service("http");
 
-        dir = new File(context.getFilesDir(), PREFIX + tag);
-        if (!dir.exists()) {
-            dir.mkdirs();
+        basicPath = new File(context.getFilesDir(), PREFIX + moduleName);
+        if (!basicPath.exists()) {
+            basicPath.mkdirs();
         }
+
+        File dexDir = new File(basicPath, "dex");
+        if (!dexDir.exists()) {
+            dexDir.mkdirs();
+        }
+        dexPath = dexDir.getAbsolutePath();
+
         try {
-            JSONObject config = IOUtil.loadLocalConfig(dir);
+            JSONObject config = IOUtil.loadLocalConfig(basicPath, "config");
             if (config != null) {
                 int version = config.getInt(K_VERSION);
                 if (version > minVersion) {
@@ -57,10 +77,13 @@ public class DexUIModuleLoader {
                     clazzName = config.getString(K_CLAZZ);
                     md5 = config.getString(K_MD5);
                     desc = config.getString(K_DESC);
+                    apkPath = new File(basicPath, "" +
+                            config.getInt(K_VERSION)).getAbsolutePath() +
+                            String.format("/%s.apk", config.getString(K_MD5));
                 }
             }
         } catch (Exception e) {
-            Log.e(tag, "unable to read config at " + new File(dir, "config"), e);
+            Log.e(moduleName, "unable to read config at " + new File(basicPath, "config"), e);
         }
     }
 
@@ -76,10 +99,11 @@ public class DexUIModuleLoader {
                 return;
             }
 
+
             // 版本升级
-            IOUtil.saveConfig(dir, config);
-            File dex = new File(dir, "" + config.getInt(K_VERSION));
-            dex.mkdir();
+            IOUtil.saveConfig(basicPath, config);
+            File path = new File(basicPath, "" + config.getInt(K_VERSION));
+            path.mkdir();
 
             try {
                 clazzName = config.getString(K_CLAZZ);
@@ -90,8 +114,8 @@ public class DexUIModuleLoader {
                 return;
             }
 
-            String filePath = String.format("%s/%s.apk", dex.getAbsolutePath(), md5);
-            httpService.download(config.getString(K_URL), filePath, true,
+            apkPath = String.format("%s/%s.apk", path.getAbsolutePath(), md5);
+            httpService.download(config.getString(K_URL), apkPath, true,
                     new HttpCallback<File>() {
                         @Override
                         public void onStart() {
@@ -104,6 +128,13 @@ public class DexUIModuleLoader {
                             super.onSuccess(file);
                             // TODO: md5校验
                             Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
+
+                            // 删除老的dex文件
+                            try {
+                                deleteOldDexFile();
+                            } catch (Exception e) {
+                                Log.d("module loader", "删除老的Dex文件错误" + e.getMessage());
+                            }
                         }
 
                         @Override
@@ -114,12 +145,12 @@ public class DexUIModuleLoader {
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(tag, e.getLocalizedMessage());
+            Log.d(moduleName, e.getLocalizedMessage());
         }
     }
 
     public String name() {
-        return tag;
+        return moduleName;
     }
 
     /**
@@ -132,21 +163,26 @@ public class DexUIModuleLoader {
     }
 
     /**
-     * 动态模块包路径
-     *
-     * @return
-     */
-    public File dexPath() {
-        return dir;
-    }
-
-    /**
      * 动态模块路径
      *
      * @return
      */
-    public File moduleDir() {
-        return dir;
+    public String modulePath() {
+        return basicPath.getAbsolutePath();
+    }
+
+    /**
+     * 动态模块包路径
+     *
+     * @return
+     */
+    public String apkPath() {
+        return apkPath;
+    }
+
+
+    public String dexPath() {
+        return dexPath;
     }
 
     /**
@@ -156,5 +192,12 @@ public class DexUIModuleLoader {
      */
     public String desc() {
         return desc;
+    }
+
+    private void deleteOldDexFile() throws IOException {
+        File dexDir = new File(basicPath, "dex");
+        IOUtil.deleteFile(dexDir);
+        dexDir = new File(basicPath, "dex");
+        dexDir.mkdirs();
     }
 }

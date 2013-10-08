@@ -22,8 +22,8 @@ public class IOUtil {
     public static final Charset UTF_8 = Charset.forName("UTF-8");
 
 
-    public static JSONObject loadLocalConfig(File dir) throws Exception {
-        File path = new File(dir, "config");
+    public static JSONObject loadLocalConfig(File dir, String fileName) throws Exception {
+        File path = new File(dir, fileName);
         if (path.length() == 0)
             return null;
         FileInputStream fis = null;

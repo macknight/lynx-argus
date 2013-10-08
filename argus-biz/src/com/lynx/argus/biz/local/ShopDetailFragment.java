@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.app.BizApplication;
+import com.lynx.lib.core.Const;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import org.json.JSONObject;
@@ -39,7 +40,7 @@ public class ShopDetailFragment extends BizFragment {
         }
 
         uid = getArguments().getString("uid");
-        String url = String.format(BMAP_SHOP_DETAIL, uid, BizApplication.BMAP_AK);
+        String url = String.format(BMAP_SHOP_DETAIL, uid, Const.BMAP_API_KEY);
         httpService.get(url, null, httpCallback);
     }
 

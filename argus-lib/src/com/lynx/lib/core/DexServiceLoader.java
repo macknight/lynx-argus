@@ -23,10 +23,20 @@ public abstract class DexServiceLoader {
     public static final String K_MD5 = "md5"; // service包md5摘要
     public static final String K_CLAZZ = "clazz"; // service实现类名
 
+    /**
+     * on the disk the dex service file dir looks like:
+     * /data/data/app.name/files/service/test/
+     * -version/
+     * --test.jar
+     * -config
+     * -dex/
+     * --test.dex
+     */
+
     protected Context context;
     private final HttpService httpService;
-    private final File dir;
-    private final String tag;
+    private final File dir; // /data/data/app.name/files/service/name/version
+    private final String name;
     private String clazzName = null;
     private String md5 = null;
     private int curVersion = -1;
@@ -37,24 +47,24 @@ public abstract class DexServiceLoader {
 
     /**
      * @param context
-     * @param tag          动态服务标签
+     * @param name         动态服务标签
      * @param minVersion   最小动态服务包版本
      * @param defaultClazz 默认服务版本
      */
-    public DexServiceLoader(Context context, String tag, int minVersion, Class<?> defaultClazz)
+    public DexServiceLoader(Context context, String name, int minVersion, Class<?> defaultClazz)
             throws Exception {
         this.context = context;
-        this.tag = tag;
+        this.name = name;
         this.curVersion = minVersion;
         this.httpService = (HttpService) ((LFApplication) context).service("http");
 
-        deleteOldDex();
-        dir = new File(context.getFilesDir(), PREFIX + tag);
+
+        dir = new File(context.getFilesDir(), PREFIX + name);
         if (!dir.exists()) {
             dir.mkdirs();
         }
         try {
-            JSONObject config = IOUtil.loadLocalConfig(dir);
+            JSONObject config = IOUtil.loadLocalConfig(dir, "config");
             if (config != null) {
                 int version = config.getInt(K_VERSION);
                 if (version > minVersion) {
@@ -65,7 +75,7 @@ public abstract class DexServiceLoader {
                 }
             }
         } catch (Exception e) {
-            Log.e(tag, "unable to read config at " + new File(dir, "config"), e);
+            Log.e(name, "unable to read config at " + new File(dir, "config"), e);
         }
 
         if (clazz == null) {
@@ -132,7 +142,7 @@ public abstract class DexServiceLoader {
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(tag, e.getLocalizedMessage());
+            Log.d(name, e.getLocalizedMessage());
         }
     }
 
@@ -174,6 +184,7 @@ public abstract class DexServiceLoader {
 
     private void replaceService() {
         beforeLoad();
+        deleteOldDex();
         try {
             loadClass(curVersion, md5, clazzName);
         } catch (Exception e) {
@@ -187,6 +198,7 @@ public abstract class DexServiceLoader {
         afterLoad();
     }
 
+    @SuppressWarnings("unchecked")
     private void loadClass(int version, String md5, String className)
             throws Exception {
         File dexFolder = new File(dir, version + "");
@@ -206,7 +218,7 @@ public abstract class DexServiceLoader {
             } catch (Exception e) {
             }
         }
-        File dexout = context.getDir("dexout", Context.MODE_PRIVATE);
+        File dexout = context.getDir("dex", Context.MODE_PRIVATE);
         if (dexout.exists()) {
             try {
                 IOUtil.deleteFile(dexout);

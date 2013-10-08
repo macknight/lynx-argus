@@ -4,6 +4,7 @@ package com.lynx.lib.core;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import com.lynx.lib.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,6 +20,8 @@ public abstract class LFFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         tabActivity = (LFTabActivity) this.getActivity();
+        tabActivity.overridePendingTransition(R.anim.slide_in_right,
+                R.anim.slide_out_left);
     }
 
     public abstract boolean onBackPressed();
