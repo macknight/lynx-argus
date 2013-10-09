@@ -6,7 +6,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TabHost;
-import com.lynx.lib.R;
 
 import java.util.Map;
 import java.util.Stack;
@@ -21,8 +20,8 @@ public abstract class LFTabActivity extends LFActivity {
     protected Map<String, Stack<Fragment>> stacks;
     protected String curTab;
     protected int resContent = -1; // fragment根容器ID
-    private int animResPushIn = R.animator.slide_in_right, animResPushOut = R.animator.slide_out_left;
-    private int animResPopIn = R.animator.slide_in_left, animResPopOut = R.animator.slide_out_right;
+    private int animResPushIn = -1, animResPushOut = -1;
+    private int animResPopIn = -1, animResPopOut = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +69,7 @@ public abstract class LFTabActivity extends LFActivity {
         FragmentManager fm = getFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         ft.setCustomAnimations(animResPopIn, animResPopOut);
+
         ft.replace(resContent, fragment);
 
         ft.commit();
