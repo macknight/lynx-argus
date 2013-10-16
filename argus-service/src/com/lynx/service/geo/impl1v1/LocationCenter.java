@@ -5,9 +5,9 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.core.Const;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -79,7 +79,7 @@ public class LocationCenter {
 
     public void start() {
         stop();
-        Log.d(Tag, "start location center");
+        Logger.i(Tag, "start location center");
         coords3thPart.clear();
         timerTask = new TimerTask() {
             @Override
@@ -97,9 +97,16 @@ public class LocationCenter {
         timer.schedule(timerTask, 0, INTERVAL_PRE);
         cellInfoManager.start();
         wifiInfoManager.start();
-        // 监听数据
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-                10000, 500, locationListener);
+        // 监听系统network定位数据
+        if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
+                    10000, 500, locationListener);
+        }
+        // 监听系统network定位数据
+        if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                    10000, 500, locationListener);
+        }
 
         geoService.onLocationChanged(LocationStatus.ONGOING);
     }
@@ -108,7 +115,7 @@ public class LocationCenter {
      * 停止预处理阶段的task
      */
     private void stopPrv() {
-        Log.d(Tag, "stop location center");
+        Logger.i(Tag, "stop location center");
         status.set(0x0000);
         loop.set(0);
         if (timerTask != null) {
@@ -152,6 +159,7 @@ public class LocationCenter {
                 status.set(status.intValue() | NETWORK_LOC_FIN);
                 return;
             }
+            Logger.i(Tag, coord.toString());
             coords3thPart.add(coord);
             coord.setSource(CoordSource.GPS);
             status.set(status.intValue() | GPS_LOC_FIN);
@@ -179,18 +187,16 @@ public class LocationCenter {
      * 完成基站数据扫描
      */
     public void cellScanFin() {
-        Log.d(Tag, "cell scan fin");
+        Logger.i(Tag, "cell scan fin");
         status.set(status.intValue() | CELL_SCAN_FIN);
-        System.out.println(cellInfoManager.cells());
     }
 
     /**
      * 完成wifi数据扫描
      */
     public void wifiScanFin() {
-        Log.d(Tag, "wifi scan fin");
+        Logger.i(Tag, "wifi scan fin");
         status.set(status.intValue() | WIFI_SCAN_FIN);
-        System.out.println(wifiInfoManager.wifis());
     }
 
     /**

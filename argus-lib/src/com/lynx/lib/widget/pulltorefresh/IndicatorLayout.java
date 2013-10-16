@@ -29,27 +29,27 @@ public class IndicatorLayout extends FrameLayout
                 R.dimen.indicator_internal_padding);
         addView(mArrowImageView, lp);
 
-        int inAnimResId, outAnimResId;
         switch (mode) {
             case PULL_UP_TO_REFRESH:
-                inAnimResId = R.anim.slide_in_left;
-                outAnimResId = R.anim.slide_out_left;
+                mInAnim = new TranslateAnimation(-1.0f, 0f, 0, 0);
+                mInAnim.setDuration(1000);
+                mOutAnim = new TranslateAnimation(0f, -1.0f, 0, 0);
+                mOutAnim.setDuration(1000);
                 setBackgroundResource(R.drawable.indicator_bg_bottom);
                 mArrowImageView.setImageResource(R.drawable.arrow_up);
                 break;
             default:
             case PULL_DOWN_TO_REFRESH:
-                inAnimResId = R.anim.slide_in_right;
-                outAnimResId = R.anim.slide_out_right;
+                mInAnim = new TranslateAnimation(1.0f, 0f, 0, 0);
+                mInAnim.setDuration(1000);
+                mOutAnim = new TranslateAnimation(0f, 1.0f, 0, 0);
+                mOutAnim.setDuration(1000);
                 setBackgroundResource(R.drawable.indicator_bg_top);
                 mArrowImageView.setImageResource(R.drawable.arrow_down);
                 break;
         }
 
-        mInAnim = AnimationUtils.loadAnimation(context, inAnimResId);
         mInAnim.setAnimationListener(this);
-
-        mOutAnim = AnimationUtils.loadAnimation(context, outAnimResId);
         mOutAnim.setAnimationListener(this);
 
         final Interpolator interpolator = new LinearInterpolator();

@@ -3,7 +3,6 @@ package com.lynx.lib.widget.pulltorefresh;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import com.lynx.lib.R;
+import com.lynx.lib.core.Logger;
 
 public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends PullToRefreshBase<T>
         implements OnScrollListener {
@@ -65,7 +65,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
                                final int totalItemCount) {
 
         if (DEBUG) {
-            Log.d(LOG_TAG, "First Visible: " + firstVisibleItem + ". Visible Count: " + visibleItemCount
+            Logger.w(LOG_TAG, "First Visible: " + firstVisibleItem + ". Visible Count: " + visibleItemCount
                     + ". Total Items: " + totalItemCount);
         }
 
@@ -338,7 +338,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
         final int lastVisiblePosition = mRefreshableView.getLastVisiblePosition();
 
         if (DEBUG) {
-            Log.d(LOG_TAG, "isLastItemVisible. Count: " + count + " Last Visible Pos: " + lastVisiblePosition);
+            Logger.w(LOG_TAG, "isLastItemVisible. Count: " + count + " Last Visible Pos: " + lastVisiblePosition);
         }
 
         if (count <= getNumberInternalViews()) {

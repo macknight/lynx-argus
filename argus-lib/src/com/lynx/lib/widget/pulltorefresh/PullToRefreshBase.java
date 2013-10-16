@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -16,6 +15,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 import com.lynx.lib.R;
+import com.lynx.lib.core.Logger;
 
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 
@@ -410,7 +410,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
     public final void setMode(Mode mode) {
         if (mode != mMode) {
             if (DEBUG) {
-                Log.d(LOG_TAG, "Setting mode to: " + mode);
+                Logger.w(LOG_TAG, "Setting mode to: " + mode);
             }
             mMode = mode;
             updateUIForMode();

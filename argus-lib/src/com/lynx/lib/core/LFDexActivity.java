@@ -25,9 +25,12 @@ public class LFDexActivity extends LFActivity {
 
     private DexUIModuleLoader moduleLoader;
 
+    private Resources.Theme defTheme; // 系统原有主题
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        defTheme = this.getTheme();
+
         loadModule(savedInstanceState);
     }
 
@@ -41,7 +44,7 @@ public class LFDexActivity extends LFActivity {
                     moduleLoader = LFApplication.instance().moduleLoader(module);
 
                     if (moduleLoader == null) {
-                        Toast.makeText(this, "模块加载失败@_@", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
                     }
 
                     DexClassLoader dcl = new DexClassLoader(moduleLoader.apkPath(),
@@ -100,6 +103,7 @@ public class LFDexActivity extends LFActivity {
             dexAssetManager = super.getAssets();
             dexResources = super.getResources();
             dexClassLoader = super.getClassLoader();
+            dexTheme = defTheme;
             super.onCreate(savedInstanceState);
             setContentView(R.layout.layout_error);
         }
@@ -123,13 +127,5 @@ public class LFDexActivity extends LFActivity {
     @Override
     public ClassLoader getClassLoader() {
         return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.slide_in_left,
-                R.anim.slide_out_right);
     }
 }

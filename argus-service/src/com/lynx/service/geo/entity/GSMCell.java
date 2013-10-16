@@ -62,7 +62,7 @@ public class GSMCell implements Cell {
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s,%s,%s", mcc, mnc, lac, cid, asu);
+        return String.format("%s,%s,%s,%s,%s", mcc, mnc, lac, cid, asu);
     }
 
     @Override

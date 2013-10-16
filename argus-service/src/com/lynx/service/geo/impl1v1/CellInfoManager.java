@@ -5,7 +5,7 @@ import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
+import com.lynx.lib.core.Logger;
 import com.lynx.service.geo.entity.CDMACell;
 import com.lynx.service.geo.entity.Cell;
 import com.lynx.service.geo.entity.GSMCell;
@@ -46,7 +46,7 @@ public class CellInfoManager {
     }
 
     public void start() {
-        Log.d(Tag, "start cell info scan");
+        Logger.i(Tag, "start cell info scan");
         stop();
         timerTask = new TimerTask() {
             @Override
@@ -69,7 +69,7 @@ public class CellInfoManager {
     }
 
     public void stop() {
-        Log.d(Tag, "stop cell info scan");
+        Logger.i(Tag, "stop cell info scan");
         // 还原状态
         loop.set(0);
         if (timerTask != null) {

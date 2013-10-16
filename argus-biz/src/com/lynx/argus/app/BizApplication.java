@@ -1,6 +1,7 @@
 package com.lynx.argus.app;
 
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +13,8 @@ public class BizApplication extends LFApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Logger.setLevel(Logger.AppLevel.PRODUCT);
     }
 
     @Override

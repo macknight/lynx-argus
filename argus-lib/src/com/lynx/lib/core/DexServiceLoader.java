@@ -35,7 +35,7 @@ public abstract class DexServiceLoader {
 
     protected Context context;
     private final HttpService httpService;
-    private final File dir; // /data/data/app.name/files/service/name/version
+    private final File dir;
     private final String name;
     private String clazzName = null;
     private String md5 = null;
@@ -75,7 +75,7 @@ public abstract class DexServiceLoader {
                 }
             }
         } catch (Exception e) {
-            Log.e(name, "unable to read config at " + new File(dir, "config"), e);
+            Logger.e(name, "unable to read config at " + new File(dir, "config"), e);
         }
 
         if (clazz == null) {
@@ -142,7 +142,7 @@ public abstract class DexServiceLoader {
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(name, e.getLocalizedMessage());
+            Logger.w(name, e.getLocalizedMessage());
         }
     }
 

@@ -1,7 +1,6 @@
 package com.lynx.lib.core;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -83,7 +82,7 @@ public class DexUIModuleLoader {
                 }
             }
         } catch (Exception e) {
-            Log.e(moduleName, "unable to read config at " + new File(basicPath, "config"), e);
+            Logger.e(moduleName, "unable to read config at " + new File(basicPath, "config"), e);
         }
     }
 
@@ -133,7 +132,7 @@ public class DexUIModuleLoader {
                             try {
                                 deleteOldDexFile();
                             } catch (Exception e) {
-                                Log.d("module loader", "删除老的Dex文件错误" + e.getMessage());
+                                Logger.w("module loader", "删除老的Dex文件错误" + e.getMessage());
                             }
                         }
 
@@ -145,7 +144,7 @@ public class DexUIModuleLoader {
                     });
         } catch (Exception e) {
             e.printStackTrace();
-            Log.d(moduleName, e.getLocalizedMessage());
+            Logger.w(moduleName, e.getLocalizedMessage());
         }
     }
 

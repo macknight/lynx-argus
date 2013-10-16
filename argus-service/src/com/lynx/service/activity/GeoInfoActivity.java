@@ -1,4 +1,4 @@
-package com.lynx.argus.biz;
+package com.lynx.service.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,7 +13,5 @@ public class GeoInfoActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
-import android.util.Log;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.NetworkManager;
 import com.lynx.lib.http.NetworkManager.NetworkState;
 import com.lynx.service.geo.entity.Wifi;
@@ -49,7 +49,7 @@ public class WifiInfoManager {
 
 
     public void start() {
-        Log.d(Tag, "start wifi info scan");
+        Logger.i(Tag, "start wifi info scan");
         stop();
         timerTask = new TimerTask() {
             @Override
@@ -73,7 +73,7 @@ public class WifiInfoManager {
     }
 
     public void stop() {
-        Log.d(Tag, "stop wifi info scan");
+        Logger.i(Tag, "stop wifi info scan");
         loop.set(0);
         if (timerTask != null) {
             timerTask.cancel();

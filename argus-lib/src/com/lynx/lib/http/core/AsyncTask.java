@@ -1,23 +1,13 @@
 package com.lynx.lib.http.core;
 
-import java.util.ArrayDeque;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CancellationException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import android.os.Handler;
 import android.os.Message;
+import com.lynx.lib.core.Logger;
+
+import java.util.ArrayDeque;
+import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 
@@ -158,7 +148,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 				try {
 					postResultIfNotInvoked(get());
 				} catch (InterruptedException e) {
-					android.util.Log.w(LOG_TAG, e);
+					Logger.w(LOG_TAG, e);
 				} catch (ExecutionException e) {
 					throw new RuntimeException(
 							"An error occured while executing doInBackground()",
