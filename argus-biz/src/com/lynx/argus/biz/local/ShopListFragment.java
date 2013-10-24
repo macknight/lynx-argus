@@ -20,8 +20,8 @@ import com.lynx.lib.core.Const;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import com.lynx.service.geo.GeoService;
-import com.lynx.service.geo.LocationListener;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

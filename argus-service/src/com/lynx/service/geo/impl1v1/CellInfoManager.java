@@ -6,9 +6,9 @@ import android.telephony.NeighboringCellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import com.lynx.lib.core.Logger;
-import com.lynx.service.geo.entity.CDMACell;
-import com.lynx.service.geo.entity.Cell;
-import com.lynx.service.geo.entity.GSMCell;
+import com.lynx.lib.geo.entity.CDMACell;
+import com.lynx.lib.geo.entity.Cell;
+import com.lynx.lib.geo.entity.GSMCell;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;

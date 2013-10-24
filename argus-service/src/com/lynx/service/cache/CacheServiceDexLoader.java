@@ -1,6 +1,7 @@
 package com.lynx.service.cache;
 
 import android.content.Context;
+import com.lynx.lib.cache.CacheService;
 import com.lynx.lib.core.DexService;
 import com.lynx.lib.core.DexServiceLoader;
 import com.lynx.service.cache.impl1v1.CacheServiceImpl;

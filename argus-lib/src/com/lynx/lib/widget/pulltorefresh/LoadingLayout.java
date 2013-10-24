@@ -2,25 +2,23 @@ package com.lynx.lib.widget.pulltorefresh;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.content.res.TypedArray;
 import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import com.lynx.lib.R;
 
-public class LoadingLayout extends FrameLayout {
+public class LoadingLayout extends RelativeLayout {
 
     static final int DEFAULT_ROTATION_ANIMATION_DURATION = 600;
 
@@ -38,20 +36,47 @@ public class LoadingLayout extends FrameLayout {
 
     private final Animation mRotateAnimation;
 
-    public LoadingLayout(Context context, final PullToRefreshBase.Mode mode, TypedArray attrs) {
+    public LoadingLayout(Context context, final PullToRefreshBase.Mode mode) {
         super(context);
-        ViewGroup header = (ViewGroup) LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_header, this);
-        mHeaderText = (TextView) header.findViewById(R.id.pull_to_refresh_text);
-        mSubHeaderText = (TextView) header.findViewById(R.id.pull_to_refresh_sub_text);
-        mHeaderImage = (ImageView) header.findViewById(R.id.pull_to_refresh_image);
+
+        setPadding(0, 25, 0, 25);
+
+        mHeaderText = new TextView(context);
+        mHeaderText.setGravity(Gravity.CENTER);
+
+        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mHeaderText.setLayoutParams(params);
+        mHeaderText.setTextColor(0xFF000000);
+        mHeaderText.setTextSize(16);
+
+        addView(mHeaderText);
+
+        mSubHeaderText = new TextView(context);
+        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_IN_PARENT);
+        mSubHeaderText.setLayoutParams(params);
+        mSubHeaderText.setTextColor(0xFF000000);
+        mSubHeaderText.setTextSize(16);
+        addView(mSubHeaderText);
+
+        mHeaderImage = new ImageView(context);
+        params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.addRule(RelativeLayout.CENTER_VERTICAL);
+        params.setMargins(70, 0, 0, 0);
+        mHeaderImage.setLayoutParams(params);
+        addView(mHeaderImage);
 
         mHeaderImage.setScaleType(ScaleType.MATRIX);
         mHeaderImageMatrix = new Matrix();
         mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 
         final Interpolator interpolator = new LinearInterpolator();
-        mRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-                0.5f);
+        mRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
         mRotateAnimation.setInterpolator(interpolator);
         mRotateAnimation.setDuration(DEFAULT_ROTATION_ANIMATION_DURATION);
         mRotateAnimation.setRepeatCount(Animation.INFINITE);
@@ -60,48 +85,19 @@ public class LoadingLayout extends FrameLayout {
         switch (mode) {
             case PULL_UP_TO_REFRESH:
                 // Load in labels
-                mPullLabel = context.getString(R.string.pull_to_refresh_from_bottom_pull_label);
-                mRefreshingLabel = context.getString(R.string.pull_to_refresh_from_bottom_refreshing_label);
-                mReleaseLabel = context.getString(R.string.pull_to_refresh_from_bottom_release_label);
+                mPullLabel = "上滑并释放以刷新…";
+                mRefreshingLabel = "载入中…";
+                mReleaseLabel = "释放以刷新…";
                 break;
 
             case PULL_DOWN_TO_REFRESH:
             default:
                 // Load in labels
-                mPullLabel = context.getString(R.string.pull_to_refresh_pull_label);
-                mRefreshingLabel = context.getString(R.string.pull_to_refresh_refreshing_label);
-                mReleaseLabel = context.getString(R.string.pull_to_refresh_release_label);
+                mPullLabel = "下拉并释放以刷新…";
+                mRefreshingLabel = "载入中…";
+                mReleaseLabel = "释放以刷新…";
                 break;
         }
-
-        if (attrs.hasValue(R.styleable.PullToRefresh_ptrHeaderTextColor)) {
-            ColorStateList colors = attrs.getColorStateList(R.styleable.PullToRefresh_ptrHeaderTextColor);
-            setTextColor(null != colors ? colors : ColorStateList.valueOf(0xFF000000));
-        }
-        if (attrs.hasValue(R.styleable.PullToRefresh_ptrHeaderSubTextColor)) {
-            ColorStateList colors = attrs.getColorStateList(R.styleable.PullToRefresh_ptrHeaderSubTextColor);
-            setSubTextColor(null != colors ? colors : ColorStateList.valueOf(0xFF000000));
-        }
-        if (attrs.hasValue(R.styleable.PullToRefresh_ptrHeaderBackground)) {
-            Drawable background = attrs.getDrawable(R.styleable.PullToRefresh_ptrHeaderBackground);
-            if (null != background) {
-                setBackground(background);
-            }
-        }
-
-        // Try and get defined drawable from Attrs
-        Drawable imageDrawable = null;
-        if (attrs.hasValue(R.styleable.PullToRefresh_ptrDrawable)) {
-            imageDrawable = attrs.getDrawable(R.styleable.PullToRefresh_ptrDrawable);
-        }
-
-        // If we don't have a user defined drawable, load the default
-        if (null == imageDrawable) {
-            imageDrawable = context.getResources().getDrawable(R.drawable.default_ptr_drawable);
-        }
-
-        // Set Drawable, and save width/height
-        setLoadingDrawable(imageDrawable);
 
         reset();
     }

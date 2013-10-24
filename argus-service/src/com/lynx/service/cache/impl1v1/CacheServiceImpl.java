@@ -2,7 +2,7 @@ package com.lynx.service.cache.impl1v1;
 
 import android.content.Context;
 import android.util.Log;
-import com.lynx.service.cache.CacheService;
+import com.lynx.lib.cache.CacheService;
 
 /**
  * Created with IntelliJ IDEA.

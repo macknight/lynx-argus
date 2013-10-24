@@ -1,6 +1,6 @@
 package com.lynx.service.geo.impl1v1;
 
-import com.lynx.service.geo.entity.Coord;
+import com.lynx.lib.geo.entity.Coord;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;

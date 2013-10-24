@@ -1,7 +1,9 @@
 package com.lynx.lib.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 import org.json.JSONObject;
 
@@ -240,5 +242,16 @@ public class IOUtil {
             Log.w("IOUtil", "fail to verify " + file, e);
         }
         return false;
+    }
+
+    public static Bitmap getBitmapFromAssert(Context context, String filename) {
+        try {
+            InputStream instream = context.getAssets().open(filename);
+            return BitmapFactory.decodeStream(instream);
+        } catch (Exception e) {
+
+        }
+
+        return null;
     }
 }

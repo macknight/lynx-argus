@@ -1,7 +1,6 @@
 package com.lynx.lib.widget.pulltorefresh;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +13,6 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
-import com.lynx.lib.R;
 import com.lynx.lib.core.Logger;
 
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
@@ -328,8 +326,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
      * By default the Widget disabled scrolling on the Refreshable View while
      * refreshing. This method can change this behaviour.
      *
-     * @param disableScrollingWhileRefreshing
-     *         - true if you want to disable scrolling while refreshing
+     * @param disableScrollingWhileRefreshing - true if you want to disable scrolling while refreshing
      */
     public final void setDisableScrollingWhileRefreshing(boolean disableScrollingWhileRefreshing) {
         mDisableScrollingWhileRefreshing = disableScrollingWhileRefreshing;
@@ -439,7 +436,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
      * Set Text to show when the Widget is being Pulled
      * <code>setPullLabel(releaseLabel, Mode.BOTH)</code>
      *
-     * @param releaseLabel - String to display
+     * @param pullLabel - String to display
      */
     public void setPullLabel(String pullLabel) {
         setPullLabel(pullLabel, Mode.BOTH);
@@ -492,7 +489,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
      * Set Text to show when the Widget is refreshing
      * <code>setRefreshingLabel(releaseLabel, Mode.BOTH)</code>
      *
-     * @param releaseLabel - String to display
+     * @param refreshingLabel - String to display
      */
     public void setRefreshingLabel(String refreshingLabel) {
         setRefreshingLabel(refreshingLabel, Mode.BOTH);
@@ -591,20 +588,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
     }
 
     /**
-     * Allows Derivative classes to handle the XML Attrs without creating a
-     * TypedArray themsevles
-     *
-     * @param a - TypedArray of PullToRefresh Attributes
-     */
-    protected void handleStyledAttributes(TypedArray a) {
-    }
-
-    /**
      * Implemented by derived class to return whether the View is in a mState
      * where the user can Pull to Refresh by scrolling down.
      *
      * @return true if the View is currently the correct mState (for example,
-     *         top of a ListView)
+     * top of a ListView)
      */
     protected abstract boolean isReadyForPullDown();
 
@@ -613,7 +601,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
      * where the user can Pull to Refresh by scrolling up.
      *
      * @return true if the View is currently in the correct mState (for example,
-     *         bottom of a ListView)
+     * bottom of a ListView)
      */
     protected abstract boolean isReadyForPullUp();
 
@@ -772,13 +760,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
         ViewConfiguration config = ViewConfiguration.get(context);
         mTouchSlop = config.getScaledTouchSlop();
 
-        // Styleables from XML
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PullToRefresh);
-        handleStyledAttributes(a);
 
-        if (a.hasValue(R.styleable.PullToRefresh_ptrMode)) {
-            mMode = Mode.mapIntToMode(a.getInteger(R.styleable.PullToRefresh_ptrMode, 0));
-        }
+        mMode = Mode.BOTH;
 
         // Refreshable View
         // By passing the attrs, we can add ListView/GridView params via XML
@@ -786,27 +769,11 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
         addRefreshableView(context, mRefreshableView);
 
         // We need to create now layouts now
-        mHeaderLayout = new LoadingLayout(context, Mode.PULL_DOWN_TO_REFRESH, a);
-        mFooterLayout = new LoadingLayout(context, Mode.PULL_UP_TO_REFRESH, a);
+        mHeaderLayout = new LoadingLayout(context, Mode.PULL_DOWN_TO_REFRESH);
+        mFooterLayout = new LoadingLayout(context, Mode.PULL_UP_TO_REFRESH);
 
         // Add Header/Footer Views
         updateUIForMode();
-
-        // Styleables from XML
-        if (a.hasValue(R.styleable.PullToRefresh_ptrHeaderBackground)) {
-            Drawable background = a.getDrawable(R.styleable.PullToRefresh_ptrHeaderBackground);
-            if (null != background) {
-                setBackground(background);
-            }
-        }
-        if (a.hasValue(R.styleable.PullToRefresh_ptrAdapterViewBackground)) {
-            Drawable background = a.getDrawable(R.styleable.PullToRefresh_ptrAdapterViewBackground);
-            if (null != background) {
-                mRefreshableView.setBackground(background);
-            }
-        }
-        a.recycle();
-        a = null;
     }
 
     private boolean isReadyForPull() {
@@ -843,7 +810,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
      * Actions a Pull Event
      *
      * @return true if the Event has been handled, false if there has been no
-     *         change
+     * change
      */
     private boolean pullEvent() {
 
@@ -942,7 +909,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
          *
          * @param modeInt - int to map a Mode to
          * @return Mode that modeInt maps to, or PULL_DOWN_TO_REFRESH by
-         *         default.
+         * default.
          */
         public static Mode mapIntToMode(int modeInt) {
             switch (modeInt) {

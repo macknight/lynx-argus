@@ -2,6 +2,8 @@ package com.lynx.service.geo;
 
 import android.content.Context;
 import com.lynx.lib.core.DexServiceLoader;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
 import com.lynx.service.geo.impl1v1.GeoServiceImpl;
 
 import java.util.List;

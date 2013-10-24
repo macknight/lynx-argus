@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import com.lynx.lib.R;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -105,7 +104,12 @@ public class LFDexActivity extends LFActivity {
             dexClassLoader = super.getClassLoader();
             dexTheme = defTheme;
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.layout_error);
+
+            Fragment f = new UILoadErrorFragment();
+            FragmentManager fm = getFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(android.R.id.primary, f);
+            ft.commit();
         }
     }
 

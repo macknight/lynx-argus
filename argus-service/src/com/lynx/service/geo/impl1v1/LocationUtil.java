@@ -1,7 +1,7 @@
 package com.lynx.service.geo.impl1v1;
 
 
-import com.lynx.service.geo.entity.Coord;
+import com.lynx.lib.geo.entity.Coord;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

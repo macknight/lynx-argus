@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.util.FloatMath;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
-import com.lynx.lib.R;
 
 public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
 
@@ -58,8 +57,6 @@ public class PullToRefreshWebView extends PullToRefreshBase<WebView> {
     @Override
     protected WebView createRefreshableView(Context context, AttributeSet attrs) {
         WebView webView = new WebView(context, attrs);
-
-        webView.setId(R.id.webview);
         return webView;
     }
 

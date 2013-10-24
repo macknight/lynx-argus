@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="argus" default="argus-lib-package">
+
+    <import file="local.properties"/>
+
+    <property name="argus-biz" value="${basedir}/argus-biz"/>
+    <property name="argus-service" value="${basedir}/argus-service"/>
+    <property name="argus-lib" value="${basedir}/argus-lib"/>
+
+
+    <import file="${argus-lib}/build.xml"/>
+    <antcall target="argus-lib-package"/>
+
+    <import file="${argus-service}/build.xml"/>
+    <antcall target="argus-service-package"/>
+
+    <import file="${argus-biz}/build.xml"/>
+    <antcall target="argus-biz-package"/>
+</project>

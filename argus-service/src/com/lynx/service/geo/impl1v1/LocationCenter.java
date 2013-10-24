@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.widget.Toast;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.Logger;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.GeoService.LocationStatus;
+import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.Cell;
+import com.lynx.lib.geo.entity.Coord;
+import com.lynx.lib.geo.entity.Coord.CoordSource;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.http.handler.HttpCallback;
-import com.lynx.service.geo.GeoService.LocationStatus;
-import com.lynx.service.geo.entity.Address;
-import com.lynx.service.geo.entity.Cell;
-import com.lynx.service.geo.entity.Coord;
-import com.lynx.service.geo.entity.Coord.CoordSource;
 import org.json.JSONObject;
 
 import java.lang.reflect.Method;
@@ -108,7 +109,7 @@ public class LocationCenter {
                     10000, 500, locationListener);
         }
 
-        geoService.onLocationChanged(LocationStatus.ONGOING);
+        geoService.onLocationChanged(GeoService.LocationStatus.ONGOING);
     }
 
     /**

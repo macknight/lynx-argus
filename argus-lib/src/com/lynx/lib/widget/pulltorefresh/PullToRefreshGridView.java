@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.GridView;
-import com.lynx.lib.R;
 
 public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView> {
 
@@ -29,9 +28,6 @@ public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView
 	@Override
 	protected final GridView createRefreshableView(Context context, AttributeSet attrs) {
 		GridView gv = new InternalGridView(context, attrs);
-
-		// Use Generated ID (from res/values/ids.xml)
-		gv.setId(R.id.gridview);
 		return gv;
 	}
 

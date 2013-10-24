@@ -1,5 +1,6 @@
 package com.lynx.argus.biz.plugin.test;
 
+import android.app.Application;
 import android.app.Fragment;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -15,8 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.http.HttpService;
-import com.lynx.service.geo.GeoService;
-import com.lynx.service.geo.LocationListener;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,7 +115,8 @@ public class DemoFragment extends Fragment {
      */
     private void initLocationModule(View v) {
         try {
-            LFApplication application = (LFApplication) getActivity().getApplication();
+            Application app = getActivity().getApplication();
+            LFApplication application = (LFApplication) app;
             geoService = (GeoService) application.service(GeoService.class.getSimpleName());
         } catch (Throwable t) {
             t.printStackTrace();

@@ -1,8 +1,8 @@
 package com.lynx.service.geo.impl1v1;
 
 import com.lynx.lib.util.StringUtils;
-import com.lynx.service.geo.entity.Address;
-import com.lynx.service.geo.entity.GeoPoint;
+import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.GeoPoint;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;

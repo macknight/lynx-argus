@@ -1,10 +1,10 @@
 package com.lynx.service.geo.impl1v1;
 
 import android.content.Context;
-import com.lynx.service.geo.GeoService;
-import com.lynx.service.geo.LocationListener;
-import com.lynx.service.geo.entity.Coord;
-import com.lynx.service.geo.entity.Coord.CoordType;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
+import com.lynx.lib.geo.entity.Coord;
+import com.lynx.lib.geo.entity.Coord.CoordType;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.lynx.argus.biz.local;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,7 +45,8 @@ public class LocalFragment extends BizFragment {
         View v = inflater.inflate(R.layout.layout_local, container, false);
 
         prlvIdx = (PullToRefreshListView) v.findViewById(R.id.prlv_local_idx);
-        prlvIdx.setShowIndicator(false);
+        Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
+        prlvIdx.setLoadingDrawable(drawable);
         prlvIdx.getRefreshableView().setAdapter(idxAdapter);
         prlvIdx.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
             @Override

@@ -5,9 +5,9 @@ import android.net.DhcpInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import com.lynx.lib.core.Logger;
+import com.lynx.lib.geo.entity.Wifi;
 import com.lynx.lib.http.NetworkManager;
 import com.lynx.lib.http.NetworkManager.NetworkState;
-import com.lynx.service.geo.entity.Wifi;
 
 import java.util.ArrayList;
 import java.util.List;
