@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,7 +33,8 @@ public class UILoadErrorFragment extends Fragment {
         Context context = inflater.getContext();
         AssetManager am = context.getAssets();
 
-        container.setBackgroundColor(0xFFFFFFFF);
+        ViewGroup view = new LinearLayout(context);
+
         ImageView iv = new ImageView(context);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -44,7 +46,7 @@ public class UILoadErrorFragment extends Fragment {
         } catch (Exception e) {
             Logger.e(Tag, "load icon error", e);
         }
-        container.addView(iv);
+        view.addView(iv);
 
         TextView tv = new TextView(context);
         params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
@@ -54,9 +56,9 @@ public class UILoadErrorFragment extends Fragment {
         tv.setPadding(0, 100, 0, 0);
         tv.setTextSize(16);
         tv.setText("页面载入失败@_@");
-        container.addView(tv);
+        view.addView(tv);
 
-        return container;
+        return view;
     }
 
     @Override

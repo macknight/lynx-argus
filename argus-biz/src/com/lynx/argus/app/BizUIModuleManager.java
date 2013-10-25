@@ -17,6 +17,6 @@ public class BizUIModuleManager extends UIModuleManager {
 
     @Override
     public void initDexLoader() {
-        addUIModule(new DexUIModuleLoader(context, "test"));
+        addUIModule(new DexUIModuleLoader(context, "local"));
     }
 }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
+import com.lynx.lib.core.LFDexActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -36,10 +37,9 @@ public class PhotoFragment extends BizFragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent("com.lynx.argus.intent.action.LOAD_FRAGMENT");
-                i.putExtra("module", "test");
+                Intent i = new Intent(getActivity(), LFDexActivity.class);
+                i.putExtra("module", "local");
                 startActivity(i);
-
             }
         });
 

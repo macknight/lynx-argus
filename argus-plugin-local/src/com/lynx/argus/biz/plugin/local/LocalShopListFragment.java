@@ -1,7 +1,7 @@
-package com.lynx.argus.biz.local;
+package com.lynx.argus.biz.plugin.local;
 
+import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -13,16 +13,13 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
-import com.lynx.argus.R;
-import com.lynx.argus.app.BizApplication;
-import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.SysInfoActivity;
 import com.lynx.lib.core.Const;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import com.lynx.lib.geo.GeoService;
-import com.lynx.lib.geo.LocationListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -32,12 +29,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-16 上午10:29
- */
-public class ShopListFragment extends BizFragment {
+public class LocalShopListFragment extends Fragment {
     private GeoService geoService;
     private HttpService httpService;
 
@@ -58,14 +50,14 @@ public class ShopListFragment extends BizFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            httpService = (HttpService) BizApplication.instance().service("http");
+            httpService = (HttpService) LFApplication.instance().service("http");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        query = getArguments().getString("query");
+//        query = getArguments().getString("query");
 
-        adapter = new ShopListAdapter(tabActivity, shops);
+        adapter = new ShopListAdapter(getActivity(), shops);
 
         animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
@@ -76,7 +68,7 @@ public class ShopListFragment extends BizFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_shop_list, container, false);
+        View v = inflater.inflate(R.layout.layout_local_shoplist, container, false);
 
         initLocationModule(v);
 
@@ -89,7 +81,7 @@ public class ShopListFragment extends BizFragment {
             @Override
             public void onRefresh() {
                 if (geoService == null) {
-                    Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
                     return;
                 } else if (geoService.coord() == null) {
                     geoService.locate(false);
@@ -103,12 +95,12 @@ public class ShopListFragment extends BizFragment {
         ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> shop = shops.get(position - 1);
-                ShopDetailFragment sdf = new ShopDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("uid", shop.get("uid").toString());
-                sdf.setArguments(bundle);
-                tabActivity.pushFragments(LocalFragment.Tag, sdf, true, true);
+//                Map<String, Object> shop = shops.get(position - 1);
+//                ShopDetailFragment sdf = new ShopDetailFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("uid", shop.get("uid").toString());
+//                sdf.setArguments(bundle);
+//                tabActivity.pushFragments(LocalFragment.Tag, sdf, true, true);
             }
         });
 
@@ -116,9 +108,9 @@ public class ShopListFragment extends BizFragment {
         ivIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(tabActivity, SysInfoActivity.class);
-                startActivity(intent);
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), SysInfoActivity.class);
+//                startActivity(intent);
             }
         });
 
@@ -173,7 +165,7 @@ public class ShopListFragment extends BizFragment {
                     }
                     adapter.setData(shops);
                 } else {
-                    Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -184,7 +176,7 @@ public class ShopListFragment extends BizFragment {
         public void onFailure(Throwable t, String strMsg) {
             super.onFailure(t, strMsg);
             ptrlvShop.onRefreshComplete();
-            Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -235,7 +227,7 @@ public class ShopListFragment extends BizFragment {
      * 初始化定位相关模块
      */
     private void initLocationModule(View v) {
-        geoService = (GeoService) BizApplication.instance().service(GeoService.class.getSimpleName());
+        geoService = (GeoService) LFApplication.instance().service(GeoService.class.getSimpleName());
 
         ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
         tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
@@ -281,7 +273,7 @@ public class ShopListFragment extends BizFragment {
     private void getLocalShop() {
         try {
             if (geoService == null) {
-                Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
                 return;
             } else if (geoService.coord() == null) {
                 geoService.locate(false);
@@ -333,7 +325,7 @@ public class ShopListFragment extends BizFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = inflater.inflate(R.layout.layout_shop_list_item, null, false);
+                convertView = inflater.inflate(R.layout.layout_local_shoplist_item, null, false);
             }
             //得到条目中的子组件
 //            ImageView tvIcon = (ImageView) convertView.findViewById(R.id.iv_shop_list_item_icon);
