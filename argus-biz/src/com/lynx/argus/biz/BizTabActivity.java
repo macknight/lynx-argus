@@ -8,7 +8,10 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import com.lynx.argus.R;
 import com.lynx.argus.biz.local.LocalFragment;
+import com.lynx.argus.biz.more.MoreFragment;
+import com.lynx.argus.biz.msg.MsgFragment;
 import com.lynx.argus.biz.photo.PhotoFragment;
+import com.lynx.argus.biz.social.SocialFragment;
 import com.lynx.lib.core.LFTabActivity;
 
 import java.util.HashMap;
@@ -41,8 +44,8 @@ public class BizTabActivity extends LFTabActivity {
         stacks.put("Local", new Stack<Fragment>());
         stacks.put("Photo", new Stack<Fragment>());
         stacks.put("Message", new Stack<Fragment>());
-        stacks.put("Friends", new Stack<Fragment>());
-        stacks.put("Share", new Stack<Fragment>());
+        stacks.put("Social", new Stack<Fragment>());
+        stacks.put("More", new Stack<Fragment>());
 
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -55,11 +58,11 @@ public class BizTabActivity extends LFTabActivity {
                     } else if (tabId.equals(PhotoFragment.Tag)) {
                         pushFragments(tabId, new PhotoFragment(), false, true);
                     } else if (tabId.equals("Message")) {
-
-                    } else if (tabId.equals("Friends")) {
-
-                    } else if (tabId.equals("Share")) {
-
+						pushFragments(tabId, new MsgFragment(), false, true);
+                    } else if (tabId.equals("Social")) {
+						pushFragments(tabId, new SocialFragment(), false, true);
+                    } else if (tabId.equals("More")) {
+						pushFragments(tabId, new MoreFragment(), false, true);
                     }
                 } else {
                     pushFragments(tabId, stacks.get(tabId).lastElement(), false, false);
@@ -81,7 +84,7 @@ public class BizTabActivity extends LFTabActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.tab_local_def));
+        spec.setIndicator(createTabView(R.drawable.tab_local));
         tabHost.addTab(spec);
 
         spec = tabHost.newTabSpec(PhotoFragment.Tag);
@@ -91,7 +94,7 @@ public class BizTabActivity extends LFTabActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.tab_photo_def));
+        spec.setIndicator(createTabView(R.drawable.tab_photo));
         tabHost.addTab(spec);
 
         spec = tabHost.newTabSpec("Message");
@@ -101,27 +104,27 @@ public class BizTabActivity extends LFTabActivity {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.tab_msg_def));
+        spec.setIndicator(createTabView(R.drawable.tab_msg));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec("Friends");
+        spec = tabHost.newTabSpec("Social");
         spec.setContent(new TabHost.TabContentFactory() {
             @Override
             public View createTabContent(String tag) {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.tab_friends_def));
+        spec.setIndicator(createTabView(R.drawable.tab_social));
         tabHost.addTab(spec);
 
-        spec = tabHost.newTabSpec("Share");
+        spec = tabHost.newTabSpec("More");
         spec.setContent(new TabHost.TabContentFactory() {
             @Override
             public View createTabContent(String tag) {
                 return findViewById(R.id.realtabcontent);
             }
         });
-        spec.setIndicator(createTabView(R.drawable.tab_share_def));
+        spec.setIndicator(createTabView(R.drawable.tab_more));
         tabHost.addTab(spec);
     }
 

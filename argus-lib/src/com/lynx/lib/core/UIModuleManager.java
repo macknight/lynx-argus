@@ -38,7 +38,7 @@ public abstract class UIModuleManager {
      * 更新service配置
      */
     public void updateConfig() {
-        httpService.get(String.format("%s%s", Const.PRODUCT_DOMAIN, URL_UI_CONFIG), null,
+        httpService.get(String.format("%s%s", Const.DOMAIN, URL_UI_CONFIG), null,
                 new HttpCallback<Object>() {
                     @Override
                     public void onSuccess(Object o) {

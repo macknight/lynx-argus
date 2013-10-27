@@ -1,5 +1,6 @@
 package com.lynx.argus.app;
 
+import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
 
@@ -10,20 +11,22 @@ import com.lynx.lib.core.Logger;
  */
 public class BizApplication extends LFApplication {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
+	@Override
+	public void onCreate() {
+		Const.DOMAIN = "http://58.210.101.202:59102/lynx-web";
+//		Const.DOMAIN = "http://192.168.0.102/lynx-web";
+		Logger.setLevel(Logger.AppLevel.DEBUG);
 
-        Logger.setLevel(Logger.AppLevel.PRODUCT);
-    }
+		super.onCreate();
+	}
 
-    @Override
-    protected void initServiceManager() {
-        serviceManager = new BizServiceManager(this);
-    }
+	@Override
+	protected void initServiceManager() {
+		serviceManager = new BizServiceManager(this);
+	}
 
-    @Override
-    protected void initUIMoudleManager() {
-        uiModuleManager = new BizUIModuleManager(this);
-    }
+	@Override
+	protected void initUIMoudleManager() {
+		uiModuleManager = new BizUIModuleManager(this);
+	}
 }
