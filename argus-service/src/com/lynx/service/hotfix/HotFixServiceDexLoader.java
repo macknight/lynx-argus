@@ -10,28 +10,28 @@ import com.lynx.lib.core.DexServiceLoader;
  */
 public class HotFixServiceDexLoader extends DexServiceLoader {
 
-    public HotFixServiceDexLoader(Context context, String tag, int minVersion, Class<?> defaultClazz)
-            throws Exception {
-        super(context, tag, minVersion, defaultClazz);
-    }
+	public HotFixServiceDexLoader(Context context, String moduleName, int minVersion, Class<?> defaultClazz)
+			throws Exception {
+		super(context, moduleName, minVersion, defaultClazz);
+	}
 
-    @Override
-    protected void beforeLoad() {
+	@Override
+	protected void beforeLoad() {
 
-    }
+	}
 
-    @Override
-    protected void loadService() throws Exception {
+	@Override
+	protected void loadService() throws Exception {
 
-    }
+	}
 
-    @Override
-    protected void afterLoad() {
+	@Override
+	protected void afterLoad() {
 
-    }
+	}
 
-    @Override
-    public String name() {
-        return HotFixService.class.getSimpleName();
-    }
+	@Override
+	public String moduleName() {
+		return HotFixService.class.getSimpleName();
+	}
 }

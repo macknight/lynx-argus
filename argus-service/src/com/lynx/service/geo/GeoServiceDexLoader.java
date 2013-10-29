@@ -60,7 +60,7 @@ public class GeoServiceDexLoader extends DexServiceLoader {
     }
 
     @Override
-    public String name() {
+    public String moduleName() {
         return GeoService.class.getSimpleName();
     }
 }

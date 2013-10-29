@@ -70,7 +70,7 @@ public abstract class BasicInfoActivity extends Activity {
                 serviceInfo.put("icon", getResId(name) + "");
                 serviceInfo.put("name", name);
                 serviceInfo.put("clazz", loader.service().getClass().getName());
-                serviceInfo.put("version", loader.curVersion() + "");
+                serviceInfo.put("version", loader.version() + "");
                 servicesInfos.add(serviceInfo);
             }
         }

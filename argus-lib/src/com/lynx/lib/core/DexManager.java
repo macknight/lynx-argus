@@ -1,7 +1,6 @@
 package com.lynx.lib.core;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
@@ -58,7 +57,6 @@ public abstract class DexManager {
 					public void onSuccess(Object o) {
 						super.onSuccess(o);
 						try {
-							Log.d("chris", o.toString());
 							JSONObject joResult = new JSONObject(o.toString());
 							if (joResult.getInt("status") != 200) {
 								Toast.makeText(context, "获取框架配置失败", Toast.LENGTH_SHORT).show();
@@ -122,7 +120,7 @@ public abstract class DexManager {
 	}
 
 	public void addService(DexServiceLoader loader) {
-		serviceLoaders.put(loader.name(), loader);
+		serviceLoaders.put(loader.moduleName(), loader);
 	}
 
 	/**
@@ -156,7 +154,7 @@ public abstract class DexManager {
 	}
 
 	public void addUIModule(DexUILoader loader) {
-		uiModuleLoaders.put(loader.name(), loader);
+		uiModuleLoaders.put(loader.moduleName(), loader);
 	}
 
 }

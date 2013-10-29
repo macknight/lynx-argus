@@ -1,14 +1,7 @@
 package com.lynx.lib.core;
 
 import android.content.Context;
-import android.widget.Toast;
-import com.lynx.lib.http.HttpService;
-import com.lynx.lib.http.handler.HttpCallback;
-import com.lynx.lib.util.IOUtil;
 import dalvik.system.DexClassLoader;
-import org.json.JSONObject;
-
-import java.io.File;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,62 +9,18 @@ import java.io.File;
  * Date: 8/30/13 11:29 AM
  */
 public abstract class DexServiceLoader extends DexModuleLoader {
-	private static final String PREFIX = "service/";
-
-	/**
-	 * on the disk the dex service file dir looks like:
-	 * /data/data/app.name/files/service/test/
-	 * -version/
-	 * --test.jar
-	 * -config
-	 * -dex/
-	 * --test.dex
-	 */
-
-	protected Context context;
-	private final HttpService httpService;
-	private final File dir;
-	private final String name;
-	private String clazzName = null;
-	private String md5 = null;
-	private int curVersion = -1;
-
 	protected Class<?> clazz;
 	protected DexService service;
 
-
 	/**
 	 * @param context
-	 * @param name         动态服务标签
+	 * @param moduleName   动态服务标签
 	 * @param minVersion   最小动态服务包版本
 	 * @param defaultClazz 默认服务版本
 	 */
-	public DexServiceLoader(Context context, String name, int minVersion, Class<?> defaultClazz)
+	public DexServiceLoader(Context context, String moduleName, int minVersion, Class<?> defaultClazz)
 			throws Exception {
-		this.context = context;
-		this.name = name;
-		this.curVersion = minVersion;
-		this.httpService = (HttpService) ((LFApplication) context).service("http");
-
-
-		dir = new File(context.getFilesDir(), PREFIX + name);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		try {
-			JSONObject config = IOUtil.loadLocalConfig(dir, "config");
-			if (config != null) {
-				int version = config.getInt(K_VERSION);
-				if (version > minVersion) {
-					curVersion = version;
-					clazzName = config.getString(K_CLAZZ);
-					md5 = config.getString(K_MD5);
-					loadClass(curVersion, md5, clazzName);
-				}
-			}
-		} catch (Exception e) {
-			Logger.e(name, "unable to read config at " + new File(dir, "config"), e);
-		}
+		super(context, "service", moduleName, minVersion);
 
 		if (clazz == null) {
 			clazz = defaultClazz;
@@ -82,62 +31,6 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 			loadService();
 		} catch (Exception e) {
 			throw new Exception("loading service exception");
-		}
-	}
-
-
-	/**
-	 * 根据新config配置，下载并载入新版本service
-	 *
-	 * @param config
-	 */
-	public void update(JSONObject config) {
-		try {
-			int newVersion = config.getInt(K_VERSION);
-			if (curVersion >= newVersion) {
-				return;
-			}
-
-			// 版本升级
-			IOUtil.saveConfig(dir, config);
-			File dex = new File(dir, "" + config.getInt(K_VERSION));
-			dex.mkdir();
-
-			try {
-				clazzName = config.getString(K_CLAZZ);
-				curVersion = config.getInt(K_VERSION);
-				md5 = config.getString(K_MD5);
-			} catch (Exception e) {
-				return;
-			}
-
-			String filePath = String.format("%s/%s.jar", dex.getAbsolutePath(), md5);
-			httpService.download(config.getString(K_URL), filePath, true,
-					new HttpCallback<File>() {
-						@Override
-						public void onStart() {
-							super.onStart();
-							Toast.makeText(context, "开始下载动态更新包", Toast.LENGTH_SHORT).show();
-						}
-
-						@Override
-						public void onSuccess(File file) {
-							super.onSuccess(file);
-							// TODO: md5校验
-							Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
-
-							replaceService();
-						}
-
-						@Override
-						public void onFailure(Throwable t, String strMsg) {
-							super.onFailure(t, strMsg);
-							Toast.makeText(context, strMsg, Toast.LENGTH_SHORT).show();
-						}
-					});
-		} catch (Exception e) {
-			e.printStackTrace();
-			Logger.w(name, e.getLocalizedMessage());
 		}
 	}
 
@@ -156,30 +49,18 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	 */
 	protected abstract void afterLoad();
 
-
-	/**
-	 * 服务名
-	 *
-	 * @return
-	 */
-	public abstract String name();
-
-	/**
-	 * 当前服务版本
-	 *
-	 * @return
-	 */
-	public int curVersion() {
-		return curVersion;
-	}
-
 	public DexService service() {
 		return service;
 	}
 
-	private void replaceService() {
+	/**
+	 * 显示调用则立即生效，否则在app下次载入时生效
+	 *
+	 * @throws Exception
+	 */
+	public void replaceService() throws Exception {
 		beforeLoad();
-		deleteOldDex();
+		deleteOldDexFile();
 		try {
 			loadClass(curVersion, md5, clazzName);
 		} catch (Exception e) {
@@ -196,29 +77,8 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	@SuppressWarnings("unchecked")
 	private void loadClass(int version, String md5, String className)
 			throws Exception {
-		File dexFolder = new File(dir, version + "");
-		File dexFile = new File(dexFolder, md5 + ".jar");
-		File dexOut = new File(dir, "dex");
-		dexOut.mkdir();
-		DexClassLoader cl = new DexClassLoader(dexFile.getAbsolutePath(),
-				dexOut.getAbsolutePath(), null, context.getClassLoader());
+		DexClassLoader cl = new DexClassLoader(apkPath,
+				dexPath, null, context.getClassLoader());
 		clazz = (Class<DexService>) cl.loadClass(className);
-	}
-
-	private void deleteOldDex() {
-		File dex = context.getDir("dex", Context.MODE_PRIVATE);
-		if (dex.exists()) {
-			try {
-				IOUtil.deleteFile(dex);
-			} catch (Exception e) {
-			}
-		}
-		File dexout = context.getDir("dex", Context.MODE_PRIVATE);
-		if (dexout.exists()) {
-			try {
-				IOUtil.deleteFile(dexout);
-			} catch (Exception e) {
-			}
-		}
 	}
 }

@@ -13,42 +13,42 @@ import com.lynx.service.cache.impl1v1.CacheServiceImpl;
  */
 public class CacheServiceDexLoader extends DexServiceLoader {
 
-    public static final String Tag = "cache";
+	public static final String Tag = "cache";
 
-    private static final int minVersion = 101;
+	private static final int minVersion = 101;
 
-    public CacheServiceDexLoader(Context context)
-            throws Exception {
-        super(context, Tag, minVersion, CacheServiceImpl.class);
-    }
+	public CacheServiceDexLoader(Context context)
+			throws Exception {
+		super(context, Tag, minVersion, CacheServiceImpl.class);
+	}
 
-    @Override
-    protected void beforeLoad() {
+	@Override
+	protected void beforeLoad() {
 
-    }
+	}
 
-    @Override
-    protected void loadService() throws Exception {
-        try {
-            if (clazz != null) {
-                service = (DexService) clazz.getConstructor(Context.class).newInstance(context);
-            }
+	@Override
+	protected void loadService() throws Exception {
+		try {
+			if (clazz != null) {
+				service = (DexService) clazz.getConstructor(Context.class).newInstance(context);
+			}
 
-            if (service == null) {
-                service = new CacheServiceImpl(context);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			if (service == null) {
+				service = new CacheServiceImpl(context);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    protected void afterLoad() {
+	@Override
+	protected void afterLoad() {
 
-    }
+	}
 
-    @Override
-    public String name() {
-        return CacheService.class.getSimpleName();
-    }
+	@Override
+	public String moduleName() {
+		return CacheService.class.getSimpleName();
+	}
 }
