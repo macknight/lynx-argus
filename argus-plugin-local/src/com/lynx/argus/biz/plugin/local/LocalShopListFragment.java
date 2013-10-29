@@ -95,11 +95,11 @@ public class LocalShopListFragment extends Fragment {
         ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Map<String, Object> shop = shops.get(position - 1);
-//                ShopDetailFragment sdf = new ShopDetailFragment();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("uid", shop.get("uid").toString());
-//                sdf.setArguments(bundle);
+                Map<String, Object> shop = shops.get(position - 1);
+                ShopDetailFragment sdf = new ShopDetailFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("uid", shop.get("uid").toString());
+                sdf.setArguments(bundle);
 //                tabActivity.pushFragments(LocalFragment.Tag, sdf, true, true);
             }
         });

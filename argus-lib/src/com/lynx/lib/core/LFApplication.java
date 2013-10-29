@@ -12,78 +12,72 @@ import java.util.Map;
  */
 public abstract class LFApplication extends Application {
 
-    protected static LFApplication instance;
-    protected ServiceManager serviceManager;
-    protected UIModuleManager uiModuleManager;
+	protected static LFApplication instance;
+	protected DexManager dexManager;
 
-    public static LFApplication instance() {
-        if (instance == null) {
-            throw new IllegalStateException("Application has not been created");
-        }
-        return instance;
-    }
+	public static LFApplication instance() {
+		if (instance == null) {
+			throw new IllegalStateException("Application has not been created");
+		}
+		return instance;
+	}
 
-    public LFApplication() {
-        instance = this;
-    }
+	public LFApplication() {
+		instance = this;
+	}
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        initServiceManager();
-        serviceManager.initDexLoader();
-        serviceManager.updateConfig();
-
-        initUIMoudleManager();
-        uiModuleManager.initDexLoader();
-        uiModuleManager.updateConfig();
-    }
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		initDexManager();
+		dexManager.initDexServiceLoader();
+		dexManager.initDexUIModuleLoader();
+		dexManager.updateConfig();
+	}
 
 
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-    }
+	@Override
+	public void onTerminate() {
+		super.onTerminate();
+	}
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-    }
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+	}
 
-    @Override
-    public void onLowMemory() {
-        super.onLowMemory();
-    }
+	@Override
+	public void onLowMemory() {
+		super.onLowMemory();
+	}
 
-    @Override
-    public void onTrimMemory(int level) {
-        super.onTrimMemory(level);
-    }
+	@Override
+	public void onTrimMemory(int level) {
+		super.onTrimMemory(level);
+	}
 
-    protected abstract void initServiceManager();
+	protected abstract void initDexManager();
 
-    protected abstract void initUIMoudleManager();
+	/**
+	 * 列举所有服务
+	 *
+	 * @return
+	 */
+	public Map<String, DexServiceLoader> services() {
+		return dexManager.dexServices();
+	}
 
-    /**
-     * 列举所有服务
-     *
-     * @return
-     */
-    public Map<String, DexServiceLoader> services() {
-        return serviceManager.dexServices();
-    }
+	/**
+	 * 根据服务获取对应服务
+	 *
+	 * @param name
+	 * @return
+	 */
+	public Object service(String name) {
+		return dexManager.getService(name);
+	}
 
-    /**
-     * 根据服务获取对应服务
-     *
-     * @param name
-     * @return
-     */
-    public Object service(String name) {
-        return serviceManager.getService(name);
-    }
-
-    public DexUIModuleLoader moduleLoader(String name) {
-        return uiModuleManager.getDexUIModuleLoader(name);
-    }
+	public DexUILoader moduleLoader(String name) {
+		return dexManager.getDexUILoader(name);
+	}
 }

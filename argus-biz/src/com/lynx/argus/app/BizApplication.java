@@ -14,19 +14,14 @@ public class BizApplication extends LFApplication {
 	@Override
 	public void onCreate() {
 		Const.DOMAIN = "http://58.210.101.202:59102/lynx-web";
-//		Const.DOMAIN = "http://192.168.0.102/lynx-web";
+		Const.DOMAIN = "http://argus.maskerliu.eu.cloudbees.net/";
 		Logger.setLevel(Logger.AppLevel.DEBUG);
 
 		super.onCreate();
 	}
 
 	@Override
-	protected void initServiceManager() {
-		serviceManager = new BizServiceManager(this);
-	}
-
-	@Override
-	protected void initUIMoudleManager() {
-		uiModuleManager = new BizUIModuleManager(this);
+	protected void initDexManager() {
+		dexManager = new BizDexManager(this);
 	}
 }

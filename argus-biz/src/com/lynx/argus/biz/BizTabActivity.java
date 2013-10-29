@@ -28,6 +28,7 @@ public class BizTabActivity extends LFTabActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // do custom init here
+        //
     }
 
     @Override
@@ -58,11 +59,11 @@ public class BizTabActivity extends LFTabActivity {
                     } else if (tabId.equals(PhotoFragment.Tag)) {
                         pushFragments(tabId, new PhotoFragment(), false, true);
                     } else if (tabId.equals("Message")) {
-						pushFragments(tabId, new MsgFragment(), false, true);
+                        pushFragments(tabId, new MsgFragment(), false, true);
                     } else if (tabId.equals("Social")) {
-						pushFragments(tabId, new SocialFragment(), false, true);
+                        pushFragments(tabId, new SocialFragment(), false, true);
                     } else if (tabId.equals("More")) {
-						pushFragments(tabId, new MoreFragment(), false, true);
+                        pushFragments(tabId, new MoreFragment(), false, true);
                     }
                 } else {
                     pushFragments(tabId, stacks.get(tabId).lastElement(), false, false);

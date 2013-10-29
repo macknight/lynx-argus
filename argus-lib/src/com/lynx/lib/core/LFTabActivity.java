@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Stack;
 
 /**
+ * 类似IOS中UITabbarController,以复合栈式结构管理其中的Fragment
+ * <p/>
  * Created with IntelliJ IDEA.
  * User: zhufeng.liu
  * Date: 9/26/13 3:08 PM

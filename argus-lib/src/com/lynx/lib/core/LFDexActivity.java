@@ -25,7 +25,7 @@ public class LFDexActivity extends LFActivity {
     protected Resources.Theme dexTheme;
     protected ClassLoader dexClassLoader;
 
-    private DexUIModuleLoader moduleLoader;
+    private DexUILoader moduleLoader;
 
     private Resources.Theme defTheme; // 系统原有主题
 

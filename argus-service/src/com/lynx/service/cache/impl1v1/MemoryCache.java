@@ -3,6 +3,7 @@ package com.lynx.service.cache.impl1v1;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.Map;
 import java.util.WeakHashMap;
 
 /**
@@ -14,7 +15,7 @@ public class MemoryCache {
     private static final String TAG = "MemoryCache";
 
     //WeakReference Map: key=string, value=Bitmap
-    private WeakHashMap<String, Object> cache = new WeakHashMap<String, Object>();
+    private Map<String, Object> cache = new WeakHashMap<String, Object>();
 
     /**
      * Search the memory cache by a unique key.
