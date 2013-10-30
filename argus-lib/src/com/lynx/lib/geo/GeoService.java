@@ -1,6 +1,6 @@
 package com.lynx.lib.geo;
 
-import com.lynx.lib.core.DexService;
+import com.lynx.lib.core.dex.DexService;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
 

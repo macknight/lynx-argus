@@ -1,7 +1,9 @@
-package com.lynx.lib.core;
+package com.lynx.lib.core.dex;
 
 import android.content.Context;
 import android.widget.Toast;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.util.IOUtil;
@@ -23,9 +25,12 @@ public class DexModuleLoader {
 
 	protected HttpService httpService;
 	protected Context context;
-	protected File basicPath; // /data/data/app.name/files/PREFIX/module
-	protected String dexPath; // /data/data/app.name/files/PREFIX/module/dex
-	protected String apkPath; // /data/data/app.name/files/PREFIX/module/version/xxx.apk
+	protected File basicPath; // /data/data/app.name/files/prefrix/module
+	protected String dexDir; // /data/data/app.name/files/prefrix/module/dex
+	protected String dexPath; // /data/data/app.name/files/prefrix/module/dex/xxxxxx.dex
+	protected String srcDir; // /data/data/app.name/files/prefrix/module/src
+	protected String srcPath; // /data/data/app.name/files/prefix/module/src/xxxxxx
+	private String tmpPath;
 	protected String moduleName;
 	protected String clazzName = null;
 	protected int curVersion = -1;
@@ -48,11 +53,20 @@ public class DexModuleLoader {
 			basicPath.mkdirs();
 		}
 
-		File dexDir = new File(basicPath, "dex");
-		if (!dexDir.exists()) {
-			dexDir.mkdirs();
+		File tmp = new File(basicPath, "src");
+		if (!tmp.exists()) {
+			tmp.mkdir();
 		}
-		dexPath = dexDir.getAbsolutePath();
+		srcDir = tmp.getAbsolutePath();
+		
+		tmp = new File(basicPath, "dex");
+		if (!tmp.exists()) {
+			tmp.mkdirs();
+		}
+		dexDir = tmp.getAbsolutePath();
+
+
+
 
 		try {
 			JSONObject config = IOUtil.loadLocalConfig(basicPath, "config");
@@ -63,13 +77,18 @@ public class DexModuleLoader {
 					clazzName = config.getString(K_CLAZZ);
 					md5 = config.getString(K_MD5);
 					desc = config.getString(K_DESC);
-					apkPath = new File(basicPath, "" +
-							config.getInt(K_VERSION)).getAbsolutePath() +
-							String.format("/%s.apk", config.getString(K_MD5));
+					srcPath = new File(basicPath, "src").getAbsolutePath() + "/" + md5;
+					dexPath = new File(basicPath, "dex").getAbsolutePath() + "/" + md5 + ".dex";
 				}
 			}
 		} catch (Exception e) {
 			Logger.e(moduleName, "unable to read config at " + new File(basicPath, "config"), e);
+		}
+
+		try {
+			clean();
+		} catch (Exception e) {
+
 		}
 	}
 
@@ -88,7 +107,7 @@ public class DexModuleLoader {
 
 			// 版本升级
 			IOUtil.saveConfig(basicPath, config);
-			File path = new File(basicPath, "" + config.getInt(K_VERSION));
+			File path = new File(basicPath, "origin");
 			path.mkdir();
 
 			try {
@@ -100,8 +119,8 @@ public class DexModuleLoader {
 				return;
 			}
 
-			apkPath = String.format("%s/%s.apk", path.getAbsolutePath(), md5);
-			httpService.download(config.getString(K_URL), apkPath, true,
+			tmpPath = String.format("%s/%s.apk", path.getAbsolutePath(), md5);
+			httpService.download(config.getString(K_URL), tmpPath, true,
 					new HttpCallback<File>() {
 						@Override
 						public void onStart() {
@@ -114,13 +133,7 @@ public class DexModuleLoader {
 							super.onSuccess(file);
 							// TODO: md5校验
 							Toast.makeText(context, "完成动态更新包下载", Toast.LENGTH_SHORT).show();
-
-							// 删除老的dex文件
-							try {
-								deleteOldDexFile();
-							} catch (Exception e) {
-								Logger.w("module loader", "删除老的Dex文件错误" + e.getMessage());
-							}
+							srcPath = tmpPath;
 						}
 
 						@Override
@@ -153,7 +166,7 @@ public class DexModuleLoader {
 	 *
 	 * @return
 	 */
-	public String modulePath() {
+	public String moduleDir() {
 		return basicPath.getAbsolutePath();
 	}
 
@@ -162,8 +175,8 @@ public class DexModuleLoader {
 	 *
 	 * @return
 	 */
-	public String apkPath() {
-		return apkPath;
+	public String srcPath() {
+		return srcPath;
 	}
 
 	/**
@@ -171,8 +184,8 @@ public class DexModuleLoader {
 	 *
 	 * @return
 	 */
-	public String dexPath() {
-		return dexPath;
+	public String dexDir() {
+		return dexDir;
 	}
 
 	public int version() {
@@ -188,10 +201,40 @@ public class DexModuleLoader {
 		return desc;
 	}
 
-	protected void deleteOldDexFile() throws IOException {
-		File dexDir = new File(basicPath, "dex");
-		IOUtil.deleteFile(dexDir);
-		dexDir = new File(basicPath, "dex");
-		dexDir.mkdirs();
+	/**
+	 * 清理旧版本动态更新模块产出文件
+	 *
+	 * @throws IOException
+	 */
+	protected void clean() throws IOException {
+		deleteOldFile(srcDir, md5 + ".apk");
+		deleteOldFile(dexDir, md5 + ".dex");
+	}
+
+	/**
+	 * 删除dir路径下除filename以外的其他文件
+	 *
+	 * @param dir
+	 * @param fileName
+	 * @throws IOException
+	 */
+	protected void deleteOldFile(String dir, String fileName) throws IOException {
+		boolean flag = false;
+		File[] files = new File(dir).listFiles();
+		for (File file : files) {
+			if (file.getName().equals(fileName)) {
+				flag = true;
+				break;
+			}
+		}
+		if (!flag) {
+			return;
+		}
+
+		for (File file : files) {
+			if (!file.getName().equals(fileName)) {
+				file.delete();
+			}
+		}
 	}
 }

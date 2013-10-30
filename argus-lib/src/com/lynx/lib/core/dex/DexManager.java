@@ -1,7 +1,8 @@
-package com.lynx.lib.core;
+package com.lynx.lib.core.dex;
 
 import android.content.Context;
 import android.widget.Toast;
+import com.lynx.lib.core.Const;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.http.handler.HttpCallback;

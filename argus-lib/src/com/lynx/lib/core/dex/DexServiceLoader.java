@@ -1,4 +1,4 @@
-package com.lynx.lib.core;
+package com.lynx.lib.core.dex;
 
 import android.content.Context;
 import dalvik.system.DexClassLoader;
@@ -60,7 +60,7 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	 */
 	public void replaceService() throws Exception {
 		beforeLoad();
-		deleteOldDexFile();
+		clean();
 		try {
 			loadClass(curVersion, md5, clazzName);
 		} catch (Exception e) {
@@ -77,8 +77,8 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	@SuppressWarnings("unchecked")
 	private void loadClass(int version, String md5, String className)
 			throws Exception {
-		DexClassLoader cl = new DexClassLoader(apkPath,
-				dexPath, null, context.getClassLoader());
+		DexClassLoader cl = new DexClassLoader(srcPath,
+				dexDir, null, context.getClassLoader());
 		clazz = (Class<DexService>) cl.loadClass(className);
 	}
 }

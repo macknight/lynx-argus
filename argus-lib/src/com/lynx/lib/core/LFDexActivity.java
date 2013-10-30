@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
+import com.lynx.lib.core.dex.DexUILoader;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -62,13 +63,13 @@ public class LFDexActivity extends LFActivity {
                 throw new Exception("not such module exist:" + module);
             }
 
-            DexClassLoader dcl = new DexClassLoader(moduleLoader.apkPath(),
-                    moduleLoader.dexPath(), null, super.getClassLoader());
+            DexClassLoader dcl = new DexClassLoader(moduleLoader.srcPath(),
+                    moduleLoader.dexDir(), null, super.getClassLoader());
             dexClassLoader = dcl;
 
             AssetManager am = AssetManager.class.newInstance();
             am.getClass().getMethod("addAssetPath", String.class)
-                    .invoke(am, moduleLoader.apkPath());
+                    .invoke(am, moduleLoader.srcPath());
             dexAssetManager = am;
 
             Resources superRes = super.getResources();

@@ -1,6 +1,6 @@
 package com.lynx.lib.cache;
 
-import com.lynx.lib.core.DexService;
+import com.lynx.lib.core.dex.DexService;
 
 /**
  * Created with IntelliJ IDEA.

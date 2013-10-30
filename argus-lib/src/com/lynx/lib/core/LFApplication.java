@@ -2,6 +2,9 @@ package com.lynx.lib.core;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import com.lynx.lib.core.dex.DexManager;
+import com.lynx.lib.core.dex.DexServiceLoader;
+import com.lynx.lib.core.dex.DexUILoader;
 
 import java.util.Map;
 

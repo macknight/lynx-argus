@@ -1,4 +1,4 @@
-package com.lynx.lib.core;
+package com.lynx.lib.core.dex;
 
 import android.content.Context;
 
