@@ -3,6 +3,7 @@ package com.lynx.lib.core.dex;
 import android.content.Context;
 import android.widget.Toast;
 import com.lynx.lib.core.Const;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.http.handler.HttpCallback;
@@ -21,13 +22,15 @@ import java.util.Map;
  * Date: 13-10-28 下午5:39
  */
 public abstract class DexManager {
+	private static final String Tag = "dexmanager";
 
 	private static final String URL_SERVICE_CONFIG = "/config/framework";
 	public static final String K_SERVICE = "service";
 	public static final String K_UI = "ui";
 
 	protected Context context;
-	private HttpService httpService;
+	private static HttpService httpService;
+
 	private Map<String, DexServiceLoader> serviceLoaders = new HashMap<String, DexServiceLoader>();
 	private Map<String, DexUILoader> uiModuleLoaders = new HashMap<String, DexUILoader>();
 
@@ -66,15 +69,9 @@ public abstract class DexManager {
 							JSONObject joConfig = joResult.getJSONObject("data");
 							// 获取service动态更新相关配置
 							try {
-								JSONArray ja_service = joConfig.getJSONArray(K_SERVICE);
-								for (int i = 0; i < ja_service.length(); ++i) {
-									JSONObject config = ja_service.getJSONObject(i);
-									String service = config.getString(DexModuleLoader.K_MODULE);
-									DexServiceLoader dexLoader = serviceLoaders.get(service);
-									if (dexLoader != null) {
-										// service 有新的动态更新
-										dexLoader.update(config);
-									}
+								JSONArray jaService = joConfig.getJSONArray(K_SERVICE);
+								for (int i = 0; i < jaService.length(); ++i) {
+									updateService(jaService.getJSONObject(i));
 								}
 							} catch (Exception e) {
 
@@ -83,17 +80,7 @@ public abstract class DexManager {
 							try {
 								JSONArray jaModule = joConfig.getJSONArray(K_UI);
 								for (int i = 0; i < jaModule.length(); ++i) {
-									JSONObject config = jaModule.getJSONObject(i);
-									String module = config.getString(DexModuleLoader.K_MODULE);
-									DexUILoader dexLoader = getDexUILoader(module);
-									if (dexLoader != null) {
-										// UI module有新的动态更新
-										dexLoader.update(config);
-									} else {
-										dexLoader = new DexUILoader(context, module);
-										dexLoader.update(config);
-										addUIModule(dexLoader);
-									}
+									updateUI(jaModule.getJSONObject(i));
 								}
 							} catch (Exception e) {
 
@@ -111,42 +98,36 @@ public abstract class DexManager {
 				});
 	}
 
-	/**
-	 * 获取所有动态服务
-	 *
-	 * @return
-	 */
-	public Map<String, DexServiceLoader> dexServices() {
+	public HttpService httpService() {
+		return httpService;
+	}
+
+	public Map<String, DexServiceLoader> allServiceLoader() {
 		return serviceLoaders;
+	}
+
+	public DexServiceLoader getDexServiceLoader(String name) {
+		return serviceLoaders.get(name);
 	}
 
 	public void addService(DexServiceLoader loader) {
 		serviceLoaders.put(loader.moduleName(), loader);
 	}
 
-	/**
-	 * 根据service名获取服务
-	 *
-	 * @param name
-	 * @return
-	 */
-	public Object getService(String name) {
-		if ("http".equals(name)) {
-			return httpService;
+	private void updateService(JSONObject config) {
+		try {
+			String moduleName = config.getString(DexModuleLoader.K_MODULE);
+			DexServiceLoader dexLoader = serviceLoaders.get(moduleName);
+			if (dexLoader != null) {
+				// service 有新的动态更新
+				dexLoader.update(config);
+			}
+		} catch (Exception e) {
+			Logger.e(Tag, "update service error", e);
 		}
-		DexServiceLoader dexLoader = serviceLoaders.get(name);
-		if (dexLoader != null) {
-			return dexLoader.service();
-		}
-		return null;
 	}
 
-	/**
-	 * 获取所有动态模块
-	 *
-	 * @return
-	 */
-	public Map<String, DexUILoader> getUIModuleLoaders() {
+	public Map<String, DexUILoader> allUIModuleLoader() {
 		return uiModuleLoaders;
 	}
 
@@ -158,4 +139,20 @@ public abstract class DexManager {
 		uiModuleLoaders.put(loader.moduleName(), loader);
 	}
 
+	private void updateUI(JSONObject config) {
+		try {
+			String module = config.getString(DexModuleLoader.K_MODULE);
+			DexUILoader dexLoader = getDexUILoader(module);
+			if (dexLoader != null) {
+				// UI module有新的动态更新
+				dexLoader.update(config);
+			} else {
+				dexLoader = new DexUILoader(context, module);
+				dexLoader.update(config);
+				addUIModule(dexLoader);
+			}
+		} catch (Exception e) {
+			Logger.e(Tag, "update ui module error", e);
+		}
+	}
 }

@@ -66,20 +66,31 @@ public abstract class LFApplication extends Application {
 	 *
 	 * @return
 	 */
-	public Map<String, DexServiceLoader> services() {
-		return dexManager.dexServices();
+	public Map<String, DexServiceLoader> serviceLoaders() {
+		return dexManager.allServiceLoader();
 	}
 
 	/**
-	 * 根据服务获取对应服务
+	 * 根据服务名获取对应服务
 	 *
 	 * @param name
 	 * @return
 	 */
 	public Object service(String name) {
-		return dexManager.getService(name);
+		if ("http".equals(name)) {
+			return dexManager.httpService();
+		}
+		Map<String, DexServiceLoader> loaders = serviceLoaders();
+		DexServiceLoader loader = loaders.get(name);
+		return loader == null ? null : loader.service();
 	}
 
+	/**
+	 * 根据模块名获取对应UI模块
+	 *
+	 * @param name
+	 * @return
+	 */
 	public DexUILoader moduleLoader(String name) {
 		return dexManager.getDexUILoader(name);
 	}

@@ -1,6 +1,7 @@
 package com.lynx.lib.core.dex;
 
 import android.content.Context;
+import com.lynx.lib.core.Logger;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -30,7 +31,7 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 		try {
 			loadService();
 		} catch (Exception e) {
-			throw new Exception("loading service exception");
+			throw new Exception("loading service error");
 		}
 	}
 
@@ -60,17 +61,16 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	 */
 	public void replaceService() throws Exception {
 		beforeLoad();
-		clean();
+		deleteOldFile();
 		try {
-			loadClass(curVersion, md5, clazzName);
+			loadClass(version, md5, clazzName);
 		} catch (Exception e) {
 			// TODO: roll back to the default service
+			Logger.e(moduleName, "replace service error", e);
 		}
-		try {
-			loadService();
-		} catch (Exception e) {
 
-		}
+		loadService();
+
 		afterLoad();
 	}
 

@@ -1,2 +1,10 @@
 out/
 .idea/
+./argus-biz/bin
+./argus-biz/gen
+./argus-service/bin
+./argus-service/gen
+./argus-lib/gen
+./argus-lib/bin
+./argus-plugin-local/bin
+./argus-plugin-local/gen

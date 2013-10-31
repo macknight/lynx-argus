@@ -2,8 +2,8 @@ package com.lynx.argus.app;
 
 import android.content.Context;
 import android.widget.Toast;
-import com.lynx.lib.core.DexManager;
-import com.lynx.lib.core.DexUILoader;
+import com.lynx.lib.core.dex.DexManager;
+import com.lynx.lib.core.dex.DexUILoader;
 import com.lynx.service.cache.CacheServiceDexLoader;
 import com.lynx.service.geo.GeoServiceDexLoader;
 import com.lynx.service.test.TestServiceDexLoader;

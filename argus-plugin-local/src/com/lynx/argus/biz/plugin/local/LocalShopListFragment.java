@@ -227,7 +227,7 @@ public class LocalShopListFragment extends Fragment {
      * 初始化定位相关模块
      */
     private void initLocationModule(View v) {
-        geoService = (GeoService) LFApplication.instance().service(GeoService.class.getSimpleName());
+        geoService = (GeoService) LFApplication.instance().service("geo");
 
         ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
         tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);

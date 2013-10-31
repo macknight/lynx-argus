@@ -1,7 +1,7 @@
 package com.lynx.service.test;
 
 import android.content.Context;
-import com.lynx.lib.core.DexServiceLoader;
+import com.lynx.lib.core.dex.DexServiceLoader;
 import com.lynx.service.test.impl1v1.TestServiceImpl;
 
 /**
@@ -10,10 +10,9 @@ import com.lynx.service.test.impl1v1.TestServiceImpl;
  * Date: 13-9-5 下午5:59
  */
 public class TestServiceDexLoader extends DexServiceLoader {
-	private static final String Tag = "test";
 
 	public TestServiceDexLoader(Context context) throws Exception {
-		super(context, Tag, 101, TestServiceImpl.class);
+		super(context, "test", 101, TestServiceImpl.class);
 	}
 
 	@Override
@@ -35,10 +34,5 @@ public class TestServiceDexLoader extends DexServiceLoader {
 	@Override
 	protected void afterLoad() {
 
-	}
-
-	@Override
-	public String moduleName() {
-		return com.lynx.service.test.TestService.class.getSimpleName();
 	}
 }

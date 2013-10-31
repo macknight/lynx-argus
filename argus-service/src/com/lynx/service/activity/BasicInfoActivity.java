@@ -6,10 +6,10 @@ import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import com.lynx.lib.core.DexServiceLoader;
-import com.lynx.service.R;
 import com.lynx.lib.cache.CacheService;
+import com.lynx.lib.core.dex.DexServiceLoader;
 import com.lynx.lib.geo.GeoService;
+import com.lynx.service.R;
 import com.lynx.service.test.TestService;
 
 import java.util.ArrayList;

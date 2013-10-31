@@ -19,116 +19,126 @@ import dalvik.system.DexClassLoader;
  * Date: 9/30/13 10:10 AM
  */
 public class LFDexActivity extends LFActivity {
-    private static final String Tag = "LFDexActivity";
+	private static final String Tag = "LFDexActivity";
 
-    protected AssetManager dexAssetManager;
-    protected Resources dexResources;
-    protected Resources.Theme dexTheme;
-    protected ClassLoader dexClassLoader;
+	protected AssetManager dexAssetManager;
+	protected Resources dexResources;
+	protected Resources.Theme dexTheme;
+	protected ClassLoader dexClassLoader;
 
-    private DexUILoader moduleLoader;
+	private DexUILoader moduleLoader;
 
-    private Resources.Theme defTheme; // 系统原有主题
+	private Resources.Theme defTheme; // 系统原有主题
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        defTheme = this.getTheme();
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		defTheme = this.getTheme();
 
-        loadModule(savedInstanceState);
-    }
+		loadModule(savedInstanceState);
+	}
 
-    protected void loadModule(Bundle savedInstanceState) {
-        FrameLayout rootView = new FrameLayout(this);
-        rootView.setLayoutParams(new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        rootView.setId(android.R.id.primary);
-        setContentView(rootView);
+	protected void loadModule(Bundle savedInstanceState) {
+		FrameLayout rootView = new FrameLayout(this);
+		rootView.setLayoutParams(new ViewGroup.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
+				ViewGroup.LayoutParams.MATCH_PARENT));
+		rootView.setId(android.R.id.primary);
+		setContentView(rootView);
 
-        try {
-            AssetManager am = getAssets();
-            BitmapDrawable bg = new BitmapDrawable(null, am.open("bg.png"));
-            rootView.setBackground(bg);
-        } catch (Exception e) {
-            Logger.e(Tag, "load icon error", e);
-        }
+		try {
+			AssetManager am = getAssets();
+			BitmapDrawable bg = new BitmapDrawable(null, am.open("bg.png"));
+			rootView.setBackground(bg);
+		} catch (Exception e) {
+			Logger.e(Tag, "load background error", e);
+		}
 
-        try {
-            String module = getIntent().getStringExtra("module");
+//		try {
+//			AssetManager am = getAssets();
+//			Bitmap bmpBg = BitmapFactory.decodeStream(am.open("bg.9.png"));
+//			NinePatch np = new NinePatch(bmpBg, bmpBg.getNinePatchChunk(), null);
+//			NinePatchDrawable localNinePatchDrawable = new NinePatchDrawable(null, np);
+//			rootView.setBackground(localNinePatchDrawable);
+//		} catch (IOException e) {
+//			Logger.e(Tag, "load background error", e);
+//		}
 
-            moduleLoader = LFApplication.instance().moduleLoader(module);
+		try {
+			String module = getIntent().getStringExtra("module");
 
-            if (moduleLoader == null) {
-                Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
-                throw new Exception("not such module exist:" + module);
-            }
+			moduleLoader = LFApplication.instance().moduleLoader(module);
 
-            DexClassLoader dcl = new DexClassLoader(moduleLoader.srcPath(),
-                    moduleLoader.dexDir(), null, super.getClassLoader());
-            dexClassLoader = dcl;
+			if (moduleLoader == null) {
+				Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
+				throw new Exception("not such module exist:" + module);
+			}
 
-            AssetManager am = AssetManager.class.newInstance();
-            am.getClass().getMethod("addAssetPath", String.class)
-                    .invoke(am, moduleLoader.srcPath());
-            dexAssetManager = am;
+			DexClassLoader dcl = new DexClassLoader(moduleLoader.srcPath(),
+					moduleLoader.dexDir(), null, super.getClassLoader());
+			dexClassLoader = dcl;
 
-            Resources superRes = super.getResources();
-            dexResources = new Resources(getAssets(), superRes.getDisplayMetrics(),
-                    superRes.getConfiguration());
+			AssetManager am = AssetManager.class.newInstance();
+			am.getClass().getMethod("addAssetPath", String.class)
+					.invoke(am, moduleLoader.srcPath());
+			dexAssetManager = am;
 
-            dexTheme = dexResources.newTheme();
-            dexTheme.setTo(super.getTheme());
+			Resources superRes = super.getResources();
+			dexResources = new Resources(getAssets(), superRes.getDisplayMetrics(),
+					superRes.getConfiguration());
 
-            super.onCreate(savedInstanceState);
+			dexTheme = dexResources.newTheme();
+			dexTheme.setTo(super.getTheme());
 
-            if (savedInstanceState != null)
-                return;
+			super.onCreate(savedInstanceState);
 
-            Fragment f = (Fragment) getClassLoader().loadClass(
-                    moduleLoader.clazzName()).newInstance();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(android.R.id.primary, f);
-            ft.commit();
-        } catch (Throwable e) {
-            e.printStackTrace();
+			if (savedInstanceState != null)
+				return;
 
-            rollback();
+			Fragment f = (Fragment) getClassLoader().loadClass(
+					moduleLoader.clazzName()).newInstance();
+			FragmentManager fm = getFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.add(android.R.id.primary, f);
+			ft.commit();
+		} catch (Throwable e) {
+			e.printStackTrace();
 
-            super.onCreate(savedInstanceState);
+			rollback();
 
-            Fragment f = new UILoadErrorFragment();
-            FragmentManager fm = getFragmentManager();
-            FragmentTransaction ft = fm.beginTransaction();
-            ft.add(android.R.id.primary, f);
-            ft.commit();
-        }
-    }
+			super.onCreate(savedInstanceState);
 
-    private void rollback() {
-        dexAssetManager = super.getAssets();
-        dexResources = super.getResources();
-        dexClassLoader = super.getClassLoader();
-        dexTheme = defTheme;
-    }
+			Fragment f = new UILoadErrorFragment();
+			FragmentManager fm = getFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			ft.add(android.R.id.primary, f);
+			ft.commit();
+		}
+	}
 
-    @Override
-    public Resources getResources() {
-        return dexResources == null ? super.getResources() : dexResources;
-    }
+	private void rollback() {
+		dexAssetManager = super.getAssets();
+		dexResources = super.getResources();
+		dexClassLoader = super.getClassLoader();
+		dexTheme = defTheme;
+	}
 
-    @Override
-    public Resources.Theme getTheme() {
-        return dexTheme == null ? super.getTheme() : dexTheme;
-    }
+	@Override
+	public Resources getResources() {
+		return dexResources == null ? super.getResources() : dexResources;
+	}
 
-    @Override
-    public AssetManager getAssets() {
-        return dexAssetManager == null ? super.getAssets() : dexAssetManager;
-    }
+	@Override
+	public Resources.Theme getTheme() {
+		return dexTheme == null ? super.getTheme() : dexTheme;
+	}
 
-    @Override
-    public ClassLoader getClassLoader() {
-        return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
-    }
+	@Override
+	public AssetManager getAssets() {
+		return dexAssetManager == null ? super.getAssets() : dexAssetManager;
+	}
+
+	@Override
+	public ClassLoader getClassLoader() {
+		return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
+	}
 }

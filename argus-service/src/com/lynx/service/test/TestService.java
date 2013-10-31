@@ -1,6 +1,6 @@
 package com.lynx.service.test;
 
-import com.lynx.lib.core.DexService;
+import com.lynx.lib.core.dex.DexService;
 
 /**
  * Created with IntelliJ IDEA.
