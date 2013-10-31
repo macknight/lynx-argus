@@ -63,7 +63,7 @@ public class LocalFragment extends BizFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("query", idxInfo.get("title").toString());
                 slf.setArguments(bundle);
-                tabActivity.pushFragments(Tag, slf, true, true);
+                tabActivity.pushFragment(Tag, slf, true, true);
             }
         });
 

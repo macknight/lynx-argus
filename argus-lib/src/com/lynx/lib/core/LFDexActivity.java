@@ -1,8 +1,5 @@
 package com.lynx.lib.core;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,7 +15,7 @@ import dalvik.system.DexClassLoader;
  * User: zhufeng.liu
  * Date: 9/30/13 10:10 AM
  */
-public class LFDexActivity extends LFActivity {
+public class LFDexActivity extends LFNavigationActivity {
 	private static final String Tag = "LFDexActivity";
 
 	protected AssetManager dexAssetManager;
@@ -94,12 +91,9 @@ public class LFDexActivity extends LFActivity {
 			if (savedInstanceState != null)
 				return;
 
-			Fragment f = (Fragment) getClassLoader().loadClass(
+			LFFragment f = (LFFragment) getClassLoader().loadClass(
 					moduleLoader.clazzName()).newInstance();
-			FragmentManager fm = getFragmentManager();
-			FragmentTransaction ft = fm.beginTransaction();
-			ft.add(android.R.id.primary, f);
-			ft.commit();
+			pushFragment(f, false, true);
 		} catch (Throwable e) {
 			e.printStackTrace();
 
@@ -107,11 +101,8 @@ public class LFDexActivity extends LFActivity {
 
 			super.onCreate(savedInstanceState);
 
-			Fragment f = new UILoadErrorFragment();
-			FragmentManager fm = getFragmentManager();
-			FragmentTransaction ft = fm.beginTransaction();
-			ft.add(android.R.id.primary, f);
-			ft.commit();
+			LFFragment f = new UILoadErrorFragment();
+			pushFragment(f, false, true);
 		}
 	}
 

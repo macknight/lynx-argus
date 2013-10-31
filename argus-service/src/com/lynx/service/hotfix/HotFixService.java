@@ -1,6 +1,6 @@
 package com.lynx.service.hotfix;
 
-import com.lynx.lib.core.DexService;
+import com.lynx.lib.core.dex.DexService;
 
 /**
  * 线上bug fix入口
@@ -10,7 +10,7 @@ import com.lynx.lib.core.DexService;
  */
 public interface HotFixService extends DexService {
 
-    public void executeOnce();
+	public void executeOnce();
 
-    public void execute();
+	public void execute();
 }

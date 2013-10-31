@@ -1,7 +1,7 @@
 package com.lynx.lib.core;
 
-import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.widget.TextView;
  * User: chris
  * Date: 13-10-18 下午1:32
  */
-public class UILoadErrorFragment extends Fragment {
+public class UILoadErrorFragment extends LFFragment {
 	private static final String Tag = "UILoadErrorFragment";
 
 	private String message; // 加载失败提示
@@ -67,5 +67,15 @@ public class UILoadErrorFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
+	}
+
+	@Override
+	public boolean onBackPressed() {
+		return false;
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
 	}
 }

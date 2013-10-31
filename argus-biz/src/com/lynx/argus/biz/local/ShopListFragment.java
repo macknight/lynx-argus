@@ -108,7 +108,7 @@ public class ShopListFragment extends BizFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("uid", shop.get("uid").toString());
                 sdf.setArguments(bundle);
-                tabActivity.pushFragments(LocalFragment.Tag, sdf, true, true);
+                tabActivity.pushFragment(LocalFragment.Tag, sdf, true, true);
             }
         });
 

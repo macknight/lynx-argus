@@ -1,6 +1,6 @@
 package com.lynx.argus.biz.plugin.local;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import org.json.JSONObject;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
  * User: chris
  * Date: 13-9-16 下午2:00
  */
-public class ShopDetailFragment extends Fragment {
+public class ShopDetailFragment extends LFFragment {
     private HttpService httpService;
     private String uid;
 
@@ -177,5 +178,13 @@ public class ShopDetailFragment extends Fragment {
         }
     }
 
+	@Override
+	public boolean onBackPressed() {
+		return false;
+	}
 
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+	}
 }

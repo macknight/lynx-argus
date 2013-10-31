@@ -11,16 +11,21 @@ import android.os.Bundle;
  */
 public abstract class LFFragment extends Fragment {
 
-    protected LFTabActivity tabActivity;
+	protected LFTabActivity tabActivity = null;
+	protected LFNavigationActivity navActivity = null;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        tabActivity = (LFTabActivity) this.getActivity();
-    }
+		if (getActivity() instanceof LFTabActivity) {
+			tabActivity = (LFTabActivity) this.getActivity();
+		} else if (getActivity() instanceof LFNavigationActivity) {
+			navActivity = (LFNavigationActivity) getActivity();
+		}
+	}
 
-    public abstract boolean onBackPressed();
+	public abstract boolean onBackPressed();
 
-    public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
+	public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
 }

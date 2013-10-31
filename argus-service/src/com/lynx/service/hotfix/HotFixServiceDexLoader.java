@@ -1,7 +1,7 @@
 package com.lynx.service.hotfix;
 
 import android.content.Context;
-import com.lynx.lib.core.DexServiceLoader;
+import com.lynx.lib.core.dex.DexServiceLoader;
 
 /**
  * Created with IntelliJ IDEA.

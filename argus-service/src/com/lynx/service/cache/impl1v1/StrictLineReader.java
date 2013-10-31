@@ -1,6 +1,6 @@
 package com.lynx.service.cache.impl1v1;
 
-import com.lynx.lib.util.IOUtil;
+import com.lynx.lib.util.FileUtil;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -33,7 +33,7 @@ public class StrictLineReader implements Closeable {
         if (capacity <= 0) {
             throw new IllegalArgumentException("capacity <=0");
         }
-        if (!(charset.equals(IOUtil.US_ASCII))) {
+        if (!(charset.equals(FileUtil.US_ASCII))) {
             throw new IllegalArgumentException("Unsupported encoding");
         }
 
