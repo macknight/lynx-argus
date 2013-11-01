@@ -23,8 +23,8 @@ public abstract class LFTabActivity extends LFActivity {
 	protected Map<String, Stack<LFFragment>> stacks;
 	protected String curTab;
 	protected int resContent = -1; // fragment根容器ID
-	private int animResPushIn = -1, animResPushOut = -1;
-	private int animResPopIn = -1, animResPopOut = -1;
+	private int animResPushIn = android.R.anim.fade_in, animResPushOut = android.R.anim.fade_out;
+	private int animResPopIn = android.R.anim.fade_in, animResPopOut = android.R.anim.fade_out;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +42,12 @@ public abstract class LFTabActivity extends LFActivity {
 
 	protected abstract void initTabContents();
 
-	protected void setPushAnimation(int resIn, int resOut) {
+	public void setPushAnimation(int resIn, int resOut) {
 		animResPushIn = resIn;
 		animResPushOut = resOut;
 	}
 
-	protected void setPopAnimation(int resIn, int resOut) {
+	public void setPopAnimation(int resIn, int resOut) {
 		animResPopIn = resIn;
 		animResPopOut = resOut;
 	}
@@ -83,14 +83,12 @@ public abstract class LFTabActivity extends LFActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (stacks.get(curTab).lastElement().onBackPressed() == false) {
+		if (!stacks.get(curTab).lastElement().onBackPressed()) {
 			if (stacks.get(curTab).size() == 1) {
 				super.onBackPressed();
 			} else {
-				popFragment(false);
+				popFragment(true);
 			}
-		} else {
-			// do nothing
 		}
 	}
 

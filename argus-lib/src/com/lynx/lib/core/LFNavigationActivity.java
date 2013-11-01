@@ -28,12 +28,12 @@ public abstract class LFNavigationActivity extends LFActivity {
 		stack = new Stack<LFFragment>();
 	}
 
-	protected void setPushAnimation(int resIn, int resOut) {
+	public void setPushAnimation(int resIn, int resOut) {
 		animResPushIn = resIn;
 		animResPushOut = resOut;
 	}
 
-	protected void setPopAnimation(int resIn, int resOut) {
+	public void setPopAnimation(int resIn, int resOut) {
 		animResPopIn = resIn;
 		animResPopOut = resOut;
 	}
@@ -69,14 +69,12 @@ public abstract class LFNavigationActivity extends LFActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (stack.lastElement().onBackPressed() == false) {
+		if (!stack.lastElement().onBackPressed()) {
 			if (stack.size() == 1) {
 				super.onBackPressed();
 			} else {
-				popFragment(false);
+				popFragment(true);
 			}
-		} else {
-			// do nothing
 		}
 	}
 

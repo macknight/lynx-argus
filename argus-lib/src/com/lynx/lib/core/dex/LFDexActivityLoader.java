@@ -1,4 +1,4 @@
-package com.lynx.lib.core;
+package com.lynx.lib.core.dex;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import com.lynx.lib.core.dex.DexUILoader;
+import com.lynx.lib.core.*;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -15,7 +15,7 @@ import dalvik.system.DexClassLoader;
  * User: zhufeng.liu
  * Date: 9/30/13 10:10 AM
  */
-public class LFDexActivity extends LFNavigationActivity {
+public class LFDexActivityLoader extends LFNavigationActivity {
 	private static final String Tag = "LFDexActivity";
 
 	protected AssetManager dexAssetManager;
@@ -49,7 +49,7 @@ public class LFDexActivity extends LFNavigationActivity {
 		} catch (Exception e) {
 			Logger.e(Tag, "load background error", e);
 		}
-
+		
 		try {
 			String module = getIntent().getStringExtra("module");
 

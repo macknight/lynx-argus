@@ -61,6 +61,9 @@ public class LocalShopListFragment extends LFFragment {
 			e.printStackTrace();
 		}
 
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+
 //        query = getArguments().getString("query");
 
 		adapter = new ShopListAdapter(getActivity(), shops);
@@ -106,7 +109,7 @@ public class LocalShopListFragment extends LFFragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("uid", shop.get("uid").toString());
 				sdf.setArguments(bundle);
-				navActivity.pushFragment(sdf, false, true);
+				navActivity.pushFragment(sdf, true, true);
 			}
 		});
 

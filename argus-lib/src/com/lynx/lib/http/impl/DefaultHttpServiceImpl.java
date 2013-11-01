@@ -40,11 +40,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.zip.GZIPInputStream;
 
 /**
- * 
  * @author chris.liu
  * @name DefaultHttpServiceImpl.java
  * @update 2013-4-17 下午11:26:48
- * 
  */
 public class DefaultHttpServiceImpl implements HttpService {
 	private static final int DEFAULT_SOCKET_BUFFER_SIZE = 8 * 1024; // 8KB
@@ -161,7 +159,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	/**
 	 * 设置网络连接超时时间，默认为10秒钟
-	 * 
+	 *
 	 * @param timeout
 	 */
 	public void setTimeout(int timeout) {
@@ -173,7 +171,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	/**
 	 * 设置https请求时 的 SSLSocketFactory
-	 * 
+	 *
 	 * @param sslSocketFactory
 	 */
 	public void setSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
@@ -184,7 +182,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	/**
 	 * 配置错误重试次数
-	 * 
+	 *
 	 * @param count
 	 */
 	public void setRequestExecutionRetryCount(int count) {
@@ -193,7 +191,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	/**
 	 * 添加http请求头
-	 * 
+	 *
 	 * @param header
 	 * @param value
 	 */
@@ -209,14 +207,14 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void get(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	                HttpCallback<? extends Object> callBack) {
 		sendRequest(httpClient, httpContext,
 				new HttpGet(getUrlWithQueryString(url, params)), null, callBack);
 	}
 
 	@Override
 	public void get(String url, Header[] headers, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	                HttpCallback<? extends Object> callBack) {
 		HttpUriRequest request = new HttpGet(getUrlWithQueryString(url, params));
 		if (headers != null)
 			request.setHeaders(headers);
@@ -250,13 +248,13 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void post(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	                 HttpCallback<? extends Object> callBack) {
 		post(url, paramsToEntity(params), null, callBack);
 	}
 
 	@Override
 	public void post(String url, HttpEntity entity, String contentType,
-			HttpCallback<? extends Object> callBack) {
+	                 HttpCallback<? extends Object> callBack) {
 		sendRequest(httpClient, httpContext,
 				addEntityToRequestBase(new HttpPost(url), entity), contentType,
 				callBack);
@@ -264,7 +262,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public <T> void post(String url, Header[] headers, HttpParam params,
-			String contentType, HttpCallback<T> callBack) {
+	                     String contentType, HttpCallback<T> callBack) {
 		HttpEntityEnclosingRequestBase request = new HttpPost(url);
 		if (params != null)
 			request.setEntity(paramsToEntity(params));
@@ -275,7 +273,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void post(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack) {
+	                 String contentType, HttpCallback<? extends Object> callBack) {
 		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
 				new HttpPost(url), entity);
 		if (headers != null)
@@ -301,7 +299,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public Object postSync(String url, Header[] headers, HttpParam params,
-			String contentType) {
+	                       String contentType) {
 		HttpEntityEnclosingRequestBase request = new HttpPost(url);
 		if (params != null)
 			request.setEntity(paramsToEntity(params));
@@ -312,7 +310,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public Object postSync(String url, Header[] headers, HttpEntity entity,
-			String contentType) {
+	                       String contentType) {
 		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
 				new HttpPost(url), entity);
 		if (headers != null)
@@ -328,13 +326,13 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void put(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	                HttpCallback<? extends Object> callBack) {
 		put(url, paramsToEntity(params), null, callBack);
 	}
 
 	@Override
 	public void put(String url, HttpEntity entity, String contentType,
-			HttpCallback<? extends Object> callBack) {
+	                HttpCallback<? extends Object> callBack) {
 		sendRequest(httpClient, httpContext,
 				addEntityToRequestBase(new HttpPut(url), entity), contentType,
 				callBack);
@@ -342,7 +340,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void put(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack) {
+	                String contentType, HttpCallback<? extends Object> callBack) {
 		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
 				new HttpPut(url), entity);
 		if (headers != null)
@@ -367,7 +365,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public Object putSync(String url, Header[] headers, HttpEntity entity,
-			String contentType) {
+	                      String contentType) {
 		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
 				new HttpPut(url), entity);
 		if (headers != null)
@@ -384,7 +382,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	@Override
 	public void delete(String url, Header[] headers,
-			HttpCallback<? extends Object> callBack) {
+	                   HttpCallback<? extends Object> callBack) {
 		final HttpDelete delete = new HttpDelete(url);
 		if (headers != null)
 			delete.setHeaders(headers);
@@ -407,25 +405,25 @@ public class DefaultHttpServiceImpl implements HttpService {
 	// ---------------------下载---------------------------------------
 	@Override
 	public HttpHandler<File> download(String url, String target,
-			HttpCallback<File> callback) {
+	                                  HttpCallback<File> callback) {
 		return download(url, null, target, false, callback);
 	}
 
 	@Override
 	public HttpHandler<File> download(String url, String target,
-			boolean isResume, HttpCallback<File> callback) {
+	                                  boolean isResume, HttpCallback<File> callback) {
 		return download(url, null, target, isResume, callback);
 	}
 
 	@Override
 	public HttpHandler<File> download(String url, HttpParam params,
-			String target, HttpCallback<File> callback) {
+	                                  String target, HttpCallback<File> callback) {
 		return download(url, params, target, false, callback);
 	}
 
 	@Override
 	public HttpHandler<File> download(String url, HttpParam params,
-			String target, boolean isResume, HttpCallback<File> callback) {
+	                                  String target, boolean isResume, HttpCallback<File> callback) {
 		final HttpGet get = new HttpGet(getUrlWithQueryString(url, params));
 		HttpHandler<File> handler = new HttpHandler<File>(httpClient,
 				httpContext, callback, charset);
@@ -434,8 +432,8 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	protected <T> void sendRequest(DefaultHttpClient client,
-			HttpContext httpContext, HttpUriRequest uriRequest,
-			String contentType, HttpCallback<T> httpCallBack) {
+	                               HttpContext httpContext, HttpUriRequest uriRequest,
+	                               String contentType, HttpCallback<T> httpCallBack) {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
@@ -446,8 +444,8 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	protected Object sendSyncRequest(DefaultHttpClient client,
-			HttpContext httpContext, HttpUriRequest uriRequest,
-			String contentType) {
+	                                 HttpContext httpContext, HttpUriRequest uriRequest,
+	                                 String contentType) {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
