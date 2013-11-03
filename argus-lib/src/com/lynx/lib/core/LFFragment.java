@@ -3,6 +3,7 @@ package com.lynx.lib.core;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,10 +19,13 @@ public abstract class LFFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getActivity() instanceof LFTabActivity) {
-			tabActivity = (LFTabActivity) this.getActivity();
-		} else if (getActivity() instanceof LFNavigationActivity) {
-			navActivity = (LFNavigationActivity) getActivity();
+		Log.d("chris", this.getActivity().getLocalClassName());
+		if (this.getActivity() instanceof LFTabActivity) {
+			Log.d("chris", "tab");
+			tabActivity = (LFTabActivity)this.getActivity();
+		} else if (this.getActivity() instanceof LFDexActivity) {
+			Log.d("chris", "nav");
+			navActivity = (LFNavigationActivity) this.getActivity();
 		}
 	}
 

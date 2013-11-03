@@ -18,6 +18,8 @@ import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
+import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
@@ -212,7 +214,15 @@ public class LocalShopListFragment extends LFFragment {
 						animRotate.cancel();
 					}
 					ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-					tvLocAddr.setText(geoService.address());
+					Address addr = geoService.address();
+					Coord coord = geoService.coord();
+					String tip = "";
+					if (addr == null) {
+						tip = String.format("%s,%s", coord.getLat(), coord.getLng());
+					} else {
+						tip = addr.getStreet();
+					}
+					tvLocAddr.setText(tip);
 					getLocalShop();
 					break;
 				case 2:
@@ -250,9 +260,14 @@ public class LocalShopListFragment extends LFFragment {
 			return;
 		}
 
-		if (geoService.address() != null) {
-			tvLocAddr.setText(geoService.address());
+		if (geoService.coord() != null) {
 			ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+			if (geoService.address() != null) {
+				tvLocAddr.setText(geoService.address().getStreet());
+			} else {
+				String tip = String.format("%s,%s", geoService.coord().getLat(), geoService.coord().getLng());
+				tvLocAddr.setText(tip);
+			}
 		}
 
 		ivLocRefresh.setOnClickListener(new View.OnClickListener() {

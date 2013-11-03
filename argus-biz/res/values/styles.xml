@@ -1,48 +1,52 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppBaseTheme" parent="@android:style/Theme.NoTitleBar"></style>
+	<style name="AppBaseTheme" parent="@android:style/Theme.NoTitleBar"></style>
 
-    <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
-    </style>
+	<!-- Application theme. -->
+	<style name="AppTheme" parent="AppBaseTheme">
+		<item name="android:windowAnimationStyle">@style/activityAnimation</item>
+	</style>
 
 
-    <style name="activityAnimation" parent="@android:style/Animation">
-        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
-        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
-    </style>
+	<style name="activityAnimation" parent="@android:style/Animation">
+		<item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+		<item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+		<item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+		<item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+	</style>
 
-    <style name="overall_rating_bar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
-        <item name="android:minHeight">32dp</item>
-        <item name="android:maxHeight">32dp</item>
-    </style>
+	<style name="overall_rating_bar" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/rating_bar_full</item>
+		<item name="android:minHeight">32dp</item>
+		<item name="android:maxHeight">32dp</item>
+	</style>
 
-    <style name="taste_rating_bar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
-        <item name="android:minHeight">15dip</item>
-        <item name="android:maxHeight">15dip</item>
-    </style>
+	<style name="taste_rating_bar" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/rating_bar_full</item>
+		<item name="android:minHeight">15dip</item>
+		<item name="android:maxHeight">15dip</item>
+	</style>
 
-    <style name="service_rating_bar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
-        <item name="android:minHeight">15dip</item>
-        <item name="android:maxHeight">15dip</item>
-    </style>
+	<style name="service_rating_bar" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/rating_bar_full</item>
+		<item name="android:minHeight">15dip</item>
+		<item name="android:maxHeight">15dip</item>
+	</style>
 
-    <style name="environment_rating_bar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/rating_bar_full</item>
-        <item name="android:minHeight">15dip</item>
-        <item name="android:maxHeight">15dip</item>
-    </style>
+	<style name="environment_rating_bar" parent="@android:style/Widget.RatingBar">
+		<item name="android:progressDrawable">@drawable/rating_bar_full</item>
+		<item name="android:minHeight">15dip</item>
+		<item name="android:maxHeight">15dip</item>
+	</style>
 
-    <!-- spinner -->
-    <style name="local_spinner_style">
-        <item name="android:background">@drawable/local_spinner_selector</item>
-        <item name="android:paddingLeft">5dip</item>
-    </style>
+	<!-- spinner -->
+	<style name="local_spinner_style">
+		<item name="android:background">@drawable/local_spinner_selector</item>
+		<item name="android:paddingLeft">5dip</item>
+	</style>
+
+	<style name="edittext_style" parent="@android:style/Widget.EditText">
+		<item name="android:background">@drawable/selector_edittext</item>
+	</style>
 
 </resources>

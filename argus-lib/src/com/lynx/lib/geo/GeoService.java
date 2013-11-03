@@ -1,6 +1,7 @@
 package com.lynx.lib.geo;
 
 import com.lynx.lib.core.dex.DexService;
+import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
 
@@ -42,7 +43,7 @@ public interface GeoService extends DexService {
 
     public Coord coord();
 
-    public String address();
+	public Address address();
 
     public enum LocationStatus {
         IDLE,

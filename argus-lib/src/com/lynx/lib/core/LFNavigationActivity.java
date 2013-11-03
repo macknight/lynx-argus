@@ -45,7 +45,9 @@ public abstract class LFNavigationActivity extends LFActivity {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {
-			ft.setCustomAnimations(animResPushIn, animResPushOut);
+			if (animResPopIn != -1 && animResPushOut != -1) {
+				ft.setCustomAnimations(animResPushIn, animResPushOut);
+			}
 		}
 		ft.replace(resContent, fragment);
 		ft.commit();

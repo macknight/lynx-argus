@@ -18,11 +18,14 @@ import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.SysInfoActivity;
 import com.lynx.lib.core.Const;
+import com.lynx.lib.core.Logger;
+import com.lynx.lib.geo.GeoService;
+import com.lynx.lib.geo.LocationListener;
+import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import com.lynx.lib.geo.GeoService;
-import com.lynx.lib.geo.LocationListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -211,7 +214,16 @@ public class ShopListFragment extends BizFragment {
                         animRotate.cancel();
                     }
                     ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-                    tvLocAddr.setText(geoService.address());
+	                Address addr = geoService.address();
+	                Logger.w("chris", addr.getCity());
+	                Coord coord = geoService.coord();
+	                String tip = "";
+	                if (addr == null) {
+						tip = String.format("%s,%s", coord.getLat(), coord.getLng());
+	                } else {
+		                tip = addr.getStreet();
+	                }
+                    tvLocAddr.setText(tip);
                     getLocalShop();
                     break;
                 case 2:
@@ -249,10 +261,15 @@ public class ShopListFragment extends BizFragment {
             return;
         }
 
-        if (geoService.address() != null) {
-            tvLocAddr.setText(geoService.address());
-            ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-        }
+	    if (geoService.coord() != null) {
+		    ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+		    if (geoService.address() != null) {
+			    tvLocAddr.setText(geoService.address().getStreet());
+		    } else {
+			    String tip = String.format("%s,%s", geoService.coord().getLat(), geoService.coord().getLng());
+			    tvLocAddr.setText(tip);
+		    }
+	    }
 
         ivLocRefresh.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {

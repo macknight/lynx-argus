@@ -223,20 +223,34 @@ public class LocationCenter {
 							Log.d("chris", o.toString());
 							JSONObject jo = new JSONObject(o.toString());
 							if (jo.getInt("status") == 200) {
-								JSONArray jaCoord = jo.getJSONArray("data");
-								if (jaCoord.length() <= 0) {
+								JSONArray jaLocation = jo.getJSONArray("data");
+								if (jaLocation.length() <= 0) {
 									geoService.onLocationChanged(LocationStatus.FAIL);
 									return;
 								}
-								if (jaCoord.length() == 1) {
-									JSONObject joCoord = jaCoord.getJSONObject(0);
-									double lat = joCoord.getDouble("lat");
-									double lng = joCoord.getDouble("lng");
-									int acc = joCoord.getInt("acc");
+								if (jaLocation.length() == 1) {
+									JSONObject jolocation = jaLocation.getJSONObject(0);
+									double lat = jolocation.getDouble("lat");
+									lat = LocationUtil.format(lat, 4);
+									double lng = jolocation.getDouble("lng");
+									lng = LocationUtil.format(lng, 4);
+									int acc = jolocation.getInt("acc");
 									coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, 0);
+									try {
+										JSONObject joAddr = jolocation.getJSONObject("addr");
+										String province = joAddr.getString("province");
+										String city = joAddr.getString("city");
+										String region = joAddr.getString("region");
+										String street = joAddr.getString("street");
+										String num = joAddr.getString("num");
+										addr = new Address(province, city, region, street, num);
+									} catch (Exception e) {
+										Logger.e(Tag, "cant get address now");
+									}
+
 									geoService.onLocationChanged(LocationStatus.SUCCESS);
 									return;
-								} else if (jaCoord.length() > 1) {
+								} else if (jaLocation.length() > 1) {
 									geoService.onLocationChanged(LocationStatus.FAIL);
 									return;
 								}
@@ -245,7 +259,7 @@ public class LocationCenter {
 								return;
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
+							Logger.e(Tag, "cant get location now");
 						}
 						geoService.onLocationChanged(LocationStatus.FAIL);
 					}

@@ -4,41 +4,63 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@drawable/tips_bar">
-        <ImageView android:id="@+id/iv_loc_indicator"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="15dp"
-                   android:layout_centerVertical="true"
-                   android:background="@drawable/gray_point"/>
+	<RelativeLayout android:layout_width="match_parent"
+	                android:layout_height="50dp"
+	                android:background="@drawable/tool_bar">
+		<EditText android:id="@+id/et_local_shop_detail_search"
+		          android:layout_width="match_parent"
+		          android:layout_height="match_parent"
+		          android:layout_marginLeft="30dp"
+		          android:layout_marginBottom="5dp"
+		          android:layout_toLeftOf="@+id/ib_local_shop_search"
+		          android:padding="12dp"
+		          style="@style/edittext_style"/>
+		<ImageButton android:id="@+id/ib_local_shop_search"
+		             android:layout_width="wrap_content"
+		             android:layout_height="wrap_content"
+		             android:layout_centerVertical="true"
+		             android:layout_alignParentRight="true"
+		             android:padding="15dp"
+		             android:src="@drawable/search"
+		             android:background="@drawable/selector_btn"/>
+	</RelativeLayout>
 
-        <TextView android:id="@+id/tv_loc_addr"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_centerInParent="true"
-                  android:textSize="@dimen/font_size_default"
-                  android:textColor="@color/LavenderBlush"/>
+	<RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
+		<com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
+				android:id="@+id/prlv_shop_list"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:cacheColorHint="@android:color/transparent"
+				android:divider="@drawable/horizontal_divider"
+				android:listSelector="@null"
+				android:scrollbars="none">
+		</com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
 
-        <ImageView android:id="@+id/iv_loc_refresh"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginRight="10dp"
-                   android:layout_centerVertical="true"
-                   android:layout_alignParentRight="true"
-                   android:src="@drawable/refresh"/>
-    </RelativeLayout>
+		<RelativeLayout android:layout_width="match_parent"
+		                android:layout_height="wrap_content"
+		                android:layout_alignParentBottom="true"
+		                android:background="@color/Translucent">
+			<ImageView android:id="@+id/iv_loc_indicator"
+			           android:layout_width="wrap_content"
+			           android:layout_height="wrap_content"
+			           android:layout_marginLeft="15dp"
+			           android:layout_centerVertical="true"
+			           android:background="@drawable/gray_point"/>
 
-    <com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
-            android:id="@+id/prlv_shop_list"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:cacheColorHint="@android:color/transparent"
-            android:divider="@drawable/horizontal_divider"
-            android:listSelector="@null"
-            android:scrollbars="none">
-    </com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
+			<TextView android:id="@+id/tv_loc_addr"
+			          android:layout_width="wrap_content"
+			          android:layout_height="wrap_content"
+			          android:layout_centerInParent="true"
+			          android:textSize="@dimen/font_size_default"
+			          android:textColor="@color/LavenderBlush"/>
 
+			<ImageView android:id="@+id/iv_loc_refresh"
+			           android:layout_width="wrap_content"
+			           android:layout_height="wrap_content"
+			           android:layout_marginRight="10dp"
+			           android:layout_centerVertical="true"
+			           android:layout_alignParentRight="true"
+			           android:src="@drawable/refresh"/>
+		</RelativeLayout>
+	</RelativeLayout>
 </LinearLayout>

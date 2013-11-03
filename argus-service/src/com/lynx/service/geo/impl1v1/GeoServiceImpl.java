@@ -1,8 +1,10 @@
 package com.lynx.service.geo.impl1v1;
 
 import android.content.Context;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
+import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
 
@@ -16,82 +18,88 @@ import java.util.List;
  */
 public class GeoServiceImpl implements GeoService, LocationListener {
 
-    private Context context;
-    private LocationCenter locationCenter;
-    private LocationStatus status;
-    private final ArrayList<LocationListener> listeners = new ArrayList<LocationListener>();
+	private Context context;
+	private LocationCenter locationCenter;
+	private LocationStatus status;
+	private final ArrayList<LocationListener> listeners = new ArrayList<LocationListener>();
 
-    public GeoServiceImpl(Context context) {
-        this.context = context;
-        locationCenter = new LocationCenter(this);
-        status = LocationStatus.IDLE;
-    }
+	public GeoServiceImpl(Context context) {
+		this.context = context;
+		locationCenter = new LocationCenter(this);
+		status = LocationStatus.IDLE;
+	}
 
-    @Override
-    public void start() {
+	@Override
+	public void start() {
 
-    }
+	}
 
-    @Override
-    public void stop() {
-        if (locationCenter != null) {
-            locationCenter.stop();
-        }
-    }
+	@Override
+	public void stop() {
+		if (locationCenter != null) {
+			locationCenter.stop();
+		}
+	}
 
-    @Override
-    public LocationStatus status() {
-        return status;
-    }
+	@Override
+	public LocationStatus status() {
+		return status;
+	}
 
-    @Override
-    public void locate(boolean refresh) {
-        locationCenter.start();
-    }
+	@Override
+	public void locate(boolean refresh) {
+		locationCenter.start();
+	}
 
-    @Override
-    public void rgc(double lat, double lng, CoordType type) {
+	@Override
+	public void rgc(double lat, double lng, CoordType type) {
 
-    }
+	}
 
-    @Override
-    public void addListener(LocationListener listener) {
-        listeners.add(listener);
-    }
+	@Override
+	public void addListener(LocationListener listener) {
+		listeners.add(listener);
+	}
 
-    @Override
-    public void removeListener(LocationListener listener) {
-        listeners.remove(listener);
-    }
+	@Override
+	public void removeListener(LocationListener listener) {
+		listeners.remove(listener);
+	}
 
-    @Override
-    public List<LocationListener> listeners() {
-        return listeners;
-    }
+	@Override
+	public List<LocationListener> listeners() {
+		return listeners;
+	}
 
-    @Override
-    public Coord coord() {
-        return locationCenter.coord();
-    }
+	@Override
+	public Coord coord() {
+		return locationCenter.coord();
+	}
 
-    @Override
-    public String address() {
-        if (locationCenter.address() != null) {
-            return locationCenter.address().getStreet() + "(impl1v1)";
-        } else {
-            return null;
-        }
-    }
+	@Override
+	public Address address() {
+		String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? "" : ("(impl1v1)");
+		Address addr = locationCenter.address();
+		if (addr == null) {
+			return null;
+		}
 
-    @Override
-    public void onLocationChanged(LocationStatus status) {
-        this.status = status;
-        for (LocationListener l : listeners) {
-            l.onLocationChanged(status);
-        }
-    }
+		if (!addr.getStreet().contains(tip)) {
+			addr.setStreet(addr.getStreet() + tip);
+		}
+		return addr;
 
-    public Context context() {
-        return context;
-    }
+	}
+
+	@Override
+	public void onLocationChanged(LocationStatus status) {
+		this.status = status;
+		for (LocationListener l : listeners) {
+			l.onLocationChanged(status);
+		}
+	}
+
+	public Context context() {
+		return context;
+	}
 }
