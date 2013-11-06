@@ -1,12 +1,12 @@
 package com.lynx.argus.biz.local;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +17,10 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.SysInfoActivity;
+import com.lynx.argus.biz.local.model.ShopListAdapter;
+import com.lynx.argus.biz.local.model.ShopListItem;
+import com.lynx.argus.biz.local.model.ShopSearchAdapter;
 import com.lynx.lib.core.Const;
-import com.lynx.lib.core.Logger;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.geo.entity.Address;
@@ -26,10 +28,12 @@ import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,328 +45,363 @@ import java.util.Map;
  * Date: 13-9-16 上午10:29
  */
 public class ShopListFragment extends BizFragment {
-    private GeoService geoService;
-    private HttpService httpService;
+	private GeoService geoService;
+	private HttpService httpService;
 
-    private List<Map<String, Object>> shops = new ArrayList<Map<String, Object>>();
-    private ShopListAdapter adapter;
-    private PullToRefreshListView ptrlvShop;
+	private List<ShopListItem> shops = new ArrayList<ShopListItem>();
+	private ShopListAdapter adapter;
+	private PullToRefreshListView ptrlvShop;
 
-    private static final String BMAP_PLACE = "http://api.map.baidu.com/place/v2/search?&query=%s&location=%s,%s&radius=2000&output=json&ak=%s";
+	private static final String BMAP_API_PLACE_SEARCH = "/search";
 
-    private Animation animRotate;
-    private AnimationDrawable adIndicator;
-    private TextView tvLocAddr;
-    private ImageView ivLocIndicator, ivLocRefresh;
+	private Animation animRotate;
+	private AnimationDrawable adIndicator;
+	private TextView tvLocAddr;
+	private ImageView ivLocIndicator, ivLocRefresh;
+	private EditText etSearch;
+	private PopupWindow popupWindow;
+	private ListView lvShopSearch;
 
-    private String query = "美食";
+	private String query = "美食";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        try {
-            httpService = (HttpService) BizApplication.instance().service("http");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+	private static final String[] autoStrs = new String[]{"a", "abc", "abcd", "abcde", "ba"};
 
-        query = getArguments().getString("query");
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		try {
+			httpService = (HttpService) BizApplication.instance().service("http");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-        adapter = new ShopListAdapter(tabActivity, shops);
+		query = getArguments().getString("query");
 
-        animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        animRotate.setDuration(1500);
-        animRotate.setRepeatCount(-1);
-        animRotate.setRepeatMode(Animation.RESTART);
-    }
+		adapter = new ShopListAdapter(tabActivity, shops);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_shop_list, container, false);
+		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
+				                                Animation.RELATIVE_TO_SELF, 0.5f);
+		animRotate.setDuration(1500);
+		animRotate.setRepeatCount(-1);
+		animRotate.setRepeatMode(Animation.RESTART);
+	}
 
-        initLocationModule(v);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_local_shop_list, container, false);
 
-        ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
-        ptrlvShop.getRefreshableView().setAdapter(adapter);
-        Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
-        ptrlvShop.setLoadingDrawable(drawable);
+		initLocationModule(v);
 
-        ptrlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (geoService == null) {
-                    Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
-                    return;
-                } else if (geoService.coord() == null) {
-                    geoService.locate(false);
-                    return;
-                } else {
-                    getLocalShop();
-                }
-            }
-        });
+		ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
+		ptrlvShop.getRefreshableView().setAdapter(adapter);
+		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
+		ptrlvShop.setLoadingDrawable(drawable);
 
-        ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> shop = shops.get(position - 1);
-                ShopDetailFragment sdf = new ShopDetailFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("uid", shop.get("uid").toString());
-                sdf.setArguments(bundle);
-                tabActivity.pushFragment(LocalFragment.Tag, sdf, true, true);
-            }
-        });
+		ptrlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				if (geoService == null) {
+					Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+					return;
+				} else if (geoService.coord() == null) {
+					geoService.locate(false);
+					return;
+				} else {
+					getLocalShop();
+				}
+			}
+		});
 
-        ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-        ivIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setClass(tabActivity, SysInfoActivity.class);
-                startActivity(intent);
-            }
-        });
+		ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ShopListItem shop = shops.get(position - 1);
+				if (shop != null) {
+					ShopDetailFragment sdf = new ShopDetailFragment();
+					Bundle bundle = new Bundle();
+					bundle.putString("uid", shop.getUid());
+					try {
+						Log.d("chris", shop.getUid());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					sdf.setArguments(bundle);
+					tabActivity.pushFragment(LocalFragment.Tag, sdf, true, true);
+				} else {
+					Toast.makeText(tabActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 
-        return v;
-    }
+		ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
+		ivIndicator.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent();
+				intent.setClass(tabActivity, SysInfoActivity.class);
+				startActivity(intent);
+			}
+		});
 
-    private HttpCallback httpCallback = new HttpCallback<Object>() {
-        @Override
-        public void onSuccess(Object o) {
-            ptrlvShop.onRefreshComplete();
-            super.onSuccess(o);
-            try {
-                JSONObject joResult = new JSONObject(o.toString());
-                if (joResult.getInt("status") == 0) {
-                    JSONArray jaResult = joResult.getJSONArray("results");
-                    if (jaResult == null || jaResult.length() == 0) {
-                        return;
-                    }
-                    shops.clear();
-                    for (int i = 0; i < jaResult.length(); ++i) {
-                        Map<String, Object> shopInfo = new HashMap<String, Object>();
-                        JSONObject joShop = jaResult.getJSONObject(i);
+		etSearch = (EditText) v.findViewById(R.id.et_local_shop_detail_search);
+		etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
-                        String name = "";
-                        try {
-                            name = joShop.getString("name");
-                        } catch (Exception e) {
-                        }
-                        shopInfo.put("name", name);
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				//当输入框获取焦点时弹出选项窗，失去焦点时取消选项窗
+				if (hasFocus) {
+					showPopupWindow();
+				} else {
+					dismissPopupWindow();
+				}
 
-                        String addr = "";
-                        try {
-                            addr = joShop.getString("address");
-                        } catch (Exception e) {
-                        }
-                        shopInfo.put("addr", addr);
+			}
+		});
+		return v;
+	}
 
-                        String tele = "";
-                        try {
-                            tele = joShop.getString("telephone");
-                        } catch (Exception e) {
-                        }
-                        shopInfo.put("tele", tele);
+	private HttpCallback httpCallback = new HttpCallback<Object>() {
+		@Override
+		public void onSuccess(Object o) {
+			ptrlvShop.onRefreshComplete();
+			super.onSuccess(o);
+			try {
+				JSONObject joResult = new JSONObject(o.toString());
+				if (joResult.getInt("status") == 0) {
+					JSONArray jaResult = joResult.getJSONArray("results");
+					if (jaResult == null || jaResult.length() == 0) {
+						return;
+					}
+					shops.clear();
+					for (int i = 0; i < jaResult.length(); ++i) {
+						try {
+							Map<String, Object> shopInfo = new HashMap<String, Object>();
+							JSONObject joShop = jaResult.getJSONObject(i);
 
-                        String uid = "";
-                        try {
-                            uid = joShop.getString("uid");
-                        } catch (Exception e) {
-                        }
-                        shopInfo.put("uid", uid);
-                        shops.add(shopInfo);
-                    }
-                    adapter.setData(shops);
-                } else {
-                    Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+							String name = joShop.getString("name");
 
-        @Override
-        public void onFailure(Throwable t, String strMsg) {
-            super.onFailure(t, strMsg);
-            ptrlvShop.onRefreshComplete();
-            Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
-        }
-    };
+							String addr = "";
+							try {
+								addr = joShop.getString("address");
+							} catch (Exception e) {
+							}
 
-    private Handler handler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 0:
-                    ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
-                    adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
-                    adIndicator.setOneShot(false);
-                    if (adIndicator.isRunning()) {
-                        adIndicator.stop();
-                    }
-                    adIndicator.start();
-                    animRotate.startNow();
-                    tvLocAddr.setText("正在定位...");
-                    break;
-                case 1:  // 定位成功
-                    if (adIndicator != null) {
-                        adIndicator.stop();
-                    }
-                    if (animRotate != null) {
-                        animRotate.cancel();
-                    }
-                    ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-	                Address addr = geoService.address();
-	                Logger.w("chris", addr.getCity());
-	                Coord coord = geoService.coord();
-	                String tip = "";
-	                if (addr == null) {
+							String tele = "";
+							try {
+								tele = joShop.getString("telephone");
+							} catch (Exception e) {
+
+							}
+
+							String uid = joShop.getString("uid");
+							ShopListItem shop = new ShopListItem(uid, name, addr, tele);
+							shops.add(shop);
+						} catch (Exception e) {
+
+						}
+					}
+					adapter.setData(shops);
+				} else {
+					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		@Override
+		public void onFailure(Throwable t, String strMsg) {
+			super.onFailure(t, strMsg);
+			ptrlvShop.onRefreshComplete();
+			Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+		}
+	};
+
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case 0:
+					ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
+					adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
+					adIndicator.setOneShot(false);
+					if (adIndicator.isRunning()) {
+						adIndicator.stop();
+					}
+					adIndicator.start();
+					animRotate.startNow();
+					tvLocAddr.setText("正在定位...");
+					break;
+				case 1:  // 定位成功
+					if (adIndicator != null) {
+						adIndicator.stop();
+					}
+					if (animRotate != null) {
+						animRotate.cancel();
+					}
+					ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+					Address addr = geoService.address();
+					Coord coord = geoService.coord();
+					String tip = "";
+					if (addr == null) {
 						tip = String.format("%s,%s", coord.getLat(), coord.getLng());
-	                } else {
-		                tip = addr.getStreet();
-	                }
-                    tvLocAddr.setText(tip);
-                    getLocalShop();
-                    break;
-                case 2:
-                    if (adIndicator != null) {
-                        adIndicator.stop();
-                    }
-                    if (animRotate != null) {
-                        animRotate.cancel();
-                    }
-                    ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
-                    tvLocAddr.setText("定位失败");
-                    if (ptrlvShop.isRefreshing()) {
-                        ptrlvShop.onRefreshComplete();
-                    }
-                    break;
-            }
-        }
-    };
+					} else {
+						tip = addr.getStreet();
+					}
+					tvLocAddr.setText(tip);
+					getLocalShop();
+					break;
+				case 2:
+					if (adIndicator != null) {
+						adIndicator.stop();
+					}
+					if (animRotate != null) {
+						animRotate.cancel();
+					}
+					ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
+					tvLocAddr.setText("定位失败");
+					if (ptrlvShop.isRefreshing()) {
+						ptrlvShop.onRefreshComplete();
+					}
+					break;
+			}
+		}
+	};
 
-    /**
-     * 初始化定位相关模块
-     */
-    private void initLocationModule(View v) {
-        geoService = (GeoService) BizApplication.instance().service("geo");
+	/**
+	 * 初始化定位相关模块
+	 */
+	private void initLocationModule(View v) {
+		geoService = (GeoService) BizApplication.instance().service("geo");
 
-        ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-        tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
-        ivLocRefresh = (ImageView) v.findViewById(R.id.iv_loc_refresh);
-        ivLocRefresh.setAnimation(animRotate);
-        animRotate.cancel();
-
-
-        if (geoService == null) {
-            Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-	    if (geoService.coord() != null) {
-		    ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-		    if (geoService.address() != null) {
-			    tvLocAddr.setText(geoService.address().getStreet());
-		    } else {
-			    String tip = String.format("%s,%s", geoService.coord().getLat(), geoService.coord().getLng());
-			    tvLocAddr.setText(tip);
-		    }
-	    }
-
-        ivLocRefresh.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                geoService.locate(false);
-            }
-        });
-
-        geoService.addListener(new LocationListener() {
-            @Override
-            public void onLocationChanged(GeoService.LocationStatus status) {
-                switch (status) {
-                    case ONGOING:
-                        handler.sendEmptyMessage(0);
-                        break;
-                    case SUCCESS:
-                        handler.sendEmptyMessage(1);
-                        break;
-                    case FAIL:
-                        handler.sendEmptyMessage(2);
-                        break;
-                }
-            }
-        });
-    }
-
-    private void getLocalShop() {
-        try {
-            if (geoService == null) {
-                Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
-                return;
-            } else if (geoService.coord() == null) {
-                geoService.locate(false);
-                return;
-            } else {
-                double lat = geoService.coord().getLat();
-                double lng = geoService.coord().getLng();
-                String url = String.format(BMAP_PLACE, URLEncoder.encode(query, "utf-8"),
-                        lat, lng, Const.BMAP_API_KEY);
-                httpService.get(url, null, httpCallback);
-
-                ptrlvShop.setRefreshing();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private class ShopListAdapter extends BaseAdapter {
-        private LayoutInflater inflater;
-        private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
+		tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
+		ivLocRefresh = (ImageView) v.findViewById(R.id.iv_loc_refresh);
+		ivLocRefresh.setAnimation(animRotate);
+		animRotate.cancel();
 
 
-        private ShopListAdapter(Context context, List<Map<String, Object>> data) {
-            this.inflater = LayoutInflater.from(context);
-            this.data = data;
-        }
+		if (geoService == null) {
+			Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
+			return;
+		}
 
-        public void setData(List<Map<String, Object>> data) {
-            this.data = data;
-            notifyDataSetChanged();
-        }
+		if (geoService.coord() != null) {
+			ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+			if (geoService.address() != null) {
+				tvLocAddr.setText(geoService.address().getStreet());
+			} else {
+				String tip = String.format("%s,%s", geoService.coord().getLat(), geoService.coord().getLng());
+				tvLocAddr.setText(tip);
+			}
+		}
 
-        @Override
-        public int getCount() {
-            return data.size();
-        }
+		ivLocRefresh.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				geoService.locate(false);
+			}
+		});
 
-        @Override
-        public Object getItem(int position) {
-            return data.get(position);
-        }
+		geoService.addListener(new LocationListener() {
+			@Override
+			public void onLocationChanged(GeoService.LocationStatus status) {
+				switch (status) {
+					case ONGOING:
+						handler.sendEmptyMessage(0);
+						break;
+					case SUCCESS:
+						handler.sendEmptyMessage(1);
+						break;
+					case FAIL:
+						handler.sendEmptyMessage(2);
+						break;
+				}
+			}
+		});
+	}
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
+	private void getLocalShop() {
+		try {
+			if (geoService == null) {
+				Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+				return;
+			} else if (geoService.coord() == null) {
+				geoService.locate(false);
+				return;
+			} else {
+				double lat = geoService.coord().getLat();
+				double lng = geoService.coord().getLng();
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
+				params.add(new BasicNameValuePair("output", "json"));
+				params.add(new BasicNameValuePair("query", query));
+				params.add(new BasicNameValuePair("page_size", 20 + ""));
+				params.add(new BasicNameValuePair("location", lat + "," + lng));
+				params.add(new BasicNameValuePair("radius", 5000 + ""));
+				String param = URLEncodedUtils.format(params, "UTF-8");
+				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
+						                          BMAP_API_PLACE_SEARCH, param);
+				httpService.get(url, null, httpCallback);
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                convertView = inflater.inflate(R.layout.layout_shop_list_item, null, false);
-            }
-            //得到条目中的子组件
-//            ImageView tvIcon = (ImageView) convertView.findViewById(R.id.iv_shop_list_item_icon);
-            TextView tvName = (TextView) convertView.findViewById(R.id.tv_shop_list_item_name);
-            TextView tvAddr = (TextView) convertView.findViewById(R.id.tv_shop_list_item_addr);
-            TextView tvTel = (TextView) convertView.findViewById(R.id.tv_shop_list_item_tele);
-            //从list对象中为子组件赋值
-//            tvIcon.setBackgroundResource(Integer.parseInt(data.get(position).get("icon").toString()));
-            tvName.setText(data.get(position).get("name").toString());
-            tvAddr.setText(data.get(position).get("addr").toString());
-            tvTel.setText(data.get(position).get("tele").toString());
-            return convertView;
-        }
-    }
+				ptrlvShop.setRefreshing();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	//设置和显示PopupWindow
+	private void showPopupWindow() {
+		//获取要显示在PopupWindow上的窗体视图
+		LayoutInflater inflater = tabActivity.getLayoutInflater();
+		View view = inflater.inflate(R.layout.layout_local_shop_search, null);
+		//实例化并且设置PopupWindow显示的视图
+		popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,
+				                             LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		//获取PopupWindow中的控件
+		lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
+
+		ShopSearchAdapter adapter = new ShopSearchAdapter(tabActivity, shops);
+		lvShopSearch.setAdapter(adapter);
+
+		//想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
+		popupWindow.setFocusable(true);
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg));
+
+		//设置PopupWindow消失的时候触发的事件
+		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				Toast.makeText(tabActivity, "我消失了", Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		//设置ListView点击事件
+		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View view, int position,
+			                        long arg3) {
+				ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
+				etSearch.setText(shop.getName());
+				dismissPopupWindow();
+			}
+		});
+
+		//显示PopupWindow有3个方法
+		//popupWindow.showAsDropDown(anchor)
+		//popupWindow.showAsDropDown(anchor, xoff, yoff)
+		//popupWindow.showAtLocation(parent, gravity, x, y)
+		//需要注意的是以上三个方法必须在触发事件中使用，比如在点击某个按钮的时候
+		popupWindow.showAsDropDown(etSearch, 0, 0);
+	}
+
+	//让PopupWindow消失
+	private void dismissPopupWindow() {
+		if (popupWindow != null && popupWindow.isShowing()) {
+			popupWindow.dismiss();
+		}
+	}
 }

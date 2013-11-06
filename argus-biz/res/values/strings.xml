@@ -2,6 +2,8 @@
 <resources>
 	<string name="app_name">argus</string>
 
+	<string name="loading_hint">加载中...</string>
+
 	<string name="shop_detail_addr_hint">地址</string>
 	<string name="shop_detail_price_hint">人均</string>
 	<string name="shop_detail_tele_hint">电话</string>
