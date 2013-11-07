@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local.R;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
@@ -46,7 +47,7 @@ public class ShopDetailFragment extends LFFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_shop_detail, container, false);
+        View v = inflater.inflate(R.layout.layout_local_shop_detail, container, false);
 
         initUI(v);
 

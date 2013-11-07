@@ -4,7 +4,7 @@
     <!-- ant 系统环境变量-->
     <property environment="env"/>
     <property file="${basedir}/../ant.properties"/>
-    <property file="local.properties"/>
+    <property file="com.lynx.argus.biz.plugin.local.properties"/>
     <property name="appName" value="${ant.project.name}"/>
 
     <loadproperties srcFile="project.properties"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">argus-plugin-local</string>
-    <string name="hello">hello world</string>
+    <string name="app_name">argus-plugin-local-beta</string>
+    <string name="loading_hint">载入中...</string>
 
 	<string name="shop_detail_addr_hint">地址</string>
 	<string name="shop_detail_price_hint">人均</string>

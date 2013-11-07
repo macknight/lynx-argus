@@ -1,6 +1,5 @@
 package com.lynx.argus.biz.plugin.local;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,7 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+import com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local.R;
+import com.lynx.argus.biz.plugin.local.model.ShopListAdapter;
+import com.lynx.argus.biz.plugin.local.model.ShopListItem;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
@@ -41,7 +46,7 @@ public class LocalShopListFragment extends LFFragment {
 	private GeoService geoService;
 	private HttpService httpService;
 
-	private List<Map<String, Object>> shops = new ArrayList<Map<String, Object>>();
+	private List<ShopListItem> shops = new ArrayList<ShopListItem>();
 	private ShopListAdapter adapter;
 	private PullToRefreshListView ptrlvShop;
 
@@ -65,8 +70,6 @@ public class LocalShopListFragment extends LFFragment {
 
 		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
 		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
-
-//        query = getArguments().getString("query");
 
 		adapter = new ShopListAdapter(getActivity(), shops);
 
@@ -106,10 +109,10 @@ public class LocalShopListFragment extends LFFragment {
 		ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Map<String, Object> shop = shops.get(position - 1);
+				ShopListItem shop = shops.get(position - 1);
 				ShopDetailFragment sdf = new ShopDetailFragment();
 				Bundle bundle = new Bundle();
-				bundle.putString("uid", shop.get("uid").toString());
+				bundle.putString("uid", shop.getUid());
 				sdf.setArguments(bundle);
 				navActivity.pushFragment(sdf, true, true);
 			}
@@ -142,41 +145,35 @@ public class LocalShopListFragment extends LFFragment {
 					}
 					shops.clear();
 					for (int i = 0; i < jaResult.length(); ++i) {
-						Map<String, Object> shopInfo = new HashMap<String, Object>();
-						JSONObject joShop = jaResult.getJSONObject(i);
-
-						String name = "";
 						try {
-							name = joShop.getString("name");
-						} catch (Exception e) {
-						}
-						shopInfo.put("name", name);
+							Map<String, Object> shopInfo = new HashMap<String, Object>();
+							JSONObject joShop = jaResult.getJSONObject(i);
 
-						String addr = "";
-						try {
-							addr = joShop.getString("address");
-						} catch (Exception e) {
-						}
-						shopInfo.put("addr", addr);
+							String name = joShop.getString("name");
 
-						String tele = "";
-						try {
-							tele = joShop.getString("telephone");
-						} catch (Exception e) {
-						}
-						shopInfo.put("tele", tele);
+							String addr = "";
+							try {
+								addr = joShop.getString("address");
+							} catch (Exception e) {
+							}
 
-						String uid = "";
-						try {
-							uid = joShop.getString("uid");
+							String tele = "";
+							try {
+								tele = joShop.getString("telephone");
+							} catch (Exception e) {
+
+							}
+
+							String uid = joShop.getString("uid");
+							ShopListItem shop = new ShopListItem(uid, name, addr, tele);
+							shops.add(shop);
 						} catch (Exception e) {
+
 						}
-						shopInfo.put("uid", uid);
-						shops.add(shopInfo);
 					}
 					adapter.setData(shops);
 				} else {
-					Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -313,55 +310,6 @@ public class LocalShopListFragment extends LFFragment {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-	private class ShopListAdapter extends BaseAdapter {
-		private LayoutInflater inflater;
-		private List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
-
-		private ShopListAdapter(Context context, List<Map<String, Object>> data) {
-			this.inflater = LayoutInflater.from(context);
-			this.data = data;
-		}
-
-		public void setData(List<Map<String, Object>> data) {
-			this.data = data;
-			notifyDataSetChanged();
-		}
-
-		@Override
-		public int getCount() {
-			return data.size();
-		}
-
-		@Override
-		public Object getItem(int position) {
-			return data.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
-		}
-
-		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
-			if (convertView == null) {
-				convertView = inflater.inflate(R.layout.layout_local_shoplist_item, null, false);
-			}
-			//得到条目中的子组件
-//            ImageView tvIcon = (ImageView) convertView.findViewById(R.id.iv_shop_list_item_icon);
-			TextView tvName = (TextView) convertView.findViewById(R.id.tv_shop_list_item_name);
-			TextView tvAddr = (TextView) convertView.findViewById(R.id.tv_shop_list_item_addr);
-			TextView tvTel = (TextView) convertView.findViewById(R.id.tv_shop_list_item_tele);
-			//从list对象中为子组件赋值
-//            tvIcon.setBackgroundResource(Integer.parseInt(data.get(position).get("icon").toString()));
-			tvName.setText(data.get(position).get("name").toString());
-			tvAddr.setText(data.get(position).get("addr").toString());
-			tvTel.setText(data.get(position).get("tele").toString());
-			return convertView;
 		}
 	}
 

@@ -88,7 +88,7 @@ public class ShopListFragment extends BizFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_local_shop_list, container, false);
+		View v = inflater.inflate(R.layout.layout_local_shoplist, container, false);
 
 		initLocationModule(v);
 
@@ -144,17 +144,19 @@ public class ShopListFragment extends BizFragment {
 		});
 
 		etSearch = (EditText) v.findViewById(R.id.et_local_shop_detail_search);
+		etSearch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showPopupWindow();
+			}
+		});
 		etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
 			@Override
 			public void onFocusChange(View v, boolean hasFocus) {
 				//当输入框获取焦点时弹出选项窗，失去焦点时取消选项窗
-				if (hasFocus) {
-					showPopupWindow();
-				} else {
+				if (!hasFocus) {
 					dismissPopupWindow();
 				}
-
 			}
 		});
 		return v;

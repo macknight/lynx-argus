@@ -8,7 +8,7 @@ package com.lynx.lib.geo.entity;
 public class GSMCell implements Cell {
     private int mcc; // mobile country code
     private int mnc; // mobile network code
-    private int lac; // local area code
+    private int lac; // com.lynx.argus.biz.plugin.local area code
     private int cid; // cell id
     private int asu; // single strength
 

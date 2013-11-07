@@ -40,7 +40,7 @@
 				android:layout_height="match_parent"
 				android:cacheColorHint="@android:color/transparent"
 				android:divider="@drawable/horizontal_divider"
-				android:listSelector="@null"
+				android:listSelector="@android:color/transparent"
 				android:scrollbars="none">
 		</com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
 

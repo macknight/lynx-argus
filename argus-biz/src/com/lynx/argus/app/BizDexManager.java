@@ -45,6 +45,6 @@ public class BizDexManager extends DexManager {
 
 	@Override
 	public void initDexUIModuleLoader() {
-		addUIModule(new DexUILoader(context, "local"));
+		addUIModule(new DexUILoader(context, "com.lynx.argus.biz.plugin.local"));
 	}
 }

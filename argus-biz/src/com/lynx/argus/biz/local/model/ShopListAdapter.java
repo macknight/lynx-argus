@@ -49,7 +49,7 @@ public class ShopListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_local_shop_list_item, null);
+			view = View.inflate(context, R.layout.layout_local_shoplist_item, null);
 			holder = new ViewHolder();
 			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shop_list_item_name);
 			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shop_list_item_addr);
