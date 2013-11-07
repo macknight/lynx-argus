@@ -1,6 +1,7 @@
 package com.lynx.argus.biz.plugin.local;
 
 import android.os.Bundle;
+import com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local.R;
 import com.mapbar.android.maps.GeoPoint;
 import com.mapbar.android.maps.MapActivity;
 import com.mapbar.android.maps.MapController;

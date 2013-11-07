@@ -28,10 +28,12 @@ import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +52,7 @@ public class LocalShopListFragment extends LFFragment {
 	private ShopListAdapter adapter;
 	private PullToRefreshListView ptrlvShop;
 
-	private static final String BMAP_PLACE = "http://api.map.baidu.com/place/v2/search?&query=%s&location=%s,%s&radius=2000&output=json&ak=%s";
+	private static final String BMAP_API_PLACE_SEARCH = "/search";
 
 	private Animation animRotate;
 	private AnimationDrawable adIndicator;
@@ -302,8 +304,16 @@ public class LocalShopListFragment extends LFFragment {
 			} else {
 				double lat = geoService.coord().getLat();
 				double lng = geoService.coord().getLng();
-				String url = String.format(BMAP_PLACE, URLEncoder.encode(query, "utf-8"),
-						lat, lng, Const.BMAP_API_KEY);
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
+				params.add(new BasicNameValuePair("output", "json"));
+				params.add(new BasicNameValuePair("query", query));
+				params.add(new BasicNameValuePair("page_size", 20 + ""));
+				params.add(new BasicNameValuePair("location", lat + "," + lng));
+				params.add(new BasicNameValuePair("radius", 5000 + ""));
+				String param = URLEncodedUtils.format(params, "UTF-8");
+				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
+						BMAP_API_PLACE_SEARCH, param);
 				httpService.get(url, null, httpCallback);
 
 				ptrlvShop.setRefreshing();

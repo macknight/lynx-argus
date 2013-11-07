@@ -6,7 +6,10 @@
 	<ListView android:id="@+id/lv_local_shop_search"
 	          android:layout_width="match_parent"
 	          android:layout_height="match_parent"
+	          android:divider="@drawable/horizontal_divider"
 	          android:listSelector="@android:color/transparent"
-	          android:cacheColorHint="@android:color/transparent"/>
+	          android:scrollbars="none"
+	          android:cacheColorHint="@android:color/transparent"
+	          android:background="@android:color/white"/>
 
 </LinearLayout>

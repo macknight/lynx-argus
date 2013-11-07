@@ -3,7 +3,7 @@
     <property environment="env"/>
 
     <property file="${basedir}/../ant.properties"/>
-    <property file="com.lynx.argus.biz.plugin.local.properties"/>
+    <property file="local.properties"/>
     <property file="ant.properties"/>
 
     <loadproperties srcFile="project.properties"/>

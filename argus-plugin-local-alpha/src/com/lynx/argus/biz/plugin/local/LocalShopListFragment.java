@@ -358,14 +358,6 @@ public class LocalShopListFragment extends LFFragment {
 		popupWindow.setOutsideTouchable(true);
 		popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.popout_list_bg));
 
-		//设置PopupWindow消失的时候触发的事件
-		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-			@Override
-			public void onDismiss() {
-				Toast.makeText(navActivity, "我消失了", Toast.LENGTH_SHORT).show();
-			}
-		});
-
 		//设置ListView点击事件
 		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
