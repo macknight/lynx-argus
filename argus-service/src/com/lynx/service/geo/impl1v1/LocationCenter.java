@@ -41,10 +41,11 @@ public class LocationCenter {
 	private static final int INTERVAL_PRE = 1000; // 预处理状态check时间间隔
 	private static final int INTERVAL_COUNT = 8;
 
-	private static final int CELL_SCAN_FIN = 0x0001;
-	private static final int WIFI_SCAN_FIN = 0x0010;
-	private static final int NETWORK_LOC_FIN = 0x0100;
-	private static final int GPS_LOC_FIN = 0x1000;
+	private static final int CELL_SCAN_FIN = 0x00001;
+	private static final int WIFI_SCAN_FIN = 0x00010;
+	private static final int BMAP_LOC_FIN = 0x00100;
+	private static final int NETWORK_LOC_FIN = 0x01000;
+	private static final int GPS_LOC_FIN = 0x10000;
 
 	private Context context = null;
 	private CellInfoManager cellInfoManager = null;
@@ -70,7 +71,7 @@ public class LocationCenter {
 		cellInfoManager = new CellInfoManager(this);
 		wifiInfoManager = new WifiInfoManager(this);
 		locationManager = (LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE);
+				                                    .getSystemService(Context.LOCATION_SERVICE);
 
 		try {
 			Method getService = context.getClass().getMethod("service", String.class);
@@ -87,12 +88,12 @@ public class LocationCenter {
 		timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (loop.intValue() >= INTERVAL_COUNT || status.intValue() >= 0x1111) {
+				if (loop.intValue() >= INTERVAL_COUNT || status.intValue() >= 0x11111) {
 					stopPrv();
 					locate();
 					return;
 				}
-				loop.set(loop.intValue() + 1);
+				loop.getAndAdd(1);
 			}
 		};
 
@@ -103,12 +104,12 @@ public class LocationCenter {
 		// 监听系统network定位数据
 		if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,
-					10000, 500, locationListener);
+					                                      10000, 500, locationListener);
 		}
 		// 监听系统network定位数据
 		if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
 			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-					10000, 500, locationListener);
+					                                      10000, 500, locationListener);
 		}
 
 		geoService.onLocationChanged(GeoService.LocationStatus.ONGOING);
@@ -154,8 +155,8 @@ public class LocationCenter {
 			double lat = LocationUtil.format(location.getLatitude(), 5);
 			double lng = LocationUtil.format(location.getLongitude(), 5);
 			Coord coord = new Coord(CoordSource.GPS, lat, lng,
-					(int) location.getAccuracy(), System.currentTimeMillis()
-					- location.getTime());
+					                       (int) location.getAccuracy(), System.currentTimeMillis()
+							                                                     - location.getTime());
 			if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
 				coord.setSource(CoordSource.NETWORK);
 				coords3thPart.add(coord);
@@ -171,18 +172,74 @@ public class LocationCenter {
 		@Override
 		public void onProviderDisabled(String provider) {
 			Toast.makeText(context, provider + "服务未打开",
-					Toast.LENGTH_SHORT).show();
+					              Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
 			Toast.makeText(context, "GPS定位开启一次，将在60s后关闭",
-					Toast.LENGTH_SHORT).show();
+					              Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
 			// 在可用、暂时不可用和无服务三个状态直接切换时触发此函数
+		}
+	};
+
+	private final HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
+		@Override
+		public void onSuccess(Object o) {
+			super.onSuccess(o);
+			try {
+				Log.d("chris", o.toString());
+				JSONObject jo = new JSONObject(o.toString());
+				if (jo.getInt("status") == 200) {
+					JSONArray jaLocation = jo.getJSONArray("data");
+					if (jaLocation.length() <= 0) {
+						geoService.onLocationChanged(LocationStatus.FAIL);
+						return;
+					}
+					if (jaLocation.length() == 1) {
+						JSONObject jolocation = jaLocation.getJSONObject(0);
+						double lat = jolocation.getDouble("lat");
+						lat = LocationUtil.format(lat, 4);
+						double lng = jolocation.getDouble("lng");
+						lng = LocationUtil.format(lng, 4);
+						int acc = jolocation.getInt("acc");
+						coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, 0);
+						try {
+							JSONObject joAddr = jolocation.getJSONObject("addr");
+							String province = joAddr.getString("province");
+							String city = joAddr.getString("city");
+							String region = joAddr.getString("region");
+							String street = joAddr.getString("street");
+							String num = joAddr.getString("num");
+							addr = new Address(province, city, region, street, num);
+						} catch (Exception e) {
+							Logger.e(Tag, "cant get address now");
+						}
+
+						geoService.onLocationChanged(LocationStatus.SUCCESS);
+						return;
+					} else if (jaLocation.length() > 1) {
+						geoService.onLocationChanged(LocationStatus.FAIL);
+						return;
+					}
+				} else {
+					geoService.onLocationChanged(LocationStatus.FAIL);
+					return;
+				}
+			} catch (Exception e) {
+				Logger.e(Tag, "cant get location now");
+			}
+			geoService.onLocationChanged(LocationStatus.FAIL);
+		}
+
+		@Override
+		public void onFailure(Throwable t, String strMsg) {
+			super.onFailure(t, strMsg);
+			geoService.onLocationChanged(LocationStatus.FAIL);
 		}
 	};
 
@@ -203,6 +260,14 @@ public class LocationCenter {
 	}
 
 	/**
+	 * 完成百度定位
+	 */
+	public void bmapLocFin() {
+		Logger.i(Tag, "baidu map locate fin");
+		status.set(status.intValue() | BMAP_LOC_FIN);
+	}
+
+	/**
 	 * 完成信息收集步骤后开始定位
 	 */
 	private void locate() {
@@ -214,63 +279,9 @@ public class LocationCenter {
 		if (wifiInfoManager.wifis2str() != null) {
 			param.put("wifi", wifiInfoManager.wifis2str());
 		}
-		httpService.post(String.format("%s%s", Const.DOMAIN, URL_LOCATE), param,
-				new HttpCallback<Object>() {
-					@Override
-					public void onSuccess(Object o) {
-						super.onSuccess(o);
-						try {
-							Log.d("chris", o.toString());
-							JSONObject jo = new JSONObject(o.toString());
-							if (jo.getInt("status") == 200) {
-								JSONArray jaLocation = jo.getJSONArray("data");
-								if (jaLocation.length() <= 0) {
-									geoService.onLocationChanged(LocationStatus.FAIL);
-									return;
-								}
-								if (jaLocation.length() == 1) {
-									JSONObject jolocation = jaLocation.getJSONObject(0);
-									double lat = jolocation.getDouble("lat");
-									lat = LocationUtil.format(lat, 4);
-									double lng = jolocation.getDouble("lng");
-									lng = LocationUtil.format(lng, 4);
-									int acc = jolocation.getInt("acc");
-									coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, 0);
-									try {
-										JSONObject joAddr = jolocation.getJSONObject("addr");
-										String province = joAddr.getString("province");
-										String city = joAddr.getString("city");
-										String region = joAddr.getString("region");
-										String street = joAddr.getString("street");
-										String num = joAddr.getString("num");
-										addr = new Address(province, city, region, street, num);
-									} catch (Exception e) {
-										Logger.e(Tag, "cant get address now");
-									}
-
-									geoService.onLocationChanged(LocationStatus.SUCCESS);
-									return;
-								} else if (jaLocation.length() > 1) {
-									geoService.onLocationChanged(LocationStatus.FAIL);
-									return;
-								}
-							} else {
-								geoService.onLocationChanged(LocationStatus.FAIL);
-								return;
-							}
-						} catch (Exception e) {
-							Logger.e(Tag, "cant get location now");
-						}
-						geoService.onLocationChanged(LocationStatus.FAIL);
-					}
-
-					@Override
-					public void onFailure(Throwable t, String strMsg) {
-						super.onFailure(t, strMsg);
-						geoService.onLocationChanged(LocationStatus.FAIL);
-					}
-				});
+		httpService.post(String.format("%s%s", Const.DOMAIN, URL_LOCATE), param, httpCallback);
 	}
+
 
 	public Context context() {
 		return context;

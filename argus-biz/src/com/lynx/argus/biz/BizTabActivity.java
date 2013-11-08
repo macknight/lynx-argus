@@ -8,9 +8,9 @@ import android.widget.TabHost;
 import com.lynx.argus.R;
 import com.lynx.argus.biz.local.LocalFragment;
 import com.lynx.argus.biz.more.MoreFragment;
-import com.lynx.argus.biz.msg.MsgFragment;
-import com.lynx.argus.biz.photo.PhotoFragment;
-import com.lynx.argus.biz.social.SocialFragment;
+import com.lynx.argus.biz.my.MyFragment;
+import com.lynx.argus.biz.search.SearchFragment;
+import com.lynx.argus.biz.shop.ShoppingFragment;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.LFTabActivity;
 
@@ -54,12 +54,12 @@ public class BizTabActivity extends LFTabActivity {
 				if (stacks.get(tabId).size() == 0) {
 					if (tabId.equals(LocalFragment.Tag)) {
 						pushFragment(tabId, new LocalFragment(), false, true);
-					} else if (tabId.equals(PhotoFragment.Tag)) {
-						pushFragment(tabId, new PhotoFragment(), false, true);
+					} else if (tabId.equals(ShoppingFragment.Tag)) {
+						pushFragment(tabId, new ShoppingFragment(), false, true);
 					} else if (tabId.equals("Message")) {
-						pushFragment(tabId, new MsgFragment(), false, true);
+						pushFragment(tabId, new MyFragment(), false, true);
 					} else if (tabId.equals("Social")) {
-						pushFragment(tabId, new SocialFragment(), false, true);
+						pushFragment(tabId, new SearchFragment(), false, true);
 					} else if (tabId.equals("More")) {
 						pushFragment(tabId, new MoreFragment(), false, true);
 					}
@@ -83,17 +83,17 @@ public class BizTabActivity extends LFTabActivity {
 				return findViewById(R.id.realtabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(R.drawable.tab_local));
+		spec.setIndicator(createTabView(R.drawable.main_idx_local));
 		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec(PhotoFragment.Tag);
+		spec = tabHost.newTabSpec(ShoppingFragment.Tag);
 		spec.setContent(new TabHost.TabContentFactory() {
 			@Override
 			public View createTabContent(String tag) {
 				return findViewById(R.id.realtabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(R.drawable.tab_photo));
+		spec.setIndicator(createTabView(R.drawable.main_idx_shop));
 		tabHost.addTab(spec);
 
 		spec = tabHost.newTabSpec("Message");
@@ -103,7 +103,7 @@ public class BizTabActivity extends LFTabActivity {
 				return findViewById(R.id.realtabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(R.drawable.tab_msg));
+		spec.setIndicator(createTabView(R.drawable.main_idx_my));
 		tabHost.addTab(spec);
 
 		spec = tabHost.newTabSpec("Social");
@@ -113,7 +113,7 @@ public class BizTabActivity extends LFTabActivity {
 				return findViewById(R.id.realtabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(R.drawable.tab_social));
+		spec.setIndicator(createTabView(R.drawable.main_idx_search));
 		tabHost.addTab(spec);
 
 		spec = tabHost.newTabSpec("More");
@@ -123,7 +123,7 @@ public class BizTabActivity extends LFTabActivity {
 				return findViewById(R.id.realtabcontent);
 			}
 		});
-		spec.setIndicator(createTabView(R.drawable.tab_more));
+		spec.setIndicator(createTabView(R.drawable.main_idx_more));
 		tabHost.addTab(spec);
 	}
 

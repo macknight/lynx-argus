@@ -7,21 +7,17 @@
                     android:layout_height="45dp"
                     android:background="@drawable/tool_bar">
 
-        <Spinner android:id="@+id/spinner_local_category"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_centerInParent="true"
-                 style="@style/local_spinner_style"/>
     </RelativeLayout>
-    <com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
-            android:id="@+id/prlv_local_idx"
+    <com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
+            android:id="@+id/prgv_local_idx"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@drawable/horizontal_divider"
-            android:listSelector="@null"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="4"
             android:scrollbars="none">
-    </com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
+    </com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
 
 </LinearLayout>
 

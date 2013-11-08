@@ -9,25 +9,15 @@
 			android:layout_height="45dp"
 			android:background="@drawable/tool_bar">
 
-		<EditText
-				android:id="@+id/et_local_shop_detail_search"
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:layout_marginLeft="30dp"
-				android:layout_marginBottom="3dp"
-				android:layout_toLeftOf="@+id/ib_local_shop_search"
-				android:gravity="fill_vertical"
-				style="@style/edittext_style"/>
-
 		<ImageButton
-				android:id="@+id/ib_local_shop_search"
+				android:id="@+id/ib_local_shoplist_map"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_centerVertical="true"
 				android:layout_alignParentRight="true"
 				android:padding="15dp"
 				android:contentDescription="@null"
-				android:src="@drawable/search"
+				android:src="@drawable/map"
 				android:background="@drawable/selector_btn"/>
 	</RelativeLayout>
 
@@ -35,7 +25,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
 		<com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
-				android:id="@+id/prlv_shop_list"
+				android:id="@+id/prlv_shoplist"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:cacheColorHint="@android:color/transparent"

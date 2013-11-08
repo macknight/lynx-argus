@@ -51,9 +51,9 @@ public class ShopListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.layout_local_shoplist_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shop_list_item_name);
-			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shop_list_item_addr);
-			holder.tvTele = (TextView) view.findViewById(R.id.tv_local_shop_list_item_tele);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shoplist_item_name);
+			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shoplist_item_addr);
+			holder.tvTele = (TextView) view.findViewById(R.id.tv_local_shoplist_item_tele);
 			view.setTag(holder);
 		} else {
 			view = convertView;

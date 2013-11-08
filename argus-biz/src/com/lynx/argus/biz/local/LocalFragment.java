@@ -7,11 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.lib.http.core.AsyncTask;
-import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
+import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,164 +23,108 @@ import java.util.Map;
  * Date: 13-9-12 下午6:18
  */
 public class LocalFragment extends BizFragment {
-    public static final String Tag = "Local";
+	public static final String Tag = "Local";
 
-    private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
-    private List<Map<String, Object>> categories = new ArrayList<Map<String, Object>>();
-    private Spinner spinnerCategory;
-    private PullToRefreshListView prlvIdx;
-    private SimpleAdapter idxAdapter;
-    private SimpleAdapter categoryAdapter;
+	private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
+	private PullToRefreshGridView prgvIdx;
+	private SimpleAdapter idxAdapter;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initIdx();
-        initCategory();
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		initIdx();
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_local, container, false);
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_local, container, false);
 
-        prlvIdx = (PullToRefreshListView) v.findViewById(R.id.prlv_local_idx);
-        Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
-        prlvIdx.setLoadingDrawable(drawable);
-        prlvIdx.getRefreshableView().setAdapter(idxAdapter);
-        prlvIdx.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new GetDataTask().execute();
-            }
-        });
+		prgvIdx = (PullToRefreshGridView) v.findViewById(R.id.prgv_local_idx);
+		idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
+				                              R.layout.layout_local_idx_item,
+				                              new String[]{"icon"},
+				                              new int[]{R.id.iv_local_idx_item_icon}
+		);
+		prgvIdx.getRefreshableView().setAdapter(idxAdapter);
 
-        prlvIdx.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> idxInfo = idxInfos.get(position - 1);
-                ShopListFragment slf = new ShopListFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("query", idxInfo.get("title").toString());
-                slf.setArguments(bundle);
-                tabActivity.pushFragment(Tag, slf, true, true);
-            }
-        });
+		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
+		prgvIdx.setLoadingDrawable(drawable);
 
-        spinnerCategory = (Spinner) v.findViewById(R.id.spinner_local_category);
-        spinnerCategory.setAdapter(categoryAdapter);
+		prgvIdx.setOnRefreshListener(new PullToRefreshGridView.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				new GetDataTask().execute();
+			}
+		});
 
-        return v;
-    }
+		prgvIdx.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (position == idxInfos.size() - 1) {
+					return;
+				}
 
-    private void initIdx() {
-        idxInfos.clear();
+				Map<String, Object> idxInfo = idxInfos.get(position);
+				ShopListFragment slf = new ShopListFragment();
+				Bundle bundle = new Bundle();
+				bundle.putString("query", idxInfo.get("title").toString());
+				slf.setArguments(bundle);
+				tabActivity.pushFragment(Tag, slf, true, true);
+			}
+		});
 
-        Map<String, Object> idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.food_u + "");
-        idxInfo.put("title", "小吃快餐");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		return v;
+	}
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.coffee_u + "");
-        idxInfo.put("title", "咖啡屋");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+	private void initIdx() {
+		idxInfos.clear();
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.bread_u + "");
-        idxInfo.put("title", "西点");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		Map<String, Object> idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_repast + "");
+		idxInfo.put("title", "美食");
+		idxInfos.add(idxInfo);
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.pot_u + "");
-        idxInfo.put("title", "火锅");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_shopping + "");
+		idxInfo.put("title", "商场");
+		idxInfos.add(idxInfo);
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.ktv_u + "");
-        idxInfo.put("title", "KTV");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_hotel + "");
+		idxInfo.put("title", "酒店");
+		idxInfos.add(idxInfo);
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.film_u + "");
-        idxInfo.put("title", "电影院");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_entertainment + "");
+		idxInfo.put("title", "娱乐");
+		idxInfos.add(idxInfo);
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.hotel_u + "");
-        idxInfo.put("title", "酒店");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_school + "");
+		idxInfo.put("title", "学校");
+		idxInfos.add(idxInfo);
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.bank_u + "");
-        idxInfo.put("title", "银行");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+		idxInfo = new HashMap<String, Object>();
+		idxInfo.put("icon", R.drawable.local_more + "");
+		idxInfo.put("title", "更多");
+		idxInfos.add(idxInfo);
+	}
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.hair_u + "");
-        idxInfo.put("title", "美容美发");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
+	private class GetDataTask extends AsyncTask<Void, Void, String[]> {
+		@Override
+		protected String[] doInBackground(Void... params) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				;
+			}
+			return null;
+		}
 
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.park_u + "");
-        idxInfo.put("title", "停车场");
-        idxInfo.put("desc", "asdfasd.fadsf");
-        idxInfos.add(idxInfo);
-
-        idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
-                R.layout.layout_local_idx_item,
-                new String[]{"icon", "title", "desc"},
-                new int[]{R.id.iv_local_idx_item_icon, R.id.tv_local_idx_item_title,
-                        R.id.tv_local_idx_item_desc}
-        );
-    }
-
-    private void initCategory() {
-        categories.clear();
-
-        Map<String, Object> category = new HashMap<String, Object>();
-        category.put("icon", R.drawable.category_tuan + "");
-        category.put("title", "团购");
-        categories.add(category);
-
-        category = new HashMap<String, Object>();
-        category.put("icon", R.drawable.category_all + "");
-        category.put("title", "所有");
-        categories.add(category);
-
-        categoryAdapter = new SimpleAdapter(tabActivity, categories,
-                R.layout.layout_local_category_spinner_item,
-                new String[]{"icon", "title"},
-                new int[]{R.id.iv_local_spinner_category_item_icon, R.id.tv_local_spinner_category_item_name}
-        );
-        categoryAdapter.setDropDownViewResource(R.layout.layout_local_category_spinner_item);
-    }
-
-    private class GetDataTask extends AsyncTask<Void, Void, String[]> {
-        @Override
-        protected String[] doInBackground(Void... params) {
-            // Simulates a background job.
-            try {
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                ;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String[] result) {
-            // Call onRefreshComplete when the list has been refreshed.
-            prlvIdx.onRefreshComplete();
-            super.onPostExecute(result);
-        }
-    }
+		@Override
+		protected void onPostExecute(String[] result) {
+			super.onPostExecute(result);
+			prgvIdx.onRefreshComplete();
+		}
+	}
 }

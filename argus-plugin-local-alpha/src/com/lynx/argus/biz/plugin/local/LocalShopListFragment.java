@@ -63,8 +63,6 @@ public class LocalShopListFragment extends LFFragment {
 
 	private String query = "美食";
 
-	private static final String[] autoStrs = new String[]{"a", "abc", "abcd", "abcde", "ba"};
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -74,7 +72,8 @@ public class LocalShopListFragment extends LFFragment {
 			e.printStackTrace();
 		}
 
-		adapter = new ShopListAdapter(navActivity, shops);
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 
 		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
 				                                Animation.RELATIVE_TO_SELF, 0.5f);
@@ -90,6 +89,7 @@ public class LocalShopListFragment extends LFFragment {
 		initLocationModule(v);
 
 		prgvShop = (PullToRefreshGridView) v.findViewById(R.id.prgv_shoplist);
+		adapter = new ShopListAdapter(navActivity, shops);
 		prgvShop.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prgvShop.setLoadingDrawable(drawable);
@@ -112,16 +112,16 @@ public class LocalShopListFragment extends LFFragment {
 		prgvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//				ShopListItem shop = shops.get(position - 1);
-//				if (shop != null) {
-//					ShopDetailFragment sdf = new ShopDetailFragment();
-//					Bundle bundle = new Bundle();
-//					bundle.putString("uid", shop.getUid());
-//					sdf.setArguments(bundle);
-//					navActivity.pushFragment(sdf, true, true);
-//				} else {
-//					Toast.makeText(navActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
-//				}
+				ShopListItem shop = shops.get(position);
+				if (shop != null) {
+					ShopDetailFragment sdf = new ShopDetailFragment();
+					Bundle bundle = new Bundle();
+					bundle.putString("uid", shop.getUid());
+					sdf.setArguments(bundle);
+					navActivity.pushFragment(sdf, true, true);
+				} else {
+					Toast.makeText(navActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 

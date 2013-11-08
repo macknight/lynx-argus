@@ -19,7 +19,6 @@ import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.SysInfoActivity;
 import com.lynx.argus.biz.local.model.ShopListAdapter;
 import com.lynx.argus.biz.local.model.ShopListItem;
-import com.lynx.argus.biz.local.model.ShopSearchAdapter;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
@@ -58,13 +57,9 @@ public class ShopListFragment extends BizFragment {
 	private AnimationDrawable adIndicator;
 	private TextView tvLocAddr;
 	private ImageView ivLocIndicator, ivLocRefresh;
-	private EditText etSearch;
-	private PopupWindow popupWindow;
-	private ListView lvShopSearch;
+
 
 	private String query = "美食";
-
-	private static final String[] autoStrs = new String[]{"a", "abc", "abcd", "abcde", "ba"};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -92,7 +87,7 @@ public class ShopListFragment extends BizFragment {
 
 		initLocationModule(v);
 
-		ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
+		ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shoplist);
 		ptrlvShop.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		ptrlvShop.setLoadingDrawable(drawable);
@@ -143,22 +138,16 @@ public class ShopListFragment extends BizFragment {
 			}
 		});
 
-		etSearch = (EditText) v.findViewById(R.id.et_local_shop_detail_search);
-		etSearch.setOnClickListener(new View.OnClickListener() {
+		ImageButton ibMap = (ImageButton)v.findViewById(R.id.ib_local_shoplist_map);
+		ibMap.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showPopupWindow();
+				Intent intent = new Intent();
+				intent.setClass(tabActivity, ShopListMapActivity.class);
+				startActivity(intent);
 			}
 		});
-		etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-			@Override
-			public void onFocusChange(View v, boolean hasFocus) {
-				//当输入框获取焦点时弹出选项窗，失去焦点时取消选项窗
-				if (!hasFocus) {
-					dismissPopupWindow();
-				}
-			}
-		});
+
 		return v;
 	}
 
@@ -349,61 +338,6 @@ public class ShopListFragment extends BizFragment {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-	}
-
-
-	//设置和显示PopupWindow
-	private void showPopupWindow() {
-		//获取要显示在PopupWindow上的窗体视图
-		LayoutInflater inflater = tabActivity.getLayoutInflater();
-		View view = inflater.inflate(R.layout.layout_local_shop_search, null);
-		//实例化并且设置PopupWindow显示的视图
-		popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,
-				                             LinearLayout.LayoutParams.WRAP_CONTENT);
-
-		//获取PopupWindow中的控件
-		lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
-
-		ShopSearchAdapter adapter = new ShopSearchAdapter(tabActivity, shops);
-		lvShopSearch.setAdapter(adapter);
-
-		//想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
-		popupWindow.setFocusable(true);
-		popupWindow.setOutsideTouchable(true);
-		popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.bg));
-
-		//设置PopupWindow消失的时候触发的事件
-		popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-			@Override
-			public void onDismiss() {
-				Toast.makeText(tabActivity, "我消失了", Toast.LENGTH_SHORT).show();
-			}
-		});
-
-		//设置ListView点击事件
-		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-			                        long arg3) {
-				ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
-				etSearch.setText(shop.getName());
-				dismissPopupWindow();
-			}
-		});
-
-		//显示PopupWindow有3个方法
-		//popupWindow.showAsDropDown(anchor)
-		//popupWindow.showAsDropDown(anchor, xoff, yoff)
-		//popupWindow.showAtLocation(parent, gravity, x, y)
-		//需要注意的是以上三个方法必须在触发事件中使用，比如在点击某个按钮的时候
-		popupWindow.showAsDropDown(etSearch, 0, 0);
-	}
-
-	//让PopupWindow消失
-	private void dismissPopupWindow() {
-		if (popupWindow != null && popupWindow.isShowing()) {
-			popupWindow.dismiss();
 		}
 	}
 }
