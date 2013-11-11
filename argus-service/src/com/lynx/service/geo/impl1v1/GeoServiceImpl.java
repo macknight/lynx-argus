@@ -17,7 +17,7 @@ import java.util.List;
  * Date: 8/29/13 11:27 AM
  */
 public class GeoServiceImpl implements GeoService, LocationListener {
-
+	public static final String Tag = "geo";
 	private Context context;
 	private LocationCenter locationCenter;
 	private LocationStatus status;

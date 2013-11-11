@@ -10,6 +10,7 @@
 	           android:layout_height="wrap_content"
 	           android:layout_marginLeft="15dp"
 	           android:layout_centerVertical="true"
+	           android:contentDescription="@null"
 	           android:src="@drawable/star_green"/>
 
 	<TextView android:id="@+id/tv_local_shoplist_item_name"

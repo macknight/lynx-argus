@@ -7,4 +7,6 @@ package com.lynx.service.statisic;
  * Time: 下午1:27
  */
 public class StatisicServiceDexLoader {
+
+	public static final String Tag = "statisic";
 }

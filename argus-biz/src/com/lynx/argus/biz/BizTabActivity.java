@@ -10,7 +10,7 @@ import com.lynx.argus.biz.local.LocalFragment;
 import com.lynx.argus.biz.more.MoreFragment;
 import com.lynx.argus.biz.my.MyFragment;
 import com.lynx.argus.biz.search.SearchFragment;
-import com.lynx.argus.biz.shop.ShoppingFragment;
+import com.lynx.argus.biz.shopping.ShoppingFragment;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.LFTabActivity;
 
@@ -40,11 +40,11 @@ public class BizTabActivity extends LFTabActivity {
 
 	@Override
 	protected void initTabHost() {
-		stacks.put("Local", new Stack<LFFragment>());
-		stacks.put("Photo", new Stack<LFFragment>());
-		stacks.put("Message", new Stack<LFFragment>());
-		stacks.put("Social", new Stack<LFFragment>());
-		stacks.put("More", new Stack<LFFragment>());
+		stacks.put(LocalFragment.Tag, new Stack<LFFragment>());
+		stacks.put(ShoppingFragment.Tag, new Stack<LFFragment>());
+		stacks.put(MyFragment.Tag, new Stack<LFFragment>());
+		stacks.put(SearchFragment.Tag, new Stack<LFFragment>());
+		stacks.put(MoreFragment.Tag, new Stack<LFFragment>());
 
 		tabHost = (TabHost) findViewById(android.R.id.tabhost);
 		tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -56,11 +56,11 @@ public class BizTabActivity extends LFTabActivity {
 						pushFragment(tabId, new LocalFragment(), false, true);
 					} else if (tabId.equals(ShoppingFragment.Tag)) {
 						pushFragment(tabId, new ShoppingFragment(), false, true);
-					} else if (tabId.equals("Message")) {
+					} else if (tabId.equals(MyFragment.Tag)) {
 						pushFragment(tabId, new MyFragment(), false, true);
-					} else if (tabId.equals("Social")) {
+					} else if (tabId.equals(SearchFragment.Tag)) {
 						pushFragment(tabId, new SearchFragment(), false, true);
-					} else if (tabId.equals("More")) {
+					} else if (tabId.equals(MoreFragment.Tag)) {
 						pushFragment(tabId, new MoreFragment(), false, true);
 					}
 				} else {
@@ -96,7 +96,7 @@ public class BizTabActivity extends LFTabActivity {
 		spec.setIndicator(createTabView(R.drawable.main_idx_shop));
 		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec("Message");
+		spec = tabHost.newTabSpec(MyFragment.Tag);
 		spec.setContent(new TabHost.TabContentFactory() {
 			@Override
 			public View createTabContent(String tag) {
@@ -106,7 +106,7 @@ public class BizTabActivity extends LFTabActivity {
 		spec.setIndicator(createTabView(R.drawable.main_idx_my));
 		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec("Social");
+		spec = tabHost.newTabSpec(SearchFragment.Tag);
 		spec.setContent(new TabHost.TabContentFactory() {
 			@Override
 			public View createTabContent(String tag) {
@@ -116,7 +116,7 @@ public class BizTabActivity extends LFTabActivity {
 		spec.setIndicator(createTabView(R.drawable.main_idx_search));
 		tabHost.addTab(spec);
 
-		spec = tabHost.newTabSpec("More");
+		spec = tabHost.newTabSpec(MoreFragment.Tag);
 		spec.setContent(new TabHost.TabContentFactory() {
 			@Override
 			public View createTabContent(String tag) {

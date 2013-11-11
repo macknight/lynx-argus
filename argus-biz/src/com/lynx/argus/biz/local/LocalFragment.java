@@ -23,7 +23,7 @@ import java.util.Map;
  * Date: 13-9-12 下午6:18
  */
 public class LocalFragment extends BizFragment {
-	public static final String Tag = "Local";
+	public static final String Tag = "local";
 
 	private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
 	private PullToRefreshGridView prgvIdx;
@@ -41,9 +41,9 @@ public class LocalFragment extends BizFragment {
 
 		prgvIdx = (PullToRefreshGridView) v.findViewById(R.id.prgv_local_idx);
 		idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
-				                              R.layout.layout_local_idx_item,
-				                              new String[]{"icon"},
-				                              new int[]{R.id.iv_local_idx_item_icon}
+				R.layout.layout_local_idx_item,
+				new String[]{"icon"},
+				new int[]{R.id.iv_local_idx_item_icon}
 		);
 		prgvIdx.getRefreshableView().setAdapter(idxAdapter);
 
@@ -80,32 +80,32 @@ public class LocalFragment extends BizFragment {
 		idxInfos.clear();
 
 		Map<String, Object> idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_repast + "");
+		idxInfo.put("icon", R.drawable.as_alias + "");
 		idxInfo.put("title", "美食");
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_shopping + "");
+		idxInfo.put("icon", R.drawable.as_app + "");
 		idxInfo.put("title", "商场");
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_hotel + "");
+		idxInfo.put("icon", R.drawable.as_browser + "");
 		idxInfo.put("title", "酒店");
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_entertainment + "");
+		idxInfo.put("icon", R.drawable.as_clear_location + "");
 		idxInfo.put("title", "娱乐");
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_school + "");
+		idxInfo.put("icon", R.drawable.as_delete + "");
 		idxInfo.put("title", "学校");
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.local_more + "");
+		idxInfo.put("icon", R.drawable.as_copy + "");
 		idxInfo.put("title", "更多");
 		idxInfos.add(idxInfo);
 	}

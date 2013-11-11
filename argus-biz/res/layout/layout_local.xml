@@ -3,11 +3,31 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
     <RelativeLayout android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:background="@drawable/tool_bar">
+	    <TextView
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:gravity="center"
+			    android:textColor="@color/Grey"
+			    android:textSize="@dimen/font_size_xlarge"
+			    android:text="@string/main_tab_title_local"
+			    android:background="@drawable/tool_bar"/>
 
+	    <ImageButton
+			    android:id="@+id/ib_local_edit"
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:layout_alignParentRight="true"
+			    android:paddingLeft="15dp"
+			    android:paddingRight="15dp"
+			    android:contentDescription="@null"
+			    android:src="@drawable/local_service_add"
+			    android:background="@drawable/selector_btn"/>
     </RelativeLayout>
+
     <com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
             android:id="@+id/prgv_local_idx"
             android:layout_width="fill_parent"

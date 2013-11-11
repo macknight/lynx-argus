@@ -12,7 +12,7 @@ import com.lynx.argus.app.BizFragment;
  * Created at 13-10-27-下午9:29.
  */
 public class SearchFragment extends BizFragment {
-
+	public static final String Tag = "Search";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class SearchFragment extends BizFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_social, container, false);
+		View v = inflater.inflate(R.layout.layout_search, container, false);
 		return v;
 	}
 }

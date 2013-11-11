@@ -13,4 +13,10 @@
 	<string name="shop_detail_service_rating_hint">服务</string>
 	<string name="shop_detail_env_rating_hint">环境</string>
 	<string name="shop_detail_hours_hint">营业时间</string>
+
+	<string name="main_tab_title_local">附近</string>
+	<string name="main_tab_title_shopping">购物</string>
+	<string name="main_tab_title_my">我</string>
+	<string name="main_tab_title_search">搜索</string>
+	<string name="main_tab_title_more">更多</string>
 </resources>

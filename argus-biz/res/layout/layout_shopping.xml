@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+	<RelativeLayout android:layout_width="match_parent"
+	                android:layout_height="45dp"
+	                android:background="@drawable/tool_bar">
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:textColor="@color/Grey"
+				android:textSize="@dimen/font_size_xlarge"
+				android:text="@string/main_tab_title_shopping"
+				android:background="@drawable/tool_bar"/>
+
+		<ImageButton
+				android:id="@+id/ib_local_edit"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentRight="true"
+				android:paddingLeft="15dp"
+				android:paddingRight="15dp"
+				android:contentDescription="@null"
+				android:src="@drawable/local_service_add"
+				android:background="@drawable/selector_btn"/>
+	</RelativeLayout>
+
+	<ImageButton android:id="@+id/ib_local_dex_laoder"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_gravity="center_horizontal"
+	             android:padding="15dp"
+	             android:contentDescription="@null"
+	             android:src="@drawable/as_locatin"
+	             android:background="@drawable/selector_btn"/>
+
+	<View android:layout_width="match_parent"
+	      android:layout_height="1dp"
+	      android:background="@drawable/horizontal_divider"/>
+
+	<ImageButton android:id="@+id/ib_shopping_dex_laoder"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_gravity="center_horizontal"
+	             android:padding="15dp"
+	             android:contentDescription="@null"
+	             android:src="@drawable/as_app"
+	             android:background="@drawable/selector_btn"/>
+
+	<View android:layout_width="match_parent"
+	      android:layout_height="1dp"
+	      android:background="@drawable/horizontal_divider"/>
+
+	<ImageButton android:id="@+id/ib_my_dex_laoder"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_gravity="center_horizontal"
+	             android:padding="15dp"
+	             android:contentDescription="@null"
+	             android:src="@drawable/as_moment"
+	             android:background="@drawable/selector_btn"/>
+
+	<View android:layout_width="match_parent"
+	      android:layout_height="1dp"
+	      android:background="@drawable/horizontal_divider"/>
+
+	<ImageButton android:id="@+id/ib_search_dex_laoder"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_gravity="center_horizontal"
+	             android:padding="15dp"
+	             android:contentDescription="@null"
+	             android:src="@drawable/as_voice"
+	             android:background="@drawable/selector_btn"/>
+
+	<View android:layout_width="match_parent"
+	      android:layout_height="1dp"
+	      android:background="@drawable/horizontal_divider"/>
+
+	<ImageButton android:id="@+id/ib_more_dex_laoder"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:layout_gravity="center_horizontal"
+	             android:padding="15dp"
+	             android:contentDescription="@null"
+	             android:src="@drawable/as_text"
+	             android:background="@drawable/selector_btn"/>
+
+	<View android:layout_width="match_parent"
+	      android:layout_height="1dp"
+	      android:background="@drawable/horizontal_divider"/>
+</LinearLayout>

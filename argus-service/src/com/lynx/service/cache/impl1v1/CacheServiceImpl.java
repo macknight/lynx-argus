@@ -10,7 +10,7 @@ import com.lynx.lib.cache.CacheService;
  * Date: 13-9-17 上午10:02
  */
 public class CacheServiceImpl implements CacheService {
-    private static final String Tag = "cache";
+    public static final String Tag = "cache";
     private MemoryCache memoryCache;
     private FileCache fileCache;
     private DBCache dbCache;

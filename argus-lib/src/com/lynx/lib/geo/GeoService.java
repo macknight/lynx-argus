@@ -14,41 +14,41 @@ import java.util.List;
  */
 public interface GeoService extends DexService {
 
-    public LocationStatus status();
+	LocationStatus status();
 
-    /**
-     * get the best coordinate by server, if can be decided, return only one
-     * coordinate result, else, return a coordinate list
-     *
-     * @param refresh
-     * @return
-     */
-    public void locate(boolean refresh);
+	/**
+	 * get the best coordinate by server, if can be decided, return only one
+	 * coordinate result, else, return a coordinate list
+	 *
+	 * @param refresh
+	 * @return
+	 */
+	void locate(boolean refresh);
 
-    /**
-     * reverse geo-coding
-     *
-     * @param lat
-     * @param lng
-     * @param type
-     * @return
-     */
-    public void rgc(double lat, double lng, CoordType type);
+	/**
+	 * reverse geo-coding
+	 *
+	 * @param lat
+	 * @param lng
+	 * @param type
+	 * @return
+	 */
+	void rgc(double lat, double lng, CoordType type);
 
-    public void addListener(LocationListener listener);
+	void addListener(LocationListener listener);
 
-    public void removeListener(LocationListener listener);
+	void removeListener(LocationListener listener);
 
-    public List<LocationListener> listeners();
+	List<LocationListener> listeners();
 
-    public Coord coord();
+	Coord coord();
 
-	public Address address();
+	Address address();
 
-    public enum LocationStatus {
-        IDLE,
-        ONGOING,
-        SUCCESS,
-        FAIL
-    }
+	public enum LocationStatus {
+		IDLE,
+		ONGOING,
+		SUCCESS,
+		FAIL
+	}
 }

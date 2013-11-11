@@ -10,6 +10,8 @@ import com.lynx.lib.core.dex.DexServiceLoader;
  */
 public class HotFixServiceDexLoader extends DexServiceLoader {
 
+	public static final String Tag = "hotfix";
+
 	public HotFixServiceDexLoader(Context context, String moduleName, int minVersion, Class<?> defaultClazz)
 			throws Exception {
 		super(context, moduleName, minVersion, defaultClazz);

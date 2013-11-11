@@ -13,6 +13,8 @@ import com.lynx.argus.app.BizFragment;
  */
 public class MyFragment extends BizFragment {
 
+	public static final String Tag = "My";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,7 +22,7 @@ public class MyFragment extends BizFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_msg, container, false);
+		View v = inflater.inflate(R.layout.layout_my, container, false);
 		return v;
 	}
 }

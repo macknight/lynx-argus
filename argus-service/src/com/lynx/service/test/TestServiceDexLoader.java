@@ -11,6 +11,8 @@ import com.lynx.service.test.impl1v1.TestServiceImpl;
  */
 public class TestServiceDexLoader extends DexServiceLoader {
 
+	public static final String Tag = "test";
+
 	public TestServiceDexLoader(Context context) throws Exception {
 		super(context, "test", 101, TestServiceImpl.class);
 	}

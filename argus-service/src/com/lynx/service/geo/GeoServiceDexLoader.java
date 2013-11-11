@@ -14,6 +14,9 @@ import java.util.List;
  * Date: 8/29/13 11:16 AM
  */
 public class GeoServiceDexLoader extends DexServiceLoader {
+
+	public static final String Tag = "geo";
+
 	private List<LocationListener> listeners = null;
 	private static final int minVersion = 101;
 

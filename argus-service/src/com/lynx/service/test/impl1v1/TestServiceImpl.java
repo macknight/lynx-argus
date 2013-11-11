@@ -9,18 +9,20 @@ import com.lynx.service.test.TestService;
  */
 public class TestServiceImpl implements TestService {
 
-    @Override
-    public void start() {
+	public static final String Tag = "test";
 
-    }
+	@Override
+	public void start() {
 
-    @Override
-    public void stop() {
+	}
 
-    }
+	@Override
+	public void stop() {
 
-    @Override
-    public String hello(String name) {
-        return name + " hello world";
-    }
+	}
+
+	@Override
+	public String hello(String name) {
+		return name + " hello world";
+	}
 }

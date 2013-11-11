@@ -7,7 +7,7 @@ package com.lynx.lib.core.dex;
  */
 public interface DexService {
 
-    public void start();
+    void start();
 
-    public void stop();
+    void stop();
 }
