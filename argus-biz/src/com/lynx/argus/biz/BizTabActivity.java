@@ -1,6 +1,8 @@
 package com.lynx.argus.biz;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,11 +25,41 @@ import java.util.Stack;
  */
 public class BizTabActivity extends LFTabActivity {
 
+	private SharedPreferences sp;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// do custom init here
-		//
+		sp = getSharedPreferences("biz", MODE_PRIVATE);
+		curTab = sp.getString("cur_tab", LocalFragment.Tag);
+		tabHost.setCurrentTabByTag(curTab);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
+
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+		SharedPreferences.Editor editor = sp.edit();
+		editor.putString("cur_tab", curTab);
+		editor.commit();
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		Log.d("chris", "onStop");
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		Log.d("chris", "onDestroy");
 	}
 
 	@Override

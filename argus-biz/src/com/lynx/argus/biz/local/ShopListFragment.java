@@ -1,5 +1,6 @@
 package com.lynx.argus.biz.local;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
@@ -60,6 +61,15 @@ public class ShopListFragment extends BizFragment {
 
 
 	private String query = "美食";
+
+	public ShopListFragment() {
+
+	}
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

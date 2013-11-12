@@ -29,10 +29,18 @@ public class LocalFragment extends BizFragment {
 	private PullToRefreshGridView prgvIdx;
 	private SimpleAdapter idxAdapter;
 
+	public LocalFragment() {
+		initIdx();
+	}
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		initIdx();
+		idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
+				R.layout.layout_local_idx_item,
+				new String[]{"icon"},
+				new int[]{R.id.iv_local_idx_item_icon}
+		);
 	}
 
 	@Override
@@ -40,11 +48,6 @@ public class LocalFragment extends BizFragment {
 		View v = inflater.inflate(R.layout.layout_local, container, false);
 
 		prgvIdx = (PullToRefreshGridView) v.findViewById(R.id.prgv_local_idx);
-		idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
-				R.layout.layout_local_idx_item,
-				new String[]{"icon"},
-				new int[]{R.id.iv_local_idx_item_icon}
-		);
 		prgvIdx.getRefreshableView().setAdapter(idxAdapter);
 
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
@@ -60,10 +63,6 @@ public class LocalFragment extends BizFragment {
 		prgvIdx.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == idxInfos.size() - 1) {
-					return;
-				}
-
 				Map<String, Object> idxInfo = idxInfos.get(position);
 				ShopListFragment slf = new ShopListFragment();
 				Bundle bundle = new Bundle();
@@ -85,7 +84,7 @@ public class LocalFragment extends BizFragment {
 		idxInfos.add(idxInfo);
 
 		idxInfo = new HashMap<String, Object>();
-		idxInfo.put("icon", R.drawable.as_app + "");
+		idxInfo.put("icon", R.drawable.as_favorite + "");
 		idxInfo.put("title", "商场");
 		idxInfos.add(idxInfo);
 
@@ -106,7 +105,7 @@ public class LocalFragment extends BizFragment {
 
 		idxInfo = new HashMap<String, Object>();
 		idxInfo.put("icon", R.drawable.as_copy + "");
-		idxInfo.put("title", "更多");
+		idxInfo.put("title", "银行");
 		idxInfos.add(idxInfo);
 	}
 

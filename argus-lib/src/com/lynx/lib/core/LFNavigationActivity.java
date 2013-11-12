@@ -22,6 +22,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 	private int animResPushIn = -1, animResPushOut = -1;
 	private int animResPopIn = -1, animResPopOut = -1;
 
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -39,9 +40,6 @@ public abstract class LFNavigationActivity extends LFActivity {
 	}
 
 	public void pushFragment(LFFragment fragment, boolean shouldAnimate, boolean shouldAdd) {
-		if (shouldAdd) {
-			stack.push(fragment);
-		}
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {
@@ -49,16 +47,19 @@ public abstract class LFNavigationActivity extends LFActivity {
 				ft.setCustomAnimations(animResPushIn, animResPushOut);
 			}
 		}
+
+		stack.push(fragment);
 		ft.replace(resContent, fragment);
+
 		ft.commit();
 	}
 
 	private void popFragment(boolean shouldAnimate) {
 		Fragment fragment = stack.elementAt(stack.size() - 2);
-
 		stack.pop();
 
 		FragmentManager fm = getFragmentManager();
+
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {
 			ft.setCustomAnimations(animResPopIn, animResPopOut);

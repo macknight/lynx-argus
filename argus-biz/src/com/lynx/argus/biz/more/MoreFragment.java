@@ -1,6 +1,8 @@
 package com.lynx.argus.biz.more;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,25 +21,87 @@ import java.util.List;
  */
 public class MoreFragment extends BizFragment {
 	public static final String Tag = "More";
-	private static List<GroupListItem> data = new ArrayList<GroupListItem>();
+	private List<GroupListItem> data = new ArrayList<GroupListItem>();
+	private GroupListAdapter adapter;
 	private ListView listview;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public MoreFragment() {
 		initData();
 	}
 
 	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		Log.d("chris", "onAttach");
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		Log.d("chris", "onCreate");
+		adapter = new GroupListAdapter(tabActivity, data);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d("chris", "onCreateView");
 		View v = inflater.inflate(R.layout.layout_more, container, false);
 		listview = (ListView) v.findViewById(R.id.lv_more_idx);
-		GroupListAdapter adapter = new GroupListAdapter(tabActivity, data);
 		listview.setAdapter(adapter);
 		return v;
 	}
 
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		Log.d("chris", "onActivityCreated");
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d("chris", "onStart");
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d("chris", "onResume");
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		Log.d("chris", "onPause");
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+		Log.d("chris", "onStop");
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		Log.d("chris", "onDestroyView");
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.d("chris", "onDestroy");
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		Log.d("chris", "onDetach");
+	}
+
 	public void initData() {
+		Log.d("chris", "init more");
 		GroupListItem item;
 		item = new GroupListItem(-1, "通用", true);
 		data.add(item);

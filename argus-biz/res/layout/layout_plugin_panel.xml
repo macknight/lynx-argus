@@ -5,36 +5,38 @@
               android:layout_height="match_parent">
 
 	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="45dp">
+	                android:layout_height="45dp"
+	                android:background="@drawable/tool_bar">
 		<TextView
-				android:id="@+id/tv_more_title"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="center"
 				android:textColor="@color/Grey"
 				android:textSize="@dimen/font_size_xlarge"
-				android:text="@string/main_tab_title_more"
+				android:text="@string/plugin_panel_title"
 				android:background="@drawable/tool_bar"/>
 
 		<ImageButton
-				android:id="@+id/ib_more_setting"
+				android:id="@+id/ib_local_edit"
 				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
+				android:layout_height="wrap_content"
 				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:layout_marginRight="15dp"
+				android:padding="15dp"
 				android:contentDescription="@null"
-				android:paddingLeft="15dp"
-				android:paddingRight="15dp"
-				android:src="@drawable/setting"
-				android:background="@drawable/selector_def_btn"/>
-
+				android:background="@drawable/selector_done_btn"/>
 	</RelativeLayout>
 
-	<ListView
-			android:id="@+id/lv_more_idx"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
+	<com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
+			android:id="@+id/prgv_local_idx"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
 			android:cacheColorHint="@android:color/transparent"
-			android:scrollbars="none"
+			android:divider="@drawable/horizontal_divider"
 			android:listSelector="@android:color/transparent"
-			android:divider="@drawable/horizontal_divider"/>
+			android:numColumns="2"
+			android:scrollbars="none"
+			android:background="@drawable/plugin_panel_bg">
+	</com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
 </LinearLayout>

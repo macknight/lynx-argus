@@ -23,6 +23,6 @@
 				android:paddingLeft="15dp"
 				android:paddingRight="15dp"
 				android:src="@drawable/search"
-				android:background="@drawable/selector_btn"/>
+				android:background="@drawable/selector_def_btn"/>
 	</RelativeLayout>
 </LinearLayout>

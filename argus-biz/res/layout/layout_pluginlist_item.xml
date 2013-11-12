@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:orientation="horizontal"
+                android:background="@drawable/selector_def_btn">
+
+	<ImageView android:id="@+id/iv_pluginlist_item_icon"
+	           android:layout_width="wrap_content"
+	           android:layout_height="wrap_content"
+	           android:layout_marginLeft="15dp"
+	           android:layout_centerHorizontal="true"
+	           android:src="@drawable/plugin_def"/>
+
+	<TextView android:id="@+id/tv_pluginlist_item_name"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_marginTop="5dp"
+	          android:layout_marginLeft="10dp"
+	          android:layout_below="@+id/iv_pluginlist_item_icon"
+	          android:singleLine="true"
+	          android:ellipsize="end"
+	          android:textColor="@color/Grey"
+	          android:textSize="@dimen/font_size_default"
+	          android:text="红翻天湖北风味小吃店"/>
+
+	<TextView android:id="@+id/tv_pluginlist_item_desc"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_marginLeft="10dp"
+	          android:layout_marginTop="5dp"
+	          android:layout_below="@+id/tv_pluginlist_item_name"
+	          android:singleLine="true"
+	          android:ellipsize="end"
+	          android:textColor="@color/Thistle"
+	          android:textSize="@dimen/font_size_small"
+	          android:text="上海市长宁区玉佩南路199弄"/>
+</RelativeLayout>

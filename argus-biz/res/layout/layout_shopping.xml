@@ -24,7 +24,7 @@
 				android:paddingRight="15dp"
 				android:contentDescription="@null"
 				android:src="@drawable/local_service_add"
-				android:background="@drawable/selector_btn"/>
+				android:background="@drawable/selector_def_btn"/>
 	</RelativeLayout>
 
 	<ImageButton android:id="@+id/ib_local_dex_laoder"
@@ -34,7 +34,7 @@
 	             android:padding="15dp"
 	             android:contentDescription="@null"
 	             android:src="@drawable/as_locatin"
-	             android:background="@drawable/selector_btn"/>
+	             android:background="@drawable/selector_def_btn"/>
 
 	<View android:layout_width="match_parent"
 	      android:layout_height="1dp"
@@ -46,8 +46,8 @@
 	             android:layout_gravity="center_horizontal"
 	             android:padding="15dp"
 	             android:contentDescription="@null"
-	             android:src="@drawable/as_app"
-	             android:background="@drawable/selector_btn"/>
+	             android:src="@drawable/as_favorite"
+	             android:background="@drawable/selector_def_btn"/>
 
 	<View android:layout_width="match_parent"
 	      android:layout_height="1dp"
@@ -60,7 +60,7 @@
 	             android:padding="15dp"
 	             android:contentDescription="@null"
 	             android:src="@drawable/as_moment"
-	             android:background="@drawable/selector_btn"/>
+	             android:background="@drawable/selector_def_btn"/>
 
 	<View android:layout_width="match_parent"
 	      android:layout_height="1dp"
@@ -73,7 +73,7 @@
 	             android:padding="15dp"
 	             android:contentDescription="@null"
 	             android:src="@drawable/as_voice"
-	             android:background="@drawable/selector_btn"/>
+	             android:background="@drawable/selector_def_btn"/>
 
 	<View android:layout_width="match_parent"
 	      android:layout_height="1dp"
@@ -86,7 +86,7 @@
 	             android:padding="15dp"
 	             android:contentDescription="@null"
 	             android:src="@drawable/as_text"
-	             android:background="@drawable/selector_btn"/>
+	             android:background="@drawable/selector_def_btn"/>
 
 	<View android:layout_width="match_parent"
 	      android:layout_height="1dp"

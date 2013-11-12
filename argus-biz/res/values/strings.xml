@@ -2,8 +2,15 @@
 <resources>
 	<string name="app_name">argus</string>
 
-	<string name="loading_hint">加载中...</string>
+	<string name="main_tab_title_local">附近</string>
+	<string name="main_tab_title_shopping">购物</string>
+	<string name="main_tab_title_my">我</string>
+	<string name="main_tab_title_search">搜索</string>
+	<string name="main_tab_title_more">更多</string>
 
+	<string name="plugin_panel_title">插件中心</string>
+
+	<string name="loading_hint">加载中...</string>
 	<string name="shop_detail_addr_hint">地址</string>
 	<string name="shop_detail_price_hint">人均</string>
 	<string name="shop_detail_tele_hint">电话</string>
@@ -14,9 +21,5 @@
 	<string name="shop_detail_env_rating_hint">环境</string>
 	<string name="shop_detail_hours_hint">营业时间</string>
 
-	<string name="main_tab_title_local">附近</string>
-	<string name="main_tab_title_shopping">购物</string>
-	<string name="main_tab_title_my">我</string>
-	<string name="main_tab_title_search">搜索</string>
-	<string name="main_tab_title_more">更多</string>
+
 </resources>

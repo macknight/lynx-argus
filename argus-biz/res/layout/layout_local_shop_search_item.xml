@@ -3,7 +3,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@drawable/selector_btn">
+              android:background="@drawable/selector_def_btn">
 	<TextView
 			android:id="@+id/tv_local_shop_search_item_name"
 			android:layout_width="wrap_content"
