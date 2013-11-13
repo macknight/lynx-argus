@@ -49,4 +49,9 @@
 		<item name="android:background">@drawable/selector_edittext</item>
 	</style>
 
+	<style name="AnimationFade">
+		<item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
+		<item name="android:windowExitAnimation">@anim/anim_fade_out</item>
+	</style>
+
 </resources>

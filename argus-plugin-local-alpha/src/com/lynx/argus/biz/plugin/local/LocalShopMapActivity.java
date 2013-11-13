@@ -2,7 +2,6 @@ package com.lynx.argus.biz.plugin.local;
 
 import android.os.Bundle;
 import com.lynx.argus.plugin.local.R;
-import com.lynx.lib.geo.GeoService;
 import com.mapbar.android.maps.GeoPoint;
 import com.mapbar.android.maps.MapActivity;
 import com.mapbar.android.maps.MapController;
@@ -24,7 +23,5 @@ public class LocalShopMapActivity extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.layout_local_shoplist_onmap);
-
-
 	}
 }

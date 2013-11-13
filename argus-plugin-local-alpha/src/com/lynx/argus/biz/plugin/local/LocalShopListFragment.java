@@ -87,6 +87,7 @@ public class LocalShopListFragment extends LFFragment {
 		View v = inflater.inflate(R.layout.layout_local_shoplist, container, false);
 
 		initLocationModule(v);
+        searchPopWindowInit();
 
 		prgvShop = (PullToRefreshGridView) v.findViewById(R.id.prgv_shoplist);
 		adapter = new ShopListAdapter(navActivity, shops);
@@ -125,13 +126,11 @@ public class LocalShopListFragment extends LFFragment {
 			}
 		});
 
-		ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-
 		etSearch = (EditText) v.findViewById(R.id.et_local_shop_detail_search);
 		etSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				showPopupWindow();
+				showSearchWindow();
 			}
 		});
 		etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -140,7 +139,7 @@ public class LocalShopListFragment extends LFFragment {
 			public void onFocusChange(View v, boolean hasFocus) {
 				//当输入框获取焦点时弹出选项窗，失去焦点时取消选项窗
 				if (!hasFocus) {
-					dismissPopupWindow();
+					dismissSearchWindow();
 				}
 			}
 		});
@@ -337,38 +336,38 @@ public class LocalShopListFragment extends LFFragment {
 		}
 	}
 
+    private void searchPopWindowInit() {
+        //获取要显示在PopupWindow上的窗体视图
+        LayoutInflater inflater = navActivity.getLayoutInflater();
+        View view = inflater.inflate(R.layout.layout_local_shop_search, null);
+        //实例化并且设置PopupWindow显示的视图
+        popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
 
-	//设置和显示PopupWindow
-	private void showPopupWindow() {
-		//获取要显示在PopupWindow上的窗体视图
-		LayoutInflater inflater = navActivity.getLayoutInflater();
-		View view = inflater.inflate(R.layout.layout_local_shop_search, null);
-		//实例化并且设置PopupWindow显示的视图
-		popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,
-				                             LinearLayout.LayoutParams.WRAP_CONTENT);
+        //获取PopupWindow中的控件
+        lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
 
-		//获取PopupWindow中的控件
-		lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
+        ShopSearchAdapter adapter = new ShopSearchAdapter(navActivity, shops);
+        lvShopSearch.setAdapter(adapter);
 
-		ShopSearchAdapter adapter = new ShopSearchAdapter(navActivity, shops);
-		lvShopSearch.setAdapter(adapter);
+        //想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
+        popupWindow.setFocusable(true);
+        popupWindow.setOutsideTouchable(true);
+        popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.popout_list_bg));
 
-		//想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
-		popupWindow.setFocusable(true);
-		popupWindow.setOutsideTouchable(true);
-		popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.popout_list_bg));
+        //设置ListView点击事件
+        lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
+                etSearch.setText(shop.getName());
+                dismissSearchWindow();
+            }
+        });
+    }
 
-		//设置ListView点击事件
-		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View view, int position,
-			                        long arg3) {
-				ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
-				etSearch.setText(shop.getName());
-				dismissPopupWindow();
-			}
-		});
-
+	private void showSearchWindow() {
 		//显示PopupWindow有3个方法
 		//popupWindow.showAsDropDown(anchor)
 		//popupWindow.showAsDropDown(anchor, xoff, yoff)
@@ -378,7 +377,7 @@ public class LocalShopListFragment extends LFFragment {
 	}
 
 	//让PopupWindow消失
-	private void dismissPopupWindow() {
+	private void dismissSearchWindow() {
 		if (popupWindow != null && popupWindow.isShowing()) {
 			popupWindow.dismiss();
 		}

@@ -2,10 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:layout_marginLeft="5dp"
+              android:layout_marginRight="5dp"
+              android:background="@drawable/plugin_panel_bg">
 
 	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="45dp"
+	                android:layout_height="35dp"
 	                android:background="@drawable/tool_bar">
 		<TextView
 				android:layout_width="wrap_content"
@@ -17,26 +20,25 @@
 				android:background="@drawable/tool_bar"/>
 
 		<ImageButton
-				android:id="@+id/ib_local_edit"
+				android:id="@+id/ib_plugin_panel_close"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_alignParentRight="true"
 				android:layout_centerVertical="true"
-				android:layout_marginRight="15dp"
 				android:padding="15dp"
 				android:contentDescription="@null"
-				android:background="@drawable/selector_done_btn"/>
+				android:src="@drawable/plugin_panel_cancel"
+				android:background="@drawable/selector_def_btn"/>
 	</RelativeLayout>
 
 	<com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
-			android:id="@+id/prgv_local_idx"
+			android:id="@+id/prgv_plugins"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:cacheColorHint="@android:color/transparent"
 			android:divider="@drawable/horizontal_divider"
 			android:listSelector="@android:color/transparent"
 			android:numColumns="2"
-			android:scrollbars="none"
-			android:background="@drawable/plugin_panel_bg">
+			android:scrollbars="none">
 	</com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
 </LinearLayout>

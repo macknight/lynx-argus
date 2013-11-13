@@ -17,7 +17,7 @@
 			    android:background="@drawable/tool_bar"/>
 
 	    <ImageButton
-			    android:id="@+id/ib_local_edit"
+			    android:id="@+id/ib_local_add"
 			    android:layout_width="wrap_content"
 			    android:layout_height="match_parent"
 			    android:layout_alignParentRight="true"
