@@ -3,21 +3,18 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:layout_marginLeft="5dp"
-              android:layout_marginRight="5dp"
-              android:background="@drawable/plugin_panel_bg">
+              android:background="@drawable/pluginstore_bg">
 
 	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="35dp"
-	                android:background="@drawable/tool_bar">
+	                android:layout_height="35dp">
 		<TextView
-				android:layout_width="wrap_content"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textColor="@color/Grey"
 				android:textSize="@dimen/font_size_xlarge"
-				android:text="@string/plugin_panel_title"
-				android:background="@drawable/tool_bar"/>
+				android:text="@string/plugin_panel_title"/>
 
 		<ImageButton
 				android:id="@+id/ib_plugin_panel_close"

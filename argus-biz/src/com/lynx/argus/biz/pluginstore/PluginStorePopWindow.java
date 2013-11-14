@@ -39,6 +39,7 @@ public class PluginStorePopWindow extends PopupWindow {
         this.setContentView(view);
 
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
+	    setWidth(dm.widthPixels * 9 / 10);
         setHeight(dm.heightPixels * 2 / 3);
 
         //想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable

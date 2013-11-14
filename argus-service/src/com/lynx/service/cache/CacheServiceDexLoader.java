@@ -1,7 +1,6 @@
 package com.lynx.service.cache;
 
 import android.content.Context;
-import com.lynx.lib.cache.CacheService;
 import com.lynx.lib.core.dex.DexService;
 import com.lynx.lib.core.dex.DexServiceLoader;
 import com.lynx.service.cache.impl1v1.CacheServiceImpl;
@@ -45,10 +44,5 @@ public class CacheServiceDexLoader extends DexServiceLoader {
 	@Override
 	protected void afterLoad() {
 
-	}
-
-	@Override
-	public String moduleName() {
-		return CacheService.class.getSimpleName();
 	}
 }

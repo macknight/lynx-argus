@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.R;
+import com.lynx.argus.app.util.ImageLoader;
 
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class PluginListAdapter extends BaseAdapter {
 		PluginItem item = data.get(position);
 		holder.tvName.setText("" + item.getName());
 		holder.tvDesc.setText("" + item.getDesc());
+		ImageLoader imgLoader = new ImageLoader(context, item.getIcon(), holder.ivIcon);
+		imgLoader.loadImage();
 //		holder.ivIcon.setImageBitmap(null);
 		return view;
 	}
