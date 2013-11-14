@@ -19,12 +19,13 @@ public interface CacheService extends DexService {
     void put(String key, Object value, CacheType[] cacheTypes);
 
     /**
-     * 获取缓存数据
+     * 从指定缓存中获取缓存数据
      *
      * @param key
+     * @param cacheType
      * @return
      */
-    Object get(String key);
+    Object get(String key, CacheType cacheType);
 
     /**
      * 根据key删除指定缓存中的数据

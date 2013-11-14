@@ -1,7 +1,6 @@
 package com.lynx.lib.http;
 
 import com.lynx.lib.http.core.HttpParam;
-import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.http.handler.HttpHandler;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;

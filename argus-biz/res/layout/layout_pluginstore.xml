@@ -31,8 +31,8 @@
 				android:background="@drawable/selector_def_btn"/>
 	</RelativeLayout>
 
-	<com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
-			android:id="@+id/prgv_plugins"
+	<com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
+			android:id="@+id/prlv_pluginstore"
 			android:layout_width="fill_parent"
 			android:layout_height="fill_parent"
 			android:cacheColorHint="@android:color/transparent"
@@ -40,5 +40,5 @@
 			android:listSelector="@android:color/transparent"
 			android:numColumns="2"
 			android:scrollbars="none">
-	</com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
+	</com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
 </LinearLayout>

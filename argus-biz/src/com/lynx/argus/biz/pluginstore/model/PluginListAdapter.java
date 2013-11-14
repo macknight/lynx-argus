@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.local.model;
+package com.lynx.argus.biz.pluginstore.model;
 
 import android.content.Context;
 import android.view.View;
@@ -18,14 +18,14 @@ import java.util.List;
  */
 public class PluginListAdapter extends BaseAdapter {
 	private Context context;
-	private List<PluginListItem> data;
+	private List<PluginItem> data;
 
-	public PluginListAdapter(Context context, List<PluginListItem> data) {
+	public PluginListAdapter(Context context, List<PluginItem> data) {
 		this.context = context;
 		this.data = data;
 	}
 
-	public void setData(List<PluginListItem> data) {
+	public void setData(List<PluginItem> data) {
 		this.data = data;
 		notifyDataSetChanged();
 	}
@@ -50,17 +50,17 @@ public class PluginListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_pluginlist_item, null);
+			view = View.inflate(context, R.layout.layout_pluginstore_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_pluginlist_item_name);
-			holder.tvDesc = (TextView) view.findViewById(R.id.tv_pluginlist_item_desc);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_pluginstore_item_name);
+			holder.tvDesc = (TextView) view.findViewById(R.id.tv_pluginstore_item_desc);
 			view.setTag(holder);
 		} else {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
 
-		PluginListItem item = data.get(position);
+		PluginItem item = data.get(position);
 		holder.tvName.setText("" + item.getName());
 		holder.tvDesc.setText("" + item.getDesc());
 //		holder.ivIcon.setImageBitmap(null);

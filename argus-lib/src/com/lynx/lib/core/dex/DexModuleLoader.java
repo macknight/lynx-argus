@@ -5,7 +5,7 @@ import android.widget.Toast;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpService;
-import com.lynx.lib.http.handler.HttpCallback;
+import com.lynx.lib.http.HttpCallback;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.lynx.lib.http.handler;
+package com.lynx.lib.http;
 
 /**
  * @param <T>

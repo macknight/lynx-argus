@@ -13,9 +13,9 @@ public class BizApplication extends LFApplication {
 
 	@Override
 	public void onCreate() {
-//		Const.DOMAIN = "http://192.168.30.83/lynx-web";
+		Const.DOMAIN = "http://192.168.30.148/lynx-web";
 //		Const.DOMAIN = "http://58.210.101.202:59102/lynx-web";
-		Const.DOMAIN = "http://argus.maskerliu.eu.cloudbees.net/";
+//		Const.DOMAIN = "http://argus.maskerliu.eu.cloudbees.net/";
 		Logger.setLevel(Logger.AppLevel.DEBUG);
 
 		super.onCreate();

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
+import com.lynx.argus.biz.pluginstore.PluginStorePopWindow;
 import com.lynx.lib.http.core.AsyncTask;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 

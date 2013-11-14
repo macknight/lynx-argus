@@ -15,9 +15,9 @@ import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordSource;
+import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import com.lynx.lib.http.handler.HttpCallback;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

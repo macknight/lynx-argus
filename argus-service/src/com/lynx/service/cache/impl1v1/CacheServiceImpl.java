@@ -55,12 +55,17 @@ public class CacheServiceImpl implements CacheService {
     }
 
     @Override
-    public Object get(String key) {
-        Object obj = memoryCache.get(key);
-        if (obj == null) {
-            obj = fileCache.get(key);
+    public Object get(String key, CacheType cacheType) {
+        switch (cacheType) {
+            case Memory:
+                return memoryCache.get(key);
+            case File:
+                return fileCache.get(key);
+            case DB:
+                return dbCache.get(key);
+            default:
+                return null;
         }
-        return obj;
     }
 
     @Override

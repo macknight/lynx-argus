@@ -1,9 +1,8 @@
 package com.lynx.lib.http.handler;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.UnknownHostException;
-
+import android.os.SystemClock;
+import com.lynx.lib.http.HttpCallback;
+import com.lynx.lib.http.core.AsyncTask;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -13,9 +12,9 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.HttpContext;
 
-import android.os.SystemClock;
-
-import com.lynx.lib.http.core.AsyncTask;
+import java.io.File;
+import java.io.IOException;
+import java.net.UnknownHostException;
 
 /**
  * 

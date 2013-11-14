@@ -2,7 +2,7 @@ package com.lynx.lib.http.impl;
 
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import com.lynx.lib.http.handler.HttpCallback;
+import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.handler.HttpHandler;
 import com.lynx.lib.http.handler.RetryHandler;
 import com.lynx.lib.http.handler.SyncRequestHandler;

@@ -6,7 +6,7 @@ import com.lynx.lib.core.Const;
 import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import com.lynx.lib.http.handler.HttpCallback;
+import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 import org.json.JSONArray;
 import org.json.JSONObject;
