@@ -12,6 +12,7 @@ import com.lynx.argus.R;
 import com.lynx.argus.biz.local.model.PluginListAdapter;
 import com.lynx.argus.biz.local.model.PluginListItem;
 import com.lynx.lib.http.core.AsyncTask;
+import com.lynx.lib.http.handler.HttpCallback;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 
 import java.io.File;
@@ -24,8 +25,10 @@ import java.util.List;
  * Date: 13-11-12
  * Time: 下午6:17
  */
-public class PluginPanelPopWindow extends PopupWindow {
-    private static final String Tag = "PluginPanelPopWindow";
+public class PluginStorePopWindow extends PopupWindow {
+    private static final String Tag = "PluginStorePopWindow";
+
+	private static final String LM_API_ALL_PLUGIN = "/pluginstore";
 
     private static final String PREFIX = "pluginstore";
     private Context context;
@@ -33,7 +36,7 @@ public class PluginPanelPopWindow extends PopupWindow {
     private PullToRefreshGridView prgvPlugins;
     private PluginListAdapter pluginAdapter;
 
-    public PluginPanelPopWindow(Context context) {
+    public PluginStorePopWindow(Context context) {
         super(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         this.context = context;
         View view = View.inflate(context, R.layout.layout_plugin_panel, null);
@@ -80,12 +83,19 @@ public class PluginPanelPopWindow extends PopupWindow {
         });
 
         setAnimationStyle(R.style.AnimationFade);
-        // 显示PopupWindow有3个方法
-        // popupWindow.showAsDropDown(anchor)
-        // popupWindow.showAsDropDown(anchor, xoff, yoff)
-        // popupWindow.showAtLocation(parent, gravity, x, y)
-        // 需要注意的是以上三个方法必须在触发事件中使用，比如在点击某个按钮的时候
     }
+
+	private HttpCallback<Object> callback = new HttpCallback<Object>() {
+		@Override
+		public void onSuccess(Object o) {
+			super.onSuccess(o);
+		}
+
+		@Override
+		public void onFailure(Throwable t, String strMsg) {
+			super.onFailure(t, strMsg);
+		}
+	};
 
     /**
      * 加载插件

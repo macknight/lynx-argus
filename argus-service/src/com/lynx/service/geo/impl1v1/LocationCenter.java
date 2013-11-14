@@ -35,8 +35,8 @@ public class LocationCenter {
 	public static final String Tag = "LocationCenter";
 
 
-	private static final String URL_LOCATE = "/geo/location";
-	private static final String URL_RGC = "/geo/rgc.php";
+	private static final String LM_API_LOCATION = "/geo/location";
+	private static final String LM_API_RGC = "/geo/rgc.php";
 
 	private static final int INTERVAL_PRE = 1000; // 预处理状态check时间间隔
 	private static final int INTERVAL_COUNT = 8;
@@ -279,7 +279,7 @@ public class LocationCenter {
 		if (wifiInfoManager.wifis2str() != null) {
 			param.put("wifi", wifiInfoManager.wifis2str());
 		}
-		httpService.post(String.format("%s%s", Const.DOMAIN, URL_LOCATE), param, httpCallback);
+		httpService.post(String.format("%s%s", Const.DOMAIN, LM_API_LOCATION), param, httpCallback);
 	}
 
 

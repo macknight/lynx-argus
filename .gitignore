@@ -7,5 +7,7 @@ argus-service/bin
 argus-service/gen
 argus-lib/gen
 argus-lib/bin/
-argus-plugin-local/bin
-argus-plugin-local/gen
+argus-plugin-local-alpha/bin
+argus-plugin-local-alpha/gen
+argus-plugin-local-beta/bin
+argus-plugin-local-beta/gen

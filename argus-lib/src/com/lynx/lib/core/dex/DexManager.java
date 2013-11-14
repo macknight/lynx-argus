@@ -24,7 +24,7 @@ import java.util.Map;
 public abstract class DexManager {
 	private static final String Tag = "dexmanager";
 
-	private static final String URL_SERVICE_CONFIG = "/config/framework";
+	private static final String LM_API_SERVICE_CONFIG = "/config/framework";
 	public static final String K_SERVICE = "service";
 	public static final String K_UI = "ui";
 
@@ -55,7 +55,7 @@ public abstract class DexManager {
 	public void updateConfig() {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
-		httpService.post(String.format("%s%s", Const.DOMAIN, URL_SERVICE_CONFIG), param,
+		httpService.post(String.format("%s%s", Const.DOMAIN, LM_API_SERVICE_CONFIG), param,
 				new HttpCallback<Object>() {
 					@Override
 					public void onSuccess(Object o) {

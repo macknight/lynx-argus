@@ -1,8 +1,0 @@
-/*___Generated_by_IDEA___*/
-
-/** Automatically generated file. DO NOT MODIFY */
-package com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local;
-
-public final class BuildConfig {
-    public final static boolean DEBUG = true;
-}

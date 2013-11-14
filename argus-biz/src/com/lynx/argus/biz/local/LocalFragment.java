@@ -29,7 +29,7 @@ public class LocalFragment extends BizFragment {
 
     private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
     private PullToRefreshGridView prgvIdx;
-    private PluginPanelPopWindow pluginPanelPopWindow;
+    private PluginStorePopWindow pluginStorePopWindow;
     private SimpleAdapter idxAdapter;
 
     public LocalFragment() {
@@ -76,13 +76,13 @@ public class LocalFragment extends BizFragment {
         });
 
 
-        pluginPanelPopWindow = new PluginPanelPopWindow(tabActivity);
+        pluginStorePopWindow = new PluginStorePopWindow(tabActivity);
 
         ImageButton ibAdd = (ImageButton) v.findViewById(R.id.ib_local_add);
         ibAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pluginPanelPopWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+                pluginStorePopWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
             }
         });
 
