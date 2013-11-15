@@ -44,6 +44,12 @@ import java.util.Map;
  * Date: 13-9-16 上午10:29
  */
 public class LocalShopListFragment extends LFFragment {
+
+	public static final int MSG_LOCATION_ONGOING = 0;
+	public static final int MSG_LOCATION_SUCCESS = 1;
+	public static final int MSG_LOCATION_FAIL = 2;
+	public static final int MSG_LOAD_SHOP_LIST_FIN = 3;
+
 	private GeoService geoService;
 	private HttpService httpService;
 
@@ -186,7 +192,7 @@ public class LocalShopListFragment extends LFFragment {
 
 						}
 					}
-					adapter.setData(shops);
+					handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_FIN);
 				} else {
 					Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 				}
@@ -207,7 +213,7 @@ public class LocalShopListFragment extends LFFragment {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case 0:
+				case MSG_LOCATION_ONGOING:
 					ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
 					adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
 					adIndicator.setOneShot(false);
@@ -218,7 +224,7 @@ public class LocalShopListFragment extends LFFragment {
 					animRotate.startNow();
 					tvLocAddr.setText("正在定位...");
 					break;
-				case 1:  // 定位成功
+				case MSG_LOCATION_SUCCESS:  // 定位成功
 					if (adIndicator != null) {
 						adIndicator.stop();
 					}
@@ -237,7 +243,7 @@ public class LocalShopListFragment extends LFFragment {
 					tvLocAddr.setText(tip);
 					getLocalShop();
 					break;
-				case 2:
+				case MSG_LOCATION_FAIL:
 					if (adIndicator != null) {
 						adIndicator.stop();
 					}
@@ -249,6 +255,9 @@ public class LocalShopListFragment extends LFFragment {
 					if (prgvShop.isRefreshing()) {
 						prgvShop.onRefreshComplete();
 					}
+					break;
+				case MSG_LOAD_SHOP_LIST_FIN:
+					adapter.setData(shops);
 					break;
 			}
 		}
@@ -293,13 +302,13 @@ public class LocalShopListFragment extends LFFragment {
 			public void onLocationChanged(GeoService.LocationStatus status) {
 				switch (status) {
 					case ONGOING:
-						handler.sendEmptyMessage(0);
+						handler.sendEmptyMessage(MSG_LOCATION_ONGOING);
 						break;
 					case SUCCESS:
-						handler.sendEmptyMessage(1);
+						handler.sendEmptyMessage(MSG_LOCATION_SUCCESS);
 						break;
 					case FAIL:
-						handler.sendEmptyMessage(2);
+						handler.sendEmptyMessage(MSG_LOCATION_FAIL);
 						break;
 				}
 			}

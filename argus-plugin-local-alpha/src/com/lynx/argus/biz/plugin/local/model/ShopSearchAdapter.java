@@ -22,7 +22,7 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 	private ShopFilter filter;
 	private List<ShopListItem> data;
 	private Context context;
-	private ArrayList<ShopListItem> mUnfilteredData;
+	private ArrayList<ShopListItem> unfilteredData;
 
 	public ShopSearchAdapter(Context context, List<ShopListItem> data) {
 		this.context = context;
@@ -84,18 +84,18 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 		protected FilterResults performFiltering(CharSequence prefix) {
 			FilterResults results = new FilterResults();
 
-			if (mUnfilteredData == null) {
-				mUnfilteredData = new ArrayList<ShopListItem>(data);
+			if (unfilteredData == null) {
+				unfilteredData = new ArrayList<ShopListItem>(data);
 			}
 
 			if (prefix == null || prefix.length() == 0) {
-				ArrayList<ShopListItem> list = mUnfilteredData;
+				ArrayList<ShopListItem> list = unfilteredData;
 				results.values = list;
 				results.count = list.size();
 			} else {
 				String prefixString = prefix.toString().toLowerCase();
 
-				ArrayList<ShopListItem> unfilteredValues = mUnfilteredData;
+				ArrayList<ShopListItem> unfilteredValues = unfilteredData;
 				int count = unfilteredValues.size();
 
 				ArrayList<ShopListItem> newValues = new ArrayList<ShopListItem>(count);

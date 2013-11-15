@@ -12,8 +12,8 @@ import com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local.R;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
-import com.lynx.lib.http.handler.HttpCallback;
 import org.json.JSONObject;
 
 /**
