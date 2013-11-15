@@ -10,11 +10,11 @@
 	    <TextView
 			    android:layout_width="wrap_content"
 			    android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
 			    android:gravity="center"
 			    android:textColor="@color/Grey"
 			    android:textSize="@dimen/font_size_xlarge"
-			    android:text="@string/main_tab_title_local"
-			    android:background="@drawable/tool_bar"/>
+			    android:text="@string/main_tab_title_plugin"/>
 
 	    <ImageButton
 			    android:id="@+id/ib_local_add"
@@ -35,7 +35,7 @@
             android:cacheColorHint="@android:color/transparent"
             android:divider="@drawable/horizontal_divider"
             android:listSelector="@android:color/transparent"
-            android:numColumns="4"
+            android:numColumns="3"
             android:scrollbars="none">
     </com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
 

@@ -1,32 +1,30 @@
-package com.lynx.argus.biz.pluginstore.model;
+package com.lynx.argus.biz.plugin.local.model;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.R;
-import com.lynx.argus.app.util.ImageLoader;
 
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  * User: chris.liu
- * Date: 13-11-12
- * Time: 下午6:27
+ * Date: 13-11-6
+ * Time: 下午4:24
  */
-public class PluginListAdapter extends BaseAdapter {
+public class ShopListAdapter extends BaseAdapter {
 	private Context context;
-	private List<PluginItem> data;
+	private List<ShopListItem> data;
 
-	public PluginListAdapter(Context context, List<PluginItem> data) {
+	public ShopListAdapter(Context context, List<ShopListItem> data) {
 		this.context = context;
 		this.data = data;
 	}
 
-	public void setData(List<PluginItem> data) {
+	public void setData(List<ShopListItem> data) {
 		this.data = data;
 		notifyDataSetChanged();
 	}
@@ -51,28 +49,27 @@ public class PluginListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_pluginstore_item, null);
+			view = View.inflate(context, R.layout.layout_local_shoplist_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_pluginstore_item_name);
-			holder.tvDesc = (TextView) view.findViewById(R.id.tv_pluginstore_item_desc);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shoplist_item_name);
+			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shoplist_item_addr);
+			holder.tvTele = (TextView) view.findViewById(R.id.tv_local_shoplist_item_tele);
 			view.setTag(holder);
 		} else {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
 
-		PluginItem item = data.get(position);
+		ShopListItem item = data.get(position);
 		holder.tvName.setText("" + item.getName());
-		holder.tvDesc.setText("" + item.getDesc());
-		ImageLoader imgLoader = new ImageLoader(context, item.getIcon(), holder.ivIcon);
-		imgLoader.loadImage();
-//		holder.ivIcon.setImageBitmap(null);
+		holder.tvAddr.setText("" + item.getAddr());
+		holder.tvTele.setText("" + item.getTele());
 		return view;
 	}
 
 	static class ViewHolder {
 		public TextView tvName;
-		public TextView tvDesc;
-		public ImageView ivIcon;
+		public TextView tvAddr;
+		public TextView tvTele;
 	}
 }

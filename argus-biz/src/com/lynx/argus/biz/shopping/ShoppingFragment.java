@@ -12,7 +12,7 @@ import com.lynx.lib.core.LFDexActivity;
 
 /**
  * Created with IntelliJ IDEA.
- * User: chris
+ * User: chris.liu
  * Date: 13-9-12 下午6:20
  */
 public class ShoppingFragment extends BizFragment {

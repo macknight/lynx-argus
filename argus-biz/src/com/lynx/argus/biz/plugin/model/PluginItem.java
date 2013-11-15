@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.pluginstore.model;
+package com.lynx.argus.biz.plugin.model;
 
 /**
  * Created with IntelliJ IDEA.

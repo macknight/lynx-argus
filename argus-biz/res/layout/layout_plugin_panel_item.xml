@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="5dp"
+              android:orientation="vertical"
+              android:background="@drawable/selector_plugin_item">
+
+    <ImageView android:id="@+id/iv_plugin_panel_item_icon"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:padding="15dp"
+               android:contentDescription="@null"
+               android:src="@drawable/plugin_def"/>
+    <TextView android:id="@+id/tv_plugin_panel_item_name"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:textColor="@color/Grey"
+              android:textSize="@dimen/font_size_default"
+              android:text="附近"/>
+</LinearLayout>

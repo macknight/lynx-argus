@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.local;
+package com.lynx.argus.biz.plugin;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.pluginstore.PluginStorePopWindow;
+import com.lynx.argus.biz.plugin.local.ShopListFragment;
 import com.lynx.lib.http.core.AsyncTask;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 
@@ -22,18 +22,18 @@ import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
- * User: chris
+ * User: chris.liu
  * Date: 13-9-12 下午6:18
  */
-public class LocalFragment extends BizFragment {
-    public static final String Tag = "local";
+public class PluginPanelFragment extends BizFragment {
+    public static final String Tag = "plugin";
 
     private List<Map<String, Object>> idxInfos = new ArrayList<Map<String, Object>>();
     private PullToRefreshGridView prgvIdx;
     private PluginStorePopWindow pluginStorePopWindow;
     private SimpleAdapter idxAdapter;
 
-    public LocalFragment() {
+    public PluginPanelFragment() {
         initIdx();
     }
 
@@ -41,15 +41,15 @@ public class LocalFragment extends BizFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         idxAdapter = new SimpleAdapter(tabActivity, idxInfos,
-                R.layout.layout_local_idx_item,
-                new String[]{"icon"},
-                new int[]{R.id.iv_local_idx_item_icon}
+                R.layout.layout_plugin_panel_item,
+                new String[]{"icon", "name"},
+                new int[]{R.id.iv_plugin_panel_item_icon, R.id.tv_plugin_panel_item_name}
         );
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_local, container, false);
+        View v = inflater.inflate(R.layout.layout_plugin_panel, container, false);
 
         prgvIdx = (PullToRefreshGridView) v.findViewById(R.id.prgv_local_idx);
         prgvIdx.getRefreshableView().setAdapter(idxAdapter);
@@ -67,12 +67,14 @@ public class LocalFragment extends BizFragment {
         prgvIdx.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Map<String, Object> idxInfo = idxInfos.get(position);
-                ShopListFragment slf = new ShopListFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("query", idxInfo.get("title").toString());
-                slf.setArguments(bundle);
-                tabActivity.pushFragment(Tag, slf, true, true);
+                if (position == 0) {
+                    Map<String, Object> idxInfo = idxInfos.get(position);
+                    ShopListFragment slf = new ShopListFragment();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("query", "美食");
+                    slf.setArguments(bundle);
+                    tabActivity.pushFragment(Tag, slf, true, true);
+                }
             }
         });
 
@@ -94,33 +96,23 @@ public class LocalFragment extends BizFragment {
         idxInfos.clear();
 
         Map<String, Object> idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_alias + "");
-        idxInfo.put("title", "美食");
+        idxInfo.put("icon", R.drawable.plugin_location + "");
+        idxInfo.put("name", "附近");
         idxInfos.add(idxInfo);
 
         idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_favorite + "");
-        idxInfo.put("title", "商场");
+        idxInfo.put("icon", R.drawable.plugin_def + "");
+        idxInfo.put("name", "待续");
         idxInfos.add(idxInfo);
 
         idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_browser + "");
-        idxInfo.put("title", "酒店");
+        idxInfo.put("icon", R.drawable.plugin_def + "");
+        idxInfo.put("name", "待续");
         idxInfos.add(idxInfo);
 
         idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_clear_location + "");
-        idxInfo.put("title", "娱乐");
-        idxInfos.add(idxInfo);
-
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_delete + "");
-        idxInfo.put("title", "学校");
-        idxInfos.add(idxInfo);
-
-        idxInfo = new HashMap<String, Object>();
-        idxInfo.put("icon", R.drawable.as_copy + "");
-        idxInfo.put("title", "银行");
+        idxInfo.put("icon", R.drawable.plugin_def + "");
+        idxInfo.put("name", "待续");
         idxInfos.add(idxInfo);
     }
 

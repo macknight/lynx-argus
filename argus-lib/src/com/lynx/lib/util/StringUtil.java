@@ -14,7 +14,7 @@ import java.security.MessageDigest;
  * User: zhufeng.liu
  * Date: 8/30/13 1:33 PM
  */
-public class StringUtils {
+public class StringUtil {
 
     private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
             "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };

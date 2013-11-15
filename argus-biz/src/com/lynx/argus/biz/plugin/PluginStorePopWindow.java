@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.pluginstore;
+package com.lynx.argus.biz.plugin;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -11,7 +11,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import com.lynx.argus.R;
-import com.lynx.argus.biz.pluginstore.model.PluginListAdapter;
+import com.lynx.argus.biz.plugin.model.PluginListAdapter;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
 

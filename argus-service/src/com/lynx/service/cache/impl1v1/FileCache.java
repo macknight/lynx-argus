@@ -32,8 +32,6 @@ public class FileCache implements Cache {
         if (!cacheDir.exists()) {
             cacheDir.mkdirs();
         }
-
-        Log.d(Tag, "cache dir: " + cacheDir.getAbsolutePath());
     }
 
     /**

@@ -4,37 +4,37 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="45dp">
-		<TextView
-				android:id="@+id/tv_more_title"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:gravity="center"
-				android:textColor="@color/Grey"
-				android:textSize="@dimen/font_size_xlarge"
-				android:text="@string/main_tab_title_more"
-				android:background="@drawable/tool_bar"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="45dp">
+        <TextView
+                android:id="@+id/tv_more_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/Grey"
+                android:textSize="@dimen/font_size_xlarge"
+                android:text="@string/main_tab_title_more"/>
 
-		<ImageButton
-				android:id="@+id/ib_more_setting"
-				android:layout_width="wrap_content"
-				android:layout_height="match_parent"
-				android:layout_alignParentRight="true"
-				android:contentDescription="@null"
-				android:paddingLeft="15dp"
-				android:paddingRight="15dp"
-				android:src="@drawable/setting"
-				android:background="@drawable/selector_def_btn"/>
+        <ImageButton
+                android:id="@+id/ib_more_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:src="@drawable/setting"
+                android:background="@drawable/selector_def_btn"/>
 
-	</RelativeLayout>
+    </RelativeLayout>
 
-	<ListView
-			android:id="@+id/lv_more_idx"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:cacheColorHint="@android:color/transparent"
-			android:scrollbars="none"
-			android:listSelector="@android:color/transparent"
-			android:divider="@drawable/horizontal_divider"/>
+    <ListView
+            android:id="@+id/lv_more_idx"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="@android:color/transparent"
+            android:scrollbars="none"
+            android:listSelector="@android:color/transparent"
+            android:divider="@drawable/horizontal_divider"/>
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="argus_plugin_test" default="help">
 
-    <!-- The com.lynx.argus.biz.plugin.local.properties file is created and updated by the 'android' tool.
+    <!-- The com.lynx.argus.biz.plugin.plugin.properties file is created and updated by the 'android' tool.
          It contains the path to the SDK. It should *NOT* be checked into
          Version Control Systems. -->
     <property file="com.lynx.argus.biz.plugin.local.properties"/>

@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.local;
+package com.lynx.argus.biz.plugin.local;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

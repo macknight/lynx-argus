@@ -1,9 +1,9 @@
-package com.lynx.argus.biz.pluginstore;
+package com.lynx.argus.biz.plugin;
 
 import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
-import com.lynx.argus.biz.pluginstore.model.PluginItem;
+import com.lynx.argus.biz.plugin.model.PluginItem;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.http.HttpCallback;

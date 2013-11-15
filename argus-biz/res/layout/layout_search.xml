@@ -9,11 +9,11 @@
 		<TextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
 				android:gravity="center"
 				android:textColor="@color/Grey"
 				android:textSize="@dimen/font_size_xlarge"
-				android:text="@string/main_tab_title_search"
-				android:background="@drawable/tool_bar"/>
+				android:text="@string/main_tab_title_search"/>
 
 		<ImageButton
 				android:id="@+id/ib_local_edit"
