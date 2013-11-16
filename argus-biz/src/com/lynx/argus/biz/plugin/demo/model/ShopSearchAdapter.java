@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.plugin.local.model;
+package com.lynx.argus.biz.plugin.demo.model;
 
 import android.content.Context;
 import android.view.View;

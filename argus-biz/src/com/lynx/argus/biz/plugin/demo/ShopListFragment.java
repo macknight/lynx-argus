@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.plugin.local;
+package com.lynx.argus.biz.plugin.demo;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,8 +19,8 @@ import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.SysInfoActivity;
 import com.lynx.argus.biz.plugin.PluginPanelFragment;
-import com.lynx.argus.biz.plugin.local.model.ShopListAdapter;
-import com.lynx.argus.biz.plugin.local.model.ShopListItem;
+import com.lynx.argus.biz.plugin.demo.model.ShopListAdapter;
+import com.lynx.argus.biz.plugin.demo.model.ShopListItem;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;

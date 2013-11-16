@@ -11,13 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
-import com.lynx.argus.biz.plugin.com.lynx.argus.biz.plugin.local.R;
+import android.widget.*;
 import com.lynx.argus.biz.plugin.local.model.ShopListAdapter;
 import com.lynx.argus.biz.plugin.local.model.ShopListItem;
+import com.lynx.argus.biz.plugin.local.model.ShopSearchAdapter;
+import com.lynx.argus.plugin.local.R;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
@@ -27,6 +25,7 @@ import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
+import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
@@ -42,41 +41,45 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  * User: chris
- * Date: 13-9-16 下午11:35
+ * Date: 13-9-16 上午10:29
  */
-public class LocalShopListFragment extends LFFragment {
+public class ShopListFragment extends LFFragment {
+
+	public static final int MSG_LOCATION_ONGOING = 0;
+	public static final int MSG_LOCATION_SUCCESS = 1;
+	public static final int MSG_LOCATION_FAIL = 2;
+	public static final int MSG_LOAD_SHOP_LIST_FIN = 3;
+
 	private GeoService geoService;
 	private HttpService httpService;
 
 	private List<ShopListItem> shops = new ArrayList<ShopListItem>();
 	private ShopListAdapter adapter;
-	private PullToRefreshListView ptrlvShop;
+	private PullToRefreshGridView prgvShop;
 
 	private static final String BMAP_API_PLACE_SEARCH = "/search";
 
-	private Animation animRotate;
+	private Animation animRotate = new RotateAnimation(0f, 360f,
+			Animation.RELATIVE_TO_SELF, 0.5f,
+			Animation.RELATIVE_TO_SELF, 0.5f);
+	;
 	private AnimationDrawable adIndicator;
 	private TextView tvLocAddr;
 	private ImageView ivLocIndicator, ivLocRefresh;
+	private EditText etSearch;
+	private PopupWindow popupWindow;
+	private ListView lvShopSearch;
 
 	private String query = "美食";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		try {
-			httpService = (HttpService) LFApplication.instance().service("http");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		httpService = (HttpService) LFApplication.instance().service("http");
 
 		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
 		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 
-		adapter = new ShopListAdapter(getActivity(), shops);
-
-		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-				Animation.RELATIVE_TO_SELF, 0.5f);
 		animRotate.setDuration(1500);
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
@@ -84,20 +87,22 @@ public class LocalShopListFragment extends LFFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_local_shoplist, container, false);
+		View v = inflater.inflate(R.layout.layout_shoplist, container, false);
 
 		initLocationModule(v);
+		searchPopWindowInit();
 
-		ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
-		ptrlvShop.getRefreshableView().setAdapter(adapter);
+		prgvShop = (PullToRefreshGridView) v.findViewById(R.id.prgv_shoplist);
+		adapter = new ShopListAdapter(navActivity, shops);
+		prgvShop.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
-		ptrlvShop.setLoadingDrawable(drawable);
+		prgvShop.setLoadingDrawable(drawable);
 
-		ptrlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+		prgvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 			@Override
 			public void onRefresh() {
 				if (geoService == null) {
-					Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
+					Toast.makeText(navActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
 					return;
 				} else if (geoService.coord() == null) {
 					geoService.locate(false);
@@ -108,35 +113,46 @@ public class LocalShopListFragment extends LFFragment {
 			}
 		});
 
-		ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		prgvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ShopListItem shop = shops.get(position - 1);
-				ShopDetailFragment sdf = new ShopDetailFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString("uid", shop.getUid());
-				sdf.setArguments(bundle);
-				navActivity.pushFragment(sdf, true, true);
+				ShopListItem shop = shops.get(position);
+				if (shop != null) {
+					ShopDetailFragment sdf = new ShopDetailFragment();
+					Bundle bundle = new Bundle();
+					bundle.putString("uid", shop.getUid());
+					sdf.setArguments(bundle);
+					navActivity.pushFragment(sdf, true, true);
+				} else {
+					Toast.makeText(navActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 
-		ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-		ivIndicator.setOnClickListener(new View.OnClickListener() {
+		etSearch = (EditText) v.findViewById(R.id.et_shop_detail_search);
+		etSearch.setOnClickListener(new View.OnClickListener() {
 			@Override
-			public void onClick(View view) {
-//                Intent intent = new Intent();
-//                intent.setClass(getActivity(), SysInfoActivity.class);
-//                startActivity(intent);
+			public void onClick(View v) {
+				showSearchWindow();
 			}
 		});
+		etSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
 
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				//当输入框获取焦点时弹出选项窗，失去焦点时取消选项窗
+				if (!hasFocus) {
+					dismissSearchWindow();
+				}
+			}
+		});
 		return v;
 	}
 
 	private HttpCallback httpCallback = new HttpCallback<Object>() {
 		@Override
 		public void onSuccess(Object o) {
-			ptrlvShop.onRefreshComplete();
+			prgvShop.onRefreshComplete();
 			super.onSuccess(o);
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
@@ -173,9 +189,9 @@ public class LocalShopListFragment extends LFFragment {
 
 						}
 					}
-					adapter.setData(shops);
+					handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_FIN);
 				} else {
-					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+					Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -185,8 +201,8 @@ public class LocalShopListFragment extends LFFragment {
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			ptrlvShop.onRefreshComplete();
-			Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+			prgvShop.onRefreshComplete();
+			Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 		}
 	};
 
@@ -194,7 +210,7 @@ public class LocalShopListFragment extends LFFragment {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case 0:
+				case MSG_LOCATION_ONGOING:
 					ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
 					adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
 					adIndicator.setOneShot(false);
@@ -205,7 +221,7 @@ public class LocalShopListFragment extends LFFragment {
 					animRotate.startNow();
 					tvLocAddr.setText("正在定位...");
 					break;
-				case 1:  // 定位成功
+				case MSG_LOCATION_SUCCESS:  // 定位成功
 					if (adIndicator != null) {
 						adIndicator.stop();
 					}
@@ -224,7 +240,7 @@ public class LocalShopListFragment extends LFFragment {
 					tvLocAddr.setText(tip);
 					getLocalShop();
 					break;
-				case 2:
+				case MSG_LOCATION_FAIL:
 					if (adIndicator != null) {
 						adIndicator.stop();
 					}
@@ -233,9 +249,12 @@ public class LocalShopListFragment extends LFFragment {
 					}
 					ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
 					tvLocAddr.setText("定位失败");
-					if (ptrlvShop.isRefreshing()) {
-						ptrlvShop.onRefreshComplete();
+					if (prgvShop.isRefreshing()) {
+						prgvShop.onRefreshComplete();
 					}
+					break;
+				case MSG_LOAD_SHOP_LIST_FIN:
+					adapter.setData(shops);
 					break;
 			}
 		}
@@ -280,13 +299,13 @@ public class LocalShopListFragment extends LFFragment {
 			public void onLocationChanged(GeoService.LocationStatus status) {
 				switch (status) {
 					case ONGOING:
-						handler.sendEmptyMessage(0);
+						handler.sendEmptyMessage(MSG_LOCATION_ONGOING);
 						break;
 					case SUCCESS:
-						handler.sendEmptyMessage(1);
+						handler.sendEmptyMessage(MSG_LOCATION_SUCCESS);
 						break;
 					case FAIL:
-						handler.sendEmptyMessage(2);
+						handler.sendEmptyMessage(MSG_LOCATION_FAIL);
 						break;
 				}
 			}
@@ -296,7 +315,7 @@ public class LocalShopListFragment extends LFFragment {
 	private void getLocalShop() {
 		try {
 			if (geoService == null) {
-				Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
+				Toast.makeText(navActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
 				return;
 			} else if (geoService.coord() == null) {
 				geoService.locate(false);
@@ -316,10 +335,57 @@ public class LocalShopListFragment extends LFFragment {
 						BMAP_API_PLACE_SEARCH, param);
 				httpService.get(url, null, httpCallback);
 
-				ptrlvShop.setRefreshing();
+				prgvShop.setRefreshing();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void searchPopWindowInit() {
+		//获取要显示在PopupWindow上的窗体视图
+		LayoutInflater inflater = navActivity.getLayoutInflater();
+		View view = inflater.inflate(R.layout.layout_shop_search, null);
+		//实例化并且设置PopupWindow显示的视图
+		popupWindow = new PopupWindow(view, LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.WRAP_CONTENT);
+
+		//获取PopupWindow中的控件
+		lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
+
+		ShopSearchAdapter adapter = new ShopSearchAdapter(navActivity, shops);
+		lvShopSearch.setAdapter(adapter);
+
+		//想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
+		popupWindow.setFocusable(true);
+		popupWindow.setOutsideTouchable(true);
+		popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.popout_list_bg));
+
+		//设置ListView点击事件
+		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+			                        long id) {
+				ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
+				etSearch.setText(shop.getName());
+				dismissSearchWindow();
+			}
+		});
+	}
+
+	private void showSearchWindow() {
+		//显示PopupWindow有3个方法
+		//popupWindow.showAsDropDown(anchor)
+		//popupWindow.showAsDropDown(anchor, xoff, yoff)
+		//popupWindow.showAtLocation(parent, gravity, x, y)
+		//需要注意的是以上三个方法必须在触发事件中使用，比如在点击某个按钮的时候
+		popupWindow.showAsDropDown(etSearch, 0, 0);
+	}
+
+	//让PopupWindow消失
+	private void dismissSearchWindow() {
+		if (popupWindow != null && popupWindow.isShowing()) {
+			popupWindow.dismiss();
 		}
 	}
 

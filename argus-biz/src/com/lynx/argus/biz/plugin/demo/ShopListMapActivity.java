@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.plugin.local;
+package com.lynx.argus.biz.plugin.demo;
 
 import android.graphics.*;
 import android.os.Bundle;

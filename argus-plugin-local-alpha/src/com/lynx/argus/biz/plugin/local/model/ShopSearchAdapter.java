@@ -49,7 +49,7 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_local_shop_search_item, null);
+			view = View.inflate(context, R.layout.layout_shop_search_item, null);
 			holder = new ViewHolder();
 			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shop_search_item_name);
 			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shop_search_item_addr);

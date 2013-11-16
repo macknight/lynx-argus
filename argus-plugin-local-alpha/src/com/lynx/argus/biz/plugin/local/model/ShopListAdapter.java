@@ -46,27 +46,22 @@ public class ShopListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		try {
-			View view;
-			ViewHolder holder;
-			if (convertView == null) {
-				view = View.inflate(context, R.layout.layout_local_shoplist_item, null);
-				holder = new ViewHolder();
-				holder.tvName = (TextView) view.findViewById(R.id.tv_local_shoplist_item_name);
-				holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shoplist_item_addr);
-				view.setTag(holder);
-			} else {
-				view = convertView;
-				holder = (ViewHolder) view.getTag();
-			}
-			ShopListItem item = data.get(position);
-			holder.tvName.setText("" + item.getName());
-			holder.tvAddr.setText("" + item.getAddr());
-			return view;
-		} catch (Throwable t) {
-
+		View view;
+		ViewHolder holder;
+		if (convertView == null) {
+			view = View.inflate(context, R.layout.layout_shoplist_item, null);
+			holder = new ViewHolder();
+			holder.tvName = (TextView) view.findViewById(R.id.tv_shoplist_item_name);
+			holder.tvAddr = (TextView) view.findViewById(R.id.tv_shoplist_item_addr);
+			view.setTag(holder);
+		} else {
+			view = convertView;
+			holder = (ViewHolder) view.getTag();
 		}
-		return null;
+		ShopListItem item = data.get(position);
+		holder.tvName.setText("" + item.getName());
+		holder.tvAddr.setText("" + item.getAddr());
+		return view;
 	}
 
 	static class ViewHolder {
