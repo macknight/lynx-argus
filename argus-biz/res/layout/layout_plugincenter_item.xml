@@ -6,7 +6,7 @@
                 android:background="@drawable/selector_plugin_item">
 
 	<ImageView
-			android:id="@+id/iv_plugin_panel_item_delete"
+			android:id="@+id/iv_plugincenter_item_delete"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_alignParentRight="true"
@@ -15,7 +15,7 @@
 			android:visibility="invisible"/>
 
 	<ImageView
-			android:id="@+id/iv_plugin_panel_item_icon"
+			android:id="@+id/iv_plugincenter_item_icon"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerHorizontal="true"
@@ -24,10 +24,10 @@
 			android:contentDescription="@null"
 			android:src="@drawable/plugin_def"/>
 	<TextView
-			android:id="@+id/tv_plugin_panel_item_name"
+			android:id="@+id/tv_plugincenter_item_name"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:layout_below="@+id/iv_plugin_panel_item_icon"
+			android:layout_below="@+id/iv_plugincenter_item_icon"
 			android:paddingBottom="10dp"
 			android:gravity="center"
 			android:textColor="@color/Grey"

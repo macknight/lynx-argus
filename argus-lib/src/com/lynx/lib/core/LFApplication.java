@@ -3,10 +3,10 @@ package com.lynx.lib.core;
 import android.app.Application;
 import android.content.res.Configuration;
 import com.lynx.lib.core.dex.DexManager;
-import com.lynx.lib.core.dex.DexServiceLoader;
-import com.lynx.lib.core.dex.DexUILoader;
-
-import java.util.Map;
+import com.lynx.lib.core.dex.Plugin;
+import com.lynx.lib.core.dex.PluginLoader;
+import com.lynx.lib.http.HttpService;
+import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +16,7 @@ import java.util.Map;
 public abstract class LFApplication extends Application {
 
 	protected static LFApplication instance;
+	private static HttpService httpService;
 	protected DexManager dexManager;
 
 	public static LFApplication instance() {
@@ -32,12 +33,10 @@ public abstract class LFApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		initDexManager();
-		dexManager.initDexServiceLoader();
-		dexManager.initDexUIModuleLoader();
-		dexManager.updateConfig();
-	}
+		httpService = new DefaultHttpServiceImpl();
 
+		dexManager = new DexManager();
+	}
 
 	@Override
 	public void onTerminate() {
@@ -62,15 +61,6 @@ public abstract class LFApplication extends Application {
 	protected abstract void initDexManager();
 
 	/**
-	 * 列举所有服务
-	 *
-	 * @return
-	 */
-	public Map<String, DexServiceLoader> serviceLoaders() {
-		return dexManager.allServiceLoader();
-	}
-
-	/**
 	 * 根据服务名获取对应服务
 	 *
 	 * @param name
@@ -78,20 +68,27 @@ public abstract class LFApplication extends Application {
 	 */
 	public Object service(String name) {
 		if ("http".equals(name)) {
-			return dexManager.httpService();
+			return httpService;
 		}
-		Map<String, DexServiceLoader> loaders = serviceLoaders();
-		DexServiceLoader loader = loaders.get(name);
-		return loader == null ? null : loader.service();
+		return dexManager.service(name);
 	}
 
 	/**
-	 * 根据模块名获取对应UI模块
+	 * 根据模块名获取对应插件加载器
 	 *
 	 * @param name
 	 * @return
 	 */
-	public DexUILoader moduleLoader(String name) {
-		return dexManager.getDexUILoader(name);
+	public PluginLoader pluginLoader(String name) {
+		return dexManager.pluginLoader(name);
+	}
+
+	/**
+	 * 加入插件
+	 *
+	 * @param plugin
+	 */
+	public void addPlugin(Plugin plugin) {
+		dexManager.installPlugin(plugin);
 	}
 }

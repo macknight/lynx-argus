@@ -1,6 +1,5 @@
 package com.lynx.lib.core.dex;
 
-import android.content.Context;
 import com.lynx.lib.core.Logger;
 import dalvik.system.DexClassLoader;
 
@@ -9,23 +8,20 @@ import dalvik.system.DexClassLoader;
  * User: zhufeng.liu
  * Date: 8/30/13 11:29 AM
  */
-public abstract class DexServiceLoader extends DexModuleLoader {
+public abstract class ServiceLoader extends DexModuleLoader {
 	protected Class<?> clazz;
-	protected DexService service;
+	protected Service service;
 
 	/**
-	 * @param context
-	 * @param moduleName   动态服务标签
-	 * @param minVersion   最小动态服务包版本
+	 * @param dexModule    动态服务配置
 	 * @param defaultClazz 默认服务版本
 	 */
-	public DexServiceLoader(Context context, String moduleName, int minVersion, Class<?> defaultClazz)
+	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz)
 			throws Exception {
-		super(context, "service", moduleName, minVersion);
+		super(DexType.SERVICE, dexModule);
 
 		if (clazz == null) {
 			clazz = defaultClazz;
-			clazzName = defaultClazz.getName();
 		}
 
 		try {
@@ -50,7 +46,7 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	 */
 	protected abstract void afterLoad();
 
-	public DexService service() {
+	public Service service() {
 		return service;
 	}
 
@@ -59,26 +55,21 @@ public abstract class DexServiceLoader extends DexModuleLoader {
 	 *
 	 * @throws Exception
 	 */
+	@SuppressWarnings("unchecked")
 	public void replaceService() throws Exception {
 		beforeLoad();
 		deleteOldFile();
 		try {
-			loadClass(version, md5, clazzName);
+			DexClassLoader cl = new DexClassLoader(srcPath,
+					dexDir, null, context.getClassLoader());
+			clazz = (Class<Service>) cl.loadClass(dexModule.clazz());
 		} catch (Exception e) {
 			// TODO: roll back to the default service
-			Logger.e(moduleName, "replace service error", e);
+			Logger.e(dexModule.module(), "replace service error", e);
 		}
 
 		loadService();
 
 		afterLoad();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void loadClass(int version, String md5, String className)
-			throws Exception {
-		DexClassLoader cl = new DexClassLoader(srcPath,
-				dexDir, null, context.getClassLoader());
-		clazz = (Class<DexService>) cl.loadClass(className);
 	}
 }

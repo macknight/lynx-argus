@@ -1,13 +1,13 @@
 package com.lynx.lib.cache;
 
-import com.lynx.lib.core.dex.DexService;
+import com.lynx.lib.core.dex.Service;
 
 /**
  * Created with IntelliJ IDEA.
  * User: chris
  * Date: 13-9-17 上午10:02
  */
-public interface CacheService extends DexService {
+public interface CacheService extends Service {
 
     /**
      * 以指定方式将数据放入CacheService中,默认放入内存缓存

@@ -23,7 +23,7 @@ public class LFDexFragmentLoader extends LFNavigationActivity {
 	protected Resources.Theme dexTheme;
 	protected ClassLoader dexClassLoader;
 
-	private DexUILoader moduleLoader;
+	private PluginLoader moduleLoader;
 
 	private Resources.Theme defTheme; // 系统原有主题
 
@@ -49,11 +49,11 @@ public class LFDexFragmentLoader extends LFNavigationActivity {
 		} catch (Exception e) {
 			Logger.e(Tag, "load background error", e);
 		}
-		
+
 		try {
 			String module = getIntent().getStringExtra("module");
 
-			moduleLoader = LFApplication.instance().moduleLoader(module);
+			moduleLoader = LFApplication.instance().pluginLoader(module);
 
 			if (moduleLoader == null) {
 				Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
@@ -78,12 +78,15 @@ public class LFDexFragmentLoader extends LFNavigationActivity {
 
 			super.onCreate(savedInstanceState);
 
-			if (savedInstanceState != null)
+			if (savedInstanceState != null) {
 				return;
+			}
 
-			LFFragment f = (LFFragment) getClassLoader().loadClass(
-					moduleLoader.clazzName()).newInstance();
-			pushFragment(f, true, true);
+			if (moduleLoader.dexModule() != null) {
+				LFFragment f = (LFFragment) getClassLoader().loadClass(
+						moduleLoader.dexModule().clazz()).newInstance();
+				pushFragment(f, true, true);
+			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 

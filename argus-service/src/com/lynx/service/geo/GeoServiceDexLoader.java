@@ -1,7 +1,8 @@
 package com.lynx.service.geo;
 
 import android.content.Context;
-import com.lynx.lib.core.dex.DexServiceLoader;
+import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.service.geo.impl1v1.GeoServiceImpl;
@@ -13,15 +14,17 @@ import java.util.List;
  * User: zhufeng.liu
  * Date: 8/29/13 11:16 AM
  */
-public class GeoServiceDexLoader extends DexServiceLoader {
+public class GeoServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "geo";
 
 	private List<LocationListener> listeners = null;
-	private static final int minVersion = 101;
 
-	public GeoServiceDexLoader(Context context) throws Exception {
-		super(context, "geo", minVersion, GeoServiceImpl.class);
+	private static DexModule defModule = new DexModule("geo", 1, null, null, "geo",
+			"com.lynx.service.geo.impl1v1.GeoServiceImpl");
+
+	public GeoServiceDexLoader() throws Exception {
+		super(defModule, GeoServiceImpl.class);
 	}
 
 	@Override

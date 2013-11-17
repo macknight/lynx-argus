@@ -1,20 +1,24 @@
 package com.lynx.service.hotfix;
 
-import android.content.Context;
-import com.lynx.lib.core.dex.DexServiceLoader;
+import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.ServiceLoader;
+import com.lynx.service.hotfix.impl1v1.HotFixServiceImpl;
 
 /**
  * Created with IntelliJ IDEA.
  * User: chris
  * Date: 13-9-12 下午1:34
  */
-public class HotFixServiceDexLoader extends DexServiceLoader {
+public class HotFixServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "hotfix";
 
-	public HotFixServiceDexLoader(Context context, String moduleName, int minVersion, Class<?> defaultClazz)
+	private static DexModule defModule = new DexModule("hotfix", 1, null, null, "hot fix",
+			"com.lynx.service.hotfix.impl1v1.HotFixServiceImpl");
+
+	public HotFixServiceDexLoader()
 			throws Exception {
-		super(context, moduleName, minVersion, defaultClazz);
+		super(defModule, HotFixServiceImpl.class);
 	}
 
 	@Override
@@ -30,10 +34,5 @@ public class HotFixServiceDexLoader extends DexServiceLoader {
 	@Override
 	protected void afterLoad() {
 
-	}
-
-	@Override
-	public String moduleName() {
-		return HotFixService.class.getSimpleName();
 	}
 }

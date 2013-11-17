@@ -37,11 +37,11 @@ public class ShopListMapActivity extends MapActivity {
 
 		geoService = (GeoService) BizApplication.instance().service("geo");
 
-		if (geoService.coord() == null) {
+		if (geoService != null && geoService.coord() == null) {
 			gpCenter = new GeoPoint((int) (31.215999 * 1E6), (int) (121.419996 * 1E6));
 		} else {
 			gpCenter = new GeoPoint((int) (geoService.coord().getLat() * 1E6),
-					                       (int) (geoService.coord().getLng() * 1E6));
+					(int) (geoService.coord().getLng() * 1E6));
 		}
 		mapController.setCenter(gpCenter);
 
@@ -52,7 +52,7 @@ public class ShopListMapActivity extends MapActivity {
 	private void pinOnMap(Coord coord) {
 		try {
 			GeoPoint gp = new GeoPoint((int) (coord.getLat() * 1E6),
-					                          (int) (coord.getLng() * 1E6));
+					(int) (coord.getLng() * 1E6));
 			mapController.animateTo(gp);
 
 			List<Overlay> overlays = mapView.getOverlays();
@@ -80,7 +80,7 @@ public class ShopListMapActivity extends MapActivity {
 
 			Point screenPoint = new Point();
 			GeoPoint gp = new GeoPoint((int) (coord.getLat() * 1E6),
-					                          (int) (coord.getLng() * 1E6));
+					(int) (coord.getLng() * 1E6));
 			mapView.getProjection().toPixels(gp, screenPoint);
 
 			Paint paint = new Paint();
@@ -91,9 +91,9 @@ public class ShopListMapActivity extends MapActivity {
 			Paint paint_marker = new Paint();
 			Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.cur_pos);
 			canvas.drawBitmap(bmp, screenPoint.x - bmp.getWidth() / 2,
-					                 screenPoint.y - bmp.getHeight() / 2, paint_marker);
+					screenPoint.y - bmp.getHeight() / 2, paint_marker);
 			canvas.drawCircle(screenPoint.x, screenPoint.y,
-					                 mapView.getProjection().metersToEquatorPixels(this.accuracy), paint);
+					mapView.getProjection().metersToEquatorPixels(this.accuracy), paint);
 		}
 	}
 }

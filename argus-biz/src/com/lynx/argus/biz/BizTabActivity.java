@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import com.lynx.argus.R;
-import com.lynx.argus.biz.plugin.PluginPanelFragment;
+import com.lynx.argus.biz.plugin.PluginCenterFragment;
 import com.lynx.argus.biz.more.MoreFragment;
 import com.lynx.argus.biz.my.MyFragment;
 import com.lynx.argus.biz.search.SearchFragment;
@@ -32,7 +32,7 @@ public class BizTabActivity extends LFTabActivity {
 		super.onCreate(savedInstanceState);
 		// do custom init here
 		sp = getSharedPreferences("biz", MODE_PRIVATE);
-		curTab = sp.getString("cur_tab", PluginPanelFragment.Tag);
+		curTab = sp.getString("cur_tab", PluginCenterFragment.Tag);
 		tabHost.setCurrentTabByTag(curTab);
 	}
 
@@ -72,7 +72,7 @@ public class BizTabActivity extends LFTabActivity {
 
 	@Override
 	protected void initTabHost() {
-		stacks.put(PluginPanelFragment.Tag, new Stack<LFFragment>());
+		stacks.put(PluginCenterFragment.Tag, new Stack<LFFragment>());
 		stacks.put(ShoppingFragment.Tag, new Stack<LFFragment>());
 		stacks.put(MyFragment.Tag, new Stack<LFFragment>());
 		stacks.put(SearchFragment.Tag, new Stack<LFFragment>());
@@ -84,8 +84,8 @@ public class BizTabActivity extends LFTabActivity {
 			public void onTabChanged(String tabId) {
 				curTab = tabId;
 				if (stacks.get(tabId).size() == 0) {
-					if (tabId.equals(PluginPanelFragment.Tag)) {
-						pushFragment(tabId, new PluginPanelFragment(), false, true);
+					if (tabId.equals(PluginCenterFragment.Tag)) {
+						pushFragment(tabId, new PluginCenterFragment(), false, true);
 					} else if (tabId.equals(ShoppingFragment.Tag)) {
 						pushFragment(tabId, new ShoppingFragment(), false, true);
 					} else if (tabId.equals(MyFragment.Tag)) {
@@ -107,7 +107,7 @@ public class BizTabActivity extends LFTabActivity {
 	protected void initTabContents() {
 		resContent = R.id.realtabcontent;
 
-		TabHost.TabSpec spec = tabHost.newTabSpec(PluginPanelFragment.Tag);
+		TabHost.TabSpec spec = tabHost.newTabSpec(PluginCenterFragment.Tag);
 		tabHost.setCurrentTab(-3);
 		spec.setContent(new TabHost.TabContentFactory() {
 			@Override

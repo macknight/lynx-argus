@@ -4,10 +4,12 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.Toast;
-import com.lynx.lib.core.dex.DexUILoader;
+import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.PluginLoader;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -23,7 +25,7 @@ public class LFDexActivity extends LFNavigationActivity {
 	protected Resources.Theme dexTheme;
 	protected ClassLoader dexClassLoader;
 
-	private DexUILoader moduleLoader;
+	private PluginLoader moduleLoader;
 
 	private Resources.Theme defTheme; // 系统原有主题
 
@@ -53,7 +55,7 @@ public class LFDexActivity extends LFNavigationActivity {
 		try {
 			String module = getIntent().getStringExtra("module");
 
-			moduleLoader = LFApplication.instance().moduleLoader(module);
+			moduleLoader = LFApplication.instance().pluginLoader(module);
 
 			if (moduleLoader == null) {
 				Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
@@ -81,9 +83,11 @@ public class LFDexActivity extends LFNavigationActivity {
 			if (savedInstanceState != null)
 				return;
 
-			LFFragment f = (LFFragment) getClassLoader().loadClass(
-					moduleLoader.clazzName()).newInstance();
-			pushFragment(f, true, true);
+			DexModule dexModule = moduleLoader.dexModule();
+			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
+				LFFragment f = (LFFragment) getClassLoader().loadClass(dexModule.clazz()).newInstance();
+				pushFragment(f, true, true);
+			}
 		} catch (Throwable e) {
 			e.printStackTrace();
 

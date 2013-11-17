@@ -33,8 +33,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".biz.SysInfoActivity"/>
-
         <activity android:name="com.lynx.lib.core.LFDexActivity"/>
 	    <activity android:name=".biz.plugin.demo.ShopListMapActivity"/>
     </application>

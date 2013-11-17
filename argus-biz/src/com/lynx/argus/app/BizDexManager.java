@@ -1,9 +1,6 @@
 package com.lynx.argus.app;
 
-import android.content.Context;
-import android.widget.Toast;
 import com.lynx.lib.core.dex.DexManager;
-import com.lynx.lib.core.dex.DexUILoader;
 import com.lynx.service.cache.CacheServiceDexLoader;
 import com.lynx.service.geo.GeoServiceDexLoader;
 import com.lynx.service.test.TestServiceDexLoader;
@@ -15,36 +12,31 @@ import com.lynx.service.test.TestServiceDexLoader;
  */
 public class BizDexManager extends DexManager {
 
-	public BizDexManager(Context context) {
-		super(context);
+	public BizDexManager() {
+		super();
+		initDexServiceLoader();
 	}
 
-	@Override
-	public void initDexServiceLoader() {
+	private void initDexServiceLoader() {
 		// 根据项目需求定制不同的service管理器
 		try {
-			TestServiceDexLoader testServiceDexLoader = new TestServiceDexLoader(context);
-			addService(testServiceDexLoader);
+			TestServiceDexLoader testServiceDexLoader = new TestServiceDexLoader();
+			addServiceLoader(testServiceDexLoader);
 		} catch (Exception e) {
-			Toast.makeText(context, "create TestService Exception", Toast.LENGTH_SHORT).show();
+
 		}
 		try {
-			GeoServiceDexLoader geoServiceDexLoader = new GeoServiceDexLoader(context);
-			addService(geoServiceDexLoader);
+			GeoServiceDexLoader geoServiceDexLoader = new GeoServiceDexLoader();
+			addServiceLoader(geoServiceDexLoader);
 		} catch (Exception e) {
-			Toast.makeText(context, "create GeoService Exception", Toast.LENGTH_SHORT).show();
+
 		}
 
 		try {
-			CacheServiceDexLoader cacheServiceDexLoader = new CacheServiceDexLoader(context);
-			addService(cacheServiceDexLoader);
+			CacheServiceDexLoader cacheServiceDexLoader = new CacheServiceDexLoader();
+			addServiceLoader(cacheServiceDexLoader);
 		} catch (Exception e) {
-			Toast.makeText(context, "create CacheService Exception", Toast.LENGTH_SHORT).show();
-		}
-	}
 
-	@Override
-	public void initDexUIModuleLoader() {
-		addUIModule(new DexUILoader(context, "local"));
+		}
 	}
 }

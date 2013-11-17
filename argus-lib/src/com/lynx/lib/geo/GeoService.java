@@ -1,6 +1,6 @@
 package com.lynx.lib.geo;
 
-import com.lynx.lib.core.dex.DexService;
+import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
@@ -12,7 +12,7 @@ import java.util.List;
  * User: zhufeng.liu
  * Date: 8/27/13 5:53 PM
  */
-public interface GeoService extends DexService {
+public interface GeoService extends Service {
 
 	LocationStatus status();
 

@@ -5,7 +5,7 @@ package com.lynx.lib.core.dex;
  * User: chris
  * Date: 13-9-11 下午4:41
  */
-public interface DexService {
+public interface Service {
 
     void start();
 

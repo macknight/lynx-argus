@@ -17,19 +17,19 @@
 			    android:text="@string/main_tab_title_plugin"/>
 
 	    <ImageButton
-			    android:id="@+id/ib_local_add"
+			    android:id="@+id/ib_plugincenter_store"
 			    android:layout_width="wrap_content"
 			    android:layout_height="match_parent"
 			    android:layout_alignParentRight="true"
 			    android:paddingLeft="15dp"
 			    android:paddingRight="15dp"
 			    android:contentDescription="@null"
-			    android:src="@drawable/local_service_add"
+			    android:src="@drawable/plugin_market"
 			    android:background="@drawable/selector_def_btn"/>
     </RelativeLayout>
 
-    <com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView
-            android:id="@+id/prgv_local_idx"
+    <GridView
+            android:id="@+id/gv_plugincenter"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:cacheColorHint="@android:color/transparent"
@@ -37,7 +37,7 @@
             android:listSelector="@android:color/transparent"
             android:numColumns="3"
             android:scrollbars="none">
-    </com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView>
+    </GridView>
 
 </LinearLayout>
 

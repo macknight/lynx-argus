@@ -17,8 +17,7 @@ import android.widget.*;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.SysInfoActivity;
-import com.lynx.argus.biz.plugin.PluginPanelFragment;
+import com.lynx.argus.biz.plugin.PluginCenterFragment;
 import com.lynx.argus.biz.plugin.demo.model.ShopListAdapter;
 import com.lynx.argus.biz.plugin.demo.model.ShopListItem;
 import com.lynx.lib.core.Const;
@@ -132,20 +131,10 @@ public class ShopListFragment extends BizFragment {
 						e.printStackTrace();
 					}
 					sdf.setArguments(bundle);
-					tabActivity.pushFragment(PluginPanelFragment.Tag, sdf, true, true);
+					tabActivity.pushFragment(PluginCenterFragment.Tag, sdf, true, true);
 				} else {
 					Toast.makeText(tabActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
 				}
-			}
-		});
-
-		ImageView ivIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
-		ivIndicator.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent intent = new Intent();
-				intent.setClass(tabActivity, SysInfoActivity.class);
-				startActivity(intent);
 			}
 		});
 

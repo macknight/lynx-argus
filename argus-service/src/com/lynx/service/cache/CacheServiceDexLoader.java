@@ -1,8 +1,9 @@
 package com.lynx.service.cache;
 
 import android.content.Context;
-import com.lynx.lib.core.dex.DexService;
-import com.lynx.lib.core.dex.DexServiceLoader;
+import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.Service;
+import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.service.cache.impl1v1.CacheServiceImpl;
 
 /**
@@ -10,15 +11,16 @@ import com.lynx.service.cache.impl1v1.CacheServiceImpl;
  * User: chris
  * Date: 13-9-17 上午10:01
  */
-public class CacheServiceDexLoader extends DexServiceLoader {
+public class CacheServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "cache";
 
 	private static final int minVersion = 101;
+	private static DexModule defModule = new DexModule("geo", 1, null, null, "geo",
+			"com.lynx.service.geo.impl1v1.GeoServiceImpl");
 
-	public CacheServiceDexLoader(Context context)
-			throws Exception {
-		super(context, Tag, minVersion, CacheServiceImpl.class);
+	public CacheServiceDexLoader() throws Exception {
+		super(defModule, CacheServiceImpl.class);
 	}
 
 	@Override
@@ -30,7 +32,7 @@ public class CacheServiceDexLoader extends DexServiceLoader {
 	protected void loadService() throws Exception {
 		try {
 			if (clazz != null) {
-				service = (DexService) clazz.getConstructor(Context.class).newInstance(context);
+				service = (Service) clazz.getConstructor(Context.class).newInstance(context);
 			}
 
 			if (service == null) {

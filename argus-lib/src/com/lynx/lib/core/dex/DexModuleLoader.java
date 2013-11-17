@@ -4,9 +4,8 @@ import android.content.Context;
 import android.widget.Toast;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
-import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.HttpCallback;
-import org.json.JSONException;
+import com.lynx.lib.http.HttpService;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -20,42 +19,25 @@ import java.io.IOException;
  * Date: 13-10-29 11:29 AM
  */
 public class DexModuleLoader {
-	public static final String K_MODULE = "module";
-	public static final String K_CLAZZ = "clazz"; // 入口类名
-	public static final String K_VERSION = "version"; // 版本
-	public static final String K_URL = "url"; // module包下载地址
-	public static final String K_MD5 = "md5"; // module包md5摘要
-	public static final String K_DESC = "desc"; // module描述
-
 	protected HttpService httpService;
 	protected Context context;
 	protected String basicDir; // /data/data/app.name/files/prefrix/module
 	protected String dexDir; // /data/data/app.name/files/prefrix/module/dex
 	protected String dexPath; // /data/data/app.name/files/prefrix/module/dex/xxxxxx.dex
 	protected String srcDir; // /data/data/app.name/files/prefrix/module/src
-	protected String srcPath; // /data/data/app.name/files/prefix/module/src/xxxxxx
+	protected String srcPath; // /data/data/app.name/files/prefix/module/src/xxxxxx.apk
+	protected DexModule dexModule;
+	private DexModule tmpModule;
+	private DexType type;
 
-	private String tmpPath;
-	private JSONObject tmpConfig;
 
-	protected String moduleName; // 模块名
-	protected String clazzName = null; // 入口类名
-	protected int version = -1; // 版本号
-	protected String md5 = null; // md5摘要
-	protected String desc; // 动态模块描述
+	public DexModuleLoader(DexType type, DexModule newModule) {
+		this.type = type;
+		this.context = LFApplication.instance();
+		this.httpService = (HttpService) LFApplication.instance().service("http");
 
-	/**
-	 * @param context
-	 * @param moduleName 动态服务标签
-	 * @param minVersion 最小动态服务包版本
-	 */
-	public DexModuleLoader(Context context, String prefix, String moduleName, int minVersion) {
-		this.context = context;
-		this.moduleName = moduleName;
-		this.version = minVersion;
-		this.httpService = (HttpService) ((LFApplication) context).service("http");
-
-		File tmp = new File(context.getFilesDir(), prefix + "/" + moduleName);
+		File tmp = new File(context.getFilesDir(),
+				type.type() + File.separator + newModule.module());
 		if (!tmp.exists()) {
 			tmp.mkdirs();
 		}
@@ -74,39 +56,33 @@ public class DexModuleLoader {
 		dexDir = tmp.getAbsolutePath();
 
 		try {
-			JSONObject config = loadLocalConfig();
-			initConfig(config);
+			loadLocalConfig();
+			initConfig(newModule);
 			// 当配置的源文件不存在时,下载该文件
 			if (!new File(srcPath).exists()) {
-				downloadSrcFile(config);
+				downloadSrcFile(this.dexModule);
 			}
 		} catch (Exception e) {
-			Logger.e(moduleName, "unable to read config at " + basicDir + "/config:" + e.getMessage());
+			Logger.e(dexModule.module(), "unable to read config at " + basicDir + "/config:" + e.getMessage());
 		}
 
 		try {
 			deleteOldFile();
 		} catch (Exception e) {
-			Logger.e(moduleName, "unable to delete old module file" + e.getMessage());
+			Logger.e(dexModule.module(), "unable to delete old module file" + e.getMessage());
 		}
 	}
 
 	/**
 	 * 读取更新配置，下载模块更新
 	 *
-	 * @param config
+	 * @param module
 	 */
-	public void update(JSONObject config) {
-		try {
-			int newVersion = config.getInt(K_VERSION);
-			if (version >= newVersion) {
-				return;
-			}
-			downloadSrcFile(config);
-		} catch (Exception e) {
-			e.printStackTrace();
-			Logger.w(moduleName, e.getLocalizedMessage());
+	public void update(DexModule module) {
+		if (dexModule.version() >= module.version()) {
+			return;
 		}
+		downloadSrcFile(module);
 	}
 
 	/**
@@ -136,20 +112,12 @@ public class DexModuleLoader {
 		return dexDir;
 	}
 
-	public String moduleName() {
-		return moduleName;
+	public DexModule dexModule() {
+		return dexModule;
 	}
 
-	public String clazzName() {
-		return clazzName;
-	}
-
-	public int version() {
-		return version;
-	}
-
-	public String desc() {
-		return desc;
+	public String module() {
+		return dexModule.module();
 	}
 
 	/**
@@ -158,10 +126,10 @@ public class DexModuleLoader {
 	 * @return
 	 * @throws Exception
 	 */
-	private JSONObject loadLocalConfig() throws Exception {
+	private void loadLocalConfig() throws Exception {
 		File path = new File(basicDir + "/config");
 		if (path.length() == 0)
-			return null;
+			return;
 		FileInputStream fis = null;
 		try {
 			fis = new FileInputStream(path);
@@ -170,12 +138,13 @@ public class DexModuleLoader {
 			fis.close();
 			String str = new String(bytes, "UTF-8");
 			JSONObject json = new JSONObject(str);
-			return json;
+			dexModule = DexUtil.json2dexModule(type, json);
 		} finally {
 			if (fis != null) {
 				try {
 					fis.close();
 				} catch (Exception e) {
+
 				}
 			}
 		}
@@ -184,30 +153,24 @@ public class DexModuleLoader {
 	/**
 	 * 配置项初始化
 	 *
-	 * @param config
-	 * @throws JSONException
+	 * @param module
 	 */
-	private void initConfig(JSONObject config) throws JSONException {
-		int ver = config.getInt(K_VERSION);
-		if (ver < version) {
+	private void initConfig(DexModule module) {
+		if (module.version() < dexModule.version()) {
 			return;
 		}
-
-		version = ver;
-		clazzName = config.getString(K_CLAZZ);
-		md5 = config.getString(K_MD5);
-		desc = config.getString(K_DESC);
-		srcPath = new File(basicDir, "src").getAbsolutePath() + "/" + md5 + ".apk";
-		dexPath = new File(basicDir, "dex").getAbsolutePath() + "/" + md5 + ".dex";
+		dexModule = module;
+		srcPath = new File(basicDir, "src").getAbsolutePath() + File.separator + dexModule.md5() + ".apk";
+		dexPath = new File(basicDir, "dex").getAbsolutePath() + File.separator + dexModule.md5() + ".dex";
 	}
 
 	/**
 	 * 将配置文件保存到本地
 	 *
-	 * @param json
+	 * @param module
 	 * @throws Exception
 	 */
-	private void saveConfig(JSONObject json) throws Exception {
+	private void saveConfig(DexModule module) throws Exception {
 		File config = new File(basicDir, "config");
 		File configTmp = new File(basicDir, "config_tmp");
 		File configOld = new File(basicDir, "config_old");
@@ -221,7 +184,7 @@ public class DexModuleLoader {
 		}
 
 		try {
-			byte[] bytes = json.toString().getBytes("UTF-8");
+			byte[] bytes = DexUtil.dexModule2json(type, module).toString().getBytes("UTF-8");
 			fos = new FileOutputStream(configTmp);
 			fos.write(bytes);
 			fos.close();
@@ -254,13 +217,12 @@ public class DexModuleLoader {
 	/**
 	 * 获取配置描述的动态更新包
 	 *
-	 * @param config
-	 * @throws JSONException
+	 * @param module
 	 */
-	private void downloadSrcFile(JSONObject config) throws JSONException {
-		tmpConfig = config;
-		tmpPath = String.format("%s/%s.apk", srcDir, config.getString(K_MD5));
-		httpService.download(config.getString(K_URL), tmpPath, true,
+	private void downloadSrcFile(DexModule module) {
+		tmpModule = module;
+		String tmpPath = String.format("%s/%s.apk", srcDir, module.md5());
+		httpService.download(module.url(), tmpPath, true,
 				new HttpCallback<File>() {
 					@Override
 					public void onStart() {
@@ -276,8 +238,8 @@ public class DexModuleLoader {
 
 						try {
 							// 配置升级
-							saveConfig(tmpConfig);
-							initConfig(tmpConfig);
+							saveConfig(tmpModule);
+							initConfig(tmpModule);
 						} catch (Exception e) {
 							return;
 						}
@@ -318,6 +280,21 @@ public class DexModuleLoader {
 				}
 				file.delete();
 			}
+		}
+	}
+
+	public enum DexType {
+		PLUGIN("plugin"),
+		SERVICE("service");
+
+		private String type;
+
+		DexType(String type) {
+			this.type = type;
+		}
+
+		public String type() {
+			return type;
 		}
 	}
 }
