@@ -12,6 +12,7 @@ import com.lynx.lib.http.core.HttpParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,83 +21,95 @@ import java.util.Map;
  * User: chris.liu
  * Date: 13-11-17 上午1:32
  */
-public class ServiceManager {
-	private static final String Tag = "serviceManager";
-	private static final String LM_API_SERVICE_CONFIG = "/dex/service";
+public abstract class ServiceManager {
+    private static final String Tag = "serviceManager";
+    private static final String LM_API_SERVICE_CONFIG = "/dex/service";
+    public static final String PREFIX = "service";
 
-	private Context context;
-	private HttpService httpService;
-	private Map<String, ServiceLoader> serviceLoaders = new HashMap<String, ServiceLoader>();
+    private Context context;
+    private HttpService httpService;
 
+    private Map<String, ServiceLoader> serviceLoaders = new HashMap<String, ServiceLoader>();
 
-	public ServiceManager() {
-		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service("http");
-	}
+    public ServiceManager() {
+        this.context = LFApplication.instance();
+        this.httpService = (HttpService) LFApplication.instance().service("http");
 
-	private HttpCallback<Object> callback = new HttpCallback<Object>() {
-		@Override
-		public void onSuccess(Object o) {
-			super.onSuccess(o);
-			try {
-				JSONObject joResult = new JSONObject(o.toString());
-				if (joResult.getInt("status") != 200) {
-					Toast.makeText(context, "获取插件更新配置失败", Toast.LENGTH_SHORT).show();
-					return;
-				}
-				JSONArray jaPlugin = joResult.getJSONArray("data");
-				// 获取插件更新配置
-				for (int i = 0; i < jaPlugin.length(); ++i) {
-					try {
-						update(jaPlugin.getJSONObject(i));
-					} catch (Exception e) {
+        File tmp = new File(context.getFilesDir(), PREFIX);
+        if (!tmp.exists()) {
+            tmp.mkdirs();
+        }
 
-					}
-				}
-			} catch (Exception e) {
-				Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-			}
-		}
+        updateCheck();
 
-		@Override
-		public void onFailure(Throwable t, String strMsg) {
-			super.onFailure(t, strMsg);
-			Toast.makeText(context, "获取插件更新配置失败", Toast.LENGTH_SHORT).show();
-		}
-	};
+        initService();
+    }
 
-	/**
-	 * 更新配置
-	 */
-	public void updateConfig() {
-		HttpParam param = new HttpParam();
-		param.put("ua", "android");
-		httpService.post(String.format("%s%s", Const.DOMAIN, LM_API_SERVICE_CONFIG),
-				param, callback);
-	}
+    protected abstract void initService();
 
-	private void update(JSONObject config) {
-		try {
-			DexModule module = DexUtil.json2dexModule(DexType.SERVICE, config);
-			ServiceLoader dexLoader = serviceLoaders.get(module.module());
-			if (dexLoader != null) {
-				// service 有新的动态更新
-				dexLoader.update(module);
-			}
-		} catch (Exception e) {
-			Logger.e(Tag, "update service error", e);
-		}
-	}
+    private HttpCallback<Object> callback = new HttpCallback<Object>() {
+        @Override
+        public void onSuccess(Object o) {
+            super.onSuccess(o);
+            try {
+                JSONObject joResult = new JSONObject(o.toString());
+                if (joResult.getInt("status") != 200) {
+                    Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                JSONArray jaPlugin = joResult.getJSONArray("data");
+                // 获取插件更新配置
+                for (int i = 0; i < jaPlugin.length(); ++i) {
+                    try {
+                        DexModule module = DexUtil.json2dexModule(DexType.SERVICE, jaPlugin.getJSONObject(i));
+                        update(module);
+                    } catch (Exception e) {
 
-	public Service service(String name) {
-		ServiceLoader loader = serviceLoaders.get(name);
-		if (loader != null) {
-			return loader.service();
-		}
-		return null;
-	}
+                    }
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }
 
-	public void addServiceLoader(ServiceLoader loader) {
-		serviceLoaders.put(loader.module(), loader);
-	}
+        @Override
+        public void onFailure(Throwable t, String strMsg) {
+            super.onFailure(t, strMsg);
+            Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    /**
+     * 更新配置
+     */
+    public void updateCheck() {
+        HttpParam param = new HttpParam();
+        param.put("ua", "android");
+        httpService.post(String.format("%s%s", Const.DOMAIN, LM_API_SERVICE_CONFIG),
+                param, callback);
+    }
+
+    private void update(DexModule dexModule) {
+        try {
+            ServiceLoader dexLoader = serviceLoaders.get(dexModule.module());
+            if (dexLoader != null) {
+                // service 有新的动态更新
+                dexLoader.update(dexModule);
+            }
+        } catch (Exception e) {
+            Logger.e(Tag, "update service error", e);
+        }
+    }
+
+    public Service service(String name) {
+        ServiceLoader loader = serviceLoaders.get(name);
+        if (loader != null) {
+            return loader.service();
+        }
+        return null;
+    }
+
+    public void addServiceLoader(ServiceLoader loader) {
+        serviceLoaders.put(loader.module(), loader);
+    }
 }

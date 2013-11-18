@@ -10,6 +10,7 @@
 	           android:layout_height="wrap_content"
 	           android:layout_marginLeft="15dp"
 	           android:layout_centerVertical="true"
+               android:contentDescription="@null"
 	           android:src="@drawable/plugin_def"/>
 
 	<TextView android:id="@+id/tv_pluginstore_item_name"
@@ -36,4 +37,14 @@
 	          android:textColor="@color/Thistle"
 	          android:textSize="@dimen/font_size_small"
 	          android:text="上海市长宁区玉佩南路199弄"/>
+
+    <ImageView android:id="@+id/iv_pluginstore_item_opt"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginRight="25dp"
+               android:layout_alignParentRight="true"
+               android:layout_centerVertical="true"
+               android:contentDescription="@null"
+               android:src="@drawable/plugin_install"/>
+
 </RelativeLayout>

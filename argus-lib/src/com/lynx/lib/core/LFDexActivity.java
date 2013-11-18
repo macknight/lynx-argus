@@ -57,7 +57,7 @@ public class LFDexActivity extends LFNavigationActivity {
 
 			moduleLoader = LFApplication.instance().pluginLoader(module);
 
-			if (moduleLoader == null) {
+			if (moduleLoader == null || moduleLoader.dexModule() == null) {
 				Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
 				throw new Exception("not such module exist:" + module);
 			}
@@ -95,7 +95,7 @@ public class LFDexActivity extends LFNavigationActivity {
 
 			super.onCreate(savedInstanceState);
 
-			LFFragment f = new UILoadErrorFragment();
+			LFFragment f = new PluginLoadErrorFragment();
 			pushFragment(f, true, true);
 		}
 	}

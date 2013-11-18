@@ -10,15 +10,15 @@ import java.io.File;
  */
 public class PluginLoader extends DexModuleLoader {
 
-	public PluginLoader(Plugin plugin) {
-		super(DexType.PLUGIN, plugin);
-	}
+    public PluginLoader(Plugin plugin) {
+        super(DexType.PLUGIN, plugin);
+    }
 
-	/**
-	 * 删除本地插件文件
-	 */
-	public void delete() {
-		File file = new File(basicDir);
-		file.delete();
-	}
+    /**
+     * 删除本地插件文件
+     */
+    public void delete() {
+        File file = new File(basicDir);
+        file.delete();
+    }
 }

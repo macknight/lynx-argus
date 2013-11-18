@@ -19,8 +19,8 @@ import android.widget.TextView;
  * User: chris
  * Date: 13-10-18 下午1:32
  */
-public class UILoadErrorFragment extends LFFragment {
-	private static final String Tag = "UILoadErrorFragment";
+public class PluginLoadErrorFragment extends LFFragment {
+	private static final String Tag = "PluginLoadErrorFragment";
 
 	private String message; // 加载失败提示
 

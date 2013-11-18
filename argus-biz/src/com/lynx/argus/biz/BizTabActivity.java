@@ -2,15 +2,14 @@ package com.lynx.argus.biz;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import com.lynx.argus.R;
-import com.lynx.argus.biz.plugin.PluginCenterFragment;
 import com.lynx.argus.biz.more.MoreFragment;
 import com.lynx.argus.biz.my.MyFragment;
+import com.lynx.argus.biz.plugin.PluginCenterFragment;
 import com.lynx.argus.biz.search.SearchFragment;
 import com.lynx.argus.biz.shopping.ShoppingFragment;
 import com.lynx.lib.core.LFFragment;
@@ -53,13 +52,11 @@ public class BizTabActivity extends LFTabActivity {
 	@Override
 	protected void onStop() {
 		super.onStop();
-		Log.d("chris", "onStop");
 	}
 
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		Log.d("chris", "onDestroy");
 	}
 
 	@Override

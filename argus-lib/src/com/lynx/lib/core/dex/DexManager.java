@@ -7,16 +7,19 @@ package com.lynx.lib.core.dex;
  * User: chris
  * Date: 13-10-28 下午5:39
  */
-public class DexManager {
+public abstract class DexManager {
 	private static final String Tag = "dexmanager";
 
-	private ServiceManager serviceManager;
-	private PluginManager pluginManager;
+	protected ServiceManager serviceManager;
+    protected PluginManager pluginManager;
 
 	public DexManager() {
-		serviceManager = new ServiceManager();
 		pluginManager = new PluginManager();
+
+        initServiceManager();
 	}
+
+    protected abstract void initServiceManager();
 
 	public Service service(String name) {
 		return serviceManager.service(name);
