@@ -18,7 +18,7 @@
 				android:padding="15dp"
 				android:contentDescription="@null"
 				android:src="@drawable/map"
-				android:background="@drawable/selector_btn_green"/>
+				android:background="@drawable/selector_def_item"/>
 	</RelativeLayout>
 
 	<RelativeLayout

@@ -67,7 +67,7 @@ public class ShopDetailFragment extends BizFragment {
 	}
 
 
-	private HttpCallback httpCallback = new HttpCallback() {
+	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
 		@Override
 		public void onSuccess(Object o) {
 			super.onSuccess(o);

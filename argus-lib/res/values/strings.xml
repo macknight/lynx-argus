@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">argus-lib</string>
-
-    <string name="error">页面载入失败@_@</string>
-
-</resources>

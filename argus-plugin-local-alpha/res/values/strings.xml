@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">argus-plugin-alpha</string>
+	<string name="app_name">local</string>
 	<string name="loading_hint">载入中...</string>
 
 	<string name="shop_detail_addr_hint">地址</string>
