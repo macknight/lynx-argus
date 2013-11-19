@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+	<RelativeLayout android:layout_width="match_parent"
+	                android:layout_height="45dp"
+	                android:background="@drawable/tool_bar">
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+				android:gravity="center"
+				android:textColor="@color/Grey"
+				android:textSize="@dimen/font_size_xlarge"
+				android:text="@string/main_tab_title_search"/>
+
+		<ImageButton
+				android:id="@+id/ib_local_edit"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_alignParentRight="true"
+				android:paddingLeft="15dp"
+				android:paddingRight="15dp"
+				android:src="@drawable/search"
+				android:background="@drawable/selector_def_item"/>
+	</RelativeLayout>
+</LinearLayout>
