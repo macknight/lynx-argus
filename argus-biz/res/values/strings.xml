@@ -8,7 +8,8 @@
     <string name="main_tab_title_search">搜索</string>
     <string name="main_tab_title_more">更多</string>
 
-    <string name="plugin_panel_title">插件市场</string>
+    <string name="plugin_store_title">插件市场</string>
+    <string name="plugin_download_title">下载管理</string>
 
     <string name="loading_hint">加载中...</string>
     <string name="shop_detail_addr_hint">地址</string>

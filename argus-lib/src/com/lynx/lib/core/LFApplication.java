@@ -8,6 +8,8 @@ import com.lynx.lib.core.dex.PluginLoader;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 
+import java.util.Map;
+
 /**
  * Created with IntelliJ IDEA.
  * User: chris
@@ -73,6 +75,10 @@ public abstract class LFApplication extends Application {
         return dexManager.service(name);
     }
 
+    public Map<String, PluginLoader> pluginLoaders() {
+        return dexManager.pluginLoaders();
+    }
+
     /**
      * 根据模块名获取对应插件加载器
      *
@@ -84,11 +90,30 @@ public abstract class LFApplication extends Application {
     }
 
     /**
-     * 加入插件
+     * 插件是否存在
+     *
+     * @param name
+     * @return
+     */
+    public boolean hasPlugin(String name) {
+        return pluginLoader(name) != null;
+    }
+
+    /**
+     * 安装插件
      *
      * @param plugin
      */
-    public void addPlugin(Plugin plugin) {
+    public void installPlugin(Plugin plugin) {
         dexManager.installPlugin(plugin);
+    }
+
+    /**
+     * 卸载插件
+     *
+     * @param plugin
+     */
+    public void uninstallPlugin(Plugin plugin) {
+        dexManager.uninstallPlugin(plugin);
     }
 }

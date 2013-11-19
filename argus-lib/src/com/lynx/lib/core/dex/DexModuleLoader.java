@@ -58,8 +58,6 @@ public class DexModuleLoader {
         loadLocalConfig();
         initConfig(newModule);
         // 当配置的源文件不存在时,下载该文件
-        Logger.w("chris", "dexModule:" + DexUtil.dexModule2json(type, dexModule));
-        Logger.w("chris", "srcPath:" + srcPath);
         if (!new File(srcPath).exists()) {
             downloadSrcFile(dexModule);
         }

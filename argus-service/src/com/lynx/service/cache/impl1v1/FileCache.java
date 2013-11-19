@@ -62,6 +62,7 @@ public class FileCache implements Cache {
                 try {
                     instream.close();
                 } catch (Exception e) {
+
                 }
             }
         }

@@ -25,7 +25,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:src="@drawable/setting"
-                android:background="@drawable/selector_def_btn"/>
+                android:background="@drawable/selector_def_item"/>
 
     </RelativeLayout>
 

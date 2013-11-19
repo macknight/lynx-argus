@@ -4,4 +4,4 @@
                 android:valueFrom="500"
                 android:valueTo="0.0"
                 android:propertyName="translationX"
-                android:duration="@android:integer/config_mediumAnimTime" />
+                android:duration="@android:integer/config_longAnimTime" />

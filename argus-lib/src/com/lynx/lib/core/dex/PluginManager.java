@@ -112,6 +112,9 @@ public class PluginManager {
      */
     public void addPluginLoader(PluginLoader loader) {
         try {
+            if (jaMyPlugins == null) {
+                jaMyPlugins = new JSONArray();
+            }
             JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
             jaMyPlugins.put(jo);
             saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
@@ -122,15 +125,18 @@ public class PluginManager {
     }
 
     public void removePluginLoader(Plugin plugin) {
-        pluginLoaders.remove(plugin.module());
         JSONArray ja = new JSONArray();
         for (String key : pluginLoaders.keySet()) {
             if (key.equals(plugin.module())) {
+                try {
+                    pluginLoaders.get(key).delete();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 continue;
             }
             try {
                 PluginLoader loader = pluginLoaders.get(key);
-                loader.delete();
                 JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
                 ja.put(jo);
             } catch (Exception e) {
@@ -140,9 +146,11 @@ public class PluginManager {
         try {
             jaMyPlugins = ja;
             saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
+            pluginLoaders.remove(plugin.module());
         } catch (Exception e) {
 
         }
+
     }
 
     private void update(Plugin plugin) {
@@ -197,12 +205,12 @@ public class PluginManager {
     }
 
     private String localPlugins() {
-//		String plugins = "";
-//		for (String key : pluginLoaders.keySet()) {
-//			plugins = String.format("%s|%s", plugins, key);
-//		}
-//		return plugins.length() > 1 ? plugins.substring(1) : null;
-        return "local";
+        String plugins = "";
+        for (String key : pluginLoaders.keySet()) {
+            plugins = String.format("%s|%s", plugins, key);
+        }
+        return plugins.length() > 1 ? plugins.substring(1) : null;
+//        return "local";
     }
 
     /**

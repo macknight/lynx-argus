@@ -1,7 +1,6 @@
 package com.lynx.service.cache.impl1v1;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import java.util.Map;
 import java.util.WeakHashMap;
@@ -38,7 +37,6 @@ public class MemoryCache {
     public void put(String key, Object value) {
         if (key != null && !"".equals(key) && value != null) {
             cache.put(key, value);
-            Log.d(TAG, "size of memory cache: " + cache.size());
         }
     }
 

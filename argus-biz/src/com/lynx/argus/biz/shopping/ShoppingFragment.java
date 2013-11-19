@@ -1,14 +1,11 @@
 package com.lynx.argus.biz.shopping;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
-import com.lynx.lib.core.LFDexActivity;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,16 +29,6 @@ public class ShoppingFragment extends BizFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_shopping, container, false);
-
-		ImageButton ib = (ImageButton) v.findViewById(R.id.ib_local_dex_laoder);
-		ib.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Intent i = new Intent(getActivity(), LFDexActivity.class);
-				i.putExtra("module", "local");
-				startActivity(i);
-			}
-		});
 
 		return v;
 	}

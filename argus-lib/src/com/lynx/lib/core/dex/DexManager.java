@@ -1,5 +1,7 @@
 package com.lynx.lib.core.dex;
 
+import java.util.Map;
+
 /**
  * 负责所有动态更新模块(包括ui module和service)的更新管理
  * <p/>
@@ -28,6 +30,10 @@ public abstract class DexManager {
 	public void addServiceLoader(ServiceLoader loader) {
 		serviceManager.addServiceLoader(loader);
 	}
+
+    public Map<String, PluginLoader> pluginLoaders() {
+        return pluginManager.pluginLoaders();
+    }
 
 	public PluginLoader pluginLoader(String name) {
 		return pluginManager.getPluginLoader(name);
