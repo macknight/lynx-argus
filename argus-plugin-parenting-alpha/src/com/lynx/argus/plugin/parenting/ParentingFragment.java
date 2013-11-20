@@ -20,7 +20,6 @@ public class ParentingFragment extends LFFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_parenting, container, false);
-
 		return v;
 	}
 

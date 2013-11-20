@@ -37,21 +37,6 @@ public class ActionSlideExpandableListView extends SlideExpandableListView {
         this.buttonIds = buttonIds;
     }
 
-    /**
-     * Interface for callback to be invoked whenever an action is clicked in
-     * the expandle area of the list item.
-     */
-    public interface OnActionClickListener {
-        /**
-         * Called when an action item is clicked.
-         *
-         * @param itemView    the view of the list item
-         * @param clickedView the view clicked
-         * @param position    the position in the listview
-         */
-        public void onClick(View itemView, View clickedView, int position);
-    }
-
     public void setAdapter(ListAdapter adapter) {
         super.setAdapter(new WrapperListAdapterImpl(adapter) {
             @Override
@@ -77,4 +62,19 @@ public class ActionSlideExpandableListView extends SlideExpandableListView {
             }
         });
     }
+
+	/**
+	 * Interface for callback to be invoked whenever an action is clicked in
+	 * the expandle area of the list item.
+	 */
+	public interface OnActionClickListener {
+		/**
+		 * Called when an action item is clicked.
+		 *
+		 * @param itemView    the view of the list item
+		 * @param clickedView the view clicked
+		 * @param position    the position in the listview
+		 */
+		public void onClick(View itemView, View clickedView, int position);
+	}
 }

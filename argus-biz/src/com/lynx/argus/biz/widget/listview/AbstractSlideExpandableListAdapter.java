@@ -145,7 +145,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
     }
 
 
-    private void enableFor(final View button, final View target, final int position) {
+    private void enableFor(final View parent, final View target, final int position) {
         if (target == lastOpen && position != lastOpenPosition) {
             // lastOpen is recycled, so its reference is false
             lastOpen = null;
@@ -163,55 +163,55 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
             updateExpandable(target, position);
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                Animation a = target.getAnimation();
-                if (a != null && a.hasStarted() && !a.hasEnded()) {
-                    a.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+        parent.setOnClickListener(new View.OnClickListener() {
+	        @Override
+	        public void onClick(final View view) {
+		        Animation a = target.getAnimation();
+		        if (a != null && a.hasStarted() && !a.hasEnded()) {
+			        a.setAnimationListener(new Animation.AnimationListener() {
+				        @Override
+				        public void onAnimationStart(Animation animation) {
 
-                        }
+				        }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            view.performClick();
-                        }
+				        @Override
+				        public void onAnimationEnd(Animation animation) {
+					        view.performClick();
+				        }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
+				        @Override
+				        public void onAnimationRepeat(Animation animation) {
 
-                        }
-                    });
-                } else {
-                    target.setAnimation(null);
+				        }
+			        });
+		        } else {
+			        target.setAnimation(null);
 
-                    int type = target.getVisibility() == View.VISIBLE
-                            ? ExpandCollapseAnimation.COLLAPSE : ExpandCollapseAnimation.EXPAND;
+			        int type = target.getVisibility() == View.VISIBLE
+					        ? ExpandCollapseAnimation.COLLAPSE : ExpandCollapseAnimation.EXPAND;
 
-                    // remember the state
-                    if (type == ExpandCollapseAnimation.EXPAND) {
-                        openItems.set(position, true);
-                    } else {
-                        openItems.set(position, false);
-                    }
-                    // check if we need to collapse a different view
-                    if (type == ExpandCollapseAnimation.EXPAND) {
-                        if (lastOpenPosition != -1 && lastOpenPosition != position) {
-                            if (lastOpen != null) {
-                                animateView(lastOpen, ExpandCollapseAnimation.COLLAPSE);
-                            }
-                            openItems.set(lastOpenPosition, false);
-                        }
-                        lastOpen = target;
-                        lastOpenPosition = position;
-                    } else if (lastOpenPosition == position) {
-                        lastOpenPosition = -1;
-                    }
-                    animateView(target, type);
-                }
-            }
+			        // remember the state
+			        if (type == ExpandCollapseAnimation.EXPAND) {
+				        openItems.set(position, true);
+			        } else {
+				        openItems.set(position, false);
+			        }
+			        // check if we need to collapse a different view
+			        if (type == ExpandCollapseAnimation.EXPAND) {
+				        if (lastOpenPosition != -1 && lastOpenPosition != position) {
+					        if (lastOpen != null) {
+						        animateView(lastOpen, ExpandCollapseAnimation.COLLAPSE);
+					        }
+					        openItems.set(lastOpenPosition, false);
+				        }
+				        lastOpen = target;
+				        lastOpenPosition = position;
+			        } else if (lastOpenPosition == position) {
+				        lastOpenPosition = -1;
+			        }
+			        animateView(target, type);
+		        }
+	        }
         });
     }
 
