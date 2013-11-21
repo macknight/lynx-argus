@@ -13,15 +13,15 @@ public abstract class DexManager {
 	private static final String Tag = "dexmanager";
 
 	protected ServiceManager serviceManager;
-    protected PluginManager pluginManager;
+	protected PluginManager pluginManager;
 
 	public DexManager() {
 		pluginManager = new PluginManager();
 
-        initServiceManager();
+		initServiceManager();
 	}
 
-    protected abstract void initServiceManager();
+	protected abstract void initServiceManager();
 
 	public Service service(String name) {
 		return serviceManager.service(name);
@@ -31,19 +31,19 @@ public abstract class DexManager {
 		serviceManager.addServiceLoader(loader);
 	}
 
-    public Map<String, PluginLoader> pluginLoaders() {
-        return pluginManager.pluginLoaders();
-    }
+	public Map<String, PluginLoader> pluginLoaders() {
+		return pluginManager.pluginLoaders();
+	}
 
 	public PluginLoader pluginLoader(String name) {
 		return pluginManager.getPluginLoader(name);
 	}
 
-	public void installPlugin(Plugin plugin) {
-		pluginManager.addPluginLoader(new PluginLoader(plugin));
+	public boolean installPlugin(Plugin plugin, DexModuleListener listener) {
+		return pluginManager.addPluginLoader(new PluginLoader(plugin, listener));
 	}
 
-	public void uninstallPlugin(Plugin plugin) {
-		pluginManager.removePluginLoader(plugin);
+	public boolean uninstallPlugin(Plugin plugin) {
+		return pluginManager.removePluginLoader(plugin);
 	}
 }

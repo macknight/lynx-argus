@@ -60,9 +60,6 @@ class SlideExpandableListView extends ListView {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				SlideExpandableListAdapter adapter = (SlideExpandableListAdapter) getAdapter();
 				adapter.getExpandToggleView(view).performClick();
-				if (parent.getLastVisiblePosition() == position) {
-					parent.scrollBy(100, 0);
-				}
 			}
 		});
 	}

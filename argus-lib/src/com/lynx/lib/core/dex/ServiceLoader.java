@@ -18,7 +18,7 @@ public abstract class ServiceLoader extends DexModuleLoader {
 	 */
 	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz)
 			throws Exception {
-		super(DexType.SERVICE, dexModule);
+		super(DexType.SERVICE, dexModule, null);
 
 		if (clazz == null) {
 			clazz = defaultClazz;
