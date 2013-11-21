@@ -16,6 +16,7 @@ import com.lynx.argus.biz.plugin.demo.ShopListFragment;
 import com.lynx.argus.biz.plugin.model.PluginCenterAdapter;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFDexActivity;
+import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 
 import java.util.ArrayList;
@@ -70,6 +71,12 @@ public class PluginCenterFragment extends BizFragment {
 		return v;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		pluginManager.removeMsgHandler(handler);
+	}
+
 	private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -92,17 +99,21 @@ public class PluginCenterFragment extends BizFragment {
 
 		@Override
 		public boolean interested(int msg) {
-			return BizPluginManager.MSG_PLUGIN_INSTALL_FAIL == msg ||
-					BizPluginManager.MSG_PLUGIN_INSTALL_SUCCESS == msg;
+			return DexModuleListener.DEX_INSTALL_SUCCESS == msg ||
+					DexModuleListener.DEX_INSTALL_FAIL == msg ||
+					DexModuleListener.DEX_UNINSTALL_SUCCESS == msg ||
+					DexModuleListener.DEX_UNINSTALL_FAIL == msg;
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case BizPluginManager.MSG_PLUGIN_INSTALL_SUCCESS:
-				case BizPluginManager.MSG_PLUGIN_INSTALL_FAIL:
-				case BizPluginManager.MSG_PLUGIN_UNINSTALL_SUCCESS:
-				case BizPluginManager.MSG_PLUGIN_UNINSTALL_FAIL:
+				case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
+				case DexModuleListener.DEX_DOWNLOAD_FAIL:
+				case DexModuleListener.DEX_INSTALL_SUCCESS:
+				case DexModuleListener.DEX_INSTALL_FAIL:
+				case DexModuleListener.DEX_UNINSTALL_SUCCESS:
+				case DexModuleListener.DEX_UNINSTALL_FAIL:
 					loadMyPlugins();
 					break;
 			}

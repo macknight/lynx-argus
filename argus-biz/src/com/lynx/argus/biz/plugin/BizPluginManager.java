@@ -33,10 +33,6 @@ public class BizPluginManager {
 	private static final String PLUGIN_STORE_CONFIG = "pluginstore_config";
 
 	public static final int MSG_STORE_UPDATE_FIN = 0; // 插件商店更新完成
-	public static final int MSG_PLUGIN_INSTALL_SUCCESS = 1; // 插件下载成功
-	public static final int MSG_PLUGIN_INSTALL_FAIL = 2; // 插件安装失败
-	public static final int MSG_PLUGIN_UNINSTALL_SUCCESS = 3; // 插件卸载成功
-	public static final int MSG_PLUGIN_UNINSTALL_FAIL = 4; // 插件卸载失败
 
 	private LFApplication application;
 	private String basicDir;
@@ -75,7 +71,7 @@ public class BizPluginManager {
 	private DexModuleListener listener = new DexModuleListener() {
 		@Override
 		public void onStatusChanged(int status) {
-
+			dispatchMessage(status);
 		}
 	};
 
@@ -133,8 +129,7 @@ public class BizPluginManager {
 
 
 	public void installPlugin(Plugin plugin) {
-		int msg = application.installPlugin(plugin, listener) ? MSG_PLUGIN_INSTALL_SUCCESS : MSG_PLUGIN_INSTALL_FAIL;
-		dispatchMessage(msg);
+		application.installPlugin(plugin, listener);
 	}
 
 	/**
@@ -143,8 +138,7 @@ public class BizPluginManager {
 	 * @param plugin
 	 */
 	public void uninstallPlugin(Plugin plugin) {
-		int msg = application.uninstallPlugin(plugin) ? MSG_PLUGIN_UNINSTALL_SUCCESS: MSG_PLUGIN_UNINSTALL_FAIL;
-		dispatchMessage(msg);
+		application.uninstallPlugin(plugin, listener);
 	}
 
 	public void addMsgHandler(PluginMsgHandler handler) {
@@ -188,6 +182,7 @@ public class BizPluginManager {
 				try {
 					fis.close();
 				} catch (Exception e) {
+
 				}
 			}
 		}

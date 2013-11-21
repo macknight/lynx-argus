@@ -65,8 +65,8 @@ public class PluginManager {
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						// TODO: 提示用户有插件更新
 						Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN, jaPlugin.getJSONObject(i));
+						// TODO: 提示用户有插件更新
 						update(plugin);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -110,7 +110,7 @@ public class PluginManager {
 	/**
 	 * 加入UI插件
 	 */
-	public boolean addPluginLoader(PluginLoader loader) {
+	public void addPluginLoader(PluginLoader loader) {
 		try {
 			if (jaMyPlugins == null) {
 				jaMyPlugins = new JSONArray();
@@ -119,54 +119,40 @@ public class PluginManager {
 			jaMyPlugins.put(jo);
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.put(loader.module(), loader);
-			return true;
 		} catch (Exception e) {
 
 		}
-		return false;
 	}
 
-	public boolean removePluginLoader(Plugin plugin) {
-		JSONArray ja = new JSONArray();
-		for (String key : pluginLoaders.keySet()) {
-			if (key.equals(plugin.module())) {
-				try {
-					pluginLoaders.get(key).delete();
-				} catch (Exception e) {
-					e.printStackTrace();
+	public void removePluginLoader(Plugin plugin, DexModuleListener listener) {
+		try {
+			JSONArray ja = new JSONArray();
+			PluginLoader loader = pluginLoaders.get(plugin.module());
+			loader.setListener(listener);
+			loader.delete();
+			for (String key : pluginLoaders.keySet()) {
+				if (key.equals(plugin.module())) {
+					continue;
 				}
-				continue;
-			}
-			try {
-				PluginLoader loader = pluginLoaders.get(key);
+				loader = pluginLoaders.get(key);
 				JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
 				ja.put(jo);
-			} catch (Exception e) {
-
 			}
-		}
-		try {
+
 			jaMyPlugins = ja;
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.remove(plugin.module());
-
-			return true;
+			listener.onStatusChanged(DexModuleListener.DEX_UNINSTALL_SUCCESS);
 		} catch (Exception e) {
-
+			listener.onStatusChanged(DexModuleListener.DEX_UNINSTALL_FAIL);
 		}
-		return false;
-
 	}
 
 	private void update(Plugin plugin) {
 		PluginLoader dexLoader = getPluginLoader(plugin.module());
 		if (dexLoader != null) {
 			// UI module有新的动态更新
-			dexLoader.update(plugin);
-		} else {
-			dexLoader = new PluginLoader(plugin, null);
-			dexLoader.update(plugin);
-			addPluginLoader(dexLoader);
+			dexLoader.hasUpdate(plugin);
 		}
 	}
 

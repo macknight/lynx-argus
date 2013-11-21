@@ -3,83 +3,89 @@
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="vertical">
-    <RelativeLayout
-            android:id="@+id/rl_selv_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/selector_def_item">
+	<RelativeLayout
+			android:id="@+id/rl_selv_item"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:background="@drawable/selector_def_item">
 
-        <ImageView android:id="@+id/iv_pluginstore_item_icon"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginLeft="15dp"
-                   android:layout_centerVertical="true"
-                   android:contentDescription="@null"
-                   android:src="@drawable/plugin_def"/>
+		<ImageView android:id="@+id/iv_pluginstore_item_icon"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:layout_marginLeft="15dp"
+		           android:layout_centerVertical="true"
+		           android:contentDescription="@null"
+		           android:src="@drawable/plugin_def"/>
 
-        <TextView android:id="@+id/tv_pluginstore_item_name"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="5dp"
-                  android:layout_marginLeft="10dp"
-                  android:layout_toRightOf="@+id/iv_pluginstore_item_icon"
-                  android:singleLine="true"
-                  android:ellipsize="end"
-                  android:textColor="@color/Grey"
-                  android:textSize="@dimen/font_size_default"
-                  android:text="红翻天湖北风味小吃店"/>
+		<TextView android:id="@+id/tv_pluginstore_item_name"
+		          android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:layout_marginTop="5dp"
+		          android:layout_marginLeft="10dp"
+		          android:layout_toRightOf="@+id/iv_pluginstore_item_icon"
+		          android:singleLine="true"
+		          android:ellipsize="end"
+		          android:textColor="@color/Grey"
+		          android:textSize="@dimen/font_size_default"/>
 
-        <TextView android:id="@+id/tv_pluginstore_item_desc"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="10dp"
-                  android:layout_marginTop="5dp"
-                  android:layout_toRightOf="@+id/iv_pluginstore_item_icon"
-                  android:layout_below="@+id/tv_pluginstore_item_name"
-                  android:singleLine="true"
-                  android:ellipsize="end"
-                  android:textColor="@color/Thistle"
-                  android:textSize="@dimen/font_size_small"
-                  android:text="上海市长宁区玉佩南路199弄"/>
+		<TextView android:id="@+id/tv_pluginstore_item_desc"
+		          android:layout_width="wrap_content"
+		          android:layout_height="wrap_content"
+		          android:layout_marginLeft="10dp"
+		          android:layout_marginTop="5dp"
+		          android:layout_toRightOf="@+id/iv_pluginstore_item_icon"
+		          android:layout_below="@+id/tv_pluginstore_item_name"
+		          android:singleLine="true"
+		          android:ellipsize="end"
+		          android:textColor="@color/Thistle"
+		          android:textSize="@dimen/font_size_small"/>
 
-        <ImageView android:id="@+id/iv_pluginstore_item_status"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:paddingRight="25dp"
-                   android:layout_alignParentRight="true"
-                   android:layout_centerVertical="true"
-                   android:contentDescription="@null"
-                   android:src="@drawable/plugin_install"/>
-    </RelativeLayout>
+		<ImageView android:id="@+id/iv_pluginstore_item_status"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:paddingRight="25dp"
+		           android:layout_alignParentRight="true"
+		           android:layout_centerVertical="true"
+		           android:contentDescription="@null"
+		           android:src="@drawable/plugin_install"/>
+	</RelativeLayout>
 
-    <LinearLayout
-            android:id="@+id/ll_selv_expandable"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:paddingBottom="5dp"
-            android:orientation="horizontal"
-            android:background="@drawable/plugin_popwindow_bg">
+	<LinearLayout
+			android:id="@+id/ll_selv_expandable"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="10dp"
+			android:layout_marginRight="10dp"
+			android:orientation="horizontal"
+			android:background="@drawable/plugin_popwindow_bg">
 
-        <Button android:id="@+id/btn_pluginstore_install"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_margin="10dp"
-                android:text="安装"
-                android:textSize="@dimen/font_size_default"
-                android:background="@drawable/selector_btn_green"/>
+		<Button android:id="@+id/btn_pluginstore_install"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.3"
+		        android:layout_margin="5dp"
+		        android:text="安装"
+		        android:textSize="@dimen/font_size_default"
+		        android:background="@drawable/selector_btn_white"/>
 
-        <Button android:id="@+id/btn_pluginstore_uninstall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:layout_margin="10dp"
-                android:text="卸载"
-                android:textSize="@dimen/font_size_default"
-                android:background="@drawable/selector_btn_red"/>
-    </LinearLayout>
+		<Button android:id="@+id/btn_pluginstore_update"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.3"
+		        android:layout_margin="5dp"
+		        android:text="更新"
+		        android:textSize="@dimen/font_size_default"
+		        android:background="@drawable/selector_btn_green"/>
+
+		<Button android:id="@+id/btn_pluginstore_uninstall"
+		        android:layout_width="0dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0.3"
+		        android:layout_margin="5dp"
+		        android:text="卸载"
+		        android:textSize="@dimen/font_size_default"
+		        android:background="@drawable/selector_btn_red"/>
+	</LinearLayout>
 
 </LinearLayout>

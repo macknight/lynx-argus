@@ -105,8 +105,8 @@ public abstract class LFApplication extends Application {
 	 *
 	 * @param plugin
 	 */
-	public boolean installPlugin(Plugin plugin, DexModuleListener listener) {
-		return dexManager.installPlugin(plugin, listener);
+	public void installPlugin(Plugin plugin, DexModuleListener listener) {
+		dexManager.installPlugin(plugin, listener);
 	}
 
 	/**
@@ -114,7 +114,7 @@ public abstract class LFApplication extends Application {
 	 *
 	 * @param plugin
 	 */
-	public boolean uninstallPlugin(Plugin plugin) {
-		return dexManager.uninstallPlugin(plugin);
+	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {
+		dexManager.uninstallPlugin(plugin, listener);
 	}
 }

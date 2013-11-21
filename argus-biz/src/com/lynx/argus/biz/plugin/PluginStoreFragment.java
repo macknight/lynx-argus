@@ -21,6 +21,7 @@ import com.lynx.argus.biz.plugin.model.PluginStoreAdapter;
 import com.lynx.argus.biz.widget.listview.ActionSlideExpandableListView;
 import com.lynx.argus.biz.widget.listview.ActionSlideExpandableListView.OnActionClickListener;
 import com.lynx.argus.biz.widget.listview.P2RASEListView;
+import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 
@@ -108,14 +109,22 @@ public class PluginStoreFragment extends BizFragment {
 		return v;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		pluginManager.removeMsgHandler(handler);
+	}
+
 	private PluginMsgHandler handler = new PluginMsgHandler() {
 		@Override
 		public boolean interested(int msg) {
 			return BizPluginManager.MSG_STORE_UPDATE_FIN == msg ||
-					BizPluginManager.MSG_PLUGIN_INSTALL_SUCCESS == msg ||
-					BizPluginManager.MSG_PLUGIN_INSTALL_FAIL == msg ||
-					BizPluginManager.MSG_PLUGIN_UNINSTALL_SUCCESS == msg ||
-					BizPluginManager.MSG_PLUGIN_INSTALL_FAIL == msg;
+					DexModuleListener.DEX_DOWNLOAD_SUCCESS == msg ||
+					DexModuleListener.DEX_DOWNLOAD_FAIL == msg ||
+					DexModuleListener.DEX_INSTALL_SUCCESS == msg ||
+					DexModuleListener.DEX_INSTALL_FAIL == msg ||
+					DexModuleListener.DEX_UNINSTALL_SUCCESS == msg ||
+					DexModuleListener.DEX_UNINSTALL_FAIL == msg;
 		}
 
 		@Override
@@ -125,13 +134,15 @@ public class PluginStoreFragment extends BizFragment {
 					p2raselv.onRefreshComplete();
 					adapter.setData(pluginManager.pluginsAtStore());
 					break;
-				case BizPluginManager.MSG_PLUGIN_INSTALL_SUCCESS:
-				case BizPluginManager.MSG_PLUGIN_UNINSTALL_SUCCESS:
+				case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
+				case DexModuleListener.DEX_INSTALL_SUCCESS:
+				case DexModuleListener.DEX_UNINSTALL_SUCCESS:
 					optPopWindow.onSuccess();
 					adapter.notifyDataSetChanged();
 					break;
-				case BizPluginManager.MSG_PLUGIN_INSTALL_FAIL:
-				case BizPluginManager.MSG_PLUGIN_UNINSTALL_FAIL:
+				case DexModuleListener.DEX_DOWNLOAD_FAIL:
+				case DexModuleListener.DEX_INSTALL_FAIL:
+				case DexModuleListener.DEX_UNINSTALL_FAIL:
 					optPopWindow.onFail();
 					adapter.notifyDataSetChanged();
 					break;

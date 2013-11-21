@@ -84,6 +84,7 @@ public class DexModuleLoader {
 			}
 
 			if (listener != null) {
+				Logger.w("chris", "download fin");
 				listener.onStatusChanged(DexModuleListener.DEX_DOWNLOAD_SUCCESS);
 			}
 		}
@@ -142,6 +143,20 @@ public class DexModuleLoader {
 
 	public String module() {
 		return dexModule.module();
+	}
+
+	/**
+	 * 有更新包
+	 *
+	 * @param newModule
+	 */
+	public void hasUpdate(DexModule newModule) {
+		if (dexModule.version() >= newModule.version()) {
+			return;
+		}
+		if (listener != null) {
+			listener.onStatusChanged(DexModuleListener.DEX_HAS_UPDATE);
+		}
 	}
 
 	public void setListener(DexModuleListener listener) {

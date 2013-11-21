@@ -39,11 +39,11 @@ public abstract class DexManager {
 		return pluginManager.getPluginLoader(name);
 	}
 
-	public boolean installPlugin(Plugin plugin, DexModuleListener listener) {
-		return pluginManager.addPluginLoader(new PluginLoader(plugin, listener));
+	public void installPlugin(Plugin plugin, DexModuleListener listener) {
+		pluginManager.addPluginLoader(new PluginLoader(plugin, listener));
 	}
 
-	public boolean uninstallPlugin(Plugin plugin) {
-		return pluginManager.removePluginLoader(plugin);
+	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {
+		pluginManager.removePluginLoader(plugin, listener);
 	}
 }

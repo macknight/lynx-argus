@@ -25,4 +25,5 @@ public class PluginLoader extends DexModuleLoader {
 		File file = new File(basicDir);
 		FileUtil.deleteFile(file);
 	}
+
 }

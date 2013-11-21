@@ -82,8 +82,8 @@ public class PluginStoreAdapter extends BaseAdapter {
             holder.btnUninstall.setEnabled(true);
         } else {
             holder.ivStatus.setImageResource(R.drawable.plugin_install);
-            holder.btnInstall.setEnabled(true);
-            holder.btnUninstall.setEnabled(false);
+	        holder.btnInstall.setEnabled(true);
+	        holder.btnUninstall.setEnabled(false);
         }
         imgLoader.showAsyncImage(holder.ivIcon, item.icon(), R.drawable.plugin_def);
         return view;
