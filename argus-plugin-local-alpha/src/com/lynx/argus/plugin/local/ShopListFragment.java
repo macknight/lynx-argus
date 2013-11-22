@@ -148,7 +148,7 @@ public class ShopListFragment extends LFFragment {
 		return v;
 	}
 
-	private HttpCallback httpCallback = new HttpCallback<Object>() {
+	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
 		@Override
 		public void onSuccess(Object o) {
 			prgvShop.onRefreshComplete();

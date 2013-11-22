@@ -14,8 +14,8 @@ import java.io.IOException;
  */
 public class PluginLoader extends DexModuleLoader {
 
-	public PluginLoader(Plugin plugin, DexModuleListener listener) {
-		super(DexType.PLUGIN, plugin, listener);
+	public PluginLoader(Plugin plugin, DexStatus status) {
+		super(DexType.PLUGIN, plugin, status);
 	}
 
 	/**

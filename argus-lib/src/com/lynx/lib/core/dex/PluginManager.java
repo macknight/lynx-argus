@@ -1,9 +1,10 @@
 package com.lynx.lib.core.dex;
 
 import android.content.Context;
-import android.widget.Toast;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.dex.DexModuleLoader.DexStatus;
 import com.lynx.lib.core.dex.DexModuleLoader.DexType;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
@@ -56,7 +57,7 @@ public class PluginManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Toast.makeText(context, "获取插件更新配置失败", Toast.LENGTH_SHORT).show();
+					Logger.w(Tag, "获取动态模块更新配置失败");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
@@ -65,22 +66,32 @@ public class PluginManager {
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN, jaPlugin.getJSONObject(i));
-						// TODO: 提示用户有插件更新
+						Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
+								jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			} catch (Exception e) {
-				Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+				Logger.w(Tag, "获取动态模块更新配置异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			Toast.makeText(context, "获取插件更新配置失败", Toast.LENGTH_SHORT).show();
+			Logger.w(Tag, "获取插件更新配置失败", t);
+		}
+	};
+
+	private DexModuleListener installListener = new DexModuleListener() {
+		@Override
+		public void onStatusChanged(DexModule dexModule, int status) {
+			switch (status) {
+				case DexModuleListener.DEX_INSTALL_FAIL:
+					removePluginLoader((Plugin) dexModule, null);
+			}
 		}
 	};
 
@@ -110,17 +121,20 @@ public class PluginManager {
 	/**
 	 * 加入UI插件
 	 */
-	public void addPluginLoader(PluginLoader loader) {
+	public void addPluginLoader(PluginLoader loader, DexModuleListener listener) {
 		try {
+			loader.addListener(listener);
+			loader.addListener(installListener);
 			if (jaMyPlugins == null) {
 				jaMyPlugins = new JSONArray();
 			}
-			JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
+			JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN,
+					loader.dexModule());
 			jaMyPlugins.put(jo);
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.put(loader.module(), loader);
 		} catch (Exception e) {
-
+			removePluginLoader((Plugin) loader.dexModule(), null);
 		}
 	}
 
@@ -128,26 +142,32 @@ public class PluginManager {
 		try {
 			JSONArray ja = new JSONArray();
 			PluginLoader loader = pluginLoaders.get(plugin.module());
-			loader.setListener(listener);
+			loader.addListener(listener);
 			loader.delete();
 			for (String key : pluginLoaders.keySet()) {
 				if (key.equals(plugin.module())) {
 					continue;
 				}
 				loader = pluginLoaders.get(key);
-				JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
+				JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN,
+						loader.dexModule());
 				ja.put(jo);
 			}
 
 			jaMyPlugins = ja;
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.remove(plugin.module());
-			listener.onStatusChanged(DexModuleListener.DEX_UNINSTALL_SUCCESS);
+			if (listener != null) {
+				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_SUCCESS);
+			}
 		} catch (Exception e) {
-			listener.onStatusChanged(DexModuleListener.DEX_UNINSTALL_FAIL);
+			if (listener != null) {
+				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_FAIL);
+			}
 		}
 	}
 
+	// TODO: 提示用户有插件更新
 	private void update(Plugin plugin) {
 		PluginLoader dexLoader = getPluginLoader(plugin.module());
 		if (dexLoader != null) {
@@ -179,7 +199,8 @@ public class PluginManager {
 				Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
 						jaMyPlugins.getJSONObject(i));
 				if (plugin != null) {
-					PluginLoader loader = new PluginLoader(plugin, null);
+					PluginLoader loader = new PluginLoader(plugin,
+							DexStatus.UPDATE);
 					pluginLoaders.put(loader.module(), loader);
 				}
 			}

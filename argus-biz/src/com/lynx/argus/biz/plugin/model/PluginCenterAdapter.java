@@ -7,8 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.R;
-import com.lynx.argus.util.AsyncImageLoader;
 import com.lynx.lib.core.dex.Plugin;
+import com.lynx.lib.util.AsyncImageLoader;
 
 import java.util.List;
 

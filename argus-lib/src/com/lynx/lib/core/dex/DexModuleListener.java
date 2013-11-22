@@ -17,6 +17,6 @@ public interface DexModuleListener {
 	public static final int DEX_UNINSTALL_SUCCESS = 5; // 动态模块卸载成功
 	public static final int DEX_UNINSTALL_FAIL = 6; // 动态模块卸载失败
 
-	void onStatusChanged(int status);
+	void onStatusChanged(DexModule dexModule, int status);
 
 }

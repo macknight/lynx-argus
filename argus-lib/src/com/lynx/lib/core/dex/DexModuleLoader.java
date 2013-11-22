@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,12 +30,13 @@ public class DexModuleLoader {
 
 	private DexType type;
 	protected DexModule dexModule;
-	protected DexModuleListener listener;
+	protected List<DexModuleListener> listeners = new ArrayList<DexModuleListener>();
 	private DexModule tmpModule;
+	private DexStatus status; // 加载器当前状态，包括正在安装、更新
 
-	public DexModuleLoader(DexType type, DexModule newModule, DexModuleListener listener) {
+	public DexModuleLoader(DexType type, DexModule newModule, DexStatus status) {
 		this.type = type;
-		this.listener = listener;
+		this.status = status;
 		this.context = LFApplication.instance();
 		this.httpService = (HttpService) LFApplication.instance().service("http");
 
@@ -66,7 +69,8 @@ public class DexModuleLoader {
 		try {
 			deleteOldFile();
 		} catch (Exception e) {
-			Logger.e(dexModule.module(), "unable to delete old module file" + e.getMessage());
+			Logger.e(dexModule.module(),
+					"unable to delete old module file" + e.getMessage());
 		}
 	}
 
@@ -79,21 +83,37 @@ public class DexModuleLoader {
 				// 配置升级
 				initConfig(tmpModule);
 				deleteOldFile();
-			} catch (Exception e) {
-				return;
-			}
 
-			if (listener != null) {
-				Logger.w("chris", "download fin");
-				listener.onStatusChanged(DexModuleListener.DEX_DOWNLOAD_SUCCESS);
+				switch (status) {
+					case INSTALL:
+						dispatchChange(DexModuleListener.DEX_INSTALL_SUCCESS);
+						break;
+					case UPDATE:
+						dispatchChange(DexModuleListener.DEX_DOWNLOAD_SUCCESS);
+						break;
+				}
+			} catch (Exception e) {
+				switch (status) {
+					case INSTALL:
+						dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
+						break;
+					case UPDATE:
+						dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
+						break;
+				}
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			if (listener != null) {
-				listener.onStatusChanged(DexModuleListener.DEX_DOWNLOAD_FAIL);
+			switch (status) {
+				case INSTALL:
+					dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
+					break;
+				case UPDATE:
+					dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
+					break;
 			}
 		}
 	};
@@ -141,6 +161,11 @@ public class DexModuleLoader {
 		return dexModule;
 	}
 
+	/**
+	 * 动态模块名
+	 *
+	 * @return
+	 */
 	public String module() {
 		return dexModule.module();
 	}
@@ -154,13 +179,16 @@ public class DexModuleLoader {
 		if (dexModule.version() >= newModule.version()) {
 			return;
 		}
-		if (listener != null) {
-			listener.onStatusChanged(DexModuleListener.DEX_HAS_UPDATE);
-		}
+
+		dispatchChange(DexModuleListener.DEX_HAS_UPDATE);
 	}
 
-	public void setListener(DexModuleListener listener) {
-		this.listener = listener;
+	public void addListener(DexModuleListener listener) {
+		listeners.add(listener);
+	}
+
+	public void removeListener(DexModuleListener listener) {
+		listeners.remove(listener);
 	}
 
 	/**
@@ -275,7 +303,6 @@ public class DexModuleLoader {
 
 		tmpModule = module;
 		String tmpPath = String.format("%s/%s.apk", srcDir, module.md5());
-
 		httpService.download(module.url(), tmpPath, true, httpCallback);
 	}
 
@@ -309,6 +336,12 @@ public class DexModuleLoader {
 		}
 	}
 
+	private void dispatchChange(int msg) {
+		for (DexModuleListener listener : listeners) {
+			listener.onStatusChanged(dexModule, msg);
+		}
+	}
+
 	public enum DexType {
 		PLUGIN("plugin"),
 		SERVICE("service");
@@ -324,4 +357,11 @@ public class DexModuleLoader {
 		}
 	}
 
+	/**
+	 * 描述loader状态
+	 */
+	public enum DexStatus {
+		INSTALL, // 安装
+		UPDATE, // 更新
+	}
 }

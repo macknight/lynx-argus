@@ -1,5 +1,7 @@
 package com.lynx.lib.core.dex;
 
+import com.lynx.lib.core.dex.DexModuleLoader.DexStatus;
+
 import java.util.Map;
 
 /**
@@ -40,7 +42,7 @@ public abstract class DexManager {
 	}
 
 	public void installPlugin(Plugin plugin, DexModuleListener listener) {
-		pluginManager.addPluginLoader(new PluginLoader(plugin, listener));
+		pluginManager.addPluginLoader(new PluginLoader(plugin, DexStatus.INSTALL), listener);
 	}
 
 	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.PluginLoader;
 import dalvik.system.DexClassLoader;
@@ -58,7 +57,6 @@ public class LFDexActivity extends LFNavigationActivity {
 			moduleLoader = LFApplication.instance().pluginLoader(module);
 
 			if (moduleLoader == null || moduleLoader.dexModule() == null) {
-				Toast.makeText(this, "模块加载失败鸟 @_@", Toast.LENGTH_SHORT).show();
 				throw new Exception("not such module exist:" + module);
 			}
 

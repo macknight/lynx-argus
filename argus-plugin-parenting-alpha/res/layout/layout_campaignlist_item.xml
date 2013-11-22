@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+	<ImageView
+			android:id="@+id/iv_campaignlist_item_snap"
+			android:layout_width="0dp"
+			android:layout_height="match_parent"
+			android:layout_weight="0.3"
+			android:contentDescription="@null"
+			android:src="@drawable/gallery_view"/>
+
+	<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="0.6"
+			android:orientation="vertical">
+
+		<TextView
+				android:id="@+id/tv_campignlist_item_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="10dp"
+				android:singleLine="true"
+				android:textColor="@color/DeepSkyBlue"
+				android:textSize="@dimen/font_size_large"
+				android:text="科学小超人正本免费来袭，变身小小科学家"/>
+		<TextView
+				android:id="@+id/tv_campignlist_item_shop"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="2dp"
+				android:drawableLeft="@drawable/loc"
+				android:drawablePadding="10dp"
+				android:gravity="center_vertical"
+				android:textColor="@color/DeepSkyBlue"
+				android:textSize="@dimen/font_size_default"
+				android:text="哈哈儿童网亲子俱乐部"/>
+
+		<TextView
+				android:id="@+id/tv_campignlist_item_time"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="2dp"
+				android:drawableLeft="@drawable/time"
+				android:gravity="center_vertical"
+				android:textColor="@color/DeepSkyBlue"
+				android:textSize="@dimen/font_size_default"
+				android:text="09月25日-12月31日"/>
+
+		<TextView
+				android:id="@+id/tv_campignlist_item_price"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_margin="2dp"
+				android:drawableLeft="@drawable/icon_price"
+				android:gravity="center_vertical"
+				android:textColor="@color/DeepSkyBlue"
+				android:textSize="@dimen/font_size_default"
+				android:text="128.00"/>
+	</LinearLayout>
+
+
+</LinearLayout>

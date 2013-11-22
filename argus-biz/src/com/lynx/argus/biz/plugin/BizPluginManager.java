@@ -4,6 +4,7 @@ import android.widget.Toast;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.DexModuleLoader.DexType;
 import com.lynx.lib.core.dex.DexUtil;
@@ -70,7 +71,7 @@ public class BizPluginManager {
 
 	private DexModuleListener listener = new DexModuleListener() {
 		@Override
-		public void onStatusChanged(int status) {
+		public void onStatusChanged(DexModule dexModule, int status) {
 			dispatchMessage(status);
 		}
 	};

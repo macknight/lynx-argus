@@ -140,8 +140,10 @@ public class PluginStoreFragment extends BizFragment {
 					optPopWindow.onSuccess();
 					adapter.notifyDataSetChanged();
 					break;
-				case DexModuleListener.DEX_DOWNLOAD_FAIL:
 				case DexModuleListener.DEX_INSTALL_FAIL:
+
+				case DexModuleListener.DEX_DOWNLOAD_FAIL:
+
 				case DexModuleListener.DEX_UNINSTALL_FAIL:
 					optPopWindow.onFail();
 					adapter.notifyDataSetChanged();
@@ -167,8 +169,8 @@ public class PluginStoreFragment extends BizFragment {
 			setWidth(dm.widthPixels * 9 / 10);
 			setHeight(dm.heightPixels * 1 / 3);
 
-			setFocusable(true);
-			setOutsideTouchable(false);
+			setFocusable(false);
+			setOutsideTouchable(true);
 			setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_round_bg));
 
 			animInstalling = new RotateAnimation(-80, 0,
