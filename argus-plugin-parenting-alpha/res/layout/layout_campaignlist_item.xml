@@ -2,13 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+              android:background="@drawable/selector_def_item">
 
 	<ImageView
 			android:id="@+id/iv_campaignlist_item_snap"
 			android:layout_width="0dp"
 			android:layout_height="match_parent"
 			android:layout_weight="0.3"
+			android:layout_margin="15dp"
+			android:layout_gravity="center_vertical"
 			android:contentDescription="@null"
 			android:src="@drawable/gallery_view"/>
 
@@ -25,18 +28,18 @@
 				android:layout_marginTop="10dp"
 				android:singleLine="true"
 				android:textColor="@color/DeepSkyBlue"
-				android:textSize="@dimen/font_size_large"
+				android:textSize="@dimen/font_size_default"
 				android:text="科学小超人正本免费来袭，变身小小科学家"/>
 		<TextView
 				android:id="@+id/tv_campignlist_item_shop"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_margin="2dp"
-				android:drawableLeft="@drawable/loc"
+				android:drawableLeft="@drawable/set_home_icon"
 				android:drawablePadding="10dp"
 				android:gravity="center_vertical"
 				android:textColor="@color/DeepSkyBlue"
-				android:textSize="@dimen/font_size_default"
+				android:textSize="@dimen/font_size_small"
 				android:text="哈哈儿童网亲子俱乐部"/>
 
 		<TextView
@@ -44,10 +47,11 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_margin="2dp"
-				android:drawableLeft="@drawable/time"
+				android:drawableLeft="@drawable/set_func_icon"
+				android:drawablePadding="10dp"
 				android:gravity="center_vertical"
 				android:textColor="@color/DeepSkyBlue"
-				android:textSize="@dimen/font_size_default"
+				android:textSize="@dimen/font_size_small"
 				android:text="09月25日-12月31日"/>
 
 		<TextView
@@ -55,10 +59,11 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_margin="2dp"
-				android:drawableLeft="@drawable/icon_price"
+				android:drawableLeft="@drawable/set_keep_icon"
+				android:drawablePadding="10dp"
 				android:gravity="center_vertical"
 				android:textColor="@color/DeepSkyBlue"
-				android:textSize="@dimen/font_size_default"
+				android:textSize="@dimen/font_size_small"
 				android:text="128.00"/>
 	</LinearLayout>
 

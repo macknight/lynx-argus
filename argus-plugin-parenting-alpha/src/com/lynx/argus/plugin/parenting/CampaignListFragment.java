@@ -37,7 +37,6 @@ public class CampaignListFragment extends LFFragment {
 	private static final String LM_API_CAMPAIGN_LIST = "http://www.hahaertong.com/index" +
 			".php?app=activity&act=m&page=#page#";
 
-
 	private static int curPage = 1;
 	private static int pageSize = 0;
 
@@ -68,7 +67,7 @@ public class CampaignListFragment extends LFFragment {
 						String shopId = joShop.getString("store_id");
 						String shopName = joShop.getString("store_name");
 						String price = joShop.getString("market_price");
-						String snapUrl = joShop.getString("default_image");
+						String snapUrl = "http://www.hahaertong.com/" + joShop.getString("default_image");
 						String startTime = joShop.getString("start_time");
 						String endTime = joShop.getString("end_time");
 						String place = joShop.getString("place");
@@ -116,9 +115,6 @@ public class CampaignListFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		httpService = (HttpService) LFApplication.instance().service("http");
-
-		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 	}
 
 	@Override

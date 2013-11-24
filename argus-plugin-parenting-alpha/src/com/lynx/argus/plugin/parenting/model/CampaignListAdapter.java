@@ -7,6 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.plugin.parenting.R;
+import com.lynx.lib.util.AsyncImageLoader;
 
 import java.util.List;
 
@@ -19,10 +20,12 @@ import java.util.List;
 public class CampaignListAdapter extends BaseAdapter {
 	private Context context;
 	private List<CampaignListItem> data;
+	private AsyncImageLoader imgLoader;
 
 	public CampaignListAdapter(Context context, List<CampaignListItem> data) {
 		this.context = context;
 		this.data = data;
+		this.imgLoader = AsyncImageLoader.instance();
 	}
 
 	public void setData(List<CampaignListItem> data) {
@@ -52,8 +55,11 @@ public class CampaignListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.layout_campaignlist_item, null);
 			holder = new ViewHolder();
+			holder.ivSnap = (ImageView) view.findViewById(R.id.iv_campaignlist_item_snap);
 			holder.tvName = (TextView) view.findViewById(R.id.tv_campignlist_item_title);
 			holder.tvShop = (TextView) view.findViewById(R.id.tv_campignlist_item_shop);
+			holder.tvTime = (TextView) view.findViewById(R.id.tv_campignlist_item_time);
+			holder.tvPrice = (TextView) view.findViewById(R.id.tv_campignlist_item_price);
 			view.setTag(holder);
 		} else {
 			view = convertView;
@@ -64,6 +70,8 @@ public class CampaignListAdapter extends BaseAdapter {
 		holder.tvShop.setText("" + item.getShopName());
 		holder.tvTime.setText("" + item.getStartTime() + "-" + item.getEndTime());
 		holder.tvPrice.setText("" + item.getPrice());
+
+		imgLoader.showAsyncImage(holder.ivSnap, item.getSnapUrl(), R.drawable.gallery_view);
 		return view;
 	}
 

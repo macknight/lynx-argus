@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import com.lynx.lib.core.LFFragment;
 
 /**
@@ -18,9 +19,34 @@ public class ParentingFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_parenting, container, false);
-		return v;
+		View view = inflater.inflate(R.layout.layout_parenting, container, false);
+		Button btn = (Button)view.findViewById(R.id.btn_campaign);
+		btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				CampaignListFragment cf = new CampaignListFragment();
+				navActivity.pushFragment(cf, true, true);
+			}
+		});
+
+		btn = (Button)view.findViewById(R.id.btn_shop);
+		btn.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				ShopListFragment slf = new ShopListFragment();
+				navActivity.pushFragment(slf, true, true);
+			}
+		});
+		return view;
 	}
 
 	@Override
