@@ -94,7 +94,7 @@ public class PluginStoreFragment extends BizFragment {
 			@Override
 			public void onClick(View v) {
 				DownloadCenterFragment downloadFragment = new DownloadCenterFragment();
-				tabActivity.pushFragment(PluginCenterFragment.Tag, downloadFragment, true, true);
+				tabActivity.pushFragment(downloadFragment, true);
 			}
 		});
 

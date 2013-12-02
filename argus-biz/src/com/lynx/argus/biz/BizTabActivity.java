@@ -82,18 +82,18 @@ public class BizTabActivity extends LFTabActivity {
 				curTab = tabId;
 				if (stacks.get(tabId).size() == 0) {
 					if (tabId.equals(PluginCenterFragment.Tag)) {
-						pushFragment(tabId, new PluginCenterFragment(), false, true);
+						pushFragment(new PluginCenterFragment(), false);
 					} else if (tabId.equals(ShoppingFragment.Tag)) {
-						pushFragment(tabId, new ShoppingFragment(), false, true);
+						pushFragment(new ShoppingFragment(), false);
 					} else if (tabId.equals(MyFragment.Tag)) {
-						pushFragment(tabId, new MyFragment(), false, true);
+						pushFragment(new MyFragment(), false);
 					} else if (tabId.equals(SearchFragment.Tag)) {
-						pushFragment(tabId, new SearchFragment(), false, true);
+						pushFragment(new SearchFragment(), false);
 					} else if (tabId.equals(MoreFragment.Tag)) {
-						pushFragment(tabId, new MoreFragment(), false, true);
+						pushFragment(new MoreFragment(), false);
 					}
 				} else {
-					pushFragment(tabId, stacks.get(tabId).lastElement(), false, false);
+					pushFragment(stacks.get(tabId).lastElement(), false);
 				}
 			}
 		});

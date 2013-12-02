@@ -17,7 +17,6 @@ import android.widget.*;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.plugin.PluginCenterFragment;
 import com.lynx.argus.biz.plugin.demo.model.ShopListAdapter;
 import com.lynx.argus.biz.plugin.demo.model.ShopListItem;
 import com.lynx.lib.core.Const;
@@ -85,7 +84,7 @@ public class ShopListFragment extends BizFragment {
 		adapter = new ShopListAdapter(tabActivity, shops);
 
 		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-				                                Animation.RELATIVE_TO_SELF, 0.5f);
+				Animation.RELATIVE_TO_SELF, 0.5f);
 		animRotate.setDuration(1500);
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
@@ -131,14 +130,14 @@ public class ShopListFragment extends BizFragment {
 						e.printStackTrace();
 					}
 					sdf.setArguments(bundle);
-					tabActivity.pushFragment(PluginCenterFragment.Tag, sdf, true, true);
+					tabActivity.pushFragment(sdf, true);
 				} else {
 					Toast.makeText(tabActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
 
-		ImageButton ibMap = (ImageButton)v.findViewById(R.id.ib_local_shoplist_map);
+		ImageButton ibMap = (ImageButton) v.findViewById(R.id.ib_local_shoplist_map);
 		ibMap.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -331,7 +330,7 @@ public class ShopListFragment extends BizFragment {
 				params.add(new BasicNameValuePair("radius", 5000 + ""));
 				String param = URLEncodedUtils.format(params, "UTF-8");
 				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
-						                          BMAP_API_PLACE_SEARCH, param);
+						BMAP_API_PLACE_SEARCH, param);
 				httpService.get(url, null, httpCallback);
 
 				ptrlvShop.setRefreshing();
