@@ -87,7 +87,7 @@ public abstract class ServiceManager {
 	public void updateCheck() {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
-		httpService.post(String.format("%s%s", Const.DOMAIN, LM_API_SERVICE_CONFIG),
+		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_SERVICE_CONFIG),
 				param, callback);
 	}
 

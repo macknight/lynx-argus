@@ -64,7 +64,7 @@ public class ShopListAdapter extends BaseAdapter {
 		return view;
 	}
 
-	static class ViewHolder {
+	class ViewHolder {
 		public TextView tvName;
 		public TextView tvAddr;
 	}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp">
+
+	<ImageView
+			android:id="@+id/iv_msg_item_avatar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="5dp"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:src="@drawable/default_avatar_shadow"/>
+
+	<RelativeLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="5dp"
+			android:background="@drawable/selector_msg_from"
+			android:layout_toRightOf="@+id/iv_msg_item_avatar"
+			android:orientation="vertical">
+		<TextView
+				android:id="@+id/tv_msg_item_content"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_centerInParent="true"
+				android:gravity="center"
+				android:textColor="#FF000000"
+				android:textSize="18sp"
+				android:text="hello world"/>
+		<TextView
+				android:id="@+id/tv_msg_item_date"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="5.0dp"
+				android:textColor="#FF666666"
+				android:textSize="10sp"
+				android:layout_alignParentBottom="true"
+				android:text="2013-12-30 12:45:43"/>
+	</RelativeLayout>
+
+</RelativeLayout>

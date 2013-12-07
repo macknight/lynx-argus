@@ -112,7 +112,7 @@ public class BizPluginManager {
 				dispatchMessage(MSG_STORE_UPDATE_FIN);
 				return;
 			}
-			String url = String.format("%s%s", Const.DOMAIN, LM_API_ALL_PLUGIN);
+			String url = String.format("%s%s", Const.LM_API_DOMAIN, LM_API_ALL_PLUGIN);
 			httpService.post(url, storeUpdateCallback);
 		} catch (Exception e) {
 			dispatchMessage(MSG_STORE_UPDATE_FIN);
