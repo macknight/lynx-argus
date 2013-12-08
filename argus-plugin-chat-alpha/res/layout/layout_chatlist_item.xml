@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:background="@drawable/selector_item_style_def">
+
+	<ImageView
+			android:id="@+id/iv_chatlist_item_avatar"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginLeft="15dp"
+			android:layout_alignParentLeft="true"
+			android:layout_centerVertical="true"
+			android:contentDescription="@null"
+			android:src="@drawable/default_avatar_shadow"/>
+
+	<TextView
+			android:id="@+id/tv_chatlist_item_from"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/iv_chatlist_item_avatar"
+			android:layout_marginLeft="25dp"
+			android:layout_marginTop="15dp"
+			android:gravity="center"
+			android:textColor="#FF000000"
+			android:textSize="20sp"
+			android:text="珍妮花"/>
+
+	<TextView
+			android:id="@+id/tv_chatlist_item_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginRight="20dp"
+			android:layout_marginTop="15dp"
+			android:layout_alignParentRight="true"
+			android:textColor="#FF666666"
+			android:textSize="18sp"
+			android:text="昨天下午"/>
+
+	<TextView
+			android:id="@+id/tv_chatList_item_summary"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/iv_chatlist_item_avatar"
+			android:layout_below="@+id/tv_chatlist_item_from"
+			android:layout_marginLeft="25dp"
+			android:layout_marginTop="10dp"
+			android:textColor="#FF666666"
+			android:textSize="15sp"
+			android:text="上海人民已阵亡"/>
+
+</RelativeLayout>

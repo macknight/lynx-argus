@@ -10,6 +10,7 @@
 			android:layout_margin="5dp"
 			android:layout_alignParentLeft="true"
 			android:layout_centerVertical="true"
+			android:contentDescription="@null"
 			android:src="@drawable/default_avatar_shadow"/>
 
 	<RelativeLayout
