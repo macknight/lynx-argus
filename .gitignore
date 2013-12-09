@@ -1,10 +1,11 @@
 *.iml
 .idea/
 out/
-argus-biz/gen/
+argus-biz/gen
 argus-service/gen
 argus-lib/gen
 argus-lib/bin
+argus-plugin-chat-alpha/gen
 argus-plugin-local-alpha/gen
 argus-plugin-local-beta/gen
 argus-plugin-news-alpha/gen
