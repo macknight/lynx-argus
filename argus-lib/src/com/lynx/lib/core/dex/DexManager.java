@@ -7,9 +7,10 @@ import java.util.Map;
 /**
  * 负责所有动态更新模块(包括ui module和service)的更新管理
  * <p/>
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-10-28 下午5:39
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-28 下午5:39
  */
 public abstract class DexManager {
 	private static final String Tag = "dexmanager";
@@ -42,7 +43,8 @@ public abstract class DexManager {
 	}
 
 	public void installPlugin(Plugin plugin, DexModuleListener listener) {
-		pluginManager.addPluginLoader(new PluginLoader(plugin, DexStatus.INSTALL), listener);
+		pluginManager.addPluginLoader(new PluginLoader(plugin,
+				DexStatus.INSTALL), listener);
 	}
 
 	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {

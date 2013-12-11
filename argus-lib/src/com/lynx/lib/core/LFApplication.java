@@ -12,9 +12,10 @@ import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-10 下午2:32
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-10 下午2:32
  */
 public abstract class LFApplication extends Application {
 
@@ -65,7 +66,7 @@ public abstract class LFApplication extends Application {
 
 	/**
 	 * 根据服务名获取对应服务
-	 *
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -82,7 +83,7 @@ public abstract class LFApplication extends Application {
 
 	/**
 	 * 根据模块名获取对应插件加载器
-	 *
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -92,7 +93,7 @@ public abstract class LFApplication extends Application {
 
 	/**
 	 * 插件是否存在
-	 *
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -102,7 +103,7 @@ public abstract class LFApplication extends Application {
 
 	/**
 	 * 安装插件
-	 *
+	 * 
 	 * @param plugin
 	 */
 	public void installPlugin(Plugin plugin, DexModuleListener listener) {
@@ -111,7 +112,7 @@ public abstract class LFApplication extends Application {
 
 	/**
 	 * 卸载插件
-	 *
+	 * 
 	 * @param plugin
 	 */
 	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {

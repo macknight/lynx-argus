@@ -7,10 +7,10 @@ import java.io.IOException;
 
 /**
  * 动态Fragment加载器
- * <p/>
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 9/29/13 4:12 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-29 下午4:12
  */
 public class PluginLoader extends DexModuleLoader {
 

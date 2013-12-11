@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 9/26/13 3:23 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-26 下午3:23
  */
 public abstract class LFFragment extends Fragment {
 
@@ -27,5 +28,6 @@ public abstract class LFFragment extends Fragment {
 
 	public abstract boolean onBackPressed();
 
-	public abstract void onActivityResult(int requestCode, int resultCode, Intent data);
+	public abstract void onActivityResult(int requestCode, int resultCode,
+			Intent data);
 }

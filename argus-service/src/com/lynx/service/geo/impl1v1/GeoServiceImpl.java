@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/29/13 11:27 AM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-29 下午11:27
  */
 public class GeoServiceImpl implements GeoService, LocationListener {
 	public static final String Tag = "geo";
@@ -78,7 +79,8 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
 	@Override
 	public Address address() {
-		String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? "" : ("(impl1v1)");
+		String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? ""
+				: ("(impl1v1)");
 		Address addr = locationCenter.address();
 		if (addr == null) {
 			return null;

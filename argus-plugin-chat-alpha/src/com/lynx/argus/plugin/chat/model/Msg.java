@@ -1,8 +1,10 @@
 package com.lynx.argus.plugin.chat.model;
 
 /**
- * Created by chris.liu
- * Time 13-12-7 下午8:06
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-7 下午8:06
  */
 public class Msg {
 	private String uid;

@@ -8,15 +8,17 @@ import android.view.ViewGroup;
 import com.lynx.lib.core.LFFragment;
 
 /**
- * Created by chris on 13-12-7.
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-7 下午6:58
  */
 public class ChatListFragment extends LFFragment {
 	private static final String LM_API_MSG = "/chat";
 
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_chatlist, container, false);
 
 		return v;

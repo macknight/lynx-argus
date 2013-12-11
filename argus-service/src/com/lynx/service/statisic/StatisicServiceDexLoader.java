@@ -1,10 +1,10 @@
 package com.lynx.service.statisic;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-8
- * Time: 下午1:27
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-8 下午1:27
  */
 public class StatisicServiceDexLoader {
 

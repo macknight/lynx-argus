@@ -1,10 +1,10 @@
 package com.lynx.argus.biz.more.model;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-11
- * Time: 下午5:15
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-11 下午5:15
  */
 public class GroupListItem {
 	private int resId;

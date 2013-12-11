@@ -12,8 +12,10 @@ import com.lynx.lib.core.LFFragment;
 import java.util.List;
 
 /**
- * Created by chris.liu
- * Time 13-12-7 下午6:58
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-7 下午6:58
  */
 public class ChatFragment extends LFFragment {
 	private static final String LM_API_MSG = "/chat";
@@ -28,7 +30,7 @@ public class ChatFragment extends LFFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-	                         Bundle savedInstanceState) {
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_chat, container, false);
 
 		return v;

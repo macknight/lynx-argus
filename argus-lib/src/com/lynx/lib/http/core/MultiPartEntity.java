@@ -1,25 +1,17 @@
 package com.lynx.lib.http.core;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Random;
-
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.message.BasicHeader;
 
+import java.io.*;
+import java.util.Random;
+
 /**
  * 
- * @author chris.liu
- * @name MultiPartEntity.java
- * @update 2013-4-17 下午10:52:25
- *
+ * @author zhufeng.liu
+ * 
+ * @addtime 2013-4-17 下午10:52:25
  */
 public class MultiPartEntity implements HttpEntity {
 	private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"

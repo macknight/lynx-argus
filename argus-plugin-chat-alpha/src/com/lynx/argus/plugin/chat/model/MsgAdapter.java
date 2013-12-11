@@ -10,8 +10,10 @@ import com.lynx.argus.plugin.chat.R;
 import java.util.List;
 
 /**
- * Created by chris.liu
- * Time 13-12-7 下午8:06
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-7 下午8:06
  */
 public class MsgAdapter extends BaseAdapter {
 	private Context context;
@@ -44,12 +46,14 @@ public class MsgAdapter extends BaseAdapter {
 		Msg msg = data.get(position);
 		if (convertView == null) {
 			if (msg.from()) {
-				view = View.inflate(context, R.layout.layout_msg_item_from, null);
+				view = View.inflate(context, R.layout.layout_msg_item_from,
+						null);
 			} else {
 				view = View.inflate(context, R.layout.layout_msg_item_to, null);
 			}
 			holder = new ViewHolder();
-			holder.tvContent = (TextView) view.findViewById(R.id.tv_msg_item_content);
+			holder.tvContent = (TextView) view
+					.findViewById(R.id.tv_msg_item_content);
 			holder.tvDate = (TextView) view.findViewById(R.id.tv_msg_item_date);
 			view.setTag(holder);
 		} else {

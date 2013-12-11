@@ -10,10 +10,10 @@ import com.lynx.argus.R;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-6
- * Time: 下午4:24
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-6 下午4:24
  */
 public class ShopListAdapter extends BaseAdapter {
 	private Context context;
@@ -49,11 +49,15 @@ public class ShopListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_local_shoplist_item, null);
+			view = View.inflate(context, R.layout.layout_local_shoplist_item,
+					null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shoplist_item_name);
-			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shoplist_item_addr);
-			holder.tvTele = (TextView) view.findViewById(R.id.tv_local_shoplist_item_tele);
+			holder.tvName = (TextView) view
+					.findViewById(R.id.tv_local_shoplist_item_name);
+			holder.tvAddr = (TextView) view
+					.findViewById(R.id.tv_local_shoplist_item_addr);
+			holder.tvTele = (TextView) view
+					.findViewById(R.id.tv_local_shoplist_item_tele);
 			view.setTag(holder);
 		} else {
 			view = convertView;

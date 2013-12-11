@@ -6,8 +6,9 @@ import android.net.NetworkInfo.State;
 
 /**
  * 
- * @author chris.liu
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午11:03:01
  */
 public class NetworkManager {
 	private ConnectivityManager connManager;

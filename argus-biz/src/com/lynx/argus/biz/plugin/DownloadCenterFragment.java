@@ -9,33 +9,37 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-18 下午8:00
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-18 下午8:00
  */
 public class DownloadCenterFragment extends BizFragment {
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.layout_downloadcenter, container, false);
-        ImageButton ibBack = (ImageButton) v.findViewById(R.id.ib_downloadcenter_back);
-        ibBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tabActivity.onBackPressed();
-            }
-        });
-        return v;
-    }
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_downloadcenter, container,
+				false);
+		ImageButton ibBack = (ImageButton) v
+				.findViewById(R.id.ib_downloadcenter_back);
+		ibBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				tabActivity.onBackPressed();
+			}
+		});
+		return v;
+	}
 
 }

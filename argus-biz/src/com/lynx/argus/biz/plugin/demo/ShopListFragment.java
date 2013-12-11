@@ -39,9 +39,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-16 上午10:29
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-16 上午10:29
  */
 public class ShopListFragment extends BizFragment {
 	private GeoService geoService;
@@ -58,7 +59,6 @@ public class ShopListFragment extends BizFragment {
 	private TextView tvLocAddr;
 	private ImageView ivLocIndicator, ivLocRefresh;
 
-
 	private String query = "美食";
 
 	public ShopListFragment() {
@@ -74,7 +74,8 @@ public class ShopListFragment extends BizFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		try {
-			httpService = (HttpService) BizApplication.instance().service("http");
+			httpService = (HttpService) BizApplication.instance().service(
+					"http");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,16 +84,18 @@ public class ShopListFragment extends BizFragment {
 
 		adapter = new ShopListAdapter(tabActivity, shops);
 
-		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-				Animation.RELATIVE_TO_SELF, 0.5f);
+		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
+				0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 		animRotate.setDuration(1500);
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_local_shoplist, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_local_shoplist, container,
+				false);
 
 		initLocationModule(v);
 
@@ -101,43 +104,49 @@ public class ShopListFragment extends BizFragment {
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		ptrlvShop.setLoadingDrawable(drawable);
 
-		ptrlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				if (geoService == null) {
-					Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
-					return;
-				} else if (geoService.coord() == null) {
-					geoService.locate(false);
-					return;
-				} else {
-					getLocalShop();
-				}
-			}
-		});
-
-		ptrlvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ShopListItem shop = shops.get(position - 1);
-				if (shop != null) {
-					ShopDetailFragment sdf = new ShopDetailFragment();
-					Bundle bundle = new Bundle();
-					bundle.putString("uid", shop.getUid());
-					try {
-						Log.d("chris", shop.getUid());
-					} catch (Exception e) {
-						e.printStackTrace();
+		ptrlvShop
+				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						if (geoService == null) {
+							Toast.makeText(tabActivity, "定位模块不可用",
+									Toast.LENGTH_SHORT).show();
+							return;
+						} else if (geoService.coord() == null) {
+							geoService.locate(false);
+							return;
+						} else {
+							getLocalShop();
+						}
 					}
-					sdf.setArguments(bundle);
-					tabActivity.pushFragment(sdf, true);
-				} else {
-					Toast.makeText(tabActivity, "未能正常获得商户信息", Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
+				});
 
-		ImageButton ibMap = (ImageButton) v.findViewById(R.id.ib_local_shoplist_map);
+		ptrlvShop.getRefreshableView().setOnItemClickListener(
+				new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						ShopListItem shop = shops.get(position - 1);
+						if (shop != null) {
+							ShopDetailFragment sdf = new ShopDetailFragment();
+							Bundle bundle = new Bundle();
+							bundle.putString("uid", shop.getUid());
+							try {
+								Log.d("chris", shop.getUid());
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+							sdf.setArguments(bundle);
+							tabActivity.pushFragment(sdf, true);
+						} else {
+							Toast.makeText(tabActivity, "未能正常获得商户信息",
+									Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+
+		ImageButton ibMap = (ImageButton) v
+				.findViewById(R.id.ib_local_shoplist_map);
 		ibMap.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -184,7 +193,8 @@ public class ShopListFragment extends BizFragment {
 							}
 
 							String uid = joShop.getString("uid");
-							ShopListItem shop = new ShopListItem(uid, name, addr, tele);
+							ShopListItem shop = new ShopListItem(uid, name,
+									addr, tele);
 							shops.add(shop);
 						} catch (Exception e) {
 
@@ -192,7 +202,8 @@ public class ShopListFragment extends BizFragment {
 					}
 					adapter.setData(shops);
 				} else {
-					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
+					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT)
+							.show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -211,49 +222,51 @@ public class ShopListFragment extends BizFragment {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case 0:
-					ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
-					adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
-					adIndicator.setOneShot(false);
-					if (adIndicator.isRunning()) {
-						adIndicator.stop();
-					}
-					adIndicator.start();
-					animRotate.startNow();
-					tvLocAddr.setText("正在定位...");
-					break;
-				case 1:  // 定位成功
-					if (adIndicator != null) {
-						adIndicator.stop();
-					}
-					if (animRotate != null) {
-						animRotate.cancel();
-					}
-					ivLocIndicator.setBackgroundResource(R.drawable.green_point);
-					Address addr = geoService.address();
-					Coord coord = geoService.coord();
-					String tip = "";
-					if (addr == null) {
-						tip = String.format("%s,%s", coord.getLat(), coord.getLng());
-					} else {
-						tip = addr.getStreet();
-					}
-					tvLocAddr.setText(tip);
-					getLocalShop();
-					break;
-				case 2:
-					if (adIndicator != null) {
-						adIndicator.stop();
-					}
-					if (animRotate != null) {
-						animRotate.cancel();
-					}
-					ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
-					tvLocAddr.setText("定位失败");
-					if (ptrlvShop.isRefreshing()) {
-						ptrlvShop.onRefreshComplete();
-					}
-					break;
+			case 0:
+				ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
+				adIndicator = (AnimationDrawable) ivLocIndicator
+						.getBackground();
+				adIndicator.setOneShot(false);
+				if (adIndicator.isRunning()) {
+					adIndicator.stop();
+				}
+				adIndicator.start();
+				animRotate.startNow();
+				tvLocAddr.setText("正在定位...");
+				break;
+			case 1: // 定位成功
+				if (adIndicator != null) {
+					adIndicator.stop();
+				}
+				if (animRotate != null) {
+					animRotate.cancel();
+				}
+				ivLocIndicator.setBackgroundResource(R.drawable.green_point);
+				Address addr = geoService.address();
+				Coord coord = geoService.coord();
+				String tip = "";
+				if (addr == null) {
+					tip = String
+							.format("%s,%s", coord.getLat(), coord.getLng());
+				} else {
+					tip = addr.getStreet();
+				}
+				tvLocAddr.setText(tip);
+				getLocalShop();
+				break;
+			case 2:
+				if (adIndicator != null) {
+					adIndicator.stop();
+				}
+				if (animRotate != null) {
+					animRotate.cancel();
+				}
+				ivLocIndicator.setBackgroundResource(R.drawable.gray_point);
+				tvLocAddr.setText("定位失败");
+				if (ptrlvShop.isRefreshing()) {
+					ptrlvShop.onRefreshComplete();
+				}
+				break;
 			}
 		}
 	};
@@ -270,9 +283,9 @@ public class ShopListFragment extends BizFragment {
 		ivLocRefresh.setAnimation(animRotate);
 		animRotate.cancel();
 
-
 		if (geoService == null) {
-			Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT)
+					.show();
 			return;
 		}
 
@@ -281,7 +294,9 @@ public class ShopListFragment extends BizFragment {
 			if (geoService.address() != null) {
 				tvLocAddr.setText(geoService.address().getStreet());
 			} else {
-				String tip = String.format("%s,%s", geoService.coord().getLat(), geoService.coord().getLng());
+				String tip = String.format("%s,%s",
+						geoService.coord().getLat(), geoService.coord()
+								.getLng());
 				tvLocAddr.setText(tip);
 			}
 		}
@@ -296,15 +311,15 @@ public class ShopListFragment extends BizFragment {
 			@Override
 			public void onLocationChanged(GeoService.LocationStatus status) {
 				switch (status) {
-					case ONGOING:
-						handler.sendEmptyMessage(0);
-						break;
-					case SUCCESS:
-						handler.sendEmptyMessage(1);
-						break;
-					case FAIL:
-						handler.sendEmptyMessage(2);
-						break;
+				case ONGOING:
+					handler.sendEmptyMessage(0);
+					break;
+				case SUCCESS:
+					handler.sendEmptyMessage(1);
+					break;
+				case FAIL:
+					handler.sendEmptyMessage(2);
+					break;
 				}
 			}
 		});
@@ -313,7 +328,8 @@ public class ShopListFragment extends BizFragment {
 	private void getLocalShop() {
 		try {
 			if (geoService == null) {
-				Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+				Toast.makeText(tabActivity, "定位模块不可用", Toast.LENGTH_SHORT)
+						.show();
 				return;
 			} else if (geoService.coord() == null) {
 				geoService.locate(false);

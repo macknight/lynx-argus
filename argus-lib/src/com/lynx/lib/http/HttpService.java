@@ -9,11 +9,9 @@ import java.io.File;
 
 /**
  * 
- * @author chris.liu
- * @name HttpService.java
- * @update 2013-4-17 下午11:03:01
- * from afinal
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午11:03:01
  */
 public interface HttpService {
 	/********************************************************************/

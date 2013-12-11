@@ -1,27 +1,24 @@
 package com.lynx.lib.http.handler;
 
-import java.io.IOException;
-import java.io.InterruptedIOException;
-import java.net.SocketException;
-import java.net.UnknownHostException;
-import java.util.HashSet;
-
-import javax.net.ssl.SSLHandshakeException;
-
+import android.os.SystemClock;
 import org.apache.http.NoHttpResponseException;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.protocol.ExecutionContext;
 import org.apache.http.protocol.HttpContext;
 
-import android.os.SystemClock;
+import javax.net.ssl.SSLHandshakeException;
+import java.io.IOException;
+import java.io.InterruptedIOException;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.HashSet;
 
 /**
  * 
- * @author chris.liu
- * @name RetryHandler.java
- * @update 2013-4-17 下午11:04:04
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午11:04:04
  */
 public class RetryHandler implements HttpRequestRetryHandler {
 	private static final int RETRY_SLEEP_TIME_MILLIS = 1000;

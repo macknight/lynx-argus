@@ -3,9 +3,10 @@ package com.lynx.service.hotfix.impl1v1;
 import com.lynx.service.hotfix.HotFixService;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-17 下午7:34
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-17 下午7:34
  */
 public class HotFixServiceImpl implements HotFixService {
 

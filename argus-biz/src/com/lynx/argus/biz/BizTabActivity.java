@@ -18,9 +18,10 @@ import com.lynx.lib.core.LFTabActivity;
 import java.util.Stack;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-12 下午5:19
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-12 下午5:19
  */
 public class BizTabActivity extends LFTabActivity {
 
@@ -39,7 +40,6 @@ public class BizTabActivity extends LFTabActivity {
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 	}
-
 
 	@Override
 	protected void onPause() {
@@ -157,7 +157,8 @@ public class BizTabActivity extends LFTabActivity {
 	}
 
 	private View createTabView(final int id) {
-		View view = LayoutInflater.from(this).inflate(R.layout.layout_tab_item, null);
+		View view = LayoutInflater.from(this).inflate(R.layout.layout_tab_item,
+				null);
 		ImageView imageView = (ImageView) view.findViewById(R.id.tab_icon);
 		imageView.setImageDrawable(getResources().getDrawable(id));
 		return view;

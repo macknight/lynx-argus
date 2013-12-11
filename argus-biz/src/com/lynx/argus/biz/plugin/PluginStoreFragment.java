@@ -26,16 +26,16 @@ import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-16 下午10:30
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-16 下午10:30
  */
 public class PluginStoreFragment extends BizFragment {
 	private P2RASEListView p2raselv;
 	private PluginStoreAdapter adapter;
 	private BizPluginManager pluginManager;
 	private InstallPopWindow optPopWindow;
-
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,16 +53,20 @@ public class PluginStoreFragment extends BizFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_pluginstore, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater
+				.inflate(R.layout.layout_pluginstore, container, false);
 
 		p2raselv = (P2RASEListView) v.findViewById(R.id.p2raselv_pluginstore);
 
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		p2raselv.setLoadingDrawable(drawable);
 
-		ActionSlideExpandableListView aselv = (ActionSlideExpandableListView) p2raselv.getRefreshableView();
-		adapter = new PluginStoreAdapter(tabActivity, pluginManager.pluginsAtStore());
+		ActionSlideExpandableListView aselv = (ActionSlideExpandableListView) p2raselv
+				.getRefreshableView();
+		adapter = new PluginStoreAdapter(tabActivity,
+				pluginManager.pluginsAtStore());
 		aselv.setAdapter(adapter);
 
 		p2raselv.setOnRefreshListener(new OnRefreshListener() {
@@ -77,19 +81,20 @@ public class PluginStoreFragment extends BizFragment {
 			public void onClick(View parent, View view, int position) {
 				Plugin plugin = adapter.getItem(position);
 				switch (view.getId()) {
-					case R.id.btn_pluginstore_install:
-						pluginManager.installPlugin(plugin);
-						break;
-					case R.id.btn_pluginstore_uninstall:
-						pluginManager.uninstallPlugin(plugin);
-						optPopWindow.show(view);
-						break;
+				case R.id.btn_pluginstore_install:
+					pluginManager.installPlugin(plugin);
+					break;
+				case R.id.btn_pluginstore_uninstall:
+					pluginManager.uninstallPlugin(plugin);
+					optPopWindow.show(view);
+					break;
 				}
 				optPopWindow.show(parent);
 			}
 		}, R.id.btn_pluginstore_install, R.id.btn_pluginstore_uninstall);
 
-		ImageButton ibDownload = (ImageButton) v.findViewById(R.id.ib_pluginstore_download);
+		ImageButton ibDownload = (ImageButton) v
+				.findViewById(R.id.ib_pluginstore_download);
 		ibDownload.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -98,7 +103,8 @@ public class PluginStoreFragment extends BizFragment {
 			}
 		});
 
-		ImageButton ibBack = (ImageButton) v.findViewById(R.id.ib_pluginstore_back);
+		ImageButton ibBack = (ImageButton) v
+				.findViewById(R.id.ib_pluginstore_back);
 		ibBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -118,49 +124,50 @@ public class PluginStoreFragment extends BizFragment {
 	private PluginMsgHandler handler = new PluginMsgHandler() {
 		@Override
 		public boolean interested(int msg) {
-			return BizPluginManager.MSG_STORE_UPDATE_FIN == msg ||
-					DexModuleListener.DEX_DOWNLOAD_SUCCESS == msg ||
-					DexModuleListener.DEX_DOWNLOAD_FAIL == msg ||
-					DexModuleListener.DEX_INSTALL_SUCCESS == msg ||
-					DexModuleListener.DEX_INSTALL_FAIL == msg ||
-					DexModuleListener.DEX_UNINSTALL_SUCCESS == msg ||
-					DexModuleListener.DEX_UNINSTALL_FAIL == msg;
+			return BizPluginManager.MSG_STORE_UPDATE_FIN == msg
+					|| DexModuleListener.DEX_DOWNLOAD_SUCCESS == msg
+					|| DexModuleListener.DEX_DOWNLOAD_FAIL == msg
+					|| DexModuleListener.DEX_INSTALL_SUCCESS == msg
+					|| DexModuleListener.DEX_INSTALL_FAIL == msg
+					|| DexModuleListener.DEX_UNINSTALL_SUCCESS == msg
+					|| DexModuleListener.DEX_UNINSTALL_FAIL == msg;
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case BizPluginManager.MSG_STORE_UPDATE_FIN:
-					p2raselv.onRefreshComplete();
-					adapter.setData(pluginManager.pluginsAtStore());
-					break;
-				case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
-				case DexModuleListener.DEX_INSTALL_SUCCESS:
-				case DexModuleListener.DEX_UNINSTALL_SUCCESS:
-					optPopWindow.onSuccess();
-					adapter.notifyDataSetChanged();
-					break;
-				case DexModuleListener.DEX_INSTALL_FAIL:
+			case BizPluginManager.MSG_STORE_UPDATE_FIN:
+				p2raselv.onRefreshComplete();
+				adapter.setData(pluginManager.pluginsAtStore());
+				break;
+			case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
+			case DexModuleListener.DEX_INSTALL_SUCCESS:
+			case DexModuleListener.DEX_UNINSTALL_SUCCESS:
+				optPopWindow.onSuccess();
+				adapter.notifyDataSetChanged();
+				break;
+			case DexModuleListener.DEX_INSTALL_FAIL:
 
-				case DexModuleListener.DEX_DOWNLOAD_FAIL:
+			case DexModuleListener.DEX_DOWNLOAD_FAIL:
 
-				case DexModuleListener.DEX_UNINSTALL_FAIL:
-					optPopWindow.onFail();
-					adapter.notifyDataSetChanged();
-					break;
+			case DexModuleListener.DEX_UNINSTALL_FAIL:
+				optPopWindow.onFail();
+				adapter.notifyDataSetChanged();
+				break;
 			}
 		}
 	};
-
 
 	private class InstallPopWindow extends PopupWindow {
 		private Animation animInstalling;
 		private ImageView ivOpt;
 
 		public InstallPopWindow() {
-			super(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			super(LinearLayout.LayoutParams.MATCH_PARENT,
+					LinearLayout.LayoutParams.MATCH_PARENT);
 
-			View view = View.inflate(tabActivity, R.layout.layout_plugin_install, null);
+			View view = View.inflate(tabActivity,
+					R.layout.layout_plugin_install, null);
 			this.setContentView(view);
 
 			ivOpt = (ImageView) view.findViewById(R.id.iv_pluginstore_opt);
@@ -171,7 +178,8 @@ public class PluginStoreFragment extends BizFragment {
 
 			setFocusable(false);
 			setOutsideTouchable(true);
-			setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_round_bg));
+			setBackgroundDrawable(getResources().getDrawable(
+					R.drawable.shape_round_bg));
 
 			animInstalling = new RotateAnimation(-80, 0,
 					Animation.RELATIVE_TO_SELF, 0.5f,

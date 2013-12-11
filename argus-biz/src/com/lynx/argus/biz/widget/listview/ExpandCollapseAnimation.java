@@ -6,9 +6,10 @@ import android.view.animation.Transformation;
 import android.widget.LinearLayout;
 
 /**
- * Animation that either expands or collapses a view by sliding it down to make it visible.
- * Or by sliding it up so it will hide. It will look like it slides behind the view above.
- *
+ * Animation that either expands or collapses a view by sliding it down to make
+ * it visible. Or by sliding it up so it will hide. It will look like it slides
+ * behind the view above.
+ * 
  * @auther tjerk
  * @date 6/9/12 4:58 PM
  */
@@ -21,10 +22,15 @@ public class ExpandCollapseAnimation extends Animation {
 	private LinearLayout.LayoutParams mLayoutParams;
 
 	/**
-	 * Initializes expand collapse animation, has two types, collapse (1) and expand (0).
-	 * @param view The view to animate
-	 * @param type The type of animation: 0 will expand from gone and 0 size to visible and layout size defined in xml.
-	 * 1 will collapse view and set to gone
+	 * Initializes expand collapse animation, has two types, collapse (1) and
+	 * expand (0).
+	 * 
+	 * @param view
+	 *            The view to animate
+	 * @param type
+	 *            The type of animation: 0 will expand from gone and 0 size to
+	 *            visible and layout size defined in xml. 1 will collapse view
+	 *            and set to gone
 	 */
 	public ExpandCollapseAnimation(View view, int type) {
 
@@ -32,7 +38,7 @@ public class ExpandCollapseAnimation extends Animation {
 		mEndHeight = mAnimatedView.getMeasuredHeight();
 		mLayoutParams = ((LinearLayout.LayoutParams) view.getLayoutParams());
 		mType = type;
-		if(mType == EXPAND) {
+		if (mType == EXPAND) {
 
 			mLayoutParams.bottomMargin = -mEndHeight;
 		} else {
@@ -47,14 +53,15 @@ public class ExpandCollapseAnimation extends Animation {
 
 		super.applyTransformation(interpolatedTime, t);
 		if (interpolatedTime < 1.0f) {
-			if(mType == EXPAND) {
-				mLayoutParams.bottomMargin =  -mEndHeight + (int) (mEndHeight * interpolatedTime);
+			if (mType == EXPAND) {
+				mLayoutParams.bottomMargin = -mEndHeight
+						+ (int) (mEndHeight * interpolatedTime);
 			} else {
-				mLayoutParams.bottomMargin = - (int) (mEndHeight * interpolatedTime);
+				mLayoutParams.bottomMargin = -(int) (mEndHeight * interpolatedTime);
 			}
 			mAnimatedView.requestLayout();
 		} else {
-			if(mType == EXPAND) {
+			if (mType == EXPAND) {
 				mLayoutParams.bottomMargin = 0;
 				mAnimatedView.requestLayout();
 			} else {

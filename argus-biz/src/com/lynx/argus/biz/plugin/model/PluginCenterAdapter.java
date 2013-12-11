@@ -13,9 +13,10 @@ import com.lynx.lib.util.AsyncImageLoader;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-16 下午5:19
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-16 下午5:19
  */
 public class PluginCenterAdapter extends BaseAdapter {
 	private Context context;
@@ -59,10 +60,13 @@ public class PluginCenterAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_plugincenter_item, null);
+			view = View.inflate(context, R.layout.layout_plugincenter_item,
+					null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_plugincenter_item_name);
-			holder.ivIcon = (ImageView) view.findViewById(R.id.iv_plugincenter_item_icon);
+			holder.tvName = (TextView) view
+					.findViewById(R.id.tv_plugincenter_item_name);
+			holder.ivIcon = (ImageView) view
+					.findViewById(R.id.iv_plugincenter_item_icon);
 			view.setTag(holder);
 		} else {
 			view = convertView;
@@ -71,7 +75,8 @@ public class PluginCenterAdapter extends BaseAdapter {
 
 		Plugin item = plugins.get(position);
 		holder.tvName.setText(item.name());
-		imgLoader.showAsyncImage(holder.ivIcon, item.icon(), R.drawable.plugin_def);
+		imgLoader.showAsyncImage(holder.ivIcon, item.icon(),
+				R.drawable.plugin_def);
 		return view;
 	}
 

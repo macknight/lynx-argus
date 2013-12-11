@@ -5,19 +5,19 @@ import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.service.hotfix.impl1v1.HotFixServiceImpl;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-12 下午1:34
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-12 下午1:34
  */
 public class HotFixServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "hotfix";
 
-	private static DexModule defModule = new DexModule("hotfix", 1, null, null, "hot fix",
-			"com.lynx.service.hotfix.impl1v1.HotFixServiceImpl");
+	private static DexModule defModule = new DexModule("hotfix", 1, null, null,
+			"hot fix", "com.lynx.service.hotfix.impl1v1.HotFixServiceImpl");
 
-	public HotFixServiceDexLoader()
-			throws Exception {
+	public HotFixServiceDexLoader() throws Exception {
 		super(defModule, HotFixServiceImpl.class);
 	}
 

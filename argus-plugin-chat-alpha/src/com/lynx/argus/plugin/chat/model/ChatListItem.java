@@ -1,8 +1,10 @@
 package com.lynx.argus.plugin.chat.model;
 
 /**
- * Created by chris.liu
- * Date: 13-12-7 下午11:41
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-7 下午11:41
  */
 public class ChatListItem {
 	private String from;

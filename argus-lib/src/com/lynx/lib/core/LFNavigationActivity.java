@@ -10,10 +10,10 @@ import java.util.Stack;
 
 /**
  * 类似IOS NavigationController,以栈式结构管理其中Fragment
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-10-29 上午10:49
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-29 上午10:49
  */
 public abstract class LFNavigationActivity extends LFActivity {
 	private Stack<LFFragment> stack;
@@ -21,7 +21,6 @@ public abstract class LFNavigationActivity extends LFActivity {
 	protected int resContent = android.R.id.primary; // fragment根容器ID
 	private int animResPushIn = -1, animResPushOut = -1;
 	private int animResPopIn = -1, animResPopOut = -1;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,8 @@ public abstract class LFNavigationActivity extends LFActivity {
 		animResPopOut = resOut;
 	}
 
-	public void pushFragment(LFFragment fragment, boolean shouldAnimate, boolean shouldAdd) {
+	public void pushFragment(LFFragment fragment, boolean shouldAnimate,
+			boolean shouldAdd) {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {

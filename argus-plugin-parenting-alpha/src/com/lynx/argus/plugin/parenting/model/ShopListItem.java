@@ -3,10 +3,10 @@ package com.lynx.argus.plugin.parenting.model;
 import com.lynx.lib.geo.entity.GeoPoint;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-22
- * Time: 下午4:59
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-22 下午4:59
  */
 public class ShopListItem {
 	private String shopId;
@@ -17,7 +17,7 @@ public class ShopListItem {
 	private int reviewNum;
 
 	public ShopListItem(String shopId, String name, String snapUrl,
-	                    GeoPoint latlng, String region, int reviewNum) {
+			GeoPoint latlng, String region, int reviewNum) {
 		this.shopId = shopId;
 		this.name = name;
 		this.snapUrl = snapUrl;

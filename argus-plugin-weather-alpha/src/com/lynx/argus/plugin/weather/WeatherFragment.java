@@ -9,16 +9,17 @@ import com.lynx.lib.core.LFFragment;
 
 /**
  * 天气插件
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-19 下午11:55
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-19 下午11:55
  */
 public class WeatherFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_weather, container, false);
 
 		return v;

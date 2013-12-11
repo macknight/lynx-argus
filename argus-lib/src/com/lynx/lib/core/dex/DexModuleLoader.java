@@ -15,9 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 13-10-29 11:29 AM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-29 上午11:30
  */
 public class DexModuleLoader {
 	protected HttpService httpService;
@@ -38,10 +39,11 @@ public class DexModuleLoader {
 		this.type = type;
 		this.status = status;
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service("http");
+		this.httpService = (HttpService) LFApplication.instance().service(
+				"http");
 
-		File tmp = new File(context.getFilesDir(),
-				type.type() + File.separator + newModule.module());
+		File tmp = new File(context.getFilesDir(), type.type() + File.separator
+				+ newModule.module());
 		if (!tmp.exists()) {
 			tmp.mkdirs();
 		}
@@ -85,21 +87,21 @@ public class DexModuleLoader {
 				deleteOldFile();
 
 				switch (status) {
-					case INSTALL:
-						dispatchChange(DexModuleListener.DEX_INSTALL_SUCCESS);
-						break;
-					case UPDATE:
-						dispatchChange(DexModuleListener.DEX_DOWNLOAD_SUCCESS);
-						break;
+				case INSTALL:
+					dispatchChange(DexModuleListener.DEX_INSTALL_SUCCESS);
+					break;
+				case UPDATE:
+					dispatchChange(DexModuleListener.DEX_DOWNLOAD_SUCCESS);
+					break;
 				}
 			} catch (Exception e) {
 				switch (status) {
-					case INSTALL:
-						dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
-						break;
-					case UPDATE:
-						dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
-						break;
+				case INSTALL:
+					dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
+					break;
+				case UPDATE:
+					dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
+					break;
 				}
 			}
 		}
@@ -108,19 +110,19 @@ public class DexModuleLoader {
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
 			switch (status) {
-				case INSTALL:
-					dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
-					break;
-				case UPDATE:
-					dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
-					break;
+			case INSTALL:
+				dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
+				break;
+			case UPDATE:
+				dispatchChange(DexModuleListener.DEX_DOWNLOAD_FAIL);
+				break;
 			}
 		}
 	};
 
 	/**
 	 * 读取更新配置，下载模块更新
-	 *
+	 * 
 	 * @param newModule
 	 */
 	public void update(DexModule newModule) {
@@ -132,7 +134,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 动态模块路径
-	 *
+	 * 
 	 * @return
 	 */
 	public String moduleDir() {
@@ -141,7 +143,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 动态模块包路径
-	 *
+	 * 
 	 * @return
 	 */
 	public String srcPath() {
@@ -150,7 +152,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 动态包输出路径
-	 *
+	 * 
 	 * @return
 	 */
 	public String dexDir() {
@@ -163,7 +165,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 动态模块名
-	 *
+	 * 
 	 * @return
 	 */
 	public String module() {
@@ -172,7 +174,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 有更新包
-	 *
+	 * 
 	 * @param newModule
 	 */
 	public void hasUpdate(DexModule newModule) {
@@ -223,7 +225,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 配置项初始化
-	 *
+	 * 
 	 * @param module
 	 */
 	private void initConfig(DexModule module) {
@@ -237,12 +239,13 @@ public class DexModuleLoader {
 		}
 
 		srcPath = srcDir + File.separator + dexModule.md5() + ".apk";
-		dexPath = new File(basicDir, "dex").getAbsolutePath() + File.separator + dexModule.md5() + ".dex";
+		dexPath = new File(basicDir, "dex").getAbsolutePath() + File.separator
+				+ dexModule.md5() + ".dex";
 	}
 
 	/**
 	 * 将配置文件保存到本地
-	 *
+	 * 
 	 * @param module
 	 */
 	private void saveConfig(DexModule module) throws IOException {
@@ -259,7 +262,8 @@ public class DexModuleLoader {
 		}
 
 		try {
-			byte[] bytes = DexUtil.dexModule2json(type, module).toString().getBytes("UTF-8");
+			byte[] bytes = DexUtil.dexModule2json(type, module).toString()
+					.getBytes("UTF-8");
 			fos = new FileOutputStream(configTmp);
 			fos.write(bytes);
 			fos.close();
@@ -271,8 +275,8 @@ public class DexModuleLoader {
 					config.delete();
 				}
 				configOld.renameTo(config);
-				throw new Exception("unable to move config from " +
-						configTmp + " to " + config);
+				throw new Exception("unable to move config from " + configTmp
+						+ " to " + config);
 			}
 		} catch (Exception e) {
 			config.delete();
@@ -293,7 +297,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 获取配置描述的动态更新包
-	 *
+	 * 
 	 * @param module
 	 */
 	private void downloadSrcFile(DexModule module) {
@@ -308,7 +312,7 @@ public class DexModuleLoader {
 
 	/**
 	 * 清理旧版本动态更新模块文件,包括源文件以及产出dex文件
-	 *
+	 * 
 	 * @throws IOException
 	 */
 	protected void deleteOldFile() throws IOException {
@@ -343,8 +347,7 @@ public class DexModuleLoader {
 	}
 
 	public enum DexType {
-		PLUGIN("plugin"),
-		SERVICE("service");
+		PLUGIN("plugin"), SERVICE("service");
 
 		private String type;
 

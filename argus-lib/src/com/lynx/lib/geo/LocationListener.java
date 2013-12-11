@@ -3,10 +3,11 @@ package com.lynx.lib.geo;
 import com.lynx.lib.geo.GeoService.LocationStatus;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/27/13 5:53 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-27 下午5:52
  */
 public interface LocationListener {
-    void onLocationChanged(LocationStatus status);
+	void onLocationChanged(LocationStatus status);
 }

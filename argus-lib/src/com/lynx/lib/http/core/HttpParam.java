@@ -1,26 +1,21 @@
 package com.lynx.lib.http.core;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 
- * @author chris.liu
- * @name HttpParam.java
- * @update 2013-4-17 下午9:49:29
+ * @author zhufeng.liu
+ * 
+ * @addtime 2013-4-17 下午9:49:29
  */
 public class HttpParam {
 	private static final String ENCODING = "UTF-8";

@@ -1,10 +1,10 @@
 package com.lynx.argus.plugin.local.model;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-6
- * Time: 下午4:20
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-6 下午4:20
  */
 public class ShopListItem {
 	private String uid;

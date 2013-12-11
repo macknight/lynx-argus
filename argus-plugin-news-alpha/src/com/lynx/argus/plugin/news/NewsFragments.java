@@ -9,16 +9,17 @@ import com.lynx.lib.core.LFFragment;
 
 /**
  * 新闻资讯
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-19 下午11:02
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-19 下午11:02
  */
 public class NewsFragments extends LFFragment {
 	private static final String LM_API_NEWS = "/news";
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_news, container, false);
 
 		return v;

@@ -12,10 +12,10 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-8
- * Time: 下午3:51
+ *
+ * @author zhufeng.liu
+ *
+ * @addtime 13-11-8 下午3:51
  */
 public class ShopListMapActivity extends MapActivity {
 	private GeoService geoService;

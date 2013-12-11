@@ -13,10 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-6
- * Time: 下午4:11
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-6 下午4:11
  */
 public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 	private ShopFilter filter;
@@ -49,10 +49,13 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_local_shop_search_item, null);
+			view = View.inflate(context,
+					R.layout.layout_local_shop_search_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view.findViewById(R.id.tv_local_shop_search_item_name);
-			holder.tvAddr = (TextView) view.findViewById(R.id.tv_local_shop_search_item_addr);
+			holder.tvName = (TextView) view
+					.findViewById(R.id.tv_local_shop_search_item_name);
+			holder.tvAddr = (TextView) view
+					.findViewById(R.id.tv_local_shop_search_item_addr);
 			view.setTag(holder);
 		} else {
 			view = convertView;
@@ -98,12 +101,15 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 				ArrayList<ShopListItem> unfilteredValues = mUnfilteredData;
 				int count = unfilteredValues.size();
 
-				ArrayList<ShopListItem> newValues = new ArrayList<ShopListItem>(count);
+				ArrayList<ShopListItem> newValues = new ArrayList<ShopListItem>(
+						count);
 
 				for (ShopListItem item : unfilteredValues) {
-					if (item.getName() != null && item.getName().startsWith(prefixString)) {
+					if (item.getName() != null
+							&& item.getName().startsWith(prefixString)) {
 						newValues.add(item);
-					} else if (item.getAddr() != null && item.getAddr().startsWith(prefixString)) {
+					} else if (item.getAddr() != null
+							&& item.getAddr().startsWith(prefixString)) {
 						newValues.add(item);
 					}
 				}
@@ -116,8 +122,9 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 		}
 
 		@Override
-		protected void publishResults(CharSequence constraint, FilterResults results) {
-			//noinspection unchecked
+		protected void publishResults(CharSequence constraint,
+				FilterResults results) {
+			// noinspection unchecked
 			data = (List<ShopListItem>) results.values;
 			if (results.count > 0) {
 				notifyDataSetChanged();

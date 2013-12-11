@@ -8,9 +8,10 @@ import com.lynx.lib.geo.entity.Coord.CoordType;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/27/13 5:53 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-27 下午5:52
  */
 public interface GeoService extends Service {
 
@@ -19,7 +20,7 @@ public interface GeoService extends Service {
 	/**
 	 * get the best coordinate by server, if can be decided, return only one
 	 * coordinate result, else, return a coordinate list
-	 *
+	 * 
 	 * @param refresh
 	 * @return
 	 */
@@ -27,7 +28,7 @@ public interface GeoService extends Service {
 
 	/**
 	 * reverse geo-coding
-	 *
+	 * 
 	 * @param lat
 	 * @param lng
 	 * @param type
@@ -46,9 +47,6 @@ public interface GeoService extends Service {
 	Address address();
 
 	public enum LocationStatus {
-		IDLE,
-		ONGOING,
-		SUCCESS,
-		FAIL
+		IDLE, ONGOING, SUCCESS, FAIL
 	}
 }

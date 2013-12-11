@@ -8,9 +8,10 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-9-12 下午6:20
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-12 下午6:20
  */
 public class ShoppingFragment extends BizFragment {
 
@@ -27,7 +28,8 @@ public class ShoppingFragment extends BizFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_shopping, container, false);
 
 		return v;

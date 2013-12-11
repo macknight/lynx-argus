@@ -2,11 +2,10 @@ package com.lynx.lib.core.dex;
 
 /**
  * 插件安装、更新回调
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-21
- * Time: 下午8:30
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-21 下午8:30
  */
 public interface DexModuleListener {
 	public static final int DEX_HAS_UPDATE = 0; // 有更新

@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-8
- * Time: 下午5:01
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-8 下午5:01
  */
 public class BMapLocateTask {
 	private static final String Tag = "BMapLocateTask";
@@ -48,29 +48,34 @@ public class BMapLocateTask {
 					httpPost = new HttpPost(B_LOC_URL);
 					params = new ArrayList<BasicNameValuePair>();
 					params.add(new BasicNameValuePair("bloc", tmp));
-					UrlEncodedFormEntity urlencodedformentity = new UrlEncodedFormEntity(params, "utf-8");
+					UrlEncodedFormEntity urlencodedformentity = new UrlEncodedFormEntity(
+							params, "utf-8");
 					httpPost.setEntity(urlencodedformentity);
 
 					HttpResponse http_resp = httpClient.execute(httpPost);
 					elapse = System.currentTimeMillis() - elapse;
 					if (http_resp.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-						String result = (EntityUtils.toString(http_resp.getEntity(), "utf-8"));
+						String result = (EntityUtils.toString(
+								http_resp.getEntity(), "utf-8"));
 						JSONObject json = new JSONObject(result);
-						int status_code = json.getJSONObject("result")
-								                  .getInt("error");
+						int status_code = json.getJSONObject("result").getInt(
+								"error");
 						if (status_code != 167) {
 							double lat = json.getJSONObject("content")
-									             .getJSONObject("point").getDouble("y");
+									.getJSONObject("point").getDouble("y");
 							lat = LocationUtil.format(lat, 5);
 							double lng = json.getJSONObject("content")
-									             .getJSONObject("point").getDouble("x");
+									.getJSONObject("point").getDouble("x");
 							lng = LocationUtil.format(lng, 5);
 							int acc = (int) json.getJSONObject("content")
-									                .getDouble("radius");
-							Coord coord = new Coord(Coord.CoordSource.BMAP, lat, lng, acc, elapse);
-							Logger.i(Tag, String.format("get coord form Baidu(%f, %f, %d)",
-									                           coord.getLat(), coord.getLng(), coord.getAcc()));
-//							coords3thPart.add(coord);
+									.getDouble("radius");
+							Coord coord = new Coord(Coord.CoordSource.BMAP,
+									lat, lng, acc, elapse);
+							Logger.i(Tag, String.format(
+									"get coord form Baidu(%f, %f, %d)",
+									coord.getLat(), coord.getLng(),
+									coord.getAcc()));
+							// coords3thPart.add(coord);
 						}
 					}
 				} catch (Exception e) {
@@ -97,7 +102,7 @@ public class BMapLocateTask {
 		try {
 			Class<?> clazz = Class.forName("com.dianping.app.Environment");
 			if (clazz != null) {
-//				imei = Environment.imei();
+				// imei = Environment.imei();
 			}
 		} catch (Exception e) {
 
@@ -109,21 +114,21 @@ public class BMapLocateTask {
 		} else {
 			Cell cell = cells.get(0);
 			switch (cell.type()) {
-				case CDMA:
-					CDMACell cdmaCell = (CDMACell) cell;
-					tmp += cdmaCell.getMcc() + "|" + cdmaCell.getSid() + "|"
-							       + cdmaCell.getNid() + "|" + cdmaCell.getBid() + "&clt=";
-					break;
-				case GSM:
-					GSMCell gsmCell = (GSMCell) cell;
+			case CDMA:
+				CDMACell cdmaCell = (CDMACell) cell;
+				tmp += cdmaCell.getMcc() + "|" + cdmaCell.getSid() + "|"
+						+ cdmaCell.getNid() + "|" + cdmaCell.getBid() + "&clt=";
+				break;
+			case GSM:
+				GSMCell gsmCell = (GSMCell) cell;
+				tmp += gsmCell.getMcc() + "|" + gsmCell.getMnc() + "|"
+						+ gsmCell.getLac() + "|" + gsmCell.getCid() + "&clt=";
+				for (Cell theCell : cells) {
+					gsmCell = (GSMCell) theCell;
 					tmp += gsmCell.getMcc() + "|" + gsmCell.getMnc() + "|"
-							       + gsmCell.getLac() + "|" + gsmCell.getCid() + "&clt=";
-					for (Cell theCell : cells) {
-						gsmCell = (GSMCell) theCell;
-						tmp += gsmCell.getMcc() + "|" + gsmCell.getMnc()
-								       + "|" + gsmCell.getLac() + "|" + gsmCell.getCid() + "|1;";
-					}
-					break;
+							+ gsmCell.getLac() + "|" + gsmCell.getCid() + "|1;";
+				}
+				break;
 			}
 			tmp += "10";
 		}
@@ -132,7 +137,7 @@ public class BMapLocateTask {
 			tmp += "&wf=";
 			for (int i = 0; i < wifis.size(); ++i) {
 				tmp += wifis.get(i).getMac().replaceAll(":", "") + ";"
-						       + Math.abs(wifis.get(i).getDBm()) + ";|";
+						+ Math.abs(wifis.get(i).getDBm()) + ";|";
 			}
 			tmp = tmp.substring(0, tmp.length() - 1);
 		}

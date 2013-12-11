@@ -6,7 +6,14 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View;
 import android.widget.GridView;
 
-public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView> {
+/**
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-30 下午1:33
+ */
+public class PullToRefreshGridView extends
+		PullToRefreshAdapterViewBase<GridView> {
 
 	public PullToRefreshGridView(Context context) {
 		super(context);
@@ -26,7 +33,8 @@ public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView
 	}
 
 	@Override
-	protected final GridView createRefreshableView(Context context, AttributeSet attrs) {
+	protected final GridView createRefreshableView(Context context,
+			AttributeSet attrs) {
 		GridView gv = new InternalGridView(context, attrs);
 		return gv;
 	}

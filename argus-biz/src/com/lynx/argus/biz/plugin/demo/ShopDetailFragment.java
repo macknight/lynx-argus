@@ -22,9 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-9-16 下午2:00
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends BizFragment {
 	private HttpService httpService;
@@ -40,7 +41,8 @@ public class ShopDetailFragment extends BizFragment {
 		super.onCreate(savedInstanceState);
 
 		try {
-			httpService = (HttpService) BizApplication.instance().service("http");
+			httpService = (HttpService) BizApplication.instance().service(
+					"http");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,19 +55,20 @@ public class ShopDetailFragment extends BizFragment {
 		params.add(new BasicNameValuePair("scope", 2 + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
 		String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
-				                          BMAP_API_PLACE_DETAIL, param);
+				BMAP_API_PLACE_DETAIL, param);
 		httpService.get(url, null, httpCallback);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_local_shop_detail, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_local_shop_detail, container,
+				false);
 
 		initUI(v);
 
 		return v;
 	}
-
 
 	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
 		@Override
@@ -77,7 +80,8 @@ public class ShopDetailFragment extends BizFragment {
 					JSONObject joShop = joResult.getJSONObject("result");
 					updateUI(joShop);
 				} else {
-					Toast.makeText(tabActivity, "获取商家信息失败", Toast.LENGTH_SHORT).show();
+					Toast.makeText(tabActivity, "获取商家信息失败", Toast.LENGTH_SHORT)
+							.show();
 				}
 			} catch (Exception e) {
 
@@ -90,7 +94,6 @@ public class ShopDetailFragment extends BizFragment {
 			super.onFailure(t, strMsg);
 		}
 	};
-
 
 	private void initUI(View v) {
 		tvName = (TextView) v.findViewById(R.id.tv_shop_detail_name);
@@ -153,28 +156,32 @@ public class ShopDetailFragment extends BizFragment {
 
 			float overallRate = 0;
 			try {
-				overallRate = Float.parseFloat(joDetail.getString("overall_rating"));
+				overallRate = Float.parseFloat(joDetail
+						.getString("overall_rating"));
 			} catch (Exception e) {
 			}
 			rbOverall.setRating(overallRate);
 
 			float tasteRate = 0;
 			try {
-				tasteRate = Float.parseFloat(joDetail.getString("taste_rating"));
+				tasteRate = Float
+						.parseFloat(joDetail.getString("taste_rating"));
 			} catch (Exception e) {
 			}
 			rbTaste.setRating(tasteRate);
 
 			float serviceRate = 0;
 			try {
-				serviceRate = Float.parseFloat(joDetail.getString("service_rating"));
+				serviceRate = Float.parseFloat(joDetail
+						.getString("service_rating"));
 			} catch (Exception e) {
 			}
 			rbService.setRating(serviceRate);
 
 			float envRate = 0;
 			try {
-				envRate = Float.parseFloat(joDetail.getString("environment_rating"));
+				envRate = Float.parseFloat(joDetail
+						.getString("environment_rating"));
 			} catch (Exception e) {
 			}
 			rbEnv.setRating(envRate);

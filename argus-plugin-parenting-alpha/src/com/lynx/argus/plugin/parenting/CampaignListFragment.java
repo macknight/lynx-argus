@@ -24,18 +24,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-22
- * Time: 下午3:54
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-22 下午3:54
  */
 public class CampaignListFragment extends LFFragment {
 
 	private static final int MSG_LOAD_CAMP_LIST_SUCCESS = 1;
 	private static final int MSG_LOAD_CAMP_LIST_FAIL = 2;
 
-	private static final String LM_API_CAMPAIGN_LIST = "http://www.hahaertong.com/index" +
-			".php?app=activity&act=m&page=#page#";
+	private static final String LM_API_CAMPAIGN_LIST = "http://www.hahaertong.com/index"
+			+ ".php?app=activity&act=m&page=#page#";
 
 	private static int curPage = 1;
 	private static int pageSize = 0;
@@ -46,7 +46,6 @@ public class CampaignListFragment extends LFFragment {
 	private List<CampaignListItem> campaignItems = new ArrayList<CampaignListItem>();
 	private CampaignListAdapter adapter;
 	private PullToRefreshListView prlvCampaign;
-
 
 	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
 		@Override
@@ -67,13 +66,15 @@ public class CampaignListFragment extends LFFragment {
 						String shopId = joShop.getString("store_id");
 						String shopName = joShop.getString("store_name");
 						String price = joShop.getString("market_price");
-						String snapUrl = "http://www.hahaertong.com/" + joShop.getString("default_image");
+						String snapUrl = "http://www.hahaertong.com/"
+								+ joShop.getString("default_image");
 						String startTime = joShop.getString("start_time");
 						String endTime = joShop.getString("end_time");
 						String place = joShop.getString("place");
 						String region = joShop.getString("regions");
-						CampaignListItem campaignListItem = new CampaignListItem(id, name, shopId, shopName,
-								price, snapUrl, startTime, endTime, place, region);
+						CampaignListItem campaignListItem = new CampaignListItem(
+								id, name, shopId, shopName, price, snapUrl,
+								startTime, endTime, place, region);
 						campaignItems.add(campaignListItem);
 					} catch (Exception e) {
 
@@ -102,11 +103,11 @@ public class CampaignListFragment extends LFFragment {
 		public void handleMessage(Message msg) {
 			prlvCampaign.onRefreshComplete();
 			switch (msg.what) {
-				case MSG_LOAD_CAMP_LIST_SUCCESS:
-					adapter.setData(campaignItems);
-					break;
-				case MSG_LOAD_CAMP_LIST_FAIL:
-					break;
+			case MSG_LOAD_CAMP_LIST_SUCCESS:
+				adapter.setData(campaignItems);
+				break;
+			case MSG_LOAD_CAMP_LIST_FAIL:
+				break;
 			}
 		}
 	};
@@ -118,21 +119,26 @@ public class CampaignListFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.layout_campaignlist, container, false);
-		prlvCampaign = (PullToRefreshListView) view.findViewById(R.id.prlv_campaignlist);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.layout_campaignlist, container,
+				false);
+		prlvCampaign = (PullToRefreshListView) view
+				.findViewById(R.id.prlv_campaignlist);
 		adapter = new CampaignListAdapter(navActivity, campaignItems);
 		prlvCampaign.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prlvCampaign.setLoadingDrawable(drawable);
 
-		prlvCampaign.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-			@Override
-			public void onRefresh() {
-				String url = LM_API_CAMPAIGN_LIST.replaceAll("#page#", (curPage + 1) + "");
-				httpService.get(url, null, httpCallback);
-			}
-		});
+		prlvCampaign
+				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+					@Override
+					public void onRefresh() {
+						String url = LM_API_CAMPAIGN_LIST.replaceAll("#page#",
+								(curPage + 1) + "");
+						httpService.get(url, null, httpCallback);
+					}
+				});
 
 		return view;
 	}

@@ -16,18 +16,20 @@ import java.util.Stack;
 
 /**
  * 类似IOS中UITabbarController,以复合栈式结构管理其中的Fragment
- * <p/>
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 9/26/13 3:08 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-26 下午3:08
  */
 public abstract class LFTabActivity extends LFActivity {
 	protected static Map<String, Stack<LFFragment>> stacks = new HashMap<String, Stack<LFFragment>>();
 	protected TabHost tabHost;
 	protected String curTab;
 	protected int resContent = -1; // fragment根容器ID
-	private int animResPushIn = android.R.anim.fade_in, animResPushOut = android.R.anim.fade_out;
-	private int animResPopIn = android.R.anim.fade_in, animResPopOut = android.R.anim.fade_out;
+	private int animResPushIn = android.R.anim.fade_in,
+			animResPushOut = android.R.anim.fade_out;
+	private int animResPopIn = android.R.anim.fade_in,
+			animResPopOut = android.R.anim.fade_out;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,9 +102,9 @@ public abstract class LFTabActivity extends LFActivity {
 		if (stacks.get(curTab).size() == 0) {
 			return;
 		}
-		stacks.get(curTab).lastElement().onActivityResult(requestCode, requestCode, data);
+		stacks.get(curTab).lastElement()
+				.onActivityResult(requestCode, requestCode, data);
 	}
-
 
 	/**
 	 * This is a helper class that implements a generic mechanism for
@@ -155,7 +157,7 @@ public abstract class LFTabActivity extends LFActivity {
 		}
 
 		public TabManager(LFTabActivity activity, TabHost tabHost,
-		                  int mContainerId) {
+				int mContainerId) {
 			mActivity = activity;
 			mTabHost = tabHost;
 			this.mContainerId = mContainerId;
@@ -168,8 +170,8 @@ public abstract class LFTabActivity extends LFActivity {
 
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager()
-					.findFragmentByTag(tag);
+			info.fragment = mActivity.getFragmentManager().findFragmentByTag(
+					tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
 				FragmentTransaction ft = mActivity.getFragmentManager()
 						.beginTransaction();
@@ -182,14 +184,14 @@ public abstract class LFTabActivity extends LFActivity {
 		}
 
 		public void addInvisibleTab(TabHost.TabSpec tabSpec, Class<?> clss,
-		                            Bundle args, int childID) {
+				Bundle args, int childID) {
 			tabSpec.setContent(new DummyTabFactory(mActivity));
 			String tag = tabSpec.getTag();
 			TabWidget tabWidget = mTabHost.getTabWidget();
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager()
-					.findFragmentByTag(tag);
+			info.fragment = mActivity.getFragmentManager().findFragmentByTag(
+					tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
 				FragmentTransaction ft = mActivity.getFragmentManager()
 						.beginTransaction();

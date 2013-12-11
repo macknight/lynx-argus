@@ -19,9 +19,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-17 上午1:33
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-17 上午1:33
  */
 public class PluginManager {
 	private static final String Tag = "pluginManager";
@@ -38,7 +39,8 @@ public class PluginManager {
 
 	public PluginManager() {
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service("http");
+		this.httpService = (HttpService) LFApplication.instance().service(
+				"http");
 
 		File tmp = new File(context.getFilesDir(), PREFIX);
 		if (!tmp.exists()) {
@@ -48,7 +50,6 @@ public class PluginManager {
 		loadLocalPlugins();
 		updateCheck();
 	}
-
 
 	private HttpCallback<Object> callback = new HttpCallback<Object>() {
 		@Override
@@ -66,8 +67,8 @@ public class PluginManager {
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
-								jaPlugin.getJSONObject(i));
+						Plugin plugin = (Plugin) DexUtil.json2dexModule(
+								DexType.PLUGIN, jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -89,8 +90,8 @@ public class PluginManager {
 		@Override
 		public void onStatusChanged(DexModule dexModule, int status) {
 			switch (status) {
-				case DexModuleListener.DEX_INSTALL_FAIL:
-					removePluginLoader((Plugin) dexModule, null);
+			case DexModuleListener.DEX_INSTALL_FAIL:
+				removePluginLoader((Plugin) dexModule, null);
 			}
 		}
 	};
@@ -106,8 +107,8 @@ public class PluginManager {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
 		param.put("apps", localPlugins());
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_PLUGIN_CONFIG),
-				param, callback);
+		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN,
+				LM_API_PLUGIN_CONFIG), param, callback);
 	}
 
 	public Map<String, PluginLoader> pluginLoaders() {
@@ -158,11 +159,13 @@ public class PluginManager {
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.remove(plugin.module());
 			if (listener != null) {
-				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_SUCCESS);
+				listener.onStatusChanged(plugin,
+						DexModuleListener.DEX_UNINSTALL_SUCCESS);
 			}
 		} catch (Exception e) {
 			if (listener != null) {
-				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_FAIL);
+				listener.onStatusChanged(plugin,
+						DexModuleListener.DEX_UNINSTALL_FAIL);
 			}
 		}
 	}
@@ -223,12 +226,12 @@ public class PluginManager {
 			plugins = String.format("%s|%s", plugins, key);
 		}
 		return plugins.length() > 1 ? plugins.substring(1) : null;
-//        return "local";
+		// return "local";
 	}
 
 	/**
 	 * 将配置文件保存到本地
-	 *
+	 * 
 	 * @param data
 	 * @throws Exception
 	 */

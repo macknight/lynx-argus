@@ -10,10 +10,10 @@ import com.lynx.argus.R;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-11
- * Time: 下午5:11
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-11 下午5:11
  */
 public class GroupListAdapter extends BaseAdapter {
 	private Context context;
@@ -28,7 +28,6 @@ public class GroupListAdapter extends BaseAdapter {
 		this.data = data;
 		notifyDataSetChanged();
 	}
-
 
 	@Override
 	public int getCount() {
@@ -52,11 +51,13 @@ public class GroupListAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			if (data.get(position).isHeader()) {
-				view = View.inflate(context, R.layout.layout_more_groupheader, null);
+				view = View.inflate(context, R.layout.layout_more_groupheader,
+						null);
 			} else {
 				view = View.inflate(context, R.layout.layout_more_item, null);
 			}
-			holder.tvTitle = (TextView) view.findViewById(R.id.tv_more_item_title);
+			holder.tvTitle = (TextView) view
+					.findViewById(R.id.tv_more_item_title);
 			view.setTag(holder);
 		} else {
 			view = convertView;

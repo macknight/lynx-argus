@@ -1,9 +1,10 @@
 package com.lynx.lib.core.dex;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-17 上午12:37
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-17 上午12:37
  */
 public class DexModule {
 	public static final String K_MODULE = "module"; // 模块名
@@ -13,7 +14,6 @@ public class DexModule {
 	public static final String K_DESC = "desc"; // module描述
 	public static final String K_CLAZZ = "clazz"; // 入口类名
 
-
 	private String module; // 模块名
 	private int version = -1; // 版本号
 	private String url;
@@ -21,9 +21,8 @@ public class DexModule {
 	private String desc; // 动态模块描述
 	private String clazz; // 入口类名
 
-
-	public DexModule(String module, int version, String url,
-	                 String md5, String desc, String clazz) {
+	public DexModule(String module, int version, String url, String md5,
+			String desc, String clazz) {
 		this.module = module;
 		this.version = version;
 		this.url = url;

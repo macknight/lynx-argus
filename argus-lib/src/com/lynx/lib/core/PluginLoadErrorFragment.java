@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 /**
  * UI模块动态加载失败提示fragment
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris
- * Date: 13-10-18 下午1:32
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-26 下午3:23
  */
 public class PluginLoadErrorFragment extends LFFragment {
 	private static final String Tag = "PluginLoadErrorFragment";
@@ -25,17 +25,20 @@ public class PluginLoadErrorFragment extends LFFragment {
 	private String message; // 加载失败提示
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		Context context = inflater.getContext();
 		AssetManager am = context.getAssets();
 
 		ViewGroup view = new RelativeLayout(context);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+				ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT);
 		view.setLayoutParams(params);
 
 		ImageView iv = new ImageView(context);
-		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+		params = new RelativeLayout.LayoutParams(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.setMargins(50, 0, 0, 50);
@@ -49,7 +52,8 @@ public class PluginLoadErrorFragment extends LFFragment {
 		view.addView(iv);
 
 		TextView tv = new TextView(context);
-		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+		params = new RelativeLayout.LayoutParams(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);

@@ -10,55 +10,57 @@ import com.lynx.service.geo.impl1v1.GeoServiceImpl;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/29/13 11:16 AM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-13 下午11:16
  */
 public class GeoServiceDexLoader extends ServiceLoader {
 
-    public static final String Tag = "geo";
+	public static final String Tag = "geo";
 
-    private List<LocationListener> listeners = null;
+	private List<LocationListener> listeners = null;
 
-    private static DexModule defModule = new DexModule("geo", 1, null, null, "地理位置信息服务",
-            "com.lynx.service.geo.impl1v1.GeoServiceImpl");
+	private static DexModule defModule = new DexModule("geo", 1, null, null,
+			"地理位置信息服务", "com.lynx.service.geo.impl1v1.GeoServiceImpl");
 
-    public GeoServiceDexLoader() throws Exception {
-        super(defModule, GeoServiceImpl.class);
-    }
+	public GeoServiceDexLoader() throws Exception {
+		super(defModule, GeoServiceImpl.class);
+	}
 
-    @Override
-    protected void beforeLoad() {
-        GeoService geoService = (GeoService) service;
-        listeners = geoService.listeners();
-        if (geoService != null) {
-            geoService.stop();
-        }
-    }
+	@Override
+	protected void beforeLoad() {
+		GeoService geoService = (GeoService) service;
+		listeners = geoService.listeners();
+		if (geoService != null) {
+			geoService.stop();
+		}
+	}
 
-    @Override
-    protected void loadService() {
-        try {
-            if (clazz != null) {
-                service = (GeoService) clazz.getConstructor(Context.class).newInstance(context);
-            }
+	@Override
+	protected void loadService() {
+		try {
+			if (clazz != null) {
+				service = (GeoService) clazz.getConstructor(Context.class)
+						.newInstance(context);
+			}
 
-            if (service == null) {
-                service = new GeoServiceImpl(context);
-            }
+			if (service == null) {
+				service = new GeoServiceImpl(context);
+			}
 
-            if (service != null && listeners != null && listeners.size() > 0) {
-                for (LocationListener listener : listeners) {
-                    ((GeoService) service).addListener(listener);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			if (service != null && listeners != null && listeners.size() > 0) {
+				for (LocationListener listener : listeners) {
+					((GeoService) service).addListener(listener);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    protected void afterLoad() {
-        service.start();
-    }
+	@Override
+	protected void afterLoad() {
+		service.start();
+	}
 }

@@ -5,18 +5,20 @@ import android.widget.ListAdapter;
 import com.lynx.argus.R;
 
 /**
- * ListAdapter that adds sliding functionality to a list.
- * Uses R.id.expandalbe_toggle_button and R.id.expandable id's if no
- * ids are given in the contructor.
- *
+ * ListAdapter that adds sliding functionality to a list. Uses
+ * R.id.expandalbe_toggle_button and R.id.expandable id's if no ids are given in
+ * the contructor.
+ * 
  * @author tjerk
  * @date 6/13/12 8:04 AM
  */
-public class SlideExpandableListAdapter extends AbstractSlideExpandableListAdapter {
+public class SlideExpandableListAdapter extends
+		AbstractSlideExpandableListAdapter {
 	private int toggleViewId;
 	private int expandableViewId;
 
-	public SlideExpandableListAdapter(ListAdapter wrapped, int toggleViewId, int expandableViewId) {
+	public SlideExpandableListAdapter(ListAdapter wrapped, int toggleViewId,
+			int expandableViewId) {
 		super(wrapped);
 		this.toggleViewId = toggleViewId;
 		this.expandableViewId = expandableViewId;

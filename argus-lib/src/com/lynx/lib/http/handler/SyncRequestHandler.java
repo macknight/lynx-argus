@@ -1,20 +1,19 @@
 package com.lynx.lib.http.handler;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.AbstractHttpClient;
 import org.apache.http.protocol.HttpContext;
 
+import java.io.IOException;
+import java.net.UnknownHostException;
+
 /**
  * 
- * @author chris.liu
- * @name SyncRequestHandler.java
- * @update 2013-4-17 下午11:04:58
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午11:04:58
  */
 public class SyncRequestHandler {
 	private final AbstractHttpClient client;

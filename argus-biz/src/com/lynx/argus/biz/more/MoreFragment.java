@@ -16,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by chris.liu
- * Created at 13-10-27-下午9:29.
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-27 下午9:29
  */
 public class MoreFragment extends BizFragment {
 	public static final String Tag = "More";
@@ -44,7 +46,8 @@ public class MoreFragment extends BizFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		Log.d("chris", "onCreateView");
 		View v = inflater.inflate(R.layout.layout_more, container, false);
 		listview = (ListView) v.findViewById(R.id.lv_more_idx);

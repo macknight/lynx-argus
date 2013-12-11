@@ -1,9 +1,10 @@
 package com.lynx.lib.core;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-10-6 下午8:26
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-6 下午8:26
  */
 public class Const {
 

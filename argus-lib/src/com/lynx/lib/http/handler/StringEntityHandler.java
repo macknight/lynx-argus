@@ -1,17 +1,16 @@
 package com.lynx.lib.http.handler;
 
+import org.apache.http.HttpEntity;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.http.HttpEntity;
-
 /**
  * 
- * @author chris.liu
- * @name StringEntityHandler.java
- * @update 2013-4-17 下午10:51:03
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午10:51:03
  */
 public class StringEntityHandler {
 	public Object handleEntity(HttpEntity entity, EntityCallback callback,

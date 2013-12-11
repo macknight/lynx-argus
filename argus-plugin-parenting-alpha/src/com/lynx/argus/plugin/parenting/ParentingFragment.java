@@ -10,10 +10,10 @@ import com.lynx.lib.core.LFFragment;
 
 /**
  * 亲子
- * <p/>
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-19 下午11:13
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-22 下午4:29
  */
 public class ParentingFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";
@@ -22,14 +22,18 @@ public class ParentingFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.animator.slide_in_left,
+				R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right,
+				R.animator.slide_out_left);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.layout_parenting, container, false);
-		Button btn = (Button)view.findViewById(R.id.btn_campaign);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.layout_parenting, container,
+				false);
+		Button btn = (Button) view.findViewById(R.id.btn_campaign);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -38,7 +42,7 @@ public class ParentingFragment extends LFFragment {
 			}
 		});
 
-		btn = (Button)view.findViewById(R.id.btn_shop);
+		btn = (Button) view.findViewById(R.id.btn_shop);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

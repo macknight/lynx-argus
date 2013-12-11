@@ -11,10 +11,10 @@ import android.widget.TabHost;
 import java.util.HashMap;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-25
- * Time: 下午2:35
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-11-25 下午2:35
  */
 public class LFFragmentTabActivity extends LFActivity {
 	private static final String Tag = "LFFragmentTabActivity";
@@ -45,13 +45,14 @@ public class LFFragmentTabActivity extends LFActivity {
 	}
 
 	public void addTab(String title, int indicatorView, Class<?> clazz,
-	                   Bundle args) {
+			Bundle args) {
 		if (title == null) {
 			throw new IllegalArgumentException("title cann't be null!");
 		}
 
-//		TabHost.TabSpec tabSpec = mTabHost.newTabSpec(title).setIndicator(new LabelAndIconIndicatorStrategy());
-//		mTabManager.addTab(tabSpec, clazz, args);
+		// TabHost.TabSpec tabSpec = mTabHost.newTabSpec(title).setIndicator(new
+		// LabelAndIconIndicatorStrategy());
+		// mTabManager.addTab(tabSpec, clazz, args);
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public class LFFragmentTabActivity extends LFActivity {
 		}
 
 		public TabManager(LFFragmentTabActivity activity, TabHost tabHost,
-		                  int containerId) {
+				int containerId) {
 			mActivity = activity;
 			mTabHost = tabHost;
 			mContainerId = containerId;
@@ -140,8 +141,8 @@ public class LFFragmentTabActivity extends LFActivity {
 			// Check to see if we already have a fragment for this tab, probably
 			// from a previously saved state. If so, deactivate it, because our
 			// initial state is that a tab isn't shown.
-			info.fragment = mActivity.getFragmentManager()
-					.findFragmentByTag(tag);
+			info.fragment = mActivity.getFragmentManager().findFragmentByTag(
+					tag);
 			if (info.fragment != null && !info.fragment.isHidden()) {
 				FragmentTransaction ft = mActivity.getFragmentManager()
 						.beginTransaction();
@@ -184,8 +185,7 @@ public class LFFragmentTabActivity extends LFActivity {
 
 				mLastTab = newTab;
 				ft.commitAllowingStateLoss();
-				mActivity.getFragmentManager()
-						.executePendingTransactions();
+				mActivity.getFragmentManager().executePendingTransactions();
 			}
 			mActivity.onTabChanged(tabId);
 		}

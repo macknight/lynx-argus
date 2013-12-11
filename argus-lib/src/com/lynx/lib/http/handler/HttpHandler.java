@@ -18,11 +18,9 @@ import java.net.UnknownHostException;
 
 /**
  * 
- * @author chris.liu
- * @name HttpHandler.java
- * @update 2013-4-17 下午10:51:12
- * @param <T>
+ * @author zhufeng.liu
  * 
+ * @addtime 2013-4-17 下午10:51:12
  */
 public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 		EntityCallback {

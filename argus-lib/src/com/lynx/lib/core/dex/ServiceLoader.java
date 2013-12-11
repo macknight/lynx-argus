@@ -4,9 +4,10 @@ import com.lynx.lib.core.Logger;
 import dalvik.system.DexClassLoader;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/30/13 11:29 AM
+ *
+ * @author zhufeng.liu
+ *
+ * @addtime 13-8-30 下午11:29
  */
 public abstract class ServiceLoader extends DexModuleLoader {
 	protected Class<?> clazz;

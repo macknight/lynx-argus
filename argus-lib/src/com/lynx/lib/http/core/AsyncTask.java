@@ -11,13 +11,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 
- * @author chris.liu
- * @name AsyncTask.java
- * @update 2013-4-17 下午10:52:04
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-27 下午5:52
  * @param <Params>
  * @param <Progress>
  * @param <Result>
- * 
  */
 public abstract class AsyncTask<Params, Progress, Result> {
 	private static final String LOG_TAG = "AsyncTask";

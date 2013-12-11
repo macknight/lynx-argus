@@ -12,9 +12,10 @@ import com.lynx.lib.core.dex.PluginLoader;
 import dalvik.system.DexClassLoader;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 9/30/13 10:10 AM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-30 上午10:10
  */
 public class LFDexActivity extends LFNavigationActivity {
 	private static final String Tag = "LFDexActivity";
@@ -70,8 +71,8 @@ public class LFDexActivity extends LFNavigationActivity {
 			dexAssetManager = am;
 
 			Resources superRes = super.getResources();
-			dexResources = new Resources(getAssets(), superRes.getDisplayMetrics(),
-					superRes.getConfiguration());
+			dexResources = new Resources(getAssets(),
+					superRes.getDisplayMetrics(), superRes.getConfiguration());
 
 			dexTheme = dexResources.newTheme();
 			dexTheme.setTo(super.getTheme());
@@ -83,7 +84,8 @@ public class LFDexActivity extends LFNavigationActivity {
 
 			DexModule dexModule = moduleLoader.dexModule();
 			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
-				LFFragment f = (LFFragment) getClassLoader().loadClass(dexModule.clazz()).newInstance();
+				LFFragment f = (LFFragment) getClassLoader().loadClass(
+						dexModule.clazz()).newInstance();
 				pushFragment(f, true, true);
 			}
 		} catch (Throwable e) {

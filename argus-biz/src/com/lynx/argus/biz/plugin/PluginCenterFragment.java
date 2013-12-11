@@ -23,9 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-9-12 下午6:18
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-9-12 下午6:18
  */
 public class PluginCenterFragment extends BizFragment {
 	public static final String Tag = "plugin";
@@ -51,15 +52,18 @@ public class PluginCenterFragment extends BizFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_plugincenter, container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		View v = inflater.inflate(R.layout.layout_plugincenter, container,
+				false);
 
 		gvPlugin = (GridView) v.findViewById(R.id.gv_plugincenter);
 
 		gvPlugin.setOnItemClickListener(onItemClickListener);
 		gvPlugin.setAdapter(adapter);
 
-		ImageButton ibStore = (ImageButton) v.findViewById(R.id.ib_plugincenter_store);
+		ImageButton ibStore = (ImageButton) v
+				.findViewById(R.id.ib_plugincenter_store);
 		ibStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -79,7 +83,8 @@ public class PluginCenterFragment extends BizFragment {
 
 	private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
 			Plugin plugin = plugins.get(position);
 			if (position == 0) {
 				ShopListFragment slf = new ShopListFragment();
@@ -99,23 +104,23 @@ public class PluginCenterFragment extends BizFragment {
 
 		@Override
 		public boolean interested(int msg) {
-			return DexModuleListener.DEX_INSTALL_SUCCESS == msg ||
-					DexModuleListener.DEX_INSTALL_FAIL == msg ||
-					DexModuleListener.DEX_UNINSTALL_SUCCESS == msg ||
-					DexModuleListener.DEX_UNINSTALL_FAIL == msg;
+			return DexModuleListener.DEX_INSTALL_SUCCESS == msg
+					|| DexModuleListener.DEX_INSTALL_FAIL == msg
+					|| DexModuleListener.DEX_UNINSTALL_SUCCESS == msg
+					|| DexModuleListener.DEX_UNINSTALL_FAIL == msg;
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-				case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
-				case DexModuleListener.DEX_DOWNLOAD_FAIL:
-				case DexModuleListener.DEX_INSTALL_SUCCESS:
-				case DexModuleListener.DEX_INSTALL_FAIL:
-				case DexModuleListener.DEX_UNINSTALL_SUCCESS:
-				case DexModuleListener.DEX_UNINSTALL_FAIL:
-					loadMyPlugins();
-					break;
+			case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
+			case DexModuleListener.DEX_DOWNLOAD_FAIL:
+			case DexModuleListener.DEX_INSTALL_SUCCESS:
+			case DexModuleListener.DEX_INSTALL_FAIL:
+			case DexModuleListener.DEX_UNINSTALL_SUCCESS:
+			case DexModuleListener.DEX_UNINSTALL_FAIL:
+				loadMyPlugins();
+				break;
 			}
 		}
 	};
@@ -132,7 +137,8 @@ public class PluginCenterFragment extends BizFragment {
 		}
 
 		for (String key : application.pluginLoaders().keySet()) {
-			plugins.add((Plugin) application.pluginLoaders().get(key).dexModule());
+			plugins.add((Plugin) application.pluginLoaders().get(key)
+					.dexModule());
 		}
 	}
 }

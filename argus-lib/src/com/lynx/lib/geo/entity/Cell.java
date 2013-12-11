@@ -3,14 +3,15 @@ package com.lynx.lib.geo.entity;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/27/13 5:53 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-27 下午5:53
  */
 public interface Cell extends Serializable {
-    CellType type();
+	CellType type();
 
-    public enum CellType {
-        GSM, CDMA, UNKNWON;
-    }
+	public enum CellType {
+		GSM, CDMA, UNKNWON;
+	}
 }

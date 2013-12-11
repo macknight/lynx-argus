@@ -8,8 +8,10 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 
 /**
- * Created by chris.liu
- * Created at 13-10-27-下午9:29.
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-10-27-下午9:29.
  */
 public class MyFragment extends BizFragment {
 
@@ -18,10 +20,12 @@ public class MyFragment extends BizFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_my, container, false);
 		return v;
 	}

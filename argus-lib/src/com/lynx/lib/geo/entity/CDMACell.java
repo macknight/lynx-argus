@@ -1,9 +1,10 @@
 package com.lynx.lib.geo.entity;
 
 /**
- * Created with IntelliJ IDEA.
- * User: zhufeng.liu
- * Date: 8/27/13 5:52 PM
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-8-27 下午5:52
  */
 public class CDMACell implements Cell {
 	private int mcc; // mobile country code
