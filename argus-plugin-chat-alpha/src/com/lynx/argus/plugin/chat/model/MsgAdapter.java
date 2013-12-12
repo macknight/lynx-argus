@@ -7,6 +7,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.lynx.argus.plugin.chat.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,10 +20,18 @@ import java.util.List;
 public class MsgAdapter extends BaseAdapter {
 	private Context context;
 	private List<Msg> data;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yy-mm-dd");
 
 	public MsgAdapter(Context context, List<Msg> data) {
 		this.context = context;
 		this.data = data;
+	}
+
+	public void addMsg(Msg msg) {
+		if (data != null) {
+			data.add(msg);
+			notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -62,7 +72,7 @@ public class MsgAdapter extends BaseAdapter {
 		}
 
 		holder.tvContent.setText("" + msg.content());
-		holder.tvDate.setText("" + msg.date());
+		holder.tvDate.setText(sdf.format(new Date(msg.date())));
 		return view;
 	}
 

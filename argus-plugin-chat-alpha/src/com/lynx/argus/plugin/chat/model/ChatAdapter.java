@@ -8,6 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.plugin.chat.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,10 +21,18 @@ import java.util.List;
 public class ChatAdapter extends BaseAdapter {
 	private Context context;
 	private List<ChatListItem> data;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yy-mm-dd");
 
 	public ChatAdapter(Context context, List<ChatListItem> data) {
 		this.context = context;
 		this.data = data;
+	}
+
+	public void addChat(ChatListItem chat) {
+		if (data != null) {
+			data.add(chat);
+			notifyDataSetChanged();
+		}
 	}
 
 	@Override
@@ -64,7 +74,7 @@ public class ChatAdapter extends BaseAdapter {
 
 		holder.tvFrom.setText("" + item.from());
 		holder.tvSummary.setText("" + item.summary());
-		holder.tvDate.setText("" + item.date());
+		holder.tvDate.setText(sdf.format(new Date(item.date())));
 		return view;
 	}
 
