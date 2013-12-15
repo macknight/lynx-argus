@@ -126,7 +126,7 @@ public class ShopListFragment extends LFFragment {
 							Bundle bundle = new Bundle();
 							bundle.putString("uid", shop.getUid());
 							sdf.setArguments(bundle);
-							navActivity.pushFragment(sdf, true, true);
+							navActivity.pushFragment(sdf);
 						} else {
 							Toast.makeText(navActivity, "未能正常获得商户信息",
 									Toast.LENGTH_SHORT).show();

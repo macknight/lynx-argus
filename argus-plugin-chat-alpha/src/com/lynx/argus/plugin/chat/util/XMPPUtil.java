@@ -5,20 +5,28 @@ import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 
 /**
- * Created by chris.liu Date: 13-12-12 下午9:20
+ * 
+ * @author zhufeng.liu
+ * 
+ * @addtime 13-12-12 下午9:20
  */
 public class XMPPUtil {
 	private static XMPPConnection conn = null;
 
 	private static void openConnection() {
-		try {
-			ConnectionConfiguration connConfig = new ConnectionConfiguration(
-					"192.168.0.102", 9091);
-			conn = new XMPPConnection(connConfig);
-			conn.connect();
-		} catch (XMPPException xe) {
-			xe.printStackTrace();
-		}
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					ConnectionConfiguration connConfig = new ConnectionConfiguration(
+							"192.168.0.102", 5222);
+					conn = new XMPPConnection(connConfig);
+					conn.connect();
+				} catch (XMPPException xe) {
+					xe.printStackTrace();
+				}
+			}
+		}).start();
 	}
 
 	public static XMPPConnection getConnection() {
@@ -29,7 +37,9 @@ public class XMPPUtil {
 	}
 
 	public static void closeConnection() {
-		conn.disconnect();
-		conn = null;
+		if (conn != null) {
+			conn.disconnect();
+			conn = null;
+		}
 	}
 }

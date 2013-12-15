@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
-                android:layout_height="80dp">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp">
 	<RelativeLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_margin="5dp"
+			android:layout_marginTop="5dp"
+			android:layout_marginLeft="30dp"
+			android:layout_marginRight="5dp"
+			android:layout_marginBottom="5dp"
 			android:background="@drawable/selector_msg_to"
 			android:layout_toLeftOf="@+id/iv_msg_item_avatar"
 			android:orientation="vertical">
@@ -13,29 +18,31 @@
 				android:id="@+id/tv_msg_item_content"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_centerInParent="true"
+				android:layout_alignParentRight="true"
+				android:layout_centerVertical="true"
+				android:paddingBottom="5dp"
 				android:gravity="center"
 				android:textColor="#FF000000"
-				android:textSize="18sp"
-				android:text="hello world"/>
+				android:textSize="18sp"/>
 		<TextView
 				android:id="@+id/tv_msg_item_date"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_marginLeft="5.0dp"
+				android:layout_below="@+id/tv_msg_item_content"
+				android:layout_alignParentRight="true"
+				android:layout_marginTop="10dp"
+				android:layout_marginRight="5dp"
+				android:paddingBottom="2dp"
 				android:textColor="#FF666666"
-				android:textSize="10sp"
-				android:layout_alignParentBottom="true"
-				android:text="2013-12-30 12:45:43"/>
+				android:textSize="10sp"/>
 	</RelativeLayout>
 
 	<ImageView
 			android:id="@+id/iv_msg_item_avatar"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_width="45dp"
+			android:layout_height="45dp"
 			android:layout_margin="5dp"
 			android:layout_alignParentRight="true"
-			android:layout_centerVertical="true"
 			android:contentDescription="@null"
 			android:src="@drawable/default_avatar_shadow"/>
 </RelativeLayout>

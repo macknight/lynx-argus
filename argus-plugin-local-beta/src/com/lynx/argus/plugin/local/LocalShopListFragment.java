@@ -125,7 +125,7 @@ public class LocalShopListFragment extends LFFragment {
 						Bundle bundle = new Bundle();
 						bundle.putString("uid", shop.getUid());
 						sdf.setArguments(bundle);
-						navActivity.pushFragment(sdf, true, true);
+						navActivity.pushFragment(sdf);
 					}
 				});
 

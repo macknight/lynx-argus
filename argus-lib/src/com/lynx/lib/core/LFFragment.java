@@ -26,6 +26,14 @@ public abstract class LFFragment extends Fragment {
 		}
 	}
 
+	public boolean shouldAdd() {
+		return true;
+	}
+
+	public boolean shouldAnimate() {
+		return true;
+	}
+
 	public abstract boolean onBackPressed();
 
 	public abstract void onActivityResult(int requestCode, int resultCode,

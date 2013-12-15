@@ -30,6 +30,10 @@ public class ChatListFragment extends LFFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		final String account = getArguments().getString("account");
+
+		chatlist.clear();
 		chatAdapter = new ChatAdapter(navActivity, chatlist);
 		View v = inflater.inflate(R.layout.layout_chatlist, container, false);
 		ListView lvChat = (ListView) v.findViewById(R.id.lv_chats);
@@ -39,7 +43,10 @@ public class ChatListFragment extends LFFragment {
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long id) {
 				ChatFragment chatFragment = new ChatFragment();
-				navActivity.pushFragment(chatFragment, true, true);
+				Bundle bundle = new Bundle();
+				bundle.putString("account", account);
+				chatFragment.setArguments(bundle);
+				navActivity.pushFragment(chatFragment);
 			}
 		});
 		initData();

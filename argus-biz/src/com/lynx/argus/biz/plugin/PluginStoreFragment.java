@@ -176,8 +176,8 @@ public class PluginStoreFragment extends BizFragment {
 			setWidth(dm.widthPixels * 9 / 10);
 			setHeight(dm.heightPixels * 1 / 3);
 
-			setFocusable(false);
-			setOutsideTouchable(true);
+			setFocusable(true);
+			setOutsideTouchable(false);
 			setBackgroundDrawable(getResources().getDrawable(
 					R.drawable.shape_round_bg));
 

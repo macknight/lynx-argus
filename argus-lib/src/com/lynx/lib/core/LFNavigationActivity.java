@@ -3,8 +3,11 @@ package com.lynx.lib.core;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 
 import java.util.Stack;
 
@@ -38,17 +41,17 @@ public abstract class LFNavigationActivity extends LFActivity {
 		animResPopOut = resOut;
 	}
 
-	public void pushFragment(LFFragment fragment, boolean shouldAnimate,
-			boolean shouldAdd) {
+	public void pushFragment(LFFragment fragment) {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		if (shouldAnimate) {
+		if (fragment.shouldAnimate()) {
 			if (animResPopIn != -1 && animResPushOut != -1) {
 				ft.setCustomAnimations(animResPushIn, animResPushOut);
 			}
 		}
-
-		stack.push(fragment);
+		if (fragment.shouldAdd()) {
+			stack.push(fragment);
+		}
 		ft.replace(resContent, fragment);
 
 		ft.commit();
@@ -68,6 +71,21 @@ public abstract class LFNavigationActivity extends LFActivity {
 		ft.replace(resContent, fragment);
 
 		ft.commit();
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			if (getCurrentFocus() != null) {
+				if (getCurrentFocus().getWindowToken() != null) {
+					imm.hideSoftInputFromWindow(getCurrentFocus()
+							.getWindowToken(),
+							InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+			}
+		}
+		return super.onTouchEvent(event);
 	}
 
 	@Override

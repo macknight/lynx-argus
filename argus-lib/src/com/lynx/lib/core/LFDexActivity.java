@@ -86,7 +86,7 @@ public class LFDexActivity extends LFNavigationActivity {
 			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
 				LFFragment f = (LFFragment) getClassLoader().loadClass(
 						dexModule.clazz()).newInstance();
-				pushFragment(f, true, true);
+				pushFragment(f);
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -96,7 +96,7 @@ public class LFDexActivity extends LFNavigationActivity {
 			super.onCreate(savedInstanceState);
 
 			LFFragment f = new PluginLoadErrorFragment();
-			pushFragment(f, true, true);
+			pushFragment(f);
 		}
 	}
 

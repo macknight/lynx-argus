@@ -54,4 +54,12 @@
 		<item name="android:windowExitAnimation">@anim/anim_fade_out</item>
 	</style>
 
+	<style name="loading_dialog" parent="android:style/Theme.Dialog">
+		<item name="android:windowFrame">@null</item>
+		<item name="android:windowNoTitle">true</item>
+		<item name="android:windowBackground">@drawable/shape_round_bg</item>
+		<item name="android:windowIsFloating">true</item>
+		<item name="android:windowContentOverlay">@null</item>
+	</style>
+
 </resources>

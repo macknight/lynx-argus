@@ -38,7 +38,7 @@ public class ParentingFragment extends LFFragment {
 			@Override
 			public void onClick(View view) {
 				CampaignListFragment cf = new CampaignListFragment();
-				navActivity.pushFragment(cf, true, true);
+				navActivity.pushFragment(cf);
 			}
 		});
 
@@ -47,7 +47,7 @@ public class ParentingFragment extends LFFragment {
 			@Override
 			public void onClick(View view) {
 				ShopListFragment slf = new ShopListFragment();
-				navActivity.pushFragment(slf, true, true);
+				navActivity.pushFragment(slf);
 			}
 		});
 		return view;

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import com.lynx.argus.plugin.chat.model.Msg;
 import com.lynx.argus.plugin.chat.model.MsgAdapter;
 import com.lynx.argus.plugin.chat.util.XMPPUtil;
@@ -31,13 +32,18 @@ import java.util.List;
 public class ChatFragment extends LFFragment {
 	private static final String LM_API_MSG = "/chat";
 
-	public static final int MSG_TEXT_RECEIVED_SUCCESS = 0;
+	public static final int MSG_RECEIVED_FAIL = 0;
+	public static final int MSG_TEXT_RECEIVED_SUCCESS = 1;
+	public static final int MSG_FILE_RECEIVED_SUCCESS = 2;
+	public static final int MSG_FILE_RECEIVED_FAIL = 3;
+	public static final int MSG_SEND_SUCCESS = 4;
+	public static final int MSG_SEND_FAIL = 5;
 
-	private static final String SERVER_NAME = "@xcjxmppserver";
+	private static final String SERVER_NAME = "@lynx";
 	private static final String XMPP_RESOURCES = "android";
 
-	private String fromUser = "lily";
-	private String uid = "chris";
+	private String fromUser = "chris";
+	private String account;
 
 	private ListView lvMsg;
 	private EditText etMsg;
@@ -47,9 +53,12 @@ public class ChatFragment extends LFFragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
+
+		account = getArguments().getString("account");
+
 		ChatManager cm = XMPPUtil.getConnection().getChatManager();
 		// 从会话管理实例中创建一个会话
-		final Chat chat = cm.createChat(fromUser + SERVER_NAME, null);
+		final Chat chat = cm.createChat(fromUser + SERVER_NAME, msgListener);
 		// 添加一个聊天的监听
 		cm.addChatListener(new ChatManagerListener() {
 			@Override
@@ -61,8 +70,9 @@ public class ChatFragment extends LFFragment {
 		msgAdapter = new MsgAdapter(navActivity, msgs);
 
 		View v = inflater.inflate(R.layout.layout_chat, container, false);
+		TextView tvTitle = (TextView) v.findViewById(R.id.tv_chat_title);
+		tvTitle.setText(fromUser);
 		lvMsg = (ListView) v.findViewById(R.id.lv_msg);
-		lvMsg.setTranscriptMode(ListView.TRANSCRIPT_MODE_ALWAYS_SCROLL);
 		lvMsg.setAdapter(msgAdapter);
 
 		etMsg = (EditText) v.findViewById(R.id.et_msg);
@@ -73,8 +83,17 @@ public class ChatFragment extends LFFragment {
 			public void onClick(View view) {
 				String content = etMsg.getText().toString();
 				if (content.length() > 0) {
-					Msg msg = new Msg(uid, content, new Date().getTime(), false);
-					msgAdapter.addMsg(msg);
+					try {
+						Msg chatMsg = new Msg(account, content, new Date().getTime(),
+								false);
+						chat.sendMessage(content);
+						android.os.Message msg = handler.obtainMessage();
+						msg.what = MSG_SEND_SUCCESS;
+						msg.obj = chatMsg;
+						msg.sendToTarget();
+					} catch (Exception e) {
+
+					}
 				}
 			}
 		});
@@ -84,19 +103,15 @@ public class ChatFragment extends LFFragment {
 	private MessageListener msgListener = new MessageListener() {
 		@Override
 		public void processMessage(Chat chat, Message message) {
-			if (message.getFrom().contains(fromUser)) {
-				try {
-					Msg chatMsg = new Msg(fromUser, message.getBody(),
-							new Date().getTime(), true);
-					android.os.Message msg = handler.obtainMessage();
-					msg.what = MSG_TEXT_RECEIVED_SUCCESS;
-					msg.obj = chatMsg;
-					msg.sendToTarget();
-				} catch (Exception e) {
-					Logger.w("chat", e);
-				}
-			} else {
-
+			try {
+				Msg chatMsg = new Msg(message.getFrom(), message.getBody(),
+						new Date().getTime(), true);
+				android.os.Message msg = handler.obtainMessage();
+				msg.what = MSG_TEXT_RECEIVED_SUCCESS;
+				msg.obj = chatMsg;
+				msg.sendToTarget();
+			} catch (Exception e) {
+				Logger.w("chat", e);
 			}
 		}
 	};
@@ -106,6 +121,9 @@ public class ChatFragment extends LFFragment {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case MSG_TEXT_RECEIVED_SUCCESS:
+				msgAdapter.addMsg((Msg) msg.obj);
+				break;
+			case MSG_SEND_SUCCESS:
 				msgAdapter.addMsg((Msg) msg.obj);
 				break;
 			}

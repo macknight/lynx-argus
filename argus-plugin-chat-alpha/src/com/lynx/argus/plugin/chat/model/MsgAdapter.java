@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.lynx.argus.plugin.chat.R;
 
 import java.text.SimpleDateFormat;
@@ -20,7 +21,7 @@ import java.util.List;
 public class MsgAdapter extends BaseAdapter {
 	private Context context;
 	private List<Msg> data;
-	private SimpleDateFormat sdf = new SimpleDateFormat("yy-mm-dd");
+	private SimpleDateFormat sdf = new SimpleDateFormat("mm-dd hh-MM");
 
 	public MsgAdapter(Context context, List<Msg> data) {
 		this.context = context;
@@ -54,6 +55,7 @@ public class MsgAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		Msg msg = data.get(position);
+		Toast.makeText(context, "from:" + msg.from(), Toast.LENGTH_SHORT).show();
 		if (convertView == null) {
 			if (msg.from()) {
 				view = View.inflate(context, R.layout.layout_msg_item_from,

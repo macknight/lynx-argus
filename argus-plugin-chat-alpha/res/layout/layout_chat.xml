@@ -4,16 +4,16 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-	<TextView android:id="@+id/tv_chat_title"
-	          android:layout_width="match_parent"
-	          android:layout_height="55dp"
-	          android:gravity="center"
-	          android:singleLine="true"
-	          android:ellipsize="end"
-	          android:textColor="@android:color/black"
-	          android:textSize="25sp"
-	          android:background="@drawable/camera_filter_bg"
-	          android:text="珍妮花"/>
+	<TextView
+			android:id="@+id/tv_chat_title"
+			android:layout_width="match_parent"
+			android:layout_height="45dp"
+			android:gravity="center"
+			android:singleLine="true"
+			android:ellipsize="end"
+			android:textColor="@android:color/black"
+			android:textSize="22sp"
+			android:background="@drawable/tool_bar"/>
 
 	<LinearLayout
 			android:layout_width="match_parent"
@@ -41,7 +41,7 @@
 	<LinearLayout
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
-			android:background="@drawable/camera_filter_bg">
+			android:background="@drawable/tool_bar">
 		<ImageButton
 				android:id="@+id/ib_chat_voice"
 				android:layout_width="wrap_content"
@@ -66,11 +66,12 @@
 				android:layout_gravity="center"
 				android:layout_weight="1.0"
 				android:inputType="textMultiLine"
+				style="@style/edittext_style"
 				android:text=""/>
 
 		<Button
 				android:id="@+id/btn_send"
-				android:layout_width="wrap_content"
+				android:layout_width="80dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="5dp"
 				android:background="@drawable/selector_btn_style_two"
