@@ -19,11 +19,11 @@ public class XMPPUtil {
 			public void run() {
 				try {
 					ConnectionConfiguration connConfig = new ConnectionConfiguration(
-							"192.168.0.102", 5222);
+							"192.168.0.100", 5222);
 					conn = new XMPPConnection(connConfig);
 					conn.connect();
-				} catch (XMPPException xe) {
-					xe.printStackTrace();
+				} catch (XMPPException e) {
+					closeConnection();
 				}
 			}
 		}).start();

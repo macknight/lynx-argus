@@ -50,6 +50,7 @@ public class LoginFragment extends LFFragment {
 					chatListFragment.setArguments(bundle);
 					navActivity.pushFragment(chatListFragment);
 				} catch (Exception e) {
+					e.printStackTrace();
 					XMPPUtil.closeConnection();
 				}
 			}

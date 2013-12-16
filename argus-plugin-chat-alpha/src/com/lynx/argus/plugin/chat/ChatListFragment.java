@@ -64,7 +64,16 @@ public class ChatListFragment extends LFFragment {
 	}
 
 	private void initData() {
-		ChatListItem chat = new ChatListItem("lily", "hello",
+		ChatListItem chat = new ChatListItem("珍妮花", "上海人民已阵亡",
+				new Date().getTime());
+		chatAdapter.addChat(chat);
+		chat = new ChatListItem("lily", "南京人民已阵亡",
+				new Date().getTime());
+		chatAdapter.addChat(chat);
+		chat = new ChatListItem("chris", "北京人民已阵亡",
+				new Date().getTime());
+		chatAdapter.addChat(chat);
+		chat = new ChatListItem("tom", "杭州人民已阵亡",
 				new Date().getTime());
 		chatAdapter.addChat(chat);
 	}

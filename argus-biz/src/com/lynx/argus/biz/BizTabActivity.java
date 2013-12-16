@@ -2,6 +2,7 @@ package com.lynx.argus.biz;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -34,6 +35,12 @@ public class BizTabActivity extends LFTabActivity {
 		sp = getSharedPreferences("biz", MODE_PRIVATE);
 		curTab = sp.getString("cur_tab", PluginCenterFragment.Tag);
 		tabHost.setCurrentTabByTag(curTab);
+
+		if (android.os.Build.VERSION.SDK_INT > 9) {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+					.permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+		}
 	}
 
 	@Override
