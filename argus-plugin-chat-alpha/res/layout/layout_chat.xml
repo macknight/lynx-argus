@@ -71,7 +71,7 @@
 
 		<Button
 				android:id="@+id/btn_send"
-				android:layout_width="80dp"
+				android:layout_width="60dp"
 				android:layout_height="wrap_content"
 				android:layout_margin="5dp"
 				android:background="@drawable/selector_btn_style_two"

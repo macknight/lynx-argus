@@ -11,7 +11,9 @@ import com.lynx.argus.plugin.chat.util.XMPPUtil;
 import com.lynx.lib.core.LFFragment;
 
 /**
+ * 
  * @author chris.liu
+ * 
  * @addtime 13-12-15 下午12:09
  */
 public class LoginFragment extends LFFragment {
@@ -50,6 +52,7 @@ public class LoginFragment extends LFFragment {
 					chatListFragment.setArguments(bundle);
 					navActivity.pushFragment(chatListFragment);
 				} catch (Exception e) {
+					e.printStackTrace();
 					XMPPUtil.closeConnection();
 				}
 			}
