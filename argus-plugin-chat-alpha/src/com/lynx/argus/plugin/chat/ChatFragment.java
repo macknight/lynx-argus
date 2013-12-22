@@ -27,6 +27,7 @@ import java.util.List;
 
 /**
  * @author zhufeng.liu
+ * 
  * @addtime 13-12-7 下午6:58
  */
 public class ChatFragment extends LFFragment {
@@ -84,8 +85,8 @@ public class ChatFragment extends LFFragment {
 				String content = etMsg.getText().toString();
 				if (content.length() > 0) {
 					try {
-						Msg chatMsg = new Msg(account, content, new Date().getTime(),
-								false);
+						Msg chatMsg = new Msg(account, content, new Date()
+								.getTime(), false);
 						chat.sendMessage(content);
 						android.os.Message msg = handler.obtainMessage();
 						msg.what = MSG_SEND_SUCCESS;

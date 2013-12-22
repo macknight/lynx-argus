@@ -42,21 +42,6 @@
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content"
 			android:background="@drawable/tool_bar">
-		<ImageButton
-				android:id="@+id/ib_chat_voice"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_margin="5dp"
-				android:background="@drawable/selector_chat_voice"/>
-		<ImageButton
-				android:id="@+id/ib_chat_emoji"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:layout_margin="5dp"
-				android:background="@drawable/selector_chat_emoji"
-				android:text="附加"/>
 
 		<EditText
 				android:id="@+id/et_msg"

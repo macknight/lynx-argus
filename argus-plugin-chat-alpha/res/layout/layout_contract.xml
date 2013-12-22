@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+
+    <ImageView 
+   		android:id="@+id/presence_mode"
+   		android:layout_width="wrap_content"
+   		android:layout_height="wrap_content"
+		android:paddingRight="15dp"
+		android:paddingTop="10dp" />
+
+	<TextView android:id="@+id/tv_contact_name"
+		android:textSize="14sp" 
+		android:textStyle="bold" 
+		android:textColor="#555555" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_toRightOf="@id/presence_mode"/>
+
+	<TextView android:id="@+id/tv_contact_id"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_below="@id/tv_contact_name"
+		android:layout_toRightOf="@id/presence_mode" />
+
+</RelativeLayout>
