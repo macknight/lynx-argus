@@ -2,6 +2,7 @@ package com.lynx.lib.core;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.os.Build;
 import com.lynx.lib.core.dex.DexManager;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
@@ -20,6 +21,8 @@ import java.util.Map;
 public abstract class LFApplication extends Application {
 
 	protected static LFApplication instance;
+	private static String did;
+	private static String ua;
 	private static HttpService httpService;
 	protected DexManager dexManager;
 
@@ -31,6 +34,12 @@ public abstract class LFApplication extends Application {
 	}
 
 	public LFApplication() {
+		String manufacturer = Build.MANUFACTURER;
+		String brand = Build.BRAND;
+		String model = Build.MODEL;
+		String ua = String.format("%s %s-%s", manufacturer, brand, model);
+
+		did = Build.DEVICE;
 		instance = this;
 	}
 
@@ -60,6 +69,24 @@ public abstract class LFApplication extends Application {
 	@Override
 	public void onTrimMemory(int level) {
 		super.onTrimMemory(level);
+	}
+
+	/**
+	 * user agent
+	 * 
+	 * @return
+	 */
+	public String userAgent() {
+		return ua;
+	}
+
+	/**
+	 * 设备唯一标识码，由wifi mac地址转义而成
+	 * 
+	 * @return
+	 */
+	public String deviceId() {
+		return did;
 	}
 
 	protected abstract void initDexManager();

@@ -21,6 +21,12 @@ import org.jivesoftware.smack.packet.Presence;
 
 import java.util.Collection;
 
+/**
+ *
+ * @author zhufeng.liu
+ *
+ * @addtime 13-12-23 下午1:20
+ */
 public class XMPPService extends Service {
 	private static final String TAG = "XMPPService";
 
@@ -43,7 +49,6 @@ public class XMPPService extends Service {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		// TODO: add login single instance.
 		connection = loginFragment.setConnection();
 		if (connection != null) {
 			// set connection handlers and listeners
