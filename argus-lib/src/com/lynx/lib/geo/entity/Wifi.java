@@ -19,33 +19,21 @@ public class Wifi implements Serializable {
 		this.dBm = dBm;
 	}
 
-	public void setSsid(String ssid) {
-		this.ssid = ssid;
-	}
-
-	public String getSsid() {
+	public String ssid() {
 		return this.ssid;
 	}
 
-	public void setMac(String mac) {
-		this.mac = mac;
-	}
-
-	public String getMac() {
+	public String mac() {
 		return this.mac;
 	}
 
-	public void setDBm(int dBm) {
-		this.dBm = dBm;
-	}
-
-	public int getDBm() {
+	public int dBm() {
 		return this.dBm;
 	}
 
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%d", this.ssid, this.mac, this.dBm);
+		return String.format("%s,%s,%s", this.ssid, this.mac, this.dBm);
 	}
 
 	@Override

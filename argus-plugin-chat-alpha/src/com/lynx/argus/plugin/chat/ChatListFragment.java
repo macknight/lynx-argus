@@ -28,7 +28,7 @@ public class ChatListFragment extends LFFragment {
 	private ChatAdapter chatAdapter;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		final String account = getArguments().getString("account");
@@ -67,14 +67,11 @@ public class ChatListFragment extends LFFragment {
 		ChatListItem chat = new ChatListItem("珍妮花", "上海人民已阵亡",
 				new Date().getTime());
 		chatAdapter.addChat(chat);
-		chat = new ChatListItem("lily", "南京人民已阵亡",
-				new Date().getTime());
+		chat = new ChatListItem("lily", "南京人民已阵亡", new Date().getTime());
 		chatAdapter.addChat(chat);
-		chat = new ChatListItem("chris", "北京人民已阵亡",
-				new Date().getTime());
+		chat = new ChatListItem("chris", "北京人民已阵亡", new Date().getTime());
 		chatAdapter.addChat(chat);
-		chat = new ChatListItem("tom", "杭州人民已阵亡",
-				new Date().getTime());
+		chat = new ChatListItem("tom", "杭州人民已阵亡", new Date().getTime());
 		chatAdapter.addChat(chat);
 	}
 }

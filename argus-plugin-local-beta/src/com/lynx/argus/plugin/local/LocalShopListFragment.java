@@ -86,7 +86,7 @@ public class LocalShopListFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_local_shoplist, container,
 				false);
@@ -230,10 +230,9 @@ public class LocalShopListFragment extends LFFragment {
 				Coord coord = geoService.coord();
 				String tip = "";
 				if (addr == null) {
-					tip = String
-							.format("%s,%s", coord.getLat(), coord.getLng());
+					tip = String.format("%s,%s", coord.lat(), coord.lng());
 				} else {
-					tip = addr.getStreet();
+					tip = addr.street();
 				}
 				tvLocAddr.setText(tip);
 				getLocalShop();
@@ -276,11 +275,10 @@ public class LocalShopListFragment extends LFFragment {
 		if (geoService.coord() != null) {
 			ivLocIndicator.setBackgroundResource(R.drawable.green_point);
 			if (geoService.address() != null) {
-				tvLocAddr.setText(geoService.address().getStreet());
+				tvLocAddr.setText(geoService.address().street());
 			} else {
-				String tip = String.format("%s,%s",
-						geoService.coord().getLat(), geoService.coord()
-								.getLng());
+				String tip = String.format("%s,%s", geoService.coord().lat(),
+						geoService.coord().lng());
 				tvLocAddr.setText(tip);
 			}
 		}
@@ -319,8 +317,8 @@ public class LocalShopListFragment extends LFFragment {
 				geoService.locate(false);
 				return;
 			} else {
-				double lat = geoService.coord().getLat();
-				double lng = geoService.coord().getLng();
+				double lat = geoService.coord().lat();
+				double lng = geoService.coord().lng();
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
 				params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
 				params.add(new BasicNameValuePair("output", "json"));

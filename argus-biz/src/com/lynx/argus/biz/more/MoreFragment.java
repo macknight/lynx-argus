@@ -46,7 +46,7 @@ public class MoreFragment extends BizFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		Log.d("chris", "onCreateView");
 		View v = inflater.inflate(R.layout.layout_more, container, false);

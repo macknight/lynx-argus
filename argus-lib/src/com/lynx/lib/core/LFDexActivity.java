@@ -2,7 +2,6 @@ package com.lynx.lib.core;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.ViewGroup;
@@ -43,14 +42,16 @@ public class LFDexActivity extends LFNavigationActivity {
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		rootView.setId(android.R.id.primary);
 		setContentView(rootView);
+		rootView.setBackgroundColor(0xffffeed7);
 
-		try {
-			AssetManager am = getAssets();
-			BitmapDrawable bg = new BitmapDrawable(null, am.open("bg.png"));
-			rootView.setBackground(bg);
-		} catch (Exception e) {
-			Logger.e(Tag, "load background error", e);
-		}
+		// set background from image in the jar resources
+		// try {
+		// AssetManager am = getAssets();
+		// BitmapDrawable bg = new BitmapDrawable(null, am.open("bg.png"));
+		// rootView.setBackground(bg);
+		// } catch (Exception e) {
+		// Logger.e(Tag, "load background error", e);
+		// }
 
 		try {
 			String module = getIntent().getStringExtra("module");
@@ -86,7 +87,9 @@ public class LFDexActivity extends LFNavigationActivity {
 			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
 				LFFragment f = (LFFragment) getClassLoader().loadClass(
 						dexModule.clazz()).newInstance();
-				pushFragment(f);
+				if (f != null) {
+					pushFragment(f);
+				}
 			}
 		} catch (Throwable e) {
 			e.printStackTrace();
@@ -126,4 +129,10 @@ public class LFDexActivity extends LFNavigationActivity {
 	public ClassLoader getClassLoader() {
 		return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
 	}
+
+    @Override
+    public void onBackPressed() {
+        rollback();
+        super.onBackPressed();
+    }
 }

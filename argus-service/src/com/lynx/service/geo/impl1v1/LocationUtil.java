@@ -13,6 +13,10 @@ import java.util.Date;
  */
 public class LocationUtil {
 
+	private LocationUtil() {
+		throw new AssertionError("this class shouldn't be instanced");
+	}
+
 	public static final SimpleDateFormat sdf = new SimpleDateFormat(
 			"yyyy-MM-dd-HH-mm-ss");
 	public static final double EARTH_RADIUS = 6371000;
@@ -22,8 +26,8 @@ public class LocationUtil {
 	}
 
 	public static double distanceTo(Coord coord1, Coord coord2) {
-		return distanceTo(coord1.getLat(), coord1.getLng(), coord2.getLat(),
-				coord2.getLng());
+		return distanceTo(coord1.lat(), coord1.lng(), coord2.lat(),
+				coord2.lng());
 	}
 
 	public static double distanceTo(double a, double b, double c, double d) {

@@ -1,7 +1,6 @@
 package com.lynx.service.geo.impl1v1;
 
 import android.content.Context;
-import com.lynx.lib.core.Logger;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.geo.entity.Address;
@@ -79,18 +78,7 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 
 	@Override
 	public Address address() {
-		String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? ""
-				: ("(impl1v1)");
-		Address addr = locationCenter.address();
-		if (addr == null) {
-			return null;
-		}
-
-		if (!addr.getStreet().contains(tip)) {
-			addr.setStreet(addr.getStreet() + tip);
-		}
-		return addr;
-
+		return locationCenter.address();
 	}
 
 	@Override

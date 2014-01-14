@@ -21,44 +21,24 @@ public class GSMCell implements Cell {
 		this.asu = asu;
 	}
 
-	public int getMcc() {
+	public int mcc() {
 		return mcc;
 	}
 
-	public void setMcc(int mcc) {
-		this.mcc = mcc;
-	}
-
-	public int getMnc() {
+	public int mnc() {
 		return mnc;
 	}
 
-	public void setMnc(int mnc) {
-		this.mnc = mnc;
-	}
-
-	public int getLac() {
+	public int lac() {
 		return lac;
 	}
 
-	public void setLac(int lac) {
-		this.lac = lac;
-	}
-
-	public int getCid() {
+	public int cid() {
 		return cid;
 	}
 
-	public void setCid(int cid) {
-		this.cid = cid;
-	}
-
-	public int getAsu() {
+	public int asu() {
 		return asu;
-	}
-
-	public void setAsu(int asu) {
-		this.asu = asu;
 	}
 
 	@Override

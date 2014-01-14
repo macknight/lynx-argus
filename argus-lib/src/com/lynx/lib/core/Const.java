@@ -15,4 +15,9 @@ public class Const {
 	public static String BMAP_API_PLACE = "http://api.map.baidu.com/place/v2";
 	public static String BMAP_API_DIRECT = "http://api.map.baidu.com/direction/v1";
 	public static String BMAP_API_TELEMATIC = "http://api.map.baidu.com/telematics/v3";
+
+	private Const() {
+		throw new AssertionError("this class shouldn't be instanced");
+	}
+
 }

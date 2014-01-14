@@ -56,7 +56,7 @@ public class LoginFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_login, container, false);
 		etAccount = (EditText) v.findViewById(R.id.et_login_account);

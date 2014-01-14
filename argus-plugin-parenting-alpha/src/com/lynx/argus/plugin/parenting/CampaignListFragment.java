@@ -17,6 +17,9 @@ import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,8 +37,7 @@ public class CampaignListFragment extends LFFragment {
 	private static final int MSG_LOAD_CAMP_LIST_SUCCESS = 1;
 	private static final int MSG_LOAD_CAMP_LIST_FAIL = 2;
 
-	private static final String LM_API_CAMPAIGN_LIST = "http://www.hahaertong.com/index"
-			+ ".php?app=activity&act=m&page=#page#";
+	private static final String LM_API_CAMPAIGN_LIST = "/index.php";
 
 	private static int curPage = 1;
 	private static int pageSize = 0;
@@ -66,7 +68,7 @@ public class CampaignListFragment extends LFFragment {
 						String shopId = joShop.getString("store_id");
 						String shopName = joShop.getString("store_name");
 						String price = joShop.getString("market_price");
-						String snapUrl = "http://www.hahaertong.com/"
+						String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
 								+ joShop.getString("default_image");
 						String startTime = joShop.getString("start_time");
 						String endTime = joShop.getString("end_time");
@@ -119,7 +121,7 @@ public class CampaignListFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.layout_campaignlist, container,
 				false);
@@ -134,9 +136,7 @@ public class CampaignListFragment extends LFFragment {
 				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
-						String url = LM_API_CAMPAIGN_LIST.replaceAll("#page#",
-								(curPage + 1) + "");
-						httpService.get(url, null, httpCallback);
+						getCampaignList();
 					}
 				});
 
@@ -151,5 +151,18 @@ public class CampaignListFragment extends LFFragment {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+	}
+
+	private void getCampaignList() {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+		params.add(new BasicNameValuePair("app", "activity"));
+		params.add(new BasicNameValuePair("act", "m"));
+		params.add(new BasicNameValuePair("page", curPage + ""));
+		String param = URLEncodedUtils.format(params, "UTF-8");
+		String url = String.format("%s%s?%s",
+				ParentingFragment.LM_API_PARENT_DOMAIN, LM_API_CAMPAIGN_LIST,
+				param);
+		httpService.get(url, null, httpCallback);
 	}
 }

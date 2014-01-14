@@ -18,7 +18,7 @@ public class NewsFragments extends LFFragment {
 	private static final String LM_API_NEWS = "/news";
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_news, container, false);
 

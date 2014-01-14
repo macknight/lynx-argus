@@ -23,6 +23,10 @@ public class FileUtil {
 	public static final Charset US_ASCII = Charset.forName("US-ASCII");
 	public static final Charset UTF_8 = Charset.forName("UTF-8");
 
+    private FileUtil() {
+        throw new AssertionError("this class shouldn't be instanced");
+    }
+
 	public static String readFully(Reader reader) throws IOException {
 		try {
 			StringWriter writer = new StringWriter();

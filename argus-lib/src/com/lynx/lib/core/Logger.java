@@ -14,7 +14,11 @@ public class Logger {
 	// app 所处模式,默认为PRODUCT
 	private static AppLevel level = AppLevel.PRODUCT;
 
-	public static AppLevel getLevel() {
+	private Logger() {
+		throw new AssertionError("this class shouldn't be instanced");
+	}
+
+	public static AppLevel level() {
 		return level;
 	}
 

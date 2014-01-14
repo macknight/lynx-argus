@@ -9,44 +9,58 @@ import com.lynx.lib.geo.entity.GeoPoint;
  * @addtime 13-11-22 下午4:59
  */
 public class ShopListItem {
+
+	private String storeName;
+	private String storeId;
+	private String shopName;
 	private String shopId;
-	private String name;
 	private String snapUrl;
 	private GeoPoint latlng;
 	private String region;
 	private int reviewNum;
 
-	public ShopListItem(String shopId, String name, String snapUrl,
-			GeoPoint latlng, String region, int reviewNum) {
+	public ShopListItem(String storeId, String storeName, String shopId,
+			String shopName, String snapUrl, GeoPoint latlng, String region,
+			int reviewNum) {
+		this.storeId = storeId;
+		this.storeName = storeName;
 		this.shopId = shopId;
-		this.name = name;
+		this.shopName = shopName;
 		this.snapUrl = snapUrl;
 		this.latlng = latlng;
 		this.region = region;
 		this.reviewNum = reviewNum;
 	}
 
-	public String getName() {
-		return name;
+	public String storeId() {
+		return storeId;
 	}
 
-	public String getShopId() {
+	public String storeName() {
+		return storeName;
+	}
+
+	public String shopId() {
 		return shopId;
 	}
 
-	public String getSnapUrl() {
+	public String shopName() {
+		return storeName;
+	}
+
+	public String snapUrl() {
 		return snapUrl;
 	}
 
-	public GeoPoint getLatlng() {
+	public GeoPoint latlng() {
 		return latlng;
 	}
 
-	public String getRegion() {
+	public String region() {
 		return region;
 	}
 
-	public int getReviewNum() {
+	public int reviewNum() {
 		return reviewNum;
 	}
 }

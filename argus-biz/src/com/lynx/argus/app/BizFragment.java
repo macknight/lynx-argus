@@ -2,6 +2,7 @@ package com.lynx.argus.app;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.lynx.lib.core.LFFragment;
 
 /**
@@ -10,7 +11,7 @@ import com.lynx.lib.core.LFFragment;
  * 
  * @addtime 13-9-12 下午6:18
  */
-public class BizFragment extends LFFragment {
+public abstract class BizFragment extends LFFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

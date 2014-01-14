@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.lynx.lib.core.LFFragment;
 
 /**
@@ -18,6 +19,8 @@ import com.lynx.lib.core.LFFragment;
 public class ParentingFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";
 
+	public static final String LM_API_PARENT_DOMAIN = "http://www.hahaertong.com";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -29,7 +32,7 @@ public class ParentingFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.layout_parenting, container,
 				false);

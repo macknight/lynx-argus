@@ -164,9 +164,9 @@ public class CellInfoManager {
 			}
 
 			try {
-				List<NeighboringCellInfo> neighbor_cells = telManager
+				List<NeighboringCellInfo> neighborCells = telManager
 						.getNeighboringCellInfo();
-				if (neighbor_cells != null) {
+				if (neighborCells != null) {
 					Method method_lac = null;
 					try {
 						method_lac = NeighboringCellInfo.class
@@ -175,19 +175,19 @@ public class CellInfoManager {
 						method_lac = null;
 					}
 
-					for (NeighboringCellInfo n_cell : neighbor_cells) {
-						cid = n_cell.getCid();
+					for (NeighboringCellInfo nCell : neighborCells) {
+						cid = nCell.getCid();
 						lac = 0;
 						if (method_lac != null) {
 							try {
-								lac = (Integer) method_lac.invoke(n_cell);
+								lac = (Integer) method_lac.invoke(nCell);
 							} catch (Exception e) {
 							}
 						}
 
 						if (!(cid <= 0) || cid == 0xFFFF) {
 							Cell cell = new GSMCell(mcc, mnc, cid, lac,
-									n_cell.getRssi());
+									nCell.getRssi());
 							cells.add(cell);
 						}
 					}
@@ -206,7 +206,7 @@ public class CellInfoManager {
 	}
 
 	public String cells2str() {
-		if (cells != null && cells.size() > 0) {
+		if (cells.size() > 0) {
 			String result = "";
 			for (Cell cell : cells) {
 				result = String.format("%s|%s", result, cell.toString());

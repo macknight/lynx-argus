@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Random;
 
 /**
- *
+ * 
  * @author zhufeng.liu
- *
+ * 
  * @addtime 13-11-8 下午3:51
  */
 public class ShopListMapActivity extends MapActivity {
@@ -23,7 +23,8 @@ public class ShopListMapActivity extends MapActivity {
 	private MapController mapController;
 	private GeoPoint gpCenter;
 	Random random = new Random();
-	private int color = Color.argb(60, random.nextInt(255), random.nextInt(255), random.nextInt(255));
+	private int color = Color.argb(60, random.nextInt(255),
+			random.nextInt(255), random.nextInt(255));
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -38,21 +39,21 @@ public class ShopListMapActivity extends MapActivity {
 		geoService = (GeoService) BizApplication.instance().service("geo");
 
 		if (geoService != null && geoService.coord() == null) {
-			gpCenter = new GeoPoint((int) (31.215999 * 1E6), (int) (121.419996 * 1E6));
+			gpCenter = new GeoPoint((int) (31.215999 * 1E6),
+					(int) (121.419996 * 1E6));
 		} else {
-			gpCenter = new GeoPoint((int) (geoService.coord().getLat() * 1E6),
-					(int) (geoService.coord().getLng() * 1E6));
+			gpCenter = new GeoPoint((int) (geoService.coord().lat() * 1E6),
+					(int) (geoService.coord().lng() * 1E6));
 		}
 		mapController.setCenter(gpCenter);
-
 
 		pinOnMap(geoService.coord());
 	}
 
 	private void pinOnMap(Coord coord) {
 		try {
-			GeoPoint gp = new GeoPoint((int) (coord.getLat() * 1E6),
-					(int) (coord.getLng() * 1E6));
+			GeoPoint gp = new GeoPoint((int) (coord.lat() * 1E6),
+					(int) (coord.lng() * 1E6));
 			mapController.animateTo(gp);
 
 			List<Overlay> overlays = mapView.getOverlays();
@@ -71,7 +72,7 @@ public class ShopListMapActivity extends MapActivity {
 
 		public MapbarMarker(Coord coord) {
 			this.coord = coord;
-			this.accuracy = (int) coord.getAcc();
+			this.accuracy = (int) coord.acc();
 		}
 
 		@Override
@@ -79,8 +80,8 @@ public class ShopListMapActivity extends MapActivity {
 			super.draw(canvas, mapView, shadow);
 
 			Point screenPoint = new Point();
-			GeoPoint gp = new GeoPoint((int) (coord.getLat() * 1E6),
-					(int) (coord.getLng() * 1E6));
+			GeoPoint gp = new GeoPoint((int) (coord.lat() * 1E6),
+					(int) (coord.lng() * 1E6));
 			mapView.getProjection().toPixels(gp, screenPoint);
 
 			Paint paint = new Paint();
@@ -89,11 +90,13 @@ public class ShopListMapActivity extends MapActivity {
 			paint.setStyle(Paint.Style.FILL_AND_STROKE);
 			paint.setColor(color);
 			Paint paint_marker = new Paint();
-			Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.cur_pos);
+			Bitmap bmp = BitmapFactory.decodeResource(getResources(),
+					R.drawable.cur_pos);
 			canvas.drawBitmap(bmp, screenPoint.x - bmp.getWidth() / 2,
 					screenPoint.y - bmp.getHeight() / 2, paint_marker);
-			canvas.drawCircle(screenPoint.x, screenPoint.y,
-					mapView.getProjection().metersToEquatorPixels(this.accuracy), paint);
+			canvas.drawCircle(screenPoint.x, screenPoint.y, mapView
+					.getProjection().metersToEquatorPixels(this.accuracy),
+					paint);
 		}
 	}
 }

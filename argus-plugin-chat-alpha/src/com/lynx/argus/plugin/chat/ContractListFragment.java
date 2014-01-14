@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * @author chris.liu
- *
+ * 
  * @addtime 13-12-22 下午10:09
  */
 public class ContractListFragment extends LFFragment {
@@ -34,10 +34,10 @@ public class ContractListFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater
-				.inflate(R.layout.layout_contractlist, container, false);
+		View view = inflater.inflate(R.layout.layout_contractlist, container,
+				false);
 
 		setContacts();
 
@@ -46,19 +46,22 @@ public class ContractListFragment extends LFFragment {
 			@Override
 			public void onClick(View view) {
 				if (view.getId() == R.id.btn_add_empty) {
-					AddContactDialog addDialog = new AddContactDialog(navActivity);
+					AddContactDialog addDialog = new AddContactDialog(
+							navActivity);
 					addDialog.show();
 				}
 			}
 		});
 
-		final ListView listViewContacts = (ListView) view.findViewById(R.id.lv_contacts);
-		listViewContacts.setAdapter(new ContactListAdapter(navActivity, contacts));
+		final ListView listViewContacts = (ListView) view
+				.findViewById(R.id.lv_contacts);
+		listViewContacts.setAdapter(new ContactListAdapter(navActivity,
+				contacts));
 		listViewContacts.setEmptyView(view.findViewById(R.id.emptyView));
 		listViewContacts
 				.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 					public void onItemClick(AdapterView<?> a, View v,
-					                        int position, long id) {
+							int position, long id) {
 						Object o = listViewContacts.getItemAtPosition(position);
 
 						Contact fullObject = (Contact) o;
@@ -99,7 +102,6 @@ public class ContractListFragment extends LFFragment {
 
 	private void setContacts() {
 		contacts = loginFragment.getContacts();
-
 
 	}
 

@@ -1,15 +1,20 @@
 package com.lynx.lib.core.dex;
 
 import org.json.JSONObject;
+
 import com.lynx.lib.core.dex.DexModuleLoader.DexType;
 
 /**
- *
+ * 
  * @author zhufeng.liu
- *
+ * 
  * @addtime 13-11-17 下午11:40
  */
 public class DexUtil {
+
+	private DexUtil() {
+		throw new AssertionError("this class shouldn't be instanced");
+	}
 
 	public static JSONObject dexModule2json(DexType type, DexModule module) {
 		switch (type) {

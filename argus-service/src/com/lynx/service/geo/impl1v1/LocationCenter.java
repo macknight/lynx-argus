@@ -67,6 +67,9 @@ public class LocationCenter {
 	private GeoServiceImpl geoService;
 	private HttpService httpService;
 
+	private static final String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? ""
+			: ("(impl1v1)");
+
 	public LocationCenter(GeoServiceImpl geoService) {
 		this.geoService = geoService;
 		this.context = geoService.context();
@@ -161,19 +164,19 @@ public class LocationCenter {
 		public void onLocationChanged(Location location) {
 			double lat = LocationUtil.format(location.getLatitude(), 5);
 			double lng = LocationUtil.format(location.getLongitude(), 5);
-			Coord coord = new Coord(CoordSource.GPS, lat, lng,
+			CoordSource source;
+			if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
+				source = CoordSource.NETWORK;
+				status.set(status.intValue() | NETWORK_LOC_FIN);
+			} else {
+				source = CoordSource.GPS;
+				status.set(status.intValue() | GPS_LOC_FIN);
+			}
+			Coord coord = new Coord(source, lat, lng,
 					(int) location.getAccuracy(), System.currentTimeMillis()
 							- location.getTime());
-			if (location.getProvider().equals(LocationManager.NETWORK_PROVIDER)) {
-				coord.setSource(CoordSource.NETWORK);
-				coords3thPart.add(coord);
-				status.set(status.intValue() | NETWORK_LOC_FIN);
-				return;
-			}
-			Logger.i(Tag, coord.toString());
 			coords3thPart.add(coord);
-			coord.setSource(CoordSource.GPS);
-			status.set(status.intValue() | GPS_LOC_FIN);
+			Logger.i(Tag, coord.toString());
 		}
 
 		@Override
@@ -224,7 +227,8 @@ public class LocationCenter {
 							String region = joAddr.getString("region");
 							String street = joAddr.getString("street");
 							String num = joAddr.getString("num");
-							addr = new Address(province, city, region, street,
+
+							addr = new Address(province, city, region, street + tip,
 									num);
 						} catch (Exception e) {
 							Logger.e(Tag, "cant get address now");

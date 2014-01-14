@@ -53,7 +53,7 @@ public class ChatFragment extends LFFragment {
 	private List<Msg> msgs = new ArrayList<Msg>();
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
 		account = getArguments().getString("account");

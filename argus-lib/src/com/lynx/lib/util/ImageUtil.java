@@ -18,6 +18,10 @@ import java.net.URL;
 public class ImageUtil {
 	private static final String TAG = "ImageUtil";
 
+    private ImageUtil() {
+        throw new AssertionError("this class shouldn't be instanced");
+    }
+
 	/**
 	 * 根据一个网络连接(String)获取bitmap图像
 	 * 

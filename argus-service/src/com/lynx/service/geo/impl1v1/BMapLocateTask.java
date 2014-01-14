@@ -73,8 +73,7 @@ public class BMapLocateTask {
 									lat, lng, acc, elapse);
 							Logger.i(Tag, String.format(
 									"get coord form Baidu(%f, %f, %d)",
-									coord.getLat(), coord.getLng(),
-									coord.getAcc()));
+									coord.lat(), coord.lng(), coord.acc()));
 							// coords3thPart.add(coord);
 						}
 					}
@@ -116,17 +115,17 @@ public class BMapLocateTask {
 			switch (cell.type()) {
 			case CDMA:
 				CDMACell cdmaCell = (CDMACell) cell;
-				tmp += cdmaCell.getMcc() + "|" + cdmaCell.getSid() + "|"
-						+ cdmaCell.getNid() + "|" + cdmaCell.getBid() + "&clt=";
+				tmp += cdmaCell.mcc() + "|" + cdmaCell.sid() + "|"
+						+ cdmaCell.nid() + "|" + cdmaCell.bid() + "&clt=";
 				break;
 			case GSM:
 				GSMCell gsmCell = (GSMCell) cell;
-				tmp += gsmCell.getMcc() + "|" + gsmCell.getMnc() + "|"
-						+ gsmCell.getLac() + "|" + gsmCell.getCid() + "&clt=";
+				tmp += gsmCell.mcc() + "|" + gsmCell.mnc() + "|"
+						+ gsmCell.lac() + "|" + gsmCell.cid() + "&clt=";
 				for (Cell theCell : cells) {
 					gsmCell = (GSMCell) theCell;
-					tmp += gsmCell.getMcc() + "|" + gsmCell.getMnc() + "|"
-							+ gsmCell.getLac() + "|" + gsmCell.getCid() + "|1;";
+					tmp += gsmCell.mcc() + "|" + gsmCell.mnc() + "|"
+							+ gsmCell.lac() + "|" + gsmCell.cid() + "|1;";
 				}
 				break;
 			}
@@ -136,8 +135,8 @@ public class BMapLocateTask {
 		if (wifis != null && wifis.size() != 0) {
 			tmp += "&wf=";
 			for (int i = 0; i < wifis.size(); ++i) {
-				tmp += wifis.get(i).getMac().replaceAll(":", "") + ";"
-						+ Math.abs(wifis.get(i).getDBm()) + ";|";
+				tmp += wifis.get(i).mac().replaceAll(":", "") + ";"
+						+ Math.abs(wifis.get(i).dBm()) + ";|";
 			}
 			tmp = tmp.substring(0, tmp.length() - 1);
 		}

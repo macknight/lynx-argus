@@ -13,59 +13,39 @@ public class Address implements Serializable {
 	private String city;
 	private String region;
 	private String street;
-	private String number;
+	private String more;
 
 	public Address(String province, String city, String region, String street,
-			String number) {
+			String more) {
 		this.province = province;
 		this.city = city;
 		this.region = region;
 		this.street = street;
-		this.number = number;
+		this.more = more;
 	}
 
-	public String getProvince() {
+	public String province() {
 		return province;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
-	}
-
-	public String getCity() {
+	public String city() {
 		return city;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getRegion() {
+	public String region() {
 		return region;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
-	}
-
-	public String getStreet() {
+	public String street() {
 		return street;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
+	public String more() {
+		return more;
 	}
 
 	@Override
 	public String toString() {
-		return null;
+		return String.format("%s%s", region, street);
 	}
 }

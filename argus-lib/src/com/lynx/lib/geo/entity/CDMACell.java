@@ -23,52 +23,28 @@ public class CDMACell implements Cell {
 		this.lng = lng;
 	}
 
-	public int getMcc() {
+	public int mcc() {
 		return mcc;
 	}
 
-	public void setMcc(int mcc) {
-		this.mcc = mcc;
-	}
-
-	public int getSid() {
+	public int sid() {
 		return sid;
 	}
 
-	public void setSid(int sid) {
-		this.sid = sid;
-	}
-
-	public int getNid() {
+	public int nid() {
 		return nid;
 	}
 
-	public void setNid(int nid) {
-		this.nid = nid;
-	}
-
-	public int getBid() {
+	public int bid() {
 		return bid;
 	}
 
-	public void setBid(int bid) {
-		this.bid = bid;
-	}
-
-	public long getLat() {
+	public long lat() {
 		return lat;
 	}
 
-	public void setLat(long lat) {
-		this.lat = lat;
-	}
-
-	public long getLng() {
+	public long lng() {
 		return lng;
-	}
-
-	public void setLng(long lng) {
-		this.lng = lng;
 	}
 
 	@Override

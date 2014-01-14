@@ -22,7 +22,12 @@ public class ShoppingFragment extends BizFragment {
 		super.onCreate(savedInstanceState);
 	}
 
-	@Override
+    @Override
+    protected View onLoadView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
+        return null;
+    }
+
+    @Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 	}

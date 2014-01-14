@@ -20,20 +20,12 @@ public class Location implements Serializable {
 		this.addr = addr;
 	}
 
-	public Coord getCoord() {
+	public Coord coord() {
 		return coord;
 	}
 
-	public void setCoord(Coord coord) {
-		this.coord = coord;
-	}
-
-	public Address getAddr() {
+	public Address addr() {
 		return addr;
-	}
-
-	public void setAddr(Address addr) {
-		this.addr = addr;
 	}
 
 	@Override

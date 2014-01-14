@@ -1,5 +1,7 @@
 package com.lynx.lib.geo.entity;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -17,19 +19,23 @@ public class GeoPoint implements Serializable {
 		this.lng = lng;
 	}
 
-	public double getLat() {
+	public double lat() {
 		return lat;
 	}
 
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
+	public double lng() {
 		return lng;
 	}
 
-	public void setLng(double lng) {
-		this.lng = lng;
+	@Override
+	public String toString() {
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("lat", lat);
+			jo.put("lng", lng);
+			return jo.toString();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 }

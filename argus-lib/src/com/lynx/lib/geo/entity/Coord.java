@@ -1,5 +1,7 @@
 package com.lynx.lib.geo.entity;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -16,6 +18,7 @@ public class Coord implements Serializable {
 	private long elapse;
 
 	public Coord() {
+
 	}
 
 	public Coord(CoordSource source, double lat, double lng, int acc,
@@ -27,52 +30,39 @@ public class Coord implements Serializable {
 		this.elapse = elapse;
 	}
 
-	public void setSource(CoordSource source) {
-		this.source = source;
-	}
-
-	public CoordSource getSource() {
+	public CoordSource source() {
 		return source;
 	}
 
-	public double getLat() {
+	public double lat() {
 		return lat;
 	}
 
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
+	public double lng() {
 		return lng;
 	}
 
-	public void setLng(double lng) {
-		this.lng = lng;
-	}
-
-	public void setAcc(int acc) {
-		this.acc = acc;
-	}
-
-	public int getAcc() {
+	public int acc() {
 		return acc;
 	}
 
-	public void setElapse(long elapse) {
-		this.elapse = elapse;
-	}
-
-	public long getElapse() {
+	public long elapse() {
 		return elapse;
 	}
 
 	@Override
 	public String toString() {
-		return String
-				.format("{\"source\":%d,\"lat\":%f,\"lng\":%f,\"acc\":%d,\"elapse\":%d}",
-						this.source.ordinal(), this.lat, this.lng, this.acc,
-						this.elapse);
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("source", source);
+			jo.put("lat", lat);
+			jo.put("lng", lng);
+			jo.put("acc", acc);
+			jo.put("elapse", elapse);
+			return jo.toString();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public enum CoordType {
