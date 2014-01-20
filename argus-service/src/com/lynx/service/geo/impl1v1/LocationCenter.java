@@ -67,7 +67,7 @@ public class LocationCenter {
 	private GeoServiceImpl geoService;
 	private HttpService httpService;
 
-	private static final String tip = Logger.level() == Logger.AppLevel.PRODUCT ? ""
+	private static final String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? ""
 			: ("(impl1v1)");
 
 	public LocationCenter(GeoServiceImpl geoService) {
@@ -228,8 +228,8 @@ public class LocationCenter {
 							String street = joAddr.getString("street");
 							String num = joAddr.getString("num");
 
-							addr = new Address(province, city, region, street
-									+ tip, num);
+							addr = new Address(province, city, region, street + tip,
+									num);
 						} catch (Exception e) {
 							Logger.e(Tag, "cant get address now");
 						}

@@ -33,7 +33,7 @@ public class ParentingFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.layout_parenting, container,
 				false);
 		Button btn = (Button) view.findViewById(R.id.btn_campaign);

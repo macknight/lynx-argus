@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">百眼巨人</string>
-    <string name="app_version">1.0.0</string>
-    <string name="app_copyright">lynx@china shanghai</string>
+    <string name="app_name">argus</string>
 
     <string name="main_tab_title_plugin">应用中心</string>
     <string name="main_tab_title_shopping">购物</string>

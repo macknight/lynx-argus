@@ -21,14 +21,14 @@ import java.util.HashMap;
 /**
  * 
  * @author chris.liu
- * 
+ *
  * @addtime 13-12-15 下午12:09
  */
 public class LoginFragment extends LFFragment {
 
 	private String SERVER_HOST = "192.168.0.102";
 	private int SERVER_PORT = 5222;
-	private boolean ip = false;
+	private boolean ip= false;
 
 	private Intent service;
 	private ConnectionConfiguration config;
@@ -57,7 +57,7 @@ public class LoginFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.layout_login, container, false);
 		etAccount = (EditText) v.findViewById(R.id.et_login_account);
 		etPwd = (EditText) v.findViewById(R.id.et_login_pwd);
@@ -123,11 +123,9 @@ public class LoginFragment extends LFFragment {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				if (connection == null) {
-					config = new ConnectionConfiguration(SERVER_HOST,
-							SERVER_PORT);
-					// config = new ConnectionConfiguration(SERVER_HOST,
-					// SERVER_PORT, SERVICE_NAME);
+				if(connection == null) {
+					config = new ConnectionConfiguration(SERVER_HOST, SERVER_PORT);
+					//config = new ConnectionConfiguration(SERVER_HOST, SERVER_PORT, SERVICE_NAME);
 
 					// for authentication stuffs
 					config.setSASLAuthenticationEnabled(true);
@@ -151,16 +149,16 @@ public class LoginFragment extends LFFragment {
 	}
 
 	public boolean login(String netID, String password) {
-		if (connection.isConnected()) {
+		if(connection.isConnected()) {
 			try {
-				if (ip) {
+				if(ip) {
 					connection.login("dwade", "dwyane", "resource");
 				} else {
 					// login using user's input
 					connection.login("amzrobles", "izaeyogeix", "resource");
 				}
 
-				// retrieve roster
+				//retrieve roster 
 				roster = connection.getRoster();
 				roster.setSubscriptionMode(Roster.SubscriptionMode.manual);
 				entries = roster.getEntries();
@@ -193,11 +191,11 @@ public class LoginFragment extends LFFragment {
 		this.roster = roster;
 	}
 
-	// stores roster to ArrayList of contacts
+	// stores roster to ArrayList of contacts 
 	public ArrayList<Contact> getContacts() {
 		contacts.clear();
-		if (!entries.isEmpty()) {
-			for (RosterEntry r : entries) {
+		if(!entries.isEmpty()) {
+			for(RosterEntry r : entries) {
 				Presence p = roster.getPresence(r.getUser());
 				Contact c = new Contact(r);
 				c.setPresence(p);

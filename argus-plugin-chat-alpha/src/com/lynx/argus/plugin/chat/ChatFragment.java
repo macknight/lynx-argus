@@ -54,7 +54,7 @@ public class ChatFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+			Bundle savedInstanceState) {
 
 		account = getArguments().getString("account");
 

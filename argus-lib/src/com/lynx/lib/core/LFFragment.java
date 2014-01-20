@@ -51,7 +51,7 @@ public abstract class LFFragment extends Fragment {
 	 * @return
 	 */
 	protected abstract View onLoadView(LayoutInflater inflater,
-			ViewGroup container, Bundle savedInstanceState) throws Exception;
+			ViewGroup container, Bundle savedInstanceState);
 
 	public boolean shouldAdd() {
 		return true;

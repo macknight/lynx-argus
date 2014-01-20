@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class ShopListFragment extends LFFragment {
 
-	private static final String LM_API_PARENTING_SHOPLIST = "/index.php";
+	private static final String LM_API_PARENTING_SHOPLIST = "?app=list&act=mlist&page=#page#";
 
 	private static int page = 1;
 
@@ -40,8 +40,9 @@ public class ShopListFragment extends LFFragment {
 	private List<ShopListItem> shopList = new ArrayList<ShopListItem>();
 	private PullToRefreshListView prlvShops;
 
-	private static int curPage = 1;
-	private static int pageSize = 0;
+
+    private static int curPage = 1;
+    private static int pageSize = 0;
 
 	private HttpService httpService;
 
@@ -70,7 +71,8 @@ public class ShopListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+			Bundle savedInstanceState) {
+
 		View view = inflater
 				.inflate(R.layout.layout_shoplist, container, false);
 		prlvShops = (PullToRefreshListView) view
@@ -126,8 +128,8 @@ public class ShopListFragment extends LFFragment {
 					JSONObject joShop = jaResult.getJSONObject(i);
 					String storeName = joShop.getString("store_name");
 					String storeId = joShop.getString("store_id");
-					String shopName = joShop.getString("shop_name");
-					String shopId = joShop.getString("store_id");
+                    String shopName = joShop.getString("shop_name");
+                    String shopId = joShop.getString("store_id");
 					String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
 							+ joShop.getString("default_image");
 					String lng = joShop.getString("map_lng");

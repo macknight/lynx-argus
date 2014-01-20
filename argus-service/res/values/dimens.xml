@@ -1,5 +1,4 @@
 <resources>
-    <dimen name="font_size_xxlarge">22.0sp</dimen>
     <dimen name="font_size_xlarge">18.0sp</dimen>
     <dimen name="font_size_large">16.0sp</dimen>
     <dimen name="font_size_default">14.0sp</dimen>
