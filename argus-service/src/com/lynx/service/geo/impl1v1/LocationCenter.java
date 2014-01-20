@@ -67,7 +67,7 @@ public class LocationCenter {
 	private GeoServiceImpl geoService;
 	private HttpService httpService;
 
-	private static final String tip = Logger.getLevel() == Logger.AppLevel.PRODUCT ? ""
+	private static final String tip = Logger.level() == Logger.AppLevel.PRODUCT ? ""
 			: ("(impl1v1)");
 
 	public LocationCenter(GeoServiceImpl geoService) {
