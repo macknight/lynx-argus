@@ -29,7 +29,7 @@ public class ChatListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 
 		final String account = getArguments().getString("account");
 

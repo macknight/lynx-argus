@@ -13,7 +13,6 @@ import com.lynx.argus.plugin.parenting.model.CampaignListAdapter;
 import com.lynx.argus.plugin.parenting.model.CampaignListItem;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
@@ -42,7 +41,6 @@ public class CampaignListFragment extends LFFragment {
 	private static int curPage = 1;
 	private static int pageSize = 0;
 
-	private GeoService geoService;
 	private HttpService httpService;
 
 	private List<CampaignListItem> campaignItems = new ArrayList<CampaignListItem>();
@@ -53,42 +51,7 @@ public class CampaignListFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object o) {
 			super.onSuccess(o);
-			try {
-				JSONObject joResult = new JSONObject(o.toString());
-				JSONArray jaResult = joResult.getJSONArray("data");
-				if (jaResult == null || jaResult.length() == 0) {
-					return;
-				}
-				campaignItems.clear();
-				for (int i = 0; i < jaResult.length(); ++i) {
-					try {
-						JSONObject joShop = jaResult.getJSONObject(i);
-						String id = joShop.getString("goods_id");
-						String name = joShop.getString("goods_name");
-						String shopId = joShop.getString("store_id");
-						String shopName = joShop.getString("store_name");
-						String price = joShop.getString("market_price");
-						String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
-								+ joShop.getString("default_image");
-						String startTime = joShop.getString("start_time");
-						String endTime = joShop.getString("end_time");
-						String place = joShop.getString("place");
-						String region = joShop.getString("regions");
-						CampaignListItem campaignListItem = new CampaignListItem(
-								id, name, shopId, shopName, price, snapUrl,
-								startTime, endTime, place, region);
-						campaignItems.add(campaignListItem);
-					} catch (Exception e) {
-
-					}
-				}
-
-				JSONObject joPage = joResult.getJSONObject("page");
-				curPage = joPage.getInt("curr_page");
-				pageSize = joPage.getInt("page_count");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			parseCampaigns(o.toString());
 			handler.sendEmptyMessage(MSG_LOAD_CAMP_LIST_SUCCESS);
 		}
 
@@ -122,7 +85,7 @@ public class CampaignListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View view = inflater.inflate(R.layout.layout_campaignlist, container,
 				false);
 		prlvCampaign = (PullToRefreshListView) view
@@ -153,6 +116,9 @@ public class CampaignListFragment extends LFFragment {
 
 	}
 
+	/**
+	 * 获取运营活动
+	 */
 	private void getCampaignList() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 
@@ -164,5 +130,49 @@ public class CampaignListFragment extends LFFragment {
 				ParentingFragment.LM_API_PARENT_DOMAIN, LM_API_CAMPAIGN_LIST,
 				param);
 		httpService.get(url, null, httpCallback);
+	}
+
+	/**
+	 * 解析运营活动
+	 * 
+	 * @param data
+	 */
+	private void parseCampaigns(String data) {
+		try {
+			JSONObject joResult = new JSONObject(data);
+			JSONArray jaResult = joResult.getJSONArray("data");
+			if (jaResult == null || jaResult.length() == 0) {
+				return;
+			}
+			campaignItems.clear();
+			for (int i = 0; i < jaResult.length(); ++i) {
+				try {
+					JSONObject joShop = jaResult.getJSONObject(i);
+					String id = joShop.getString("goods_id");
+					String name = joShop.getString("goods_name");
+					String shopId = joShop.getString("store_id");
+					String shopName = joShop.getString("store_name");
+					String price = joShop.getString("market_price");
+					String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
+							+ joShop.getString("default_image");
+					String startTime = joShop.getString("start_time");
+					String endTime = joShop.getString("end_time");
+					String place = joShop.getString("place");
+					String region = joShop.getString("regions");
+					CampaignListItem campaignListItem = new CampaignListItem(
+							id, name, shopId, shopName, price, snapUrl,
+							startTime, endTime, place, region);
+					campaignItems.add(campaignListItem);
+				} catch (Exception e) {
+
+				}
+			}
+
+			JSONObject joPage = joResult.getJSONObject("page");
+			curPage = joPage.getInt("curr_page");
+			pageSize = joPage.getInt("page_count");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

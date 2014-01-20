@@ -87,7 +87,7 @@ public class LocalShopListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View v = inflater.inflate(R.layout.layout_local_shoplist, container,
 				false);
 

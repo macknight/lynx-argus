@@ -1,5 +1,7 @@
 package com.lynx.argus.plugin.local;
 
+import org.json.JSONObject;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
-import org.json.JSONObject;
 
 /**
  * 
@@ -47,8 +49,8 @@ public class ShopDetailFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) throws Exception {
 		View v = inflater.inflate(R.layout.layout_local_shop_detail, container,
 				false);
 

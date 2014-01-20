@@ -95,11 +95,6 @@ public class CellInfoManager {
 
 		switch (telManager.getPhoneType()) {
 		case TelephonyManager.PHONE_TYPE_CDMA:
-			mcc = 0;
-			bid = 0;
-			sid = 0;
-			nid = 0;
-
 			try {
 				String s = telManager.getNetworkOperator();
 				if (s == null || s.length() != 5 && s.length() != 6) {
@@ -167,20 +162,20 @@ public class CellInfoManager {
 				List<NeighboringCellInfo> neighborCells = telManager
 						.getNeighboringCellInfo();
 				if (neighborCells != null) {
-					Method method_lac = null;
+					Method methodLac = null;
 					try {
-						method_lac = NeighboringCellInfo.class
+						methodLac = NeighboringCellInfo.class
 								.getMethod("getLac");
 					} catch (Exception e) {
-						method_lac = null;
+						methodLac = null;
 					}
 
 					for (NeighboringCellInfo nCell : neighborCells) {
 						cid = nCell.getCid();
 						lac = 0;
-						if (method_lac != null) {
+						if (methodLac != null) {
 							try {
-								lac = (Integer) method_lac.invoke(nCell);
+								lac = (Integer) methodLac.invoke(nCell);
 							} catch (Exception e) {
 							}
 						}

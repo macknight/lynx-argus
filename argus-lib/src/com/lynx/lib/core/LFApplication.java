@@ -32,7 +32,7 @@ public abstract class LFApplication extends Application {
 		return instance;
 	}
 
-	private LFApplication() {
+	protected LFApplication() {
 		instance = this;
 	}
 

@@ -35,7 +35,7 @@ public class ContractListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View view = inflater.inflate(R.layout.layout_contractlist, container,
 				false);
 
