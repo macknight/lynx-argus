@@ -15,7 +15,7 @@ import java.util.Map;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-10 下午2:32
+ * @version 13-9-10 下午2:32
  */
 public abstract class LFApplication extends Application {
 

@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * @author chris.liu
  * 
- * @addtime 13-12-22 下午10:09
+ * @version 13-12-22 下午10:09
  */
 public class ContractListFragment extends LFFragment {
 	private LoginFragment loginFragment = null;
@@ -35,7 +35,7 @@ public class ContractListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View view = inflater.inflate(R.layout.layout_contractlist, container,
 				false);
 

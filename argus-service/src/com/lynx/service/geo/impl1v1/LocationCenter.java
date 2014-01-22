@@ -32,7 +32,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午5:01
+ * @version 13-11-8 下午5:01
  */
 public class LocationCenter {
 	public static final String Tag = "LocationCenter";
@@ -228,8 +228,8 @@ public class LocationCenter {
 							String street = joAddr.getString("street");
 							String num = joAddr.getString("num");
 
-							addr = new Address(province, city, region, street + tip,
-									num);
+							addr = new Address(province, city, region, street
+									+ tip, num);
 						} catch (Exception e) {
 							Logger.e(Tag, "cant get address now");
 						}

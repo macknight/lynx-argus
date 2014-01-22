@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-27 下午5:53
+ * @version 13-8-27 下午5:53
  */
 public class Coord implements Serializable {
 	private CoordSource source;

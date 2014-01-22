@@ -43,21 +43,21 @@ import java.util.zip.GZIPInputStream;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午11:26:48
+ * @version 2013-4-17 下午11:26:48
  */
 public class DefaultHttpServiceImpl implements HttpService {
 	private static final int DEFAULT_SOCKET_BUFFER_SIZE = 8 * 1024; // 8KB
 	private static final String HEADER_ACCEPT_ENCODING = "Accept-Encoding";
 	private static final String ENCODING_GZIP = "gzip";
 
-	private static int maxConnections = 10; // http请求最大并发连接数
-	private static int socketTimeout = 10 * 1000; // 超时时间，默认10秒
-	private static int maxRetries = 5;// 错误尝试次数，错误异常表请在RetryHandler添加
-	private static int httpThreadCount = 3;// http线程池数量
+	private static final int CORE_POOL_SIZE = 10; // http请求最大并发连接数
+	private static final int MAX_POOL_SIZE = 3;// http线程池数量
+	private static final int SOCKET_TIMEOUT = 10 * 1000; // 超时时间，默认10秒
+	private static final int MAX_RETRIES = 2;// 错误尝试次数，错误异常表请在RetryHandler添加
 
 	private final DefaultHttpClient httpClient;
 	private final HttpContext httpContext;
-	private String charset = "utf-8";
+	private String CHARSET = "utf-8";
 
 	private final Map<String, String> clientHeaderMap;
 
@@ -73,18 +73,18 @@ public class DefaultHttpServiceImpl implements HttpService {
 	};
 
 	private static final Executor executor = Executors.newFixedThreadPool(
-			httpThreadCount, sThreadFactory);
+			MAX_POOL_SIZE, sThreadFactory);
 
 	public DefaultHttpServiceImpl() {
 		BasicHttpParams httpParams = new BasicHttpParams();
 
-		ConnManagerParams.setTimeout(httpParams, socketTimeout);
+		ConnManagerParams.setTimeout(httpParams, SOCKET_TIMEOUT);
 		ConnManagerParams.setMaxConnectionsPerRoute(httpParams,
-				new ConnPerRouteBean(maxConnections));
+				new ConnPerRouteBean(CORE_POOL_SIZE));
 		ConnManagerParams.setMaxTotalConnections(httpParams, 10);
 
-		HttpConnectionParams.setSoTimeout(httpParams, socketTimeout);
-		HttpConnectionParams.setConnectionTimeout(httpParams, socketTimeout);
+		HttpConnectionParams.setSoTimeout(httpParams, SOCKET_TIMEOUT);
+		HttpConnectionParams.setConnectionTimeout(httpParams, SOCKET_TIMEOUT);
 		HttpConnectionParams.setTcpNoDelay(httpParams, true);
 		HttpConnectionParams.setSocketBufferSize(httpParams,
 				DEFAULT_SOCKET_BUFFER_SIZE);
@@ -131,7 +131,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 			}
 		});
 
-		httpClient.setHttpRequestRetryHandler(new RetryHandler(maxRetries));
+		httpClient.setHttpRequestRetryHandler(new RetryHandler(MAX_RETRIES));
 
 		clientHeaderMap = new HashMap<String, String>();
 
@@ -145,9 +145,9 @@ public class DefaultHttpServiceImpl implements HttpService {
 		return this.httpContext;
 	}
 
-	public void setCharset(String charSet) {
+	public void setCHARSET(String charSet) {
 		if (charSet != null && charSet.trim().length() != 0)
-			this.charset = charSet;
+			this.CHARSET = charSet;
 	}
 
 	public void setCookieStore(CookieStore cookieStore) {
@@ -427,7 +427,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 			String target, boolean isResume, HttpCallback<File> callback) {
 		final HttpGet get = new HttpGet(getUrlWithQueryString(url, params));
 		HttpHandler<File> handler = new HttpHandler<File>(httpClient,
-				httpContext, callback, charset);
+				httpContext, callback, CHARSET);
 		handler.executeOnExecutor(executor, get, target, isResume);
 		return handler;
 	}
@@ -439,7 +439,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
 
-		new HttpHandler<T>(client, httpContext, httpCallBack, charset)
+		new HttpHandler<T>(client, httpContext, httpCallBack, CHARSET)
 				.executeOnExecutor(executor, uriRequest);
 
 	}
@@ -450,7 +450,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
-		return new SyncRequestHandler(client, httpContext, charset)
+		return new SyncRequestHandler(client, httpContext, CHARSET)
 				.sendRequest(uriRequest);
 	}
 

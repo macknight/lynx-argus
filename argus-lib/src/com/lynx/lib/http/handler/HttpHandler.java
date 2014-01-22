@@ -20,7 +20,7 @@ import java.net.UnknownHostException;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午10:51:12
+ * @version 2013-4-17 下午10:51:12
  */
 public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 		EntityCallback {
@@ -151,8 +151,7 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 	}
 
 	/**
-	 * @param stop
-	 *            停止下载任务
+	 * 停止下载任务
 	 */
 	public void stop() {
 		mFileEntityHandler.setStop(true);

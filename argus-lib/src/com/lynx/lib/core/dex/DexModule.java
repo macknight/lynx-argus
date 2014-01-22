@@ -4,7 +4,7 @@ package com.lynx.lib.core.dex;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-17 上午12:37
+ * @version 13-11-17 上午12:37
  */
 public class DexModule {
 	public static final String K_MODULE = "module"; // 模块名

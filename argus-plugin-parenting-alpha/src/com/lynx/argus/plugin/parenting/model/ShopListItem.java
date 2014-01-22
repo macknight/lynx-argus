@@ -6,7 +6,7 @@ import com.lynx.lib.geo.entity.GeoPoint;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午4:59
+ * @version 13-11-22 下午4:59
  */
 public class ShopListItem {
 

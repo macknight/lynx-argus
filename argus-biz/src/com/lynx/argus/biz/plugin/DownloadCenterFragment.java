@@ -12,7 +12,7 @@ import com.lynx.argus.app.BizFragment;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-18 下午8:00
+ * @version 13-11-18 下午8:00
  */
 public class DownloadCenterFragment extends BizFragment {
 

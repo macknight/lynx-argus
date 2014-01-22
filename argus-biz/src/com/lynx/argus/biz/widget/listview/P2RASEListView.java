@@ -15,7 +15,9 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshAdapterViewBase;
 /**
  * 可下拉刷新且有可展开的slide action的listview
  * <p/>
- * Created with IntelliJ IDEA. User: chris.liu Date: 13-11-19 下午3:55
+ * 
+ * @author chris.liu
+ * @version 13-11-19 下午3:55
  */
 public class P2RASEListView extends
 		PullToRefreshAdapterViewBase<ActionSlideExpandableListView> {

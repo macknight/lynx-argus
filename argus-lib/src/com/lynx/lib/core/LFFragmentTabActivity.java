@@ -14,7 +14,7 @@ import java.util.HashMap;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-25 下午2:35
+ * @version 13-11-25 下午2:35
  */
 public class LFFragmentTabActivity extends LFActivity {
 	private static final String Tag = "LFFragmentTabActivity";

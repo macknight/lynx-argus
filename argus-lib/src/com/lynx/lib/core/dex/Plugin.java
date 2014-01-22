@@ -4,7 +4,7 @@ package com.lynx.lib.core.dex;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-17 上午12:39
+ * @version 13-11-17 上午12:39
  */
 public class Plugin extends DexModule {
 	public static final String K_NAME = "name";

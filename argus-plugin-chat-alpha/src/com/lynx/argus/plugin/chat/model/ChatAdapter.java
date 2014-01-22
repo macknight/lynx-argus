@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-12-8 下午7:43
+ * @version 13-12-8 下午7:43
  */
 public class ChatAdapter extends BaseAdapter {
 	private Context context;

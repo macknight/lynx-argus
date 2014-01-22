@@ -7,7 +7,7 @@ import android.util.Log;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-25 下午2:35
+ * @version 13-11-25 下午2:35
  */
 public class Logger {
 

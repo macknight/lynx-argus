@@ -6,7 +6,7 @@ import com.lynx.lib.core.dex.Service;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 下午10:02
+ * @version 13-9-17 下午10:02
  */
 public interface CacheService extends Service {
 

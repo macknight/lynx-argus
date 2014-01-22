@@ -12,7 +12,7 @@ import com.lynx.lib.util.ViewUtil;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-26 下午3:23
+ * @version 13-9-26 下午3:23
  */
 public abstract class LFFragment extends Fragment {
 	public static final String Tag = "LFFragment";

@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-12-7 下午8:06
+ * @version 13-12-7 下午8:06
  */
 public class MsgAdapter extends BaseAdapter {
 	private Context context;
@@ -55,7 +55,8 @@ public class MsgAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		Msg msg = data.get(position);
-		Toast.makeText(context, "from:" + msg.from(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(context, "from:" + msg.from(), Toast.LENGTH_SHORT)
+				.show();
 		if (convertView == null) {
 			if (msg.from()) {
 				view = View.inflate(context, R.layout.layout_msg_item_from,

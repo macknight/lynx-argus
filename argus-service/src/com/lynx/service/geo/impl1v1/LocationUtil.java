@@ -9,7 +9,7 @@ import java.util.Date;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午5:01
+ * @version 13-11-8 下午5:01
  */
 public class LocationUtil {
 

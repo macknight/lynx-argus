@@ -29,7 +29,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-12-7 下午6:58
+ * @version 13-12-7 下午6:58
  */
 public class ChatFragment extends LFFragment {
 	private static final String LM_API_MSG = "/chat";
@@ -54,7 +54,7 @@ public class ChatFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 
 		account = getArguments().getString("account");
 

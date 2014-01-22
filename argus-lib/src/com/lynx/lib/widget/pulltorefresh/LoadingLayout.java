@@ -22,7 +22,7 @@ import android.widget.TextView;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-30 下午1:33
+ * @version 13-8-30 下午1:33
  */
 public class LoadingLayout extends RelativeLayout {
 

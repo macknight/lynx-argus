@@ -18,7 +18,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-10-29 上午11:30
+ * @version 13-10-29 上午11:30
  */
 public class DexModuleLoader {
 	protected HttpService httpService;

@@ -20,7 +20,7 @@ import java.util.Map;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-17 上午1:32
+ * @version 13-11-17 上午1:32
  */
 public abstract class ServiceManager {
 	private static final String Tag = "serviceManager";

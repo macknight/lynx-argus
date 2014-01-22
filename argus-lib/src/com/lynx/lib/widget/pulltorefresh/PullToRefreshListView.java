@@ -14,7 +14,7 @@ import android.widget.ListView;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-30 下午1:33
+ * @version 13-8-30 下午1:33
  */
 public class PullToRefreshListView extends
 		PullToRefreshAdapterViewBase<ListView> {

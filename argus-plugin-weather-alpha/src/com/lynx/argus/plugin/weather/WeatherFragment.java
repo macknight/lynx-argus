@@ -13,7 +13,7 @@ import com.lynx.lib.core.LFFragment;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-19 下午11:55
+ * @version 13-11-19 下午11:55
  */
 public class WeatherFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";

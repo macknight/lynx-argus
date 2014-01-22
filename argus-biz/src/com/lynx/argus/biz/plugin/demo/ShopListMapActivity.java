@@ -15,7 +15,7 @@ import java.util.Random;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午3:51
+ * @version 13-11-8 下午3:51
  */
 public class ShopListMapActivity extends MapActivity {
 	private GeoService geoService;

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-27 下午5:52
+ * @version 13-8-27 下午5:52
  */
 public class Wifi implements Serializable {
 	private String ssid;

@@ -4,7 +4,7 @@ package com.lynx.argus.biz.plugin.demo.model;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-6 下午4:20
+ * @version 13-11-6 下午4:20
  */
 public class ShopListItem {
 	private String uid;

@@ -14,7 +14,7 @@ import dalvik.system.DexClassLoader;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-30 上午10:10
+ * @version 13-9-30 上午10:10
  */
 public class LFDexActivity extends LFNavigationActivity {
 	private static final String Tag = "LFDexActivity";

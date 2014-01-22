@@ -25,7 +25,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-16 下午2:00
+ * @version 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends BizFragment {
 	private HttpService httpService;

@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-16 下午5:19
+ * @version 13-11-16 下午5:19
  */
 public class PluginCenterAdapter extends BaseAdapter {
 	private Context context;

@@ -5,8 +5,10 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 
 /**
- * @author: chris.liu
- * @addtime: 14-1-6 下午4:21
+ * 
+ * @author chris.liu
+ * 
+ * @version 14-1-6 下午4:21
  */
 public class MotionDetector {
 	private static MotionEvent latestEvent;

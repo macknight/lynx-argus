@@ -30,7 +30,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午3:54
+ * @version 13-11-22 下午3:54
  */
 public class CampaignListFragment extends LFFragment {
 

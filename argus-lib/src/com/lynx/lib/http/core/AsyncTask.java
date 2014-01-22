@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-27 下午5:52
+ * @version 13-8-27 下午5:52
  * @param <Params>
  * @param <Progress>
  * @param <Result>

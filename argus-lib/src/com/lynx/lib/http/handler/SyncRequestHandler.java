@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午11:04:58
+ * @version 2013-4-17 下午11:04:58
  */
 public class SyncRequestHandler {
 	private final AbstractHttpClient client;

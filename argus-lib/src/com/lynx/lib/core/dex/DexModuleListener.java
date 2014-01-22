@@ -5,7 +5,7 @@ package com.lynx.lib.core.dex;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-21 下午8:30
+ * @version 13-11-21 下午8:30
  */
 public interface DexModuleListener {
 	public static final int DEX_HAS_UPDATE = 0; // 有更新

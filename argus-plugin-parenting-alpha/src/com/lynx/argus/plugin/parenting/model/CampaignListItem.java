@@ -4,7 +4,7 @@ package com.lynx.argus.plugin.parenting.model;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午5:00
+ * @version 13-11-22 下午5:00
  */
 public class CampaignListItem {
 	private String id;

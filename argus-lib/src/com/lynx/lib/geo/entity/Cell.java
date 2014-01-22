@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-27 下午5:53
+ * @version 13-8-27 下午5:53
  */
 public interface Cell extends Serializable {
 	CellType type();

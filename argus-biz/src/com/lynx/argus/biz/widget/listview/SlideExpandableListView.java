@@ -12,6 +12,9 @@ import com.lynx.argus.biz.widget.listview.AbstractSlideExpandableListAdapter.Sav
 /**
  * Simple subclass of listview which does nothing more than wrap any ListAdapter
  * in a SlideExpandalbeListAdapter
+ *
+ * @author zhufeng.liu
+ * @version 13-11-19 下午3:55
  */
 class SlideExpandableListView extends ListView {
 	private SlideExpandableListAdapter adapter;

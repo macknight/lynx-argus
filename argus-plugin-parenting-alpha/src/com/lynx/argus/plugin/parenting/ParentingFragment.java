@@ -14,7 +14,7 @@ import com.lynx.lib.core.LFFragment;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午4:29
+ * @version 13-11-22 下午4:29
  */
 public class ParentingFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";

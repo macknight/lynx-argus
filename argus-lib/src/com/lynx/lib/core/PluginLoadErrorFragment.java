@@ -12,7 +12,7 @@ import com.lynx.lib.util.ViewUtil;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-26 下午3:23
+ * @version 13-9-26 下午3:23
  */
 public class PluginLoadErrorFragment extends LFFragment {
 	private static final String Tag = "PluginLoadErrorFragment";

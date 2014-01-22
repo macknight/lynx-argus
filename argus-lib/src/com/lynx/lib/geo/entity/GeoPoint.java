@@ -8,7 +8,7 @@ import java.io.Serializable;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-10 下午1:54
+ * @version 13-9-10 下午1:54
  */
 public class GeoPoint implements Serializable {
 	private double lat;

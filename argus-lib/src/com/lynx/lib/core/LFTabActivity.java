@@ -19,7 +19,7 @@ import java.util.Stack;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-26 下午3:08
+ * @version 13-9-26 下午3:08
  */
 public abstract class LFTabActivity extends LFActivity {
 	protected static Map<String, Stack<LFFragment>> stacks = new HashMap<String, Stack<LFFragment>>();

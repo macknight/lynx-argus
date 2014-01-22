@@ -17,7 +17,7 @@ import android.widget.WrapperListAdapter;
  * The wrapped adapter is available to subclasses as the "wrapped" field.
  * 
  * @author tjerk
- * @date 6/9/12 4:41 PM
+ * @version 6/9/12 4:41 PM
  */
 public abstract class WrapperListAdapterImpl extends BaseAdapter implements
 		WrapperListAdapter {

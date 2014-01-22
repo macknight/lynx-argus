@@ -7,7 +7,7 @@ import java.security.MessageDigest;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午5:01
+ * @version 13-11-8 下午5:01
  */
 public class BMapDigester {
 	private static char _fldif[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/."

@@ -16,7 +16,7 @@ import java.util.Stack;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-10-29 上午10:49
+ * @version 13-10-29 上午10:49
  */
 public abstract class LFNavigationActivity extends LFActivity {
 	private Stack<LFFragment> stack;

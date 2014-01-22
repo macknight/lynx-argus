@@ -15,7 +15,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午5:11
+ * @version 13-11-22 下午5:11
  */
 public class CampaignListAdapter extends BaseAdapter {
 	private Context context;

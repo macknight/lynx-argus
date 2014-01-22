@@ -19,7 +19,7 @@ import org.json.JSONObject;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-16 下午2:00
+ * @version 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends LFFragment {
 	private HttpService httpService;
@@ -48,7 +48,7 @@ public class ShopDetailFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View v = inflater
 				.inflate(R.layout.layout_shop_detail, container, false);
 

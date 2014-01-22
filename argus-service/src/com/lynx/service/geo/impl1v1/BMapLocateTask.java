@@ -20,7 +20,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午5:01
+ * @version 13-11-8 下午5:01
  */
 public class BMapLocateTask {
 	private static final String Tag = "BMapLocateTask";

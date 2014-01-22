@@ -16,7 +16,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-6 下午4:11
+ * @version 13-11-6 下午4:11
  */
 public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 	private ShopFilter filter;

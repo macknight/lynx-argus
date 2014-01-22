@@ -41,7 +41,7 @@ import java.util.Map;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-16 上午10:29
+ * @version 13-9-16 上午10:29
  */
 public class ShopListFragment extends LFFragment {
 
@@ -87,7 +87,7 @@ public class ShopListFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+			Bundle savedInstanceState) throws Exception {
 		View v = inflater.inflate(R.layout.layout_shoplist, container, false);
 
 		initLocationModule(v);

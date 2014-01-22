@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-8 下午5:01
+ * @version 13-11-8 下午5:01
  */
 public class WifiInfoManager {
 	private static final String Tag = "WifiInfoManager";

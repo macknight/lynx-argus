@@ -8,8 +8,10 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 
 /**
- * @author: chris.liu
- * @addtime: 14-1-20 上午11:53
+ * 
+ * @author chris.liu
+ * 
+ * @version 14-1-20 上午11:53
  */
 public class AboutFragment extends BizFragment {
 

@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-6 下午4:24
+ * @version 13-11-6 下午4:24
  */
 public class ShopListAdapter extends BaseAdapter {
 	private Context context;

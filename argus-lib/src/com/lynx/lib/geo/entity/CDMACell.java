@@ -4,7 +4,7 @@ package com.lynx.lib.geo.entity;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-27 下午5:52
+ * @version 13-8-27 下午5:52
  */
 public class CDMACell implements Cell {
 	private int mcc; // mobile country code

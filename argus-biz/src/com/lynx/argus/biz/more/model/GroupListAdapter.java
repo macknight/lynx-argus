@@ -64,7 +64,7 @@ public class GroupListAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		holder.tvTitle.setText(data.get(position).getTitle());
+		holder.tvTitle.setText(data.get(position).title());
 		return view;
 	}
 

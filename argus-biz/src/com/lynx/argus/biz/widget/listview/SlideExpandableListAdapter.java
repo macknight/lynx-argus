@@ -10,7 +10,8 @@ import com.lynx.argus.R;
  * the contructor.
  * 
  * @author tjerk
- * @date 6/13/12 8:04 AM
+ *
+ * @version 6/13/12 8:04 AM
  */
 public class SlideExpandableListAdapter extends
 		AbstractSlideExpandableListAdapter {

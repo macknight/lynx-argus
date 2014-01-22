@@ -12,16 +12,18 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 /**
- * @author: chris.liu
- * @addtime: 14-1-14 上午10:32
+ * 
+ * @author chris.liu
+ * 
+ * @version 14-1-14 上午10:32
  */
 public class LFEnvironment {
 
-    private static boolean sourceInited = false;
+	private static boolean sourceInited = false;
 	private static String imei;
 	private static String did;
 	private static String ua;
-    private static String source;
+	private static String source;
 	private static PackageInfo packageInfo;
 
 	private LFEnvironment() {
@@ -168,8 +170,11 @@ public class LFEnvironment {
 	private static PackageInfo pkgInfo() {
 		if (packageInfo == null) {
 			try {
-				packageInfo = LFApplication.instance().getPackageManager().getPackageInfo(
-                        LFApplication.instance().getPackageName(), 0);
+				packageInfo = LFApplication
+						.instance()
+						.getPackageManager()
+						.getPackageInfo(
+								LFApplication.instance().getPackageName(), 0);
 			} catch (PackageManager.NameNotFoundException e) {
 
 			}
@@ -181,7 +186,8 @@ public class LFEnvironment {
 	private static String source() {
 		if (!sourceInited) {
 			try {
-				InputStream ins = LFApplication.instance.getAssets().open("source.txt");
+				InputStream ins = LFApplication.instance.getAssets().open(
+						"source.txt");
 				byte[] bytes = new byte[0x100];
 				int l = ins.read(bytes);
 				if (l > 0) {
@@ -196,22 +202,22 @@ public class LFEnvironment {
 		return source;
 	}
 
-    private static String escapeSource(String src) {
-        StringBuilder sb = new StringBuilder();
-        for (char c : src.toCharArray()) {
-            if (c >= 'a' && c <= 'z') {
-                sb.append(c);
-            } else if (c >= 'A' && c <= 'Z') {
-                sb.append(c);
-            } else if (c >= '0' && c <= '9') {
-                sb.append(c);
-            } else if (c == '.' || c == '_' || c == '-' || c == '/') {
-                sb.append(c);
-            } else if (c == ' ') {
-                sb.append('_');
-            }
-        }
-        return sb.toString();
-    }
+	private static String escapeSource(String src) {
+		StringBuilder sb = new StringBuilder();
+		for (char c : src.toCharArray()) {
+			if (c >= 'a' && c <= 'z') {
+				sb.append(c);
+			} else if (c >= 'A' && c <= 'Z') {
+				sb.append(c);
+			} else if (c >= '0' && c <= '9') {
+				sb.append(c);
+			} else if (c == '.' || c == '_' || c == '-' || c == '/') {
+				sb.append(c);
+			} else if (c == ' ') {
+				sb.append('_');
+			}
+		}
+		return sb.toString();
+	}
 
 }

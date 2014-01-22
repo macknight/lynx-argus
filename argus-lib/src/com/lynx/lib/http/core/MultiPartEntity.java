@@ -11,7 +11,7 @@ import java.util.Random;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午10:52:25
+ * @version 2013-4-17 下午10:52:25
  */
 public class MultiPartEntity implements HttpEntity {
 	private final static char[] MULTIPART_CHARS = "-_1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"

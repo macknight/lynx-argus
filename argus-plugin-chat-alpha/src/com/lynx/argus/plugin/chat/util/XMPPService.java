@@ -22,10 +22,10 @@ import org.jivesoftware.smack.packet.Presence;
 import java.util.Collection;
 
 /**
- *
+ * 
  * @author zhufeng.liu
- *
- * @addtime 13-12-23 下午1:20
+ * 
+ * @version 13-12-23 下午1:20
  */
 public class XMPPService extends Service {
 	private static final String TAG = "XMPPService";
@@ -90,19 +90,19 @@ public class XMPPService extends Service {
 		NotificationManager notifier = (NotificationManager) XMPPService.this
 				.getSystemService(Context.NOTIFICATION_SERVICE);
 
-//		Notification notification = new Notification(icon, text, when);
-//
-//		Intent pending = new Intent(this, RequestActivity.class);
-//		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-//				pending, 0);
-//
-//		notification.setLatestEventInfo(this, "Contact Request", info,
-//				contentIntent);
-//
-//		notification.flags |= Notification.FLAG_AUTO_CANCEL;
-//		notification.flags |= Notification.DEFAULT_SOUND;
-//
-//		notifier.notify(0x007, notification);
+		// Notification notification = new Notification(icon, text, when);
+		//
+		// Intent pending = new Intent(this, RequestActivity.class);
+		// PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+		// pending, 0);
+		//
+		// notification.setLatestEventInfo(this, "Contact Request", info,
+		// contentIntent);
+		//
+		// notification.flags |= Notification.FLAG_AUTO_CANCEL;
+		// notification.flags |= Notification.DEFAULT_SOUND;
+		//
+		// notifier.notify(0x007, notification);
 	}
 
 	// notification for a received message

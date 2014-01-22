@@ -11,7 +11,7 @@ import com.lynx.service.cache.impl1v1.CacheServiceImpl;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 上午10:01
+ * @version 13-9-17 上午10:01
  */
 public class CacheServiceDexLoader extends ServiceLoader {
 

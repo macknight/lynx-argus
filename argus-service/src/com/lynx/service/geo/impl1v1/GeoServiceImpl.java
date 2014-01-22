@@ -14,7 +14,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-29 下午11:27
+ * @version 13-8-29 下午11:27
  */
 public class GeoServiceImpl implements GeoService, LocationListener {
 	public static final String Tag = "geo";

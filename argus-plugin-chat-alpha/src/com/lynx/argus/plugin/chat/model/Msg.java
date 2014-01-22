@@ -4,7 +4,7 @@ package com.lynx.argus.plugin.chat.model;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-12-7 下午8:06
+ * @version 13-12-7 下午8:06
  */
 public class Msg {
 	private String uid;

@@ -8,7 +8,7 @@ import android.view.View;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-15 下午1:38
+ * @version 13-11-15 下午1:38
  */
 public interface EmptyViewMethodAccessor {
 

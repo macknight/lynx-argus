@@ -22,7 +22,7 @@ import java.util.Stack;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-12 下午5:19
+ * @version 13-9-12 下午5:19
  */
 public class BizTabActivity extends LFTabActivity {
 

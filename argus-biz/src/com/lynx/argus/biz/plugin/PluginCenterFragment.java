@@ -26,7 +26,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-12 下午6:18
+ * @version 13-9-12 下午6:18
  */
 public class PluginCenterFragment extends BizFragment {
 	public static final String Tag = "plugin";

@@ -9,7 +9,7 @@ import com.lynx.lib.cache.CacheService;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 上午10:02
+ * @version 13-9-17 上午10:02
  */
 public class CacheServiceImpl implements CacheService {
 	public static final String Tag = "cache";

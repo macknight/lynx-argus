@@ -8,7 +8,7 @@ import com.lynx.service.hotfix.impl1v1.HotFixServiceImpl;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-12 下午1:34
+ * @version 13-9-12 下午1:34
  */
 public class HotFixServiceDexLoader extends ServiceLoader {
 

@@ -9,7 +9,7 @@ import java.util.WeakHashMap;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 下午3:36
+ * @version 13-9-17 下午3:36
  */
 public class MemoryCache {
 	private static final String TAG = "MemoryCache";

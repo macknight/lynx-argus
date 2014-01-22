@@ -14,7 +14,8 @@ import android.widget.ListAdapter;
  * that will be invoked if one of those buttons are pressed.
  * 
  * @author tjerk
- * @date 6/26/12 7:01 PM
+ * 
+ * @version 6/26/12 7:01 PM
  */
 public class ActionSlideExpandableListView extends SlideExpandableListView {
 	private OnActionClickListener listener;

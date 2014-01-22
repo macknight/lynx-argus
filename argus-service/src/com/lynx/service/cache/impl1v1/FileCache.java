@@ -15,7 +15,7 @@ import java.io.InputStream;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 下午3:36
+ * @version 13-9-17 下午3:36
  */
 public class FileCache implements Cache {
 	private static final String Tag = "FileCache";

@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-13 下午11:16
+ * @version 13-8-13 下午11:16
  */
 public class GeoServiceDexLoader extends ServiceLoader {
 

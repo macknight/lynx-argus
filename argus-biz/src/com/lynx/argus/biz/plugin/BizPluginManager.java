@@ -24,7 +24,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-14 下午2:37
+ * @version 13-11-14 下午2:37
  */
 public class BizPluginManager {
 	private static final String K_LST_UPDATE = "lst_update";

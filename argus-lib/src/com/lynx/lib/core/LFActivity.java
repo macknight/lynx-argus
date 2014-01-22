@@ -8,7 +8,7 @@ import android.os.Bundle;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-26 下午3:06
+ * @version 13-9-26 下午3:06
  */
 public abstract class LFActivity extends Activity {
 

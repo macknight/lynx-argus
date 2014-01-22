@@ -42,7 +42,7 @@ import java.util.Map;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-16 上午10:29
+ * @version 13-9-16 上午10:29
  */
 public class ShopListFragment extends BizFragment {
 	private GeoService geoService;

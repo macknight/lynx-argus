@@ -19,7 +19,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-12 下午6:27
+ * @version 13-11-12 下午6:27
  */
 public class PluginStoreAdapter extends BaseAdapter {
 	private Context context;

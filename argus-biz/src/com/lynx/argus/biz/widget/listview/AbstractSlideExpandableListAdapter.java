@@ -17,7 +17,8 @@ import java.util.BitSet;
  * getExpandableView for each list item.
  * 
  * @author tjerk
- * @date 6/9/12 4:41 PM
+ * 
+ * @version 6/9/12 4:41 PM
  */
 public abstract class AbstractSlideExpandableListAdapter extends
 		WrapperListAdapterImpl {

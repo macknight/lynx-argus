@@ -4,7 +4,7 @@ package com.lynx.lib.http;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午10:52:48
+ * @version 2013-4-17 下午10:52:48
  */
 public abstract class HttpCallback<T> {
 	private boolean progress = true;

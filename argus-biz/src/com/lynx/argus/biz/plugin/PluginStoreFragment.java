@@ -29,7 +29,7 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-16 下午10:30
+ * @version 13-11-16 下午10:30
  */
 public class PluginStoreFragment extends BizFragment {
 	private P2RASEListView p2raselv;

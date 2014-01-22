@@ -19,7 +19,7 @@ import com.lynx.lib.core.Logger;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-30 下午1:33
+ * @version 13-8-30 下午1:33
  */
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 

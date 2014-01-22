@@ -12,12 +12,14 @@ import android.widget.TextView;
 import com.lynx.lib.core.Logger;
 
 /**
- * @author: chris.liu
- * @addtime: 14-1-13 上午11:49
+ * 
+ * @author chris.liu
+ * 
+ * @version 14-1-13 上午11:49
  */
 public class ViewUtil {
 
-    public static final String Tag = "ViewUtil";
+	public static final String Tag = "ViewUtil";
 
 	private ViewUtil() {
 		throw new AssertionError("this class shouldn't be instanced");

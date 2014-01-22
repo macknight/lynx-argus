@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午9:49:29
+ * @version 2013-4-17 下午9:49:29
  */
 public class HttpParam {
 	private static final String ENCODING = "UTF-8";

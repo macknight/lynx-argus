@@ -7,7 +7,7 @@ import com.lynx.lib.core.dex.Service;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-12 下午1:34
+ * @version 13-9-12 下午1:34
  */
 public interface HotFixService extends Service {
 

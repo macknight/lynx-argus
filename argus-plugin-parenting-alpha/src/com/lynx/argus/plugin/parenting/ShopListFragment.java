@@ -28,7 +28,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-22 下午4:29
+ * @version 13-11-22 下午4:29
  */
 public class ShopListFragment extends LFFragment {
 
@@ -40,9 +40,8 @@ public class ShopListFragment extends LFFragment {
 	private List<ShopListItem> shopList = new ArrayList<ShopListItem>();
 	private PullToRefreshListView prlvShops;
 
-
-    private static int curPage = 1;
-    private static int pageSize = 0;
+	private static int curPage = 1;
+	private static int pageSize = 0;
 
 	private HttpService httpService;
 
@@ -128,8 +127,8 @@ public class ShopListFragment extends LFFragment {
 					JSONObject joShop = jaResult.getJSONObject(i);
 					String storeName = joShop.getString("store_name");
 					String storeId = joShop.getString("store_id");
-                    String shopName = joShop.getString("shop_name");
-                    String shopId = joShop.getString("store_id");
+					String shopName = joShop.getString("shop_name");
+					String shopId = joShop.getString("store_id");
 					String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
 							+ joShop.getString("default_image");
 					String lng = joShop.getString("map_lng");

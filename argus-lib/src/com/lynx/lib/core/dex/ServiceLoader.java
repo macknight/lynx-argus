@@ -4,18 +4,20 @@ import com.lynx.lib.core.Logger;
 import dalvik.system.DexClassLoader;
 
 /**
- *
+ * 
  * @author zhufeng.liu
- *
- * @addtime 13-8-30 下午11:29
+ * 
+ * @version 13-8-30 下午11:29
  */
 public abstract class ServiceLoader extends DexModuleLoader {
 	protected Class<?> clazz;
 	protected Service service;
 
 	/**
-	 * @param dexModule    动态服务配置
-	 * @param defaultClazz 默认服务版本
+	 * @param dexModule
+	 *            动态服务配置
+	 * @param defaultClazz
+	 *            默认服务版本
 	 */
 	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz)
 			throws Exception {
@@ -53,7 +55,7 @@ public abstract class ServiceLoader extends DexModuleLoader {
 
 	/**
 	 * 显示调用则立即生效，否则在app下次载入时生效
-	 *
+	 * 
 	 * @throws Exception
 	 */
 	@SuppressWarnings("unchecked")
@@ -61,8 +63,8 @@ public abstract class ServiceLoader extends DexModuleLoader {
 		beforeLoad();
 		deleteOldFile();
 		try {
-			DexClassLoader cl = new DexClassLoader(srcPath,
-					dexDir, null, context.getClassLoader());
+			DexClassLoader cl = new DexClassLoader(srcPath, dexDir, null,
+					context.getClassLoader());
 			clazz = (Class<Service>) cl.loadClass(dexModule.clazz());
 		} catch (Exception e) {
 			// TODO: roll back to the default service

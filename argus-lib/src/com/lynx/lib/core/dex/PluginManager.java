@@ -22,7 +22,7 @@ import java.util.Map;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-17 上午1:33
+ * @version 13-11-17 上午1:33
  */
 public class PluginManager {
 	private static final String Tag = "pluginManager";

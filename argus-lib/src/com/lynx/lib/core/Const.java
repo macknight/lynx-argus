@@ -4,7 +4,7 @@ package com.lynx.lib.core;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-10-6 下午8:26
+ * @version 13-10-6 下午8:26
  */
 public class Const {
 

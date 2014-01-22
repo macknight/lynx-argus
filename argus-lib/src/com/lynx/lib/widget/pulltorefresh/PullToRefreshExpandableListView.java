@@ -10,7 +10,7 @@ import android.widget.ExpandableListView;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-30 下午1:33
+ * @version 13-8-30 下午1:33
  */
 public class PullToRefreshExpandableListView extends
 		PullToRefreshAdapterViewBase<ExpandableListView> {

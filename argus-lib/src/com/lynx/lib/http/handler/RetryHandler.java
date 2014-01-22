@@ -18,7 +18,7 @@ import java.util.HashSet;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午11:04:04
+ * @version 2013-4-17 下午11:04:04
  */
 public class RetryHandler implements HttpRequestRetryHandler {
 	private static final int RETRY_SLEEP_TIME_MILLIS = 1000;

@@ -10,8 +10,9 @@ import android.widget.LinearLayout;
  * it visible. Or by sliding it up so it will hide. It will look like it slides
  * behind the view above.
  * 
- * @auther tjerk
- * @date 6/9/12 4:58 PM
+ * @author tjerk
+ * 
+ * @version 6/9/12 4:58 PM
  */
 public class ExpandCollapseAnimation extends Animation {
 	private View mAnimatedView;

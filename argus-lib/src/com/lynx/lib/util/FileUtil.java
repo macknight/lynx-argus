@@ -17,15 +17,15 @@ import java.util.jar.JarFile;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 上午11:39
+ * @version 13-9-17 上午11:39
  */
 public class FileUtil {
 	public static final Charset US_ASCII = Charset.forName("US-ASCII");
 	public static final Charset UTF_8 = Charset.forName("UTF-8");
 
-    private FileUtil() {
-        throw new AssertionError("this class shouldn't be instanced");
-    }
+	private FileUtil() {
+		throw new AssertionError("this class shouldn't be instanced");
+	}
 
 	public static String readFully(Reader reader) throws IOException {
 		try {

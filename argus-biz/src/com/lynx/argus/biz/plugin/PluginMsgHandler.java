@@ -6,7 +6,7 @@ import android.os.Handler;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-16 下午11:10
+ * @version 13-11-16 下午11:10
  */
 public abstract class PluginMsgHandler extends Handler {
 

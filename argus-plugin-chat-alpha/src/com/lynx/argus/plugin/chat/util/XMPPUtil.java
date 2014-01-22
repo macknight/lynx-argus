@@ -8,7 +8,7 @@ import org.jivesoftware.smack.XMPPException;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-12-12 下午9:20
+ * @version 13-12-12 下午9:20
  */
 public class XMPPUtil {
 	private static XMPPConnection conn = null;

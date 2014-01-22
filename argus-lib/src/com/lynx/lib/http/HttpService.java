@@ -11,7 +11,7 @@ import java.io.File;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 2013-4-17 下午11:03:01
+ * @version 2013-4-17 下午11:03:01
  */
 public interface HttpService {
 	/********************************************************************/

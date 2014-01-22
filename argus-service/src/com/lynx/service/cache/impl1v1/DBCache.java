@@ -6,7 +6,7 @@ import android.content.Context;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-18 上午10:29
+ * @version 13-9-18 上午10:29
  */
 public class DBCache implements Cache {
 

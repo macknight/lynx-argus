@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-17 上午10:17
+ * @version 13-9-17 上午10:17
  */
 public class StrictLineReader implements Closeable {
 

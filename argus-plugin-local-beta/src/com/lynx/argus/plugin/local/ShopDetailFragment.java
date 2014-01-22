@@ -47,8 +47,8 @@ public class ShopDetailFragment extends LFFragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) throws Exception {
 		View v = inflater.inflate(R.layout.layout_local_shop_detail, container,
 				false);
 

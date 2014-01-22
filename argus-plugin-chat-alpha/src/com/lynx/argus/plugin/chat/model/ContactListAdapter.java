@@ -13,8 +13,8 @@ import java.util.List;
 
 /**
  * @author chris.liu
- *
- * @addtime 13-12-22 下午10:09
+ * 
+ * @version 13-12-22 下午10:09
  */
 public class ContactListAdapter extends BaseAdapter {
 	private static List<Contact> contactList;
