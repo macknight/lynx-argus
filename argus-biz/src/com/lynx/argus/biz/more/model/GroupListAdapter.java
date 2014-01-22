@@ -13,7 +13,7 @@ import java.util.List;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-11 下午5:11
+ * @version 13-11-11 下午5:11
  */
 public class GroupListAdapter extends BaseAdapter {
 	private Context context;

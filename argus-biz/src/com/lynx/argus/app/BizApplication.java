@@ -8,7 +8,7 @@ import com.lynx.lib.core.Logger;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-8-29 下午6:15
+ * @version 13-8-29 下午6:15
  */
 public class BizApplication extends LFApplication {
 
@@ -18,7 +18,7 @@ public class BizApplication extends LFApplication {
 		// Const.LM_API_DOMAIN = "http://192.168.0.102/lynx-web";
 		// Const.LM_API_DOMAIN = "http://58.210.101.202:59102/lynx-web";
 		// Const.LM_API_DOMAIN = "http://192.168.1.163/lynx-web";
-//		Const.LM_API_DOMAIN = "http://argus.maskerliu.eu.cloudbees.net/";
+		// Const.LM_API_DOMAIN = "http://argus.maskerliu.eu.cloudbees.net/";
 		Logger.setLevel(Logger.AppLevel.DEBUG);
 
 		super.onCreate();

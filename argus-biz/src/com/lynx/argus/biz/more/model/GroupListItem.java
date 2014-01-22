@@ -4,7 +4,7 @@ package com.lynx.argus.biz.more.model;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-11-11 下午5:15
+ * @version 13-11-11 下午5:15
  */
 public class GroupListItem {
 	private int resId;

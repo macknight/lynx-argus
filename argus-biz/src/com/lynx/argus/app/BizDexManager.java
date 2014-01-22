@@ -9,7 +9,7 @@ import com.lynx.service.geo.GeoServiceDexLoader;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-10 下午3:38
+ * @version 13-9-10 下午3:38
  */
 public class BizDexManager extends DexManager {
 

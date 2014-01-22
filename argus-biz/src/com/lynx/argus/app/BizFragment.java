@@ -9,7 +9,7 @@ import com.lynx.lib.core.LFFragment;
  * 
  * @author zhufeng.liu
  * 
- * @addtime 13-9-12 下午6:18
+ * @version 13-9-12 下午6:18
  */
 public abstract class BizFragment extends LFFragment {
 
