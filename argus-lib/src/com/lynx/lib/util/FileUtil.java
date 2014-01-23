@@ -24,7 +24,7 @@ public class FileUtil {
 	public static final Charset UTF_8 = Charset.forName("UTF-8");
 
 	private FileUtil() {
-		throw new AssertionError("this class shouldn't be instanced");
+		throw new AssertionError("FileUtil shouldn't be instanced");
 	}
 
 	public static String readFully(Reader reader) throws IOException {

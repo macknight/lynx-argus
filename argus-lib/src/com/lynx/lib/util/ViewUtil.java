@@ -22,7 +22,7 @@ public class ViewUtil {
 	public static final String Tag = "ViewUtil";
 
 	private ViewUtil() {
-		throw new AssertionError("this class shouldn't be instanced");
+		throw new AssertionError("ViewUtil shouldn't be instanced");
 	}
 
 	/**

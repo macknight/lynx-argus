@@ -57,7 +57,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	private final DefaultHttpClient httpClient;
 	private final HttpContext httpContext;
-	private String CHARSET = "utf-8";
+	private String charset = "utf-8";
 
 	private final Map<String, String> clientHeaderMap;
 
@@ -145,9 +145,9 @@ public class DefaultHttpServiceImpl implements HttpService {
 		return this.httpContext;
 	}
 
-	public void setCHARSET(String charSet) {
+	public void setCharset(String charSet) {
 		if (charSet != null && charSet.trim().length() != 0)
-			this.CHARSET = charSet;
+			this.charset = charSet;
 	}
 
 	public void setCookieStore(CookieStore cookieStore) {
@@ -427,7 +427,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 			String target, boolean isResume, HttpCallback<File> callback) {
 		final HttpGet get = new HttpGet(getUrlWithQueryString(url, params));
 		HttpHandler<File> handler = new HttpHandler<File>(httpClient,
-				httpContext, callback, CHARSET);
+				httpContext, callback, charset);
 		handler.executeOnExecutor(executor, get, target, isResume);
 		return handler;
 	}
@@ -439,7 +439,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
 
-		new HttpHandler<T>(client, httpContext, httpCallBack, CHARSET)
+		new HttpHandler<T>(client, httpContext, httpCallBack, charset)
 				.executeOnExecutor(executor, uriRequest);
 
 	}
@@ -450,7 +450,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
-		return new SyncRequestHandler(client, httpContext, CHARSET)
+		return new SyncRequestHandler(client, httpContext, charset)
 				.sendRequest(uriRequest);
 	}
 

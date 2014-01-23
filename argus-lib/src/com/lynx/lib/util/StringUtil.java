@@ -21,7 +21,7 @@ public class StringUtil {
 			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 
 	private StringUtil() {
-		throw new AssertionError("this class shouldn't be instanced");
+		throw new AssertionError("StringUtil shouldn't be instanced");
 	}
 
 	public static String byteArrayToHexString(byte[] b) {

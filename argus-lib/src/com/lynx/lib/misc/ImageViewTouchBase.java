@@ -33,6 +33,21 @@ import android.widget.ImageView;
  */
 public class ImageViewTouchBase extends ImageView {
 
+	protected Matrix mBaseMatrix = new Matrix();
+	protected Matrix mSuppMatrix = new Matrix();
+	protected Handler mHandler = new Handler();
+	protected Runnable mOnLayoutRunnable = null;
+	protected float mMaxZoom;
+	protected final Matrix mDisplayMatrix = new Matrix();
+	protected final float[] mMatrixValues = new float[9];
+
+	protected int mThisWidth = -1, mThisHeight = -1;
+	final protected RotateBitmap mBitmapDisplayed = new RotateBitmap(null, 0);
+
+	final protected float MAX_ZOOM = 2.0f;
+
+	private OnBitmapChangedListener mListener;
+
 	protected enum Command {
 		Center, Move, Zoom, Layout, Reset,
 	};
@@ -49,21 +64,6 @@ public class ImageViewTouchBase extends ImageView {
 		return (end * (((time = (time / duration) - 1) * time * time) + 1))
 				+ start;
 	}
-
-	protected Matrix mBaseMatrix = new Matrix();
-	protected Matrix mSuppMatrix = new Matrix();
-	protected Handler mHandler = new Handler();
-	protected Runnable mOnLayoutRunnable = null;
-	protected float mMaxZoom;
-	protected final Matrix mDisplayMatrix = new Matrix();
-	protected final float[] mMatrixValues = new float[9];
-
-	protected int mThisWidth = -1, mThisHeight = -1;
-	final protected RotateBitmap mBitmapDisplayed = new RotateBitmap(null, 0);
-
-	final protected float MAX_ZOOM = 2.0f;
-
-	private OnBitmapChangedListener mListener;
 
 	public ImageViewTouchBase(final Context context) {
 		super(context);

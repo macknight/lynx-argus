@@ -19,7 +19,7 @@ public class ImageUtil {
 	private static final String TAG = "ImageUtil";
 
 	private ImageUtil() {
-		throw new AssertionError("this class shouldn't be instanced");
+		throw new AssertionError("ImageUtil shouldn't be instanced");
 	}
 
 	/**

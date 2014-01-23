@@ -21,9 +21,9 @@ public abstract class LFApplication extends Application {
 
 	protected static LFApplication instance;
 
-
 	private static HttpService httpService;
 	protected DexManager dexManager;
+    private static ImageLoader imageLoader;
 
 	public static LFApplication instance() {
 		if (instance == null) {
@@ -40,7 +40,7 @@ public abstract class LFApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		httpService = new DefaultHttpServiceImpl();
-
+        imageLoader = new ImageLoader();
 		initDexManager();
 	}
 
@@ -78,6 +78,10 @@ public abstract class LFApplication extends Application {
 		}
 		return dexManager.service(name);
 	}
+
+    public ImageLoader imageLoader() {
+        return imageLoader;
+    }
 
 	public Map<String, PluginLoader> pluginLoaders() {
 		return dexManager.pluginLoaders();

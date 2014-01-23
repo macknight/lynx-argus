@@ -29,6 +29,86 @@ import android.view.ViewConfiguration;
  */
 public class ImageViewTouch extends ImageViewTouchBase {
 
+	static final float MIN_ZOOM = 0.9f;
+	protected ScaleGestureDetector mScaleDetector;
+	protected GestureDetector mGestureDetector;
+	protected int mTouchSlop;
+	protected float mCurrentScaleFactor;
+	protected float mScaleFactor;
+	protected int mDoubleTapDirection;
+
+	protected GestureListener mGestureListener;
+
+	protected ScaleListener mScaleListener;
+
+	public ImageViewTouch(final Context context, final AttributeSet attrs) {
+		super(context, attrs);
+	}
+
+	@Override
+	protected void init() {
+		super.init();
+		this.mTouchSlop = ViewConfiguration.getTouchSlop();
+		this.mGestureListener = new GestureListener();
+		this.mScaleListener = new ScaleListener();
+
+		// compatibility for api 7
+		this.mScaleDetector = new ScaleGestureDetector(getContext(),
+				this.mScaleListener);
+		// mGestureDetector = new GestureDetector( getContext(),
+		// mGestureListener, null, true );// api>=8
+		this.mGestureDetector = new GestureDetector(getContext(),
+				this.mGestureListener, null);
+		this.mCurrentScaleFactor = 1f;
+		this.mDoubleTapDirection = 1;
+	}
+
+	protected float onDoubleTapPost(final float scale, final float maxZoom) {
+		if (this.mDoubleTapDirection == 1) {
+			if ((scale + (this.mScaleFactor * 2)) <= maxZoom) {
+				return scale + this.mScaleFactor;
+			} else {
+				this.mDoubleTapDirection = -1;
+				return maxZoom;
+			}
+		} else {
+			this.mDoubleTapDirection = 1;
+			return 1f;
+		}
+	}
+
+	@Override
+	public boolean onTouchEvent(final MotionEvent event) {
+		this.mScaleDetector.onTouchEvent(event);
+		if (!this.mScaleDetector.isInProgress()) {
+			this.mGestureDetector.onTouchEvent(event);
+		}
+		final int action = event.getAction();
+		switch (action & MotionEvent.ACTION_MASK) {
+		case MotionEvent.ACTION_UP:
+			if (getScale() < 1f) {
+				zoomTo(1f, 50);
+			}
+			break;
+		}
+		return true;
+	}
+
+	@Override
+	protected void onZoom(final float scale) {
+		super.onZoom(scale);
+		if (!this.mScaleDetector.isInProgress()) {
+			this.mCurrentScaleFactor = scale;
+		}
+	}
+
+	@Override
+	public void setImageRotateBitmapReset(final RotateBitmap bitmap,
+			final boolean reset) {
+		super.setImageRotateBitmapReset(bitmap, reset);
+		this.mScaleFactor = getMaxZoom() / 3;
+	}
+
 	class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
 		@Override
@@ -108,85 +188,5 @@ public class ImageViewTouch extends ImageViewTouchBase {
 			}
 			return false;
 		}
-	}
-
-	static final float MIN_ZOOM = 0.9f;
-	protected ScaleGestureDetector mScaleDetector;
-	protected GestureDetector mGestureDetector;
-	protected int mTouchSlop;
-	protected float mCurrentScaleFactor;
-	protected float mScaleFactor;
-	protected int mDoubleTapDirection;
-
-	protected GestureListener mGestureListener;
-
-	protected ScaleListener mScaleListener;
-
-	public ImageViewTouch(final Context context, final AttributeSet attrs) {
-		super(context, attrs);
-	}
-
-	@Override
-	protected void init() {
-		super.init();
-		this.mTouchSlop = ViewConfiguration.getTouchSlop();
-		this.mGestureListener = new GestureListener();
-		this.mScaleListener = new ScaleListener();
-
-		// compatibility for api 7
-		this.mScaleDetector = new ScaleGestureDetector(getContext(),
-				this.mScaleListener);
-		// mGestureDetector = new GestureDetector( getContext(),
-		// mGestureListener, null, true );// api>=8
-		this.mGestureDetector = new GestureDetector(getContext(),
-				this.mGestureListener, null);
-		this.mCurrentScaleFactor = 1f;
-		this.mDoubleTapDirection = 1;
-	}
-
-	protected float onDoubleTapPost(final float scale, final float maxZoom) {
-		if (this.mDoubleTapDirection == 1) {
-			if ((scale + (this.mScaleFactor * 2)) <= maxZoom) {
-				return scale + this.mScaleFactor;
-			} else {
-				this.mDoubleTapDirection = -1;
-				return maxZoom;
-			}
-		} else {
-			this.mDoubleTapDirection = 1;
-			return 1f;
-		}
-	}
-
-	@Override
-	public boolean onTouchEvent(final MotionEvent event) {
-		this.mScaleDetector.onTouchEvent(event);
-		if (!this.mScaleDetector.isInProgress()) {
-			this.mGestureDetector.onTouchEvent(event);
-		}
-		final int action = event.getAction();
-		switch (action & MotionEvent.ACTION_MASK) {
-		case MotionEvent.ACTION_UP:
-			if (getScale() < 1f) {
-				zoomTo(1f, 50);
-			}
-			break;
-		}
-		return true;
-	}
-
-	@Override
-	protected void onZoom(final float scale) {
-		super.onZoom(scale);
-		if (!this.mScaleDetector.isInProgress()) {
-			this.mCurrentScaleFactor = scale;
-		}
-	}
-
-	@Override
-	public void setImageRotateBitmapReset(final RotateBitmap bitmap,
-			final boolean reset) {
-		super.setImageRotateBitmapReset(bitmap, reset);
-		this.mScaleFactor = getMaxZoom() / 3;
 	}
 }
