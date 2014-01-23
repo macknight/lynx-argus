@@ -20,14 +20,15 @@ public class BitmapCache extends LruCache<String, SoftReference<Bitmap>> {
 
 	@Override
 	protected void entryRemoved(final boolean evicted, final String key,
-			final SoftReference<Bitmap> oldValue,
-			final SoftReference<Bitmap> newValue) {
-		if (oldValue != null) {
-			final Bitmap bitmap = oldValue.get();
+			final SoftReference<Bitmap> oldVal,
+			final SoftReference<Bitmap> newVal) {
+
+		if (oldVal != null && oldVal.get() != null) {
+            final Bitmap bitmap = oldVal.get();
 
 			if (bitmap != null) {
-				if (!oldValue.get().isRecycled()) {
-					oldValue.get().recycle();
+				if (!bitmap.isRecycled()) {
+					bitmap.recycle();
 				}
 			}
 		}

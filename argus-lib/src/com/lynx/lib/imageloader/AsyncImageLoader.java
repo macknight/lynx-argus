@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.widget.ImageView;
+import com.lynx.lib.cache.CacheService;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.util.FileUtil;
@@ -29,6 +30,7 @@ public class AsyncImageLoader {
 	private final DiskCache diskCache;
 	private final Activity activity;
 	private static HttpService httpService;
+	private static CacheService cacheService;
 
 	private boolean paused;
 	private boolean closed;
@@ -55,6 +57,7 @@ public class AsyncImageLoader {
 		}
 
 		httpService = (HttpService) LFApplication.instance().service("http");
+		cacheService = (CacheService) LFApplication.instance().service("cache");
 
 		this.diskCache = new DiskCache(thumbnailPath);
 		this.activity = activity;
