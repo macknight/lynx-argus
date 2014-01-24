@@ -2,7 +2,7 @@ package com.lynx.lib.util;
 
 import android.graphics.*;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import com.lynx.lib.core.Logger;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,13 +42,25 @@ public class ImageUtil {
 			bitmap = BitmapFactory.decodeStream(is);
 			is.close();
 
-			Log.i(TAG, "image download finished." + imageUri);
+			Logger.i(TAG, "image download finished." + imageUri);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
 		}
 		return bitmap;
 	}
+
+    public static Bitmap stream2bitmap(InputStream stream) {
+        Bitmap bmp = null;
+        try {
+            bmp = BitmapFactory.decodeStream(stream);
+            stream.close();
+        } catch (Exception e) {
+            Logger.e(TAG, "bitmap convert error", e);
+        }
+
+        return bmp;
+    }
 
 	// 放大缩小图片
 	public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h) {

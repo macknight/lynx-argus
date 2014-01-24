@@ -1,488 +1,223 @@
 package com.lynx.lib.imageloader;
 
-import android.app.Activity;
+/**
+ * Created with IntelliJ IDEA.
+ * User: chris.liu
+ * Date: 13-11-15 下午1:37
+ */
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.ThumbnailUtils;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 import com.lynx.lib.cache.CacheService;
+import com.lynx.lib.cache.CacheService.CacheType;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.http.HttpService;
-import com.lynx.lib.util.FileUtil;
+import com.lynx.lib.util.ImageUtil;
+import com.lynx.lib.util.StringUtil;
 
 import java.io.InputStream;
-import java.lang.ref.SoftReference;
-import java.net.URL;
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * 图片异步loader
  * 
- * @author chris.liu
+ * @author zhufeng.liu
  * 
- * @version 14-1-23 上午11:33
+ * @version 2014-1-22 下午5:15:48
  */
 public class AsyncImageLoader {
+	private static final String TAG = "AsynImageLoader";
+	// 缓存下载过的图片的Map
+	private HttpService httpService;
+	private CacheService cacheService;
+	// 任务队列
+	private List<Task> taskQueue;
+	private AtomicBoolean isRunning = new AtomicBoolean(false);
 
-	private static BitmapCache bitmapCache;
+	private static AsyncImageLoader instance;
 
-	private final LinkedList<WorkItem> workItems = new LinkedList<WorkItem>();
-	private final DiskCache diskCache;
-	private final Activity activity;
-	private static HttpService httpService;
-	private static CacheService cacheService;
+	public static AsyncImageLoader instance() {
+		if (instance == null) {
+			instance = new AsyncImageLoader();
+		}
+		return instance;
+	}
 
-	private boolean paused;
-	private boolean closed;
-	private Thread thread;
+	private AsyncImageLoader() {
+		this.httpService = (HttpService) LFApplication.instance().service(
+				"http");
+		this.cacheService = (CacheService) LFApplication.instance().service(
+				"cache");
+		taskQueue = new ArrayList<Task>();
+		// 启动图片下载线程
+		isRunning.set(true);
+		new Thread(runnable).start();
+	}
 
-	/**
-	 * Creates a new instance of AsyncImageLoader object and specifies the
-	 * maximum number of Bitmap objects to cache in memory, and the path to
-	 * store generated thumbnails.
-	 * 
-	 * @param activity
-	 *            the Activity that hosts the ImageView to display loaded
-	 *            Bitmaps.
-	 * @param numberOfCachedBitmaps
-	 *            the maximum number of Bitmap objects to cache in memory.
-	 * @param thumbnailPath
-	 *            the path to store generated thumbnail files.
-	 */
-	public AsyncImageLoader(final Activity activity,
-			final int numberOfCachedBitmaps, final String thumbnailPath) {
-		if (AsyncImageLoader.bitmapCache == null) {
-			AsyncImageLoader.bitmapCache = new BitmapCache(
-					numberOfCachedBitmaps);
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			// 子线程中返回的下载完成的任务
+			Task task = (Task) msg.obj;
+			// 调用callback对象的loadImage方法，并将图片路径和图片回传给adapter
+			task.listener.loadImage(task.path, task.bitmap);
+			CacheType[] cacheTypes = { CacheType.Memory, CacheType.File };
+			cacheService.put(StringUtil.MD5Encode(task.path), task.bitmap,
+					cacheTypes);
 		}
 
-		httpService = (HttpService) LFApplication.instance().service("http");
-		cacheService = (CacheService) LFApplication.instance().service("cache");
+	};
 
-		this.diskCache = new DiskCache(thumbnailPath);
-		this.activity = activity;
-	}
+	private Runnable runnable = new Runnable() {
+		@Override
+		public void run() {
+			while (isRunning.get()) {
+				// 当队列中还有未处理的任务时，执行下载任务
+				while (taskQueue.size() > 0) {
+					// 获取第一个任务，并将之从任务队列中删除
+					Task task = taskQueue.remove(0);
+					// 将下载的图片添加到缓存
+					InputStream instream = (InputStream) httpService
+							.getSync(task.path);
+					task.bitmap = ImageUtil.stream2bitmap(instream);
+					if (handler != null) {
+						// 创建消息对象，并将完成的任务添加到消息对象中
+						Message msg = handler.obtainMessage();
+						msg.obj = task;
+						// 发送消息回主线程
+						handler.sendMessage(msg);
+					}
+				}
 
-	/**
-	 * Loads and displays a Bitmap at the given path for an ImageView.
-	 * 
-	 * @param path
-	 *            the path to load a Bitmap.
-	 * @param imageView
-	 *            the ImageView to display the loaded Bitmap.
-	 */
-	public void loadImage(final String path, final ImageView imageView) {
-		this.loadImage(path, imageView, null, null);
-	}
-
-	/**
-	 * Loads and displays a Bitmap from the given url for ImageView.
-	 * 
-	 * @param url
-	 *            the URL to retrieve the Bitmap data.
-	 * @param imageView
-	 *            the ImageView to display the loaded ink Bitmap.
-	 */
-	public void loadImage(final URL url, final ImageView imageView) {
-		this.loadImage(url, imageView, null);
-	}
-
-	/**
-	 * Loads and displays a Bitmap at the given path for an ImageView.
-	 * 
-	 * @param path
-	 *            the path to load a Bitmap.
-	 * @param imageView
-	 *            the ImageView to display the loaded Bitmap.
-	 * @param options
-	 *            the bitmap options to use, if any, when loading the Bitmap.
-	 */
-	public void loadImage(final String path, final ImageView imageView,
-			final BitmapFactory.Options options) {
-		this.loadImage(path, imageView, options, null);
-	}
-
-	/**
-	 * Loads and displays a {@link Bitmap} at the given <code>path</code> for an
-	 * {@link ImageView}, and notifies the given <code>listener</code> when the
-	 * process completes.
-	 * 
-	 * @param path
-	 *            the path to load a {@link Bitmap}.
-	 * @param imageView
-	 *            the {@link ImageView} to display the loaded {@link Bitmap}.
-	 * @param listener
-	 *            a callback when the process completes.
-	 */
-	public void loadImage(final String path, final ImageView imageView,
-			final OnImageLoadedListener listener) {
-		this.loadImage(path, imageView, null, listener);
-	}
-
-	/**
-	 * Loads and displays a Bitmap at the given path for an ImageView, and
-	 * notifies the given listener when the process completes.
-	 * 
-	 * @param path
-	 *            the path to load a Bitmap.
-	 * @param imageView
-	 *            the ImageView to display the loaded Bitmap.
-	 * @param options
-	 *            the bitmap options to use, if any, when loading the Bitmap.
-	 * @param listener
-	 *            a callback when the process completes.
-	 */
-	public void loadImage(final String path, final ImageView imageView,
-			final BitmapFactory.Options options,
-			final OnImageLoadedListener listener) {
-		this.checkState();
-
-		if (this.thread == null) {
-			this.thread = new Thread(new WorkerThread());
-
-			this.thread.start();
-		}
-
-		this.cancel(imageView);
-
-		synchronized (this.workItems) {
-			this.workItems.add(new WorkItem(path, imageView, options, -1, -1,
-					listener));
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Loads and displays a Bitmap from the given url for an ImageView, and
-	 * notifies the given listener when the process completes.
-	 * 
-	 * @param url
-	 *            the URL to retrieve the Bitmap data.
-	 * @param imageView
-	 *            the ImageView to display the loaded Bitmap.
-	 * @param listener
-	 *            a callback when the process completes.
-	 */
-	public void loadImage(final URL url, final ImageView imageView,
-			final OnImageLoadedListener listener) {
-		this.checkState();
-
-		if (this.thread == null) {
-			this.thread = new Thread(new WorkerThread());
-
-			this.thread.start();
-		}
-
-		this.cancel(imageView);
-
-		synchronized (this.workItems) {
-			this.workItems.add(new WorkItem(url, imageView, null, -1, -1,
-					listener));
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Loads and displays the thumbnail version of the Bitmap at the given path
-	 * for an ImageView.
-	 * 
-	 * @param path
-	 *            the path to create a thumbnail from.
-	 * @param imageView
-	 *            the ImageView to display the generated thumbnail.
-	 * @param kind
-	 *            either
-	 */
-	public void loadImageThumbnail(final String path,
-			final ImageView imageView, final int kind) {
-		this.loadImageThumbnail(path, imageView, kind, null);
-	}
-
-	/**
-	 * Loads and displays the thumbnail version of the Bitmap at the given path
-	 * for an ImageView.
-	 * 
-	 * @param path
-	 *            the path to create a thumbnail from.
-	 * @param imageView
-	 *            the ImageView to display the generated thumbnail.
-	 * @param kind
-	 *            either
-	 * @param listener
-	 *            a callback when the process completes.
-	 */
-	public void loadImageThumbnail(final String path,
-			final ImageView imageView, final int kind,
-			final OnImageLoadedListener listener) {
-		this.checkState();
-
-		if (this.thread == null) {
-			this.thread = new Thread(new WorkerThread());
-
-			this.thread.start();
-		}
-
-		this.cancel(imageView);
-
-		synchronized (this.workItems) {
-			this.workItems.add(new WorkItem(path, imageView, null, kind, -1,
-					listener));
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Loads and displays the thumbnail of a video at the given path for an
-	 * ImageView.
-	 * 
-	 * @param path
-	 *            the path to create a thumbnail from.
-	 * @param imageView
-	 *            the ImageView to display the generated thumbnail.
-	 * @param kind
-	 *            either android.provider.MediaStore.Video.Thumbnails#MINI_KIND
-	 *            or android.provider.MediaStore.Video.Thumbnails#MICRO_KIND ,
-	 *            or -1 if this parameter is irrelevant.
-	 */
-	public void loadVideoThumbnail(final String path,
-			final ImageView imageView, final int kind) {
-		this.loadVideoThumbnail(path, imageView, kind, null);
-	}
-
-	/**
-	 * Loads and displays the thumbnail of a video at the given path for an
-	 * ImageView}.
-	 * 
-	 * @param path
-	 *            the path to create a thumbnail from.
-	 * @param imageView
-	 *            the ImageView to display the generated thumbnail.
-	 * @param kind
-	 *            either android.provider.MediaStore.Video.Thumbnails#MINI_KIND
-	 *            or android.provider.MediaStore.Video.Thumbnails#MICRO_KIND ,
-	 *            or -1 if this parameter is irrelevant.
-	 * @param listener
-	 *            a callback when the process completes.
-	 */
-	public void loadVideoThumbnail(final String path,
-			final ImageView imageView, final int kind,
-			final OnImageLoadedListener listener) {
-		this.checkState();
-
-		if (this.thread == null) {
-			this.thread = new Thread(new WorkerThread());
-
-			this.thread.start();
-		}
-
-		this.cancel(imageView);
-
-		synchronized (this.workItems) {
-			this.workItems.add(new WorkItem(path, imageView, null, -1, kind,
-					listener));
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Pauses the thread that loads and displays images.
-	 */
-	public void pause() {
-		synchronized (this.workItems) {
-			this.paused = true;
-
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Resumes any paused thread that loads and displays images.
-	 */
-	public void resume() {
-		synchronized (this.workItems) {
-			this.paused = false;
-
-			this.workItems.notifyAll();
-		}
-	}
-
-	/**
-	 * Cleans up any resources used by the loader.
-	 * <p>
-	 * Further use of the loader beyond this point may cause unexpected errors.
-	 * </p>
-	 */
-	public void close() {
-		if (!this.closed) {
-			synchronized (this.workItems) {
-				this.closed = true;
-
-				this.workItems.notifyAll();
-			}
-
-			this.workItems.clear();
-
-			try {
-				this.thread.join();
-			} catch (final InterruptedException e) {
-
-			}
-		}
-	}
-
-	private void cancel(final ImageView imageView) {
-		synchronized (this.workItems) {
-			WorkItem workItemToRemove = null;
-
-			for (final WorkItem workItem : this.workItems) {
-				if (workItem.imageView == imageView) {
-					workItemToRemove = workItem;
-
-					break;
+				// 如果队列为空,则令线程等待
+				synchronized (this) {
+					try {
+						this.wait();
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
-
-			if (workItemToRemove != null) {
-				this.workItems.remove(workItemToRemove);
-			}
 		}
-	}
+	};
 
-	private void checkState() {
-		if (this.closed) {
-			throw new IllegalStateException(
-					"AsyncImageLoaded has already been closed"); //$NON-NLS-1$
-		}
+	/**
+	 * 开启异步图片下载
+	 */
+	public void start() {
+		isRunning.set(true);
 	}
 
 	/**
-	 * 异步图片加载工作线程
+	 * 关闭异步图片下载
 	 */
-	private final class WorkerThread implements Runnable {
-		public WorkerThread() {
+	public void shutdown() {
+		isRunning.set(false);
+	}
 
+	/**
+	 * @param imageView
+	 *            需要延迟加载图片的对象
+	 * @param url
+	 *            图片的URL地址
+	 * @param resId
+	 *            图片加载过程中显示的图片资源
+	 */
+	public void showAsyncImage(ImageView imageView, String url, int resId) {
+		imageView.setTag(url);
+
+		if (url == null) {
+			imageView.setImageResource(resId);
+			return;
+		}
+
+		Bitmap bitmap = loadAsyncImage(url, getImageCallback(imageView, resId));
+
+		if (bitmap == null) {
+			imageView.setImageResource(resId);
+		} else {
+			imageView.setImageBitmap(bitmap);
+		}
+	}
+
+	public Bitmap loadAsyncImage(String path, OnImageLoadListener callback) {
+		String key = StringUtil.MD5Encode(path);
+		// get bitmap from memory cache
+		Bitmap bmp = (Bitmap) cacheService.get(key, CacheType.Memory);
+		if (bmp != null) {
+			return bmp;
+		}
+
+		// get bmp from file cache
+		byte[] buf = (byte[]) cacheService.get(key, CacheType.File);
+		if (buf != null) {
+			bmp = BitmapFactory.decodeByteArray(buf, 0, buf.length);
+			if (bmp != null) {
+				cacheService
+						.put(key, bmp, new CacheType[] { CacheType.Memory });
+				return bmp;
+			}
+		}
+
+		// neither in memory or file cache, download from internet.
+		cacheService.remove(key, new CacheType[] { CacheType.Memory });
+		Task task = new Task(path, callback);
+		if (!taskQueue.contains(task)) {
+			taskQueue.add(task);
+			// 唤醒任务下载队列
+			synchronized (runnable) {
+				runnable.notify();
+			}
+		}
+
+		return null;
+	}
+
+	/**
+	 * @param imageView
+	 * @param resId
+	 *            图片加载完成前显示的图片资源ID
+	 * @return
+	 */
+	private OnImageLoadListener getImageCallback(final ImageView imageView,
+			final int resId) {
+		return new OnImageLoadListener() {
+			@Override
+			public void loadImage(String path, Bitmap bitmap) {
+				if (path.equals(imageView.getTag().toString())) {
+					imageView.setImageBitmap(bitmap);
+				} else {
+					imageView.setImageResource(resId);
+				}
+			}
+		};
+	}
+
+	/**
+	 * 图片下载完成回调接口
+	 */
+	public interface OnImageLoadListener {
+		void loadImage(String path, Bitmap bitmap);
+	}
+
+	private class Task {
+		private String path; // 下载任务的下载路径
+		private Bitmap bitmap; // 下载的图片
+		private OnImageLoadListener listener;// 回调对象
+
+		public Task(String path, OnImageLoadListener listener) {
+			this.path = path;
+			this.listener = listener;
 		}
 
 		@Override
-		public void run() {
-			while (true) {
-				WorkItem workItem = null;
-
-				synchronized (AsyncImageLoader.this.workItems) {
-					if (AsyncImageLoader.this.closed) {
-						break;
-					}
-
-					if (AsyncImageLoader.this.paused) {
-						try {
-							AsyncImageLoader.this.workItems.wait();
-						} catch (final InterruptedException e) {
-
-						}
-					}
-
-					if (AsyncImageLoader.this.workItems.isEmpty()) {
-						try {
-							AsyncImageLoader.this.workItems.wait();
-						} catch (final InterruptedException e) {
-
-						}
-
-						continue;
-					}
-
-					workItem = AsyncImageLoader.this.workItems.removeFirst();
-				}
-
-				if (workItem != null) {
-					Bitmap bitmap = null;
-
-					final SoftReference<Bitmap> reference = AsyncImageLoader.bitmapCache
-							.get(workItem.path == null ? workItem.url
-									.toString() : workItem.path);
-
-					if (reference != null) {
-						bitmap = reference.get();
-					}
-
-					if (bitmap == null) {
-						try {
-							if (workItem.path == null) {
-								InputStream instream = (InputStream) httpService
-										.getSync(workItem.url.toString());
-
-								final byte[] data = FileUtil
-										.stream2byte(instream);
-
-								bitmap = BitmapFactory.decodeByteArray(data, 0,
-										data.length);
-							} else {
-								if (workItem.imageKind > 0) {
-									bitmap = AsyncImageLoader.this.diskCache
-											.get(workItem.path,
-													workItem.imageKind);
-								} else if (workItem.videoKind > 0) {
-									bitmap = ThumbnailUtils
-											.createVideoThumbnail(
-													workItem.path,
-													workItem.videoKind);
-								} else {
-									bitmap = AsyncImageLoader.this.diskCache
-											.get(workItem.path);
-
-									if (bitmap == null) {
-										bitmap = BitmapFactory
-												.decodeFile(workItem.path,
-														workItem.options);
-									}
-								}
-							}
-
-							if (bitmap != null) {
-								AsyncImageLoader.bitmapCache.put(
-										workItem.path == null ? workItem.url
-												.toString() : workItem.path,
-										new SoftReference<Bitmap>(bitmap));
-
-								if (workItem.path != null
-										&& AsyncImageLoader.this.diskCache
-												.has(workItem.path)) {
-									AsyncImageLoader.this.diskCache.put(
-											workItem.path, bitmap);
-								}
-
-								this.onImageLoaded(workItem, bitmap);
-							}
-						} catch (final Exception e) {
-							if (workItem.listener != null) {
-								workItem.listener
-										.onError(workItem.imageView, e);
-							}
-						}
-					} else {
-						this.onImageLoaded(workItem, bitmap);
-					}
-				}
-			}
-		}
-
-		private void onImageLoaded(final WorkItem workItem, final Bitmap bitmap) {
-			if (workItem.listener != null) {
-				final Bitmap finalBitmap = workItem.listener.onImageLoaded(
-						workItem.imageView, bitmap);
-
-				if (workItem.imageView != null) {
-					AsyncImageLoader.this.activity
-							.runOnUiThread(new UpdateImageView(
-									workItem.imageView, finalBitmap));
-				}
-			} else {
-				if (workItem.imageView != null) {
-					AsyncImageLoader.this.activity
-							.runOnUiThread(new UpdateImageView(
-									workItem.imageView, bitmap));
-				}
-			}
+		public boolean equals(Object o) {
+			Task task = (Task) o;
+			return path.equals(task.path);
 		}
 	}
 }
