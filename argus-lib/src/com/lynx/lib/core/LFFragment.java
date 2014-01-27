@@ -37,6 +37,7 @@ public abstract class LFFragment extends Fragment {
 		try {
 			return onLoadView(inflater, container, savedInstanceState);
 		} catch (Exception e) {
+            Logger.e(Tag, "onLoadView error", e);
 			// 当加载页面错误时载入默认错误提示页面
 			return ViewUtil.createLoadErrorView(inflater);
 		}

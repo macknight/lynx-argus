@@ -12,6 +12,9 @@ import android.os.Bundle;
  */
 public abstract class LFActivity extends Activity {
 
+    protected int animResPushIn = -1, animResPushOut = -1;
+    protected int animResPopIn = -1, animResPopOut = -1;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

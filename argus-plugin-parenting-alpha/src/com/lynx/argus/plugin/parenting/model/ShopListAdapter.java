@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.plugin.parenting.R;
-import com.lynx.lib.util.AsyncImageLoader;
+import com.lynx.lib.misc.AsyncImageLoader;
 
 import java.util.List;
 
@@ -79,8 +79,7 @@ public class ShopListAdapter extends BaseAdapter {
 		holder.tvTime.setText(item.latlng().toString());
 		holder.tvPrice.setText("" + item.reviewNum());
 
-		imgLoader.showAsyncImage(holder.ivSnap, item.snapUrl(),
-				R.drawable.gallery_view);
+		imgLoader.showAsyncImage(holder.ivSnap, item.snapUrl());
 		return view;
 	}
 

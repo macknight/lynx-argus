@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string name="app_name">parenting</string>
+    <string name="app_name">亲子</string>
+    <string name="campaign_hint">活动</string>
+    <string name="shoplist_hint">商户</string>
+
 </resources>

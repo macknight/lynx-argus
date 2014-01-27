@@ -3,6 +3,8 @@ package com.lynx.argus.plugin.parenting;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,13 +34,14 @@ import java.util.List;
  */
 public class ShopListFragment extends LFFragment {
 
-	private static final String LM_API_PARENTING_SHOPLIST = "?app=list&act=mlist&page=#page#";
+	private static final String LM_API_PARENTING_SHOPLIST = "/index.php";
 
-	private static int page = 1;
+	private static final int MSG_LOAD_SHOP_LIST_SUCCESS = 1;
+	private static final int MSG_LOAD_SHOP_LIST_FAIL = 2;
 
 	private ShopListAdapter adapter;
 	private List<ShopListItem> shopList = new ArrayList<ShopListItem>();
-	private PullToRefreshListView prlvShops;
+	private PullToRefreshListView prlvShoplist;
 
 	private static int curPage = 1;
 	private static int pageSize = 0;
@@ -53,35 +56,44 @@ public class ShopListFragment extends LFFragment {
 
 		@Override
 		public void onSuccess(Object s) {
-			super.onSuccess(s);
+			parseShopListInfoFromApi(s.toString());
+			handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable throwable, String s) {
-			super.onFailure(throwable, s);
+			handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_FAIL);
+		}
+	};
+
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			prlvShoplist.onRefreshComplete();
+			switch (msg.what) {
+			case MSG_LOAD_SHOP_LIST_SUCCESS:
+				adapter.setData(shopList);
+				break;
+			case MSG_LOAD_SHOP_LIST_FAIL:
+				break;
+			}
 		}
 	};
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		httpService = (HttpService) LFApplication.instance().service("http");
-	}
-
-	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-
+			Bundle savedInstanceState) throws Exception {
+		httpService = (HttpService) LFApplication.instance().service("http");
 		View view = inflater
 				.inflate(R.layout.layout_shoplist, container, false);
-		prlvShops = (PullToRefreshListView) view
+		prlvShoplist = (PullToRefreshListView) view
 				.findViewById(R.id.prlv_shoplist);
 		adapter = new ShopListAdapter(navActivity, shopList);
-		prlvShops.getRefreshableView().setAdapter(adapter);
+		prlvShoplist.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
-		prlvShops.setLoadingDrawable(drawable);
+		prlvShoplist.setLoadingDrawable(drawable);
 
-		prlvShops
+		prlvShoplist
 				.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener() {
 					@Override
 					public void onRefresh() {
@@ -106,7 +118,7 @@ public class ShopListFragment extends LFFragment {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("app", "list"));
 		params.add(new BasicNameValuePair("act", "mlist"));
-		params.add(new BasicNameValuePair("page", page + ""));
+		params.add(new BasicNameValuePair("page", curPage + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
 		String url = String.format("%s%s?%s",
 				ParentingFragment.LM_API_PARENT_DOMAIN,

@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.R;
 import com.lynx.lib.core.dex.Plugin;
-import com.lynx.lib.util.AsyncImageLoader;
+import com.lynx.lib.misc.AsyncImageLoader;
 
 import java.util.List;
 
@@ -75,8 +75,7 @@ public class PluginCenterAdapter extends BaseAdapter {
 
 		Plugin item = plugins.get(position);
 		holder.tvName.setText(item.name());
-		imgLoader.showAsyncImage(holder.ivIcon, item.icon(),
-				R.drawable.plugin_def);
+		imgLoader.showAsyncImage(holder.ivIcon, item.icon());
 		return view;
 	}
 

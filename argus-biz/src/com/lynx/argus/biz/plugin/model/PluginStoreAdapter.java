@@ -11,7 +11,7 @@ import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.dex.Plugin;
-import com.lynx.lib.util.AsyncImageLoader;
+import com.lynx.lib.misc.AsyncImageLoader;
 
 import java.util.List;
 
@@ -92,8 +92,7 @@ public class PluginStoreAdapter extends BaseAdapter {
 			holder.btnInstall.setEnabled(true);
 			holder.btnUninstall.setEnabled(false);
 		}
-		imgLoader.showAsyncImage(holder.ivIcon, item.icon(),
-				R.drawable.plugin_def);
+		imgLoader.showAsyncImage(holder.ivIcon, item.icon());
 		return view;
 	}
 

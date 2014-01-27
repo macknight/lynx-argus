@@ -4,10 +4,7 @@ import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import com.lynx.lib.core.Logger;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 /**
  * 
@@ -22,47 +19,26 @@ public class ImageUtil {
 		throw new AssertionError("ImageUtil shouldn't be instanced");
 	}
 
-	/**
-	 * 根据一个网络连接(String)获取bitmap图像
-	 * 
-	 * @param imageUri
-	 * @return
-	 * @throws java.net.MalformedURLException
-	 */
-	public static Bitmap getbitmap(String imageUri) {
-		// 显示网络上的图片
-		Bitmap bitmap = null;
+	public static Bitmap stream2bitmap(InputStream stream) {
+		Bitmap bmp = null;
 		try {
-			URL myFileUrl = new URL(imageUri);
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
-			conn.setDoInput(true);
-			conn.connect();
-			InputStream is = conn.getInputStream();
-			bitmap = BitmapFactory.decodeStream(is);
-			is.close();
-
-			Logger.i(TAG, "image download finished." + imageUri);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
+			bmp = BitmapFactory.decodeStream(stream);
+			stream.close();
+		} catch (Exception e) {
+			Logger.e(TAG, "bitmap convert error", e);
 		}
-		return bitmap;
+
+		return bmp;
 	}
 
-    public static Bitmap stream2bitmap(InputStream stream) {
-        Bitmap bmp = null;
-        try {
-            bmp = BitmapFactory.decodeStream(stream);
-            stream.close();
-        } catch (Exception e) {
-            Logger.e(TAG, "bitmap convert error", e);
-        }
-
-        return bmp;
-    }
-
-	// 放大缩小图片
+	/**
+	 * 放大缩小图片
+	 * 
+	 * @param bitmap
+	 * @param w
+	 * @param h
+	 * @return
+	 */
 	public static Bitmap zoomBitmap(Bitmap bitmap, int w, int h) {
 		int width = bitmap.getWidth();
 		int height = bitmap.getHeight();
@@ -75,7 +51,12 @@ public class ImageUtil {
 		return newbmp;
 	}
 
-	// 将Drawable转化为Bitmap
+	/**
+	 * 将Drawable转化为Bitmap
+	 * 
+	 * @param drawable
+	 * @return
+	 */
 	public static Bitmap drawableToBitmap(Drawable drawable) {
 		int width = drawable.getIntrinsicWidth();
 		int height = drawable.getIntrinsicHeight();
@@ -89,7 +70,13 @@ public class ImageUtil {
 
 	}
 
-	// 获得圆角图片的方法
+	/**
+	 * 获得圆角图片的方法
+	 * 
+	 * @param bitmap
+	 * @param roundPx
+	 * @return
+	 */
 	public static Bitmap getRoundedCornerBitmap(Bitmap bitmap, float roundPx) {
 		if (bitmap == null) {
 			return null;

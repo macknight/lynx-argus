@@ -92,7 +92,7 @@ public class LFDexActivity extends LFNavigationActivity {
 				}
 			}
 		} catch (Throwable e) {
-			e.printStackTrace();
+			Logger.e(Tag, "load dex ui error", e);
 
 			rollback();
 
@@ -130,9 +130,9 @@ public class LFDexActivity extends LFNavigationActivity {
 		return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
 	}
 
-    @Override
-    public void onBackPressed() {
-        rollback();
-        super.onBackPressed();
-    }
+	@Override
+	public void onBackPressed() {
+		rollback();
+		super.onBackPressed();
+	}
 }

@@ -96,9 +96,6 @@ public class CellInfoManager {
 		switch (telManager.getPhoneType()) {
 		case TelephonyManager.PHONE_TYPE_CDMA:
 			mcc = 0;
-			bid = 0;
-			sid = 0;
-			nid = 0;
 
 			try {
 				String s = telManager.getNetworkOperator();

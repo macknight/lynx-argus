@@ -1,6 +1,5 @@
 package com.lynx.lib.core;
 
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
@@ -22,8 +21,6 @@ public abstract class LFNavigationActivity extends LFActivity {
 	private Stack<LFFragment> stack;
 
 	protected int resContent = android.R.id.primary; // fragment根容器ID
-	private int animResPushIn = -1, animResPushOut = -1;
-	private int animResPopIn = -1, animResPopOut = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +42,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (fragment.shouldAnimate()) {
-			if (animResPopIn != -1 && animResPushOut != -1) {
+			if (animResPushIn != -1 && animResPushOut != -1) {
 				ft.setCustomAnimations(animResPushIn, animResPushOut);
 			}
 		}
@@ -57,15 +54,17 @@ public abstract class LFNavigationActivity extends LFActivity {
 		ft.commit();
 	}
 
-	private void popFragment(boolean shouldAnimate) {
-		Fragment fragment = stack.elementAt(stack.size() - 2);
+	private void popFragment() {
+		LFFragment fragment = stack.elementAt(stack.size() - 2);
 		stack.pop();
 
 		FragmentManager fm = getFragmentManager();
 
 		FragmentTransaction ft = fm.beginTransaction();
-		if (shouldAnimate) {
-			ft.setCustomAnimations(animResPopIn, animResPopOut);
+		if (fragment.shouldAnimate()) {
+			if (animResPopIn != -1 && animResPopOut != -1) {
+				ft.setCustomAnimations(animResPopIn, animResPopOut);
+			}
 		}
 
 		ft.replace(resContent, fragment);
@@ -94,7 +93,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 			if (stack.size() == 1) {
 				super.onBackPressed();
 			} else {
-				popFragment(true);
+				popFragment();
 			}
 		}
 	}

@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.lynx.argus.plugin.parenting.R;
-import com.lynx.lib.util.AsyncImageLoader;
+import com.lynx.lib.misc.AsyncImageLoader;
 
 import java.util.List;
 
@@ -52,6 +52,11 @@ public class CampaignListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view;
 		ViewHolder holder;
+        CampaignListItem item = data.get(position);
+        if (item == null) {
+            return null;
+        }
+
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.layout_campaignlist_item,
 					null);
@@ -71,15 +76,14 @@ public class CampaignListAdapter extends BaseAdapter {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
-		CampaignListItem item = data.get(position);
+
 		holder.tvName.setText("" + item.getName());
 		holder.tvShop.setText("" + item.getShopName());
 		holder.tvTime.setText("" + item.getStartTime() + "-"
 				+ item.getEndTime());
 		holder.tvPrice.setText("" + item.getPrice());
 
-		imgLoader.showAsyncImage(holder.ivSnap, item.getSnapUrl(),
-				R.drawable.gallery_view);
+		imgLoader.showAsyncImage(holder.ivSnap, item.getSnapUrl());
 		return view;
 	}
 
