@@ -4,7 +4,10 @@ import android.graphics.*;
 import android.graphics.drawable.Drawable;
 import com.lynx.lib.core.Logger;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * 
@@ -19,16 +22,40 @@ public class ImageUtil {
 		throw new AssertionError("ImageUtil shouldn't be instanced");
 	}
 
-	public static Bitmap stream2bitmap(InputStream stream) {
-		Bitmap bmp = null;
+	/**
+	 * 根据一个网络连接(String)获取bitmap图像
+	 * 
+	 * @param imageUri
+	 * @return
+	 * @throws java.net.MalformedURLException
+	 */
+	public static Bitmap getbitmap(String imageUri) {
+		// 显示网络上的图片
+		Bitmap bitmap = null;
 		try {
-			bmp = BitmapFactory.decodeStream(stream);
-			stream.close();
+			URL myFileUrl = new URL(imageUri);
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl
+					.openConnection();
+			conn.setDoInput(true);
+			conn.connect();
+			InputStream is = conn.getInputStream();
+			bitmap = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return bitmap;
+	}
+
+	public static Bitmap stream2bitmap(InputStream stream) {
+		try {
+			return BitmapFactory.decodeStream(stream);
 		} catch (Exception e) {
 			Logger.e(TAG, "bitmap convert error", e);
 		}
 
-		return bmp;
+		return null;
 	}
 
 	/**

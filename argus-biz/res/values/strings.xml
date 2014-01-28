@@ -13,16 +13,10 @@
     <string name="plugin_store_title">插件市场</string>
     <string name="plugin_download_title">下载管理</string>
 
-    <string name="loading_hint">加载中...</string>
-    <string name="shop_detail_addr_hint">地址</string>
-    <string name="shop_detail_price_hint">人均</string>
-    <string name="shop_detail_tele_hint">电话</string>
-    <string name="shop_detail_tags_hint">标签</string>
-    <string name="shop_detail_overall_rating_hint">综合</string>
-    <string name="shop_detail_taste_rating_hint">口味</string>
-    <string name="shop_detail_service_rating_hint">服务</string>
-    <string name="shop_detail_env_rating_hint">环境</string>
-    <string name="shop_detail_hours_hint">营业时间</string>
-
-
+    <string name="more_about">关于我们</string>
+    <string name="more_about_subject">  百眼巨人\n   Argus</string>
+    <string name="more_about_desc">一起来制作属于您的私人定制App！</string>
+    <string name="more_about_copyright_1">开源项目 版权所有</string>
+    <string name="more_about_copyright_2">Copyright © 2012~2014 lynx工作室(上海).</string>
+    <string name="more_about_copyright_3">All Rights Reserved.</string>
 </resources>

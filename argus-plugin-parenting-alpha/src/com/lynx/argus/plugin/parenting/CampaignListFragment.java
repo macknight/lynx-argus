@@ -144,8 +144,9 @@ public class CampaignListFragment extends LFFragment {
 					String shopId = joShop.getString("store_id");
 					String shopName = joShop.getString("store_name");
 					String price = joShop.getString("market_price");
-					String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
-							+ joShop.getString("default_image");
+					String snapUrl = String.format("%s/%s",
+							ParentingFragment.LM_API_PARENT_DOMAIN,
+							joShop.getString("default_image"));
 					String startTime = joShop.getString("start_time");
 					String endTime = joShop.getString("end_time");
 					String place = joShop.getString("place");

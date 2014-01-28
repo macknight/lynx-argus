@@ -52,10 +52,10 @@ public class CampaignListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view;
 		ViewHolder holder;
-        CampaignListItem item = data.get(position);
-        if (item == null) {
-            return null;
-        }
+		CampaignListItem item = data.get(position);
+		if (item == null) {
+			return null;
+		}
 
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.layout_campaignlist_item,
@@ -65,8 +65,6 @@ public class CampaignListAdapter extends BaseAdapter {
 					.findViewById(R.id.iv_campaignlist_item_snap);
 			holder.tvName = (TextView) view
 					.findViewById(R.id.tv_campignlist_item_title);
-			holder.tvShop = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_shop);
 			holder.tvTime = (TextView) view
 					.findViewById(R.id.tv_campignlist_item_time);
 			holder.tvPrice = (TextView) view
@@ -78,7 +76,6 @@ public class CampaignListAdapter extends BaseAdapter {
 		}
 
 		holder.tvName.setText("" + item.getName());
-		holder.tvShop.setText("" + item.getShopName());
 		holder.tvTime.setText("" + item.getStartTime() + "-"
 				+ item.getEndTime());
 		holder.tvPrice.setText("" + item.getPrice());
@@ -89,7 +86,6 @@ public class CampaignListAdapter extends BaseAdapter {
 
 	static class ViewHolder {
 		TextView tvName;
-		TextView tvShop;
 		ImageView ivSnap;
 		TextView tvTime;
 		TextView tvPrice;

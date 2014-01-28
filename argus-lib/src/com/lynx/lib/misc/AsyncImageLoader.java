@@ -6,12 +6,18 @@ package com.lynx.lib.misc;
  * Date: 13-11-15 下午1:37
  */
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.widget.ImageView;
+
 import com.lynx.lib.cache.CacheService;
 import com.lynx.lib.cache.CacheService.CacheType;
 import com.lynx.lib.core.LFApplication;
@@ -20,10 +26,6 @@ import com.lynx.lib.http.HttpService;
 import com.lynx.lib.util.ImageUtil;
 import com.lynx.lib.util.StringUtil;
 
-import java.io.InputStream;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 /**
  * 
  * @author zhufeng.liu
@@ -31,8 +33,7 @@ import java.util.concurrent.Executors;
  * @version 2014-1-22 下午5:15:48
  */
 public class AsyncImageLoader {
-	private static final String TAG = "AsynImageLoader";
-	// 缓存下载过的图片的Map
+	private static final String Tag = "AsynImageLoader";
 	private HttpService httpService;
 	private CacheService cacheService;
 
@@ -40,6 +41,9 @@ public class AsyncImageLoader {
 	private ExecutorService executorService;
 
 	private static AsyncImageLoader instance;
+
+	private static final int ASYNC_IMAGE_LOAD_SUCCESS = 0;
+	private static final int ASYNC_IMAGE_LOAD_FAIL = 1;
 
 	public static AsyncImageLoader instance() {
 		if (instance == null) {
@@ -61,12 +65,20 @@ public class AsyncImageLoader {
 		@Override
 		public void handleMessage(Message msg) {
 			// 子线程中返回的下载完成的任务
-			Task task = (Task) msg.obj;
-			// 调用callback对象的loadImage方法，并将图片路径和图片回传给adapter
-			task.listener.onSuccess(task.bitmap);
-			CacheType[] cacheTypes = { CacheType.Memory, CacheType.File };
-			cacheService.put(StringUtil.MD5Encode(task.path), task.bitmap,
-					cacheTypes);
+			switch (msg.what) {
+			case ASYNC_IMAGE_LOAD_SUCCESS:
+				Task task = (Task) msg.obj;
+				// 调用callback对象的loadImage方法，并将图片路径和图片回传给adapter
+				task.listener.onSuccess(task.bitmap);
+				CacheType[] cacheTypes = { CacheType.Memory, CacheType.File };
+				cacheService.put(StringUtil.MD5Encode(task.path), task.bitmap,
+						cacheTypes);
+				break;
+			case ASYNC_IMAGE_LOAD_FAIL:
+
+				break;
+			}
+
 		}
 	};
 
@@ -99,17 +111,16 @@ public class AsyncImageLoader {
 
 		if (bmp == null) {
 			// load image from internet
-            Logger.i("Tag", "down image from " + url);
 			Task task = new Task(url, imageView);
 			executorService.submit(task);
 		} else {
-            imageView.setImageBitmap(bmp);
-        }
+			imageView.setImageBitmap(bmp);
+		}
 	}
 
 	private class Task implements Runnable {
 		String path; // 下载任务的下载路径
-        Bitmap bitmap;
+		Bitmap bitmap;
 		ImageLoadListener listener; // 回调对象
 
 		public Task(final String path, final ImageView imageView) {
@@ -124,7 +135,7 @@ public class AsyncImageLoader {
 
 				@Override
 				public void onFail() {
-
+					Logger.i(Tag, "download fail");
 				}
 			};
 		}
@@ -132,13 +143,19 @@ public class AsyncImageLoader {
 		@Override
 		public void run() {
 			try {
-				InputStream instream = (InputStream) httpService.getSync(path);
-                bitmap = ImageUtil.stream2bitmap(instream);
-				Message msg = handler.obtainMessage();
-				msg.obj = this;
-				handler.sendMessage(msg);
+                bitmap = ImageUtil.getbitmap(path);
+				if (bitmap != null) {
+					Message msg = handler.obtainMessage();
+					msg.what = ASYNC_IMAGE_LOAD_SUCCESS;
+					msg.obj = this;
+					handler.sendMessage(msg);
+				} else {
+					Message msg = handler.obtainMessage();
+					msg.what = ASYNC_IMAGE_LOAD_FAIL;
+					handler.sendMessage(msg);
+				}
 			} catch (Exception e) {
-
+				Logger.e(Tag, "async image load task error", e);
 			}
 		}
 

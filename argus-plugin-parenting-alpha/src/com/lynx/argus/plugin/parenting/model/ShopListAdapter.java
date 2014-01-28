@@ -54,19 +54,19 @@ public class ShopListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_campaignlist_item,
+			view = View.inflate(context, R.layout.layout_shoplist_item,
 					null);
 			holder = new ViewHolder();
 			holder.ivSnap = (ImageView) view
-					.findViewById(R.id.iv_campaignlist_item_snap);
+					.findViewById(R.id.iv_shoplist_item_snap);
 			holder.tvName = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_title);
+					.findViewById(R.id.tv_shoplist_item_title);
 			holder.tvShop = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_shop);
+					.findViewById(R.id.tv_shoplist_item_shop);
 			holder.tvTime = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_time);
-			holder.tvPrice = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_price);
+					.findViewById(R.id.tv_shoplist_item_time);
+			holder.tvReview = (TextView) view
+					.findViewById(R.id.tv_shoplist_item_review);
 			view.setTag(holder);
 		} else {
 			view = convertView;
@@ -77,7 +77,7 @@ public class ShopListAdapter extends BaseAdapter {
 				item.shopName()));
 		holder.tvShop.setText("" + item.region());
 		holder.tvTime.setText(item.latlng().toString());
-		holder.tvPrice.setText("" + item.reviewNum());
+		holder.tvReview.setText("" + item.reviewNum());
 
 		imgLoader.showAsyncImage(holder.ivSnap, item.snapUrl());
 		return view;
@@ -88,6 +88,6 @@ public class ShopListAdapter extends BaseAdapter {
 		TextView tvShop;
 		ImageView ivSnap;
 		TextView tvTime;
-		TextView tvPrice;
+		TextView tvReview;
 	}
 }

@@ -56,7 +56,7 @@ public class MoreFragment extends BizFragment {
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view,
 					int position, long id) {
-				if (position == 11) {
+				if (position == 10) {
 					tabActivity.pushFragment(new AboutFragment(), true);
 				}
 			}

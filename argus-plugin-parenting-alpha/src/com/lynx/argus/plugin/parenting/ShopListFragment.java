@@ -141,8 +141,9 @@ public class ShopListFragment extends LFFragment {
 					String storeId = joShop.getString("store_id");
 					String shopName = joShop.getString("shop_name");
 					String shopId = joShop.getString("store_id");
-					String snapUrl = ParentingFragment.LM_API_PARENT_DOMAIN
-							+ joShop.getString("default_image");
+					String snapUrl = String.format("%s/%s",
+							ParentingFragment.LM_API_PARENT_DOMAIN,
+							joShop.getString("default_image"));
 					String lng = joShop.getString("map_lng");
 					String lat = joShop.getString("map_lat");
 					GeoPoint latlng = new GeoPoint(Double.parseDouble(lat),
