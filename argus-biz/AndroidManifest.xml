@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.lynx.argus"
           android:versionCode="1"
-          android:versionName="1.0">
+          android:versionName="1.0.0">
 	<!-- 只支持android 4.0以上版本 -->
 	<uses-sdk android:minSdkVersion="14" android:targetSdkVersion="18"/>
 
@@ -35,6 +35,5 @@
 		</activity>
 
 		<activity android:name="com.lynx.lib.core.LFDexActivity"/>
-		<activity android:name=".biz.plugin.demo.ShopListMapActivity"/>
-	</application>
+    </application>
 </manifest>

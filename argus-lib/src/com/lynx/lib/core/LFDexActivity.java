@@ -2,6 +2,7 @@ package com.lynx.lib.core;
 
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.content.res.Resources.Theme;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class LFDexActivity extends LFNavigationActivity {
 
 	private PluginLoader moduleLoader;
 
-	private Resources.Theme defTheme; // 系统原有主题
+	private static Theme defTheme; // 系统原有主题
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +104,8 @@ public class LFDexActivity extends LFNavigationActivity {
 		}
 	}
 
-	private void rollback() {
+	@Override
+	protected void rollback() {
 		dexAssetManager = super.getAssets();
 		dexResources = super.getResources();
 		dexClassLoader = super.getClassLoader();
@@ -130,9 +132,4 @@ public class LFDexActivity extends LFNavigationActivity {
 		return dexClassLoader == null ? super.getClassLoader() : dexClassLoader;
 	}
 
-	@Override
-	public void onBackPressed() {
-		rollback();
-		super.onBackPressed();
-	}
 }

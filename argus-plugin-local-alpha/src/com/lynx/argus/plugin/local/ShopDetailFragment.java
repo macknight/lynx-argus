@@ -109,6 +109,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				name = joShop.getString("name");
 			} catch (Exception e) {
+
 			}
 			tvName.setText(name);
 
@@ -116,6 +117,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				addr = joShop.getString("address");
 			} catch (Exception e) {
+
 			}
 			tvAddr.setText(addr);
 
@@ -123,6 +125,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				tele = joShop.getString("telephone");
 			} catch (Exception e) {
+
 			}
 			tvTele.setText(tele);
 
@@ -131,6 +134,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				tags = joDetail.getString("tag");
 			} catch (Exception e) {
+
 			}
 			tvTags.setText(tags);
 
@@ -138,6 +142,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				price = joDetail.getString("price");
 			} catch (Exception e) {
+
 			}
 			tvPrice.setText(price);
 
@@ -154,6 +159,7 @@ public class ShopDetailFragment extends LFFragment {
 				tasteRate = Float
 						.parseFloat(joDetail.getString("taste_rating"));
 			} catch (Exception e) {
+
 			}
 			rbTaste.setRating(tasteRate);
 
@@ -162,6 +168,7 @@ public class ShopDetailFragment extends LFFragment {
 				serviceRate = Float.parseFloat(joDetail
 						.getString("service_rating"));
 			} catch (Exception e) {
+
 			}
 			rbService.setRating(serviceRate);
 
@@ -170,6 +177,7 @@ public class ShopDetailFragment extends LFFragment {
 				envRate = Float.parseFloat(joDetail
 						.getString("environment_rating"));
 			} catch (Exception e) {
+
 			}
 			rbEnv.setRating(envRate);
 
@@ -177,6 +185,7 @@ public class ShopDetailFragment extends LFFragment {
 			try {
 				shopHours = joDetail.getString("shop_hours");
 			} catch (Exception e) {
+
 			}
 			tvShopHours.setText(shopHours);
 

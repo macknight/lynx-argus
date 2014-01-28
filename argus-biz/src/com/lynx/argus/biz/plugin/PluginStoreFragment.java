@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.plugin.model.PluginStoreAdapter;

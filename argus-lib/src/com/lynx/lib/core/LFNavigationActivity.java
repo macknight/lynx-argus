@@ -91,6 +91,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 	public void onBackPressed() {
 		if (!stack.lastElement().onBackPressed()) {
 			if (stack.size() == 1) {
+                rollback();
 				super.onBackPressed();
 			} else {
 				popFragment();
@@ -106,4 +107,9 @@ public abstract class LFNavigationActivity extends LFActivity {
 		}
 		stack.lastElement().onActivityResult(requestCode, requestCode, data);
 	}
+
+	/**
+	 * 重置动态加载模块的环境变量
+	 */
+	protected abstract void rollback();
 }

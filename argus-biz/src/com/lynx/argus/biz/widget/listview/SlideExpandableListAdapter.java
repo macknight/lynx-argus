@@ -2,6 +2,7 @@ package com.lynx.argus.biz.widget.listview;
 
 import android.view.View;
 import android.widget.ListAdapter;
+
 import com.lynx.argus.R;
 
 /**
