@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.parenting;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +14,10 @@ import com.lynx.lib.core.LFFragment;
  */
 public class ShopDetailFragment extends LFFragment {
 
-
 	@Override
 	protected View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) throws Exception {
 		return null;
 	}
 
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }

@@ -4,8 +4,10 @@ import android.content.Context;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
+import com.lynx.lib.geo.entity.Wifi;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,6 +71,21 @@ public class GeoServiceImpl implements GeoService, LocationListener {
 	@Override
 	public List<LocationListener> listeners() {
 		return listeners;
+	}
+
+	@Override
+	public List<Cell> cells() {
+		return locationCenter.cells();
+	}
+
+	@Override
+	public List<Wifi> wifis() {
+		return locationCenter.wifis();
+	}
+
+	@Override
+	public List<Coord> coords() {
+		return locationCenter.coords();
 	}
 
 	@Override

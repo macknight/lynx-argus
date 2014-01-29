@@ -1,11 +1,9 @@
 package com.lynx.argus.plugin.weather;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.lynx.lib.core.LFFragment;
 
 /**
@@ -26,13 +24,4 @@ public class WeatherFragment extends LFFragment {
 		return v;
 	}
 
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }

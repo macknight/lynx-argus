@@ -62,9 +62,14 @@ public abstract class LFFragment extends Fragment {
 		return true;
 	}
 
-	public abstract boolean onBackPressed();
+	public boolean onBackPressed() {
+		return false;
+	}
 
-	public abstract void onActivityResult(int requestCode, int resultCode,
-			Intent data);
+	@Override
+	public void onActivityResult(int requestCode, int resultCode,
+			Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+	}
 
 }

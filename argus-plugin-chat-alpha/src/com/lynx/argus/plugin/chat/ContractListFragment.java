@@ -80,26 +80,6 @@ public class ContractListFragment extends LFFragment {
 		return view;
 	}
 
-	@Override
-	public boolean shouldAdd() {
-		return super.shouldAdd();
-	}
-
-	@Override
-	public boolean shouldAnimate() {
-		return super.shouldAnimate();
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
-
 	private void setContacts() {
 		contacts = loginFragment.getContacts();
 

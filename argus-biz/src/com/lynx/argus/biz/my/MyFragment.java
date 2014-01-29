@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lynx.argus.R;
-import com.lynx.argus.app.BizFragment;
+import com.lynx.lib.core.LFFragment;
 
 /**
  * 
@@ -14,15 +14,9 @@ import com.lynx.argus.app.BizFragment;
  * 
  * @version 13-10-27-下午9:29.
  */
-public class MyFragment extends BizFragment {
+public class MyFragment extends LFFragment {
 
 	public static final String Tag = "My";
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-	}
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
@@ -30,4 +24,5 @@ public class MyFragment extends BizFragment {
 		View v = inflater.inflate(R.layout.layout_my, container, false);
 		return v;
 	}
+
 }

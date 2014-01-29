@@ -2,8 +2,10 @@ package com.lynx.lib.geo;
 
 import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.geo.entity.Address;
+import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
+import com.lynx.lib.geo.entity.Wifi;
 
 import java.util.List;
 
@@ -41,6 +43,27 @@ public interface GeoService extends Service {
 	void removeListener(LocationListener listener);
 
 	List<LocationListener> listeners();
+
+	/**
+	 * 获取当前所扫描到的基站
+	 * 
+	 * @return
+	 */
+	List<Cell> cells();
+
+	/**
+	 * 当前所扫描到的wifi
+	 * 
+	 * @return
+	 */
+	List<Wifi> wifis();
+
+	/**
+	 * 当前定位后所拿到的位置坐标
+	 * 
+	 * @return
+	 */
+	List<Coord> coords();
 
 	Coord coord();
 

@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.webkit.WebView;
 import android.widget.TextView;
+
 import com.lynx.argus.R;
-import com.lynx.argus.app.BizFragment;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.Logger;
 
 /**
@@ -19,7 +19,8 @@ import com.lynx.lib.core.Logger;
  * 
  * @version 14-1-20 上午11:53
  */
-public class AboutFragment extends BizFragment {
+public class AboutFragment extends LFFragment {
+	private static final String Tag = "about";
 
 	private TextView tvVersion;
 	private WebView wvAbout;

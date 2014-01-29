@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.parenting;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -103,16 +102,6 @@ public class CampaignListFragment extends LFFragment {
 		});
 
 		return view;
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 	}
 
 	private void getCampaignList() {

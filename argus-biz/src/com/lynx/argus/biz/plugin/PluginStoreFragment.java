@@ -17,11 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 import com.lynx.argus.R;
-import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.plugin.model.PluginStoreAdapter;
 import com.lynx.argus.biz.widget.listview.ActionSlideExpandableListView;
 import com.lynx.argus.biz.widget.listview.ActionSlideExpandableListView.OnActionClickListener;
 import com.lynx.argus.biz.widget.listview.P2RASEListView;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
@@ -32,7 +32,7 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
  * 
  * @version 13-11-16 下午10:30
  */
-public class PluginStoreFragment extends BizFragment {
+public class PluginStoreFragment extends LFFragment {
 	private P2RASEListView p2raselv;
 	private PluginStoreAdapter adapter;
 	private BizPluginManager pluginManager;

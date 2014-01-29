@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.local;
 
-import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -338,13 +337,4 @@ public class LocalShopListFragment extends LFFragment {
 		}
 	}
 
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }

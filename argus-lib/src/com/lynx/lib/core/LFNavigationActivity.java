@@ -38,10 +38,10 @@ public abstract class LFNavigationActivity extends LFActivity {
 		animResPopOut = resOut;
 	}
 
-	public void pushFragment(LFFragment fragment) {
+	public void pushFragment(LFFragment fragment, boolean shouldAnimate) {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		if (fragment.shouldAnimate()) {
+		if (shouldAnimate) {
 			if (animResPushIn != -1 && animResPushOut != -1) {
 				ft.setCustomAnimations(animResPushIn, animResPushOut);
 			}
@@ -52,6 +52,10 @@ public abstract class LFNavigationActivity extends LFActivity {
 		ft.replace(resContent, fragment);
 
 		ft.commit();
+	}
+
+	public void pushFragment(LFFragment fragment) {
+		pushFragment(fragment, fragment.shouldAnimate());
 	}
 
 	private void popFragment() {

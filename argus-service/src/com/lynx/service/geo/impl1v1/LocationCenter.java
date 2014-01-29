@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.Logger;
@@ -15,6 +14,7 @@ import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordSource;
+import com.lynx.lib.geo.entity.Wifi;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
@@ -83,7 +83,7 @@ public class LocationCenter {
 					String.class);
 			httpService = (HttpService) getService.invoke(context, "http");
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e(Tag, "location center init error", e);
 		}
 	}
 
@@ -202,7 +202,6 @@ public class LocationCenter {
 		public void onSuccess(Object o) {
 			super.onSuccess(o);
 			try {
-				Log.d("chris", o.toString());
 				JSONObject jo = new JSONObject(o.toString());
 				if (jo.getInt("status") == 200) {
 					JSONArray jaLocation = jo.getJSONArray("data");
@@ -231,7 +230,7 @@ public class LocationCenter {
 							addr = new Address(province, city, region, street
 									+ tip, num);
 						} catch (Exception e) {
-							Logger.e(Tag, "cant get address now");
+							Logger.e(Tag, "cant get address now", e);
 						}
 
 						geoService.onLocationChanged(LocationStatus.SUCCESS);
@@ -245,15 +244,15 @@ public class LocationCenter {
 					return;
 				}
 			} catch (Exception e) {
-				Logger.e(Tag, "cant get location now");
+				Logger.e(Tag, "cant get location now", e);
 			}
 			geoService.onLocationChanged(LocationStatus.FAIL);
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-			super.onFailure(t, strMsg);
 			geoService.onLocationChanged(LocationStatus.FAIL);
+			Logger.e(Tag, "unknown network error " + strMsg, t);
 		}
 	};
 
@@ -300,6 +299,18 @@ public class LocationCenter {
 
 	public Context context() {
 		return context;
+	}
+
+	public List<Cell> cells() {
+		return cellInfoManager.cells();
+	}
+
+	public List<Wifi> wifis() {
+		return wifiInfoManager.wifis();
+	}
+
+	public List<Coord> coords() {
+		return null;
 	}
 
 	public Coord coord() {

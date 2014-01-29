@@ -99,21 +99,6 @@ public class LoginFragment extends LFFragment {
 		return v;
 	}
 
-	@Override
-	public boolean shouldAdd() {
-		return true;
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
-
 	public void setConnection(XMPPConnection connection) {
 		this.connection = connection;
 	}

@@ -11,11 +11,11 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
-import com.lynx.argus.app.BizFragment;
-import com.lynx.argus.biz.plugin.demo.ShopListFragment;
+import com.lynx.argus.biz.misc.LocationInfoFragment;
 import com.lynx.argus.biz.plugin.model.PluginCenterAdapter;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFDexActivity;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * 
  * @version 13-9-12 下午6:18
  */
-public class PluginCenterFragment extends BizFragment {
+public class PluginCenterFragment extends LFFragment {
 	public static final String Tag = "plugin";
 
 	private LFApplication application;
@@ -87,11 +87,8 @@ public class PluginCenterFragment extends BizFragment {
 				long id) {
 			Plugin plugin = plugins.get(position);
 			if (position == 0) {
-				ShopListFragment slf = new ShopListFragment();
-				Bundle bundle = new Bundle();
-				bundle.putString("query", "美食");
-				slf.setArguments(bundle);
-				tabActivity.pushFragment(slf);
+				LocationInfoFragment locationInfoFragment = new LocationInfoFragment();
+				tabActivity.pushFragment(locationInfoFragment);
 			} else {
 				Intent i = new Intent(getActivity(), LFDexActivity.class);
 				i.putExtra("module", plugin.module());
@@ -129,7 +126,7 @@ public class PluginCenterFragment extends BizFragment {
 		plugins.clear();
 
 		Plugin plugin = new Plugin("demo", 1, "实验", null, null, null, "试验田",
-				"com.lynx.argus.biz.plugin.demo.ShopListFragment", 1);
+				"com.lynx.argus.biz.misc.LocationInfoFragment", 1);
 		plugins.add(plugin);
 
 		if (application.pluginLoaders() == null) {

@@ -79,7 +79,7 @@ public abstract class ServiceManager {
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-            Logger.w(Tag, "获取服务更新配置失败"+ strMsg , t);
+            Logger.w(Tag, "获取服务更新配置失败 "+ strMsg , t);
 		}
 	};
 

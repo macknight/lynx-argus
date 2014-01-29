@@ -1,4 +1,4 @@
-package com.lynx.argus.biz;
+package com.lynx.argus.app;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -89,18 +89,18 @@ public class BizTabActivity extends LFTabActivity {
 				curTab = tabId;
 				if (stacks.get(tabId).size() == 0) {
 					if (tabId.equals(PluginCenterFragment.Tag)) {
-						pushFragment(new PluginCenterFragment());
+						pushFragment(new PluginCenterFragment(), false);
 					} else if (tabId.equals(ShoppingFragment.Tag)) {
-						pushFragment(new ShoppingFragment());
+						pushFragment(new ShoppingFragment(), false);
 					} else if (tabId.equals(MyFragment.Tag)) {
-						pushFragment(new MyFragment());
+						pushFragment(new MyFragment(), false);
 					} else if (tabId.equals(SearchFragment.Tag)) {
-						pushFragment(new SearchFragment());
+						pushFragment(new SearchFragment(), false);
 					} else if (tabId.equals(MoreFragment.Tag)) {
-						pushFragment(new MoreFragment());
+						pushFragment(new MoreFragment(), false);
 					}
 				} else {
-					pushFragment(stacks.get(tabId).lastElement());
+					pushFragment(stacks.get(tabId).lastElement(), false);
 				}
 			}
 		});

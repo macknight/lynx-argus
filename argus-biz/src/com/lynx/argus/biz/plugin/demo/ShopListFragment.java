@@ -1,11 +1,10 @@
 package com.lynx.argus.biz.plugin.demo;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.lynx.argus.app.BizFragment;
+import com.lynx.lib.core.LFFragment;
 
 /**
  * 
@@ -13,20 +12,10 @@ import com.lynx.argus.app.BizFragment;
  * 
  * @version 13-9-16 上午10:29
  */
-public class ShopListFragment extends BizFragment {
+public class ShopListFragment extends LFFragment {
 
 	public ShopListFragment() {
 
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 	}
 
 	@Override

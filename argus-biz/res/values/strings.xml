@@ -4,19 +4,48 @@
 	<string name="app_version">1.0.0</string>
 	<string name="app_copyright">lynx@china shanghai</string>
 
-    <string name="main_tab_title_plugin">应用中心</string>
-    <string name="main_tab_title_shopping">购物</string>
-    <string name="main_tab_title_my">我</string>
-    <string name="main_tab_title_search">搜索</string>
-    <string name="main_tab_title_more">更多</string>
+	<string name="main_tab_title_plugin">应用中心</string>
+	<string name="main_tab_title_shopping">购物</string>
+	<string name="main_tab_title_my">我</string>
+	<string name="main_tab_title_search">搜索</string>
+	<string name="main_tab_title_more">更多</string>
 
-    <string name="plugin_store_title">插件市场</string>
-    <string name="plugin_download_title">下载管理</string>
+	<string name="plugin_store_title">插件市场</string>
+	<string name="plugin_download_title">下载管理</string>
 
-    <string name="more_about">关于我们</string>
-    <string name="more_about_subject">  百眼巨人\n   Argus</string>
-    <string name="more_about_desc">一起来制作属于您的私人定制App！</string>
-    <string name="more_about_copyright_1">开源项目 版权所有</string>
-    <string name="more_about_copyright_2">Copyright © 2012~2014 lynx工作室(上海).</string>
-    <string name="more_about_copyright_3">All Rights Reserved.</string>
+	<string name="more_about">关于我们</string>
+	<string name="more_about_subject">百眼巨人\n Argus</string>
+	<string name="more_about_desc">一起来制作属于您的私人定制App！</string>
+	<string name="more_about_copyright_1">开源项目 版权所有</string>
+	<string name="more_about_copyright_2">Copyright © 2012~2014 lynx工作室(上海).</string>
+	<string name="more_about_copyright_3">All Rights Reserved.</string>
+
+
+	<string name="location_info_tip">定位信息详情</string>
+	<string name="tv_cell_info_tip">基站信息</string>
+	<string name="tv_cell_type_tip">Type</string>
+	<string name="tv_cell_mcc_tip">MCC</string>
+	<string name="tv_cell_mnc_tip">MNC</string>
+	<string name="tv_cell_cid_tip">CID</string>
+	<string name="tv_cell_lac_tip">LAC</string>
+	<string name="tv_cell_asu_tip">ASU</string>
+	<string name="tv_wifi_info_tip">wifi信息</string>
+	<string name="tv_wifi_ssid_tip">SSID</string>
+	<string name="tv_wifi_mac_tip">MAC</string>
+	<string name="tv_wifi_dbm_tip">dBm</string>
+	<string name="tv_coord_info_tip">定位经纬度</string>
+	<string name="tv_coord_source_tip">Source</string>
+	<string name="tv_coord_lat_tip">Lat</string>
+	<string name="tv_coord_lng_tip">Lng</string>
+	<string name="tv_coord_acc_tip">Acc</string>
+	<string name="tv_coord_elapse_tip">Elapse</string>
+	<string name="coord_type_gcell_tip">GCell</string>
+	<string name="coord_type_gwifi_tip">GWifi</string>
+	<string name="coord_type_bcell_tip">BCell</string>
+	<string name="coord_type_bwifi_tip">BWifi</string>
+	<string name="coord_type_acell_tip">ACell</string>
+	<string name="coord_type_awifi_tip">AWifi</string>
+	<string name="coord_type_system_tip">Sys</string>
+	<string name="coord_type_gps_tip">GPS</string>
+	<string name="tv_sys_info_tip">系统信息</string>
 </resources>

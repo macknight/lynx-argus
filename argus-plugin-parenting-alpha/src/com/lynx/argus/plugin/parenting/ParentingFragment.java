@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.parenting;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,13 +54,4 @@ public class ParentingFragment extends LFFragment {
 		return view;
 	}
 
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }

@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.lynx.argus.R;
-import com.lynx.argus.app.BizFragment;
+import com.lynx.lib.core.LFFragment;
 
 /**
  * 
@@ -15,7 +15,7 @@ import com.lynx.argus.app.BizFragment;
  * 
  * @version 13-11-18 下午8:00
  */
-public class DownloadCenterFragment extends BizFragment {
+public class DownloadCenterFragment extends LFFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

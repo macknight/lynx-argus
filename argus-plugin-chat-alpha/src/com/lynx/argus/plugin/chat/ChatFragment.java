@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.chat;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -131,14 +130,4 @@ public class ChatFragment extends LFFragment {
 			}
 		}
 	};
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-	}
 }

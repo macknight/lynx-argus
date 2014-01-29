@@ -1,6 +1,5 @@
 package com.lynx.argus.plugin.local;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import org.json.JSONObject;
@@ -32,18 +32,16 @@ public class ShopDetailFragment extends LFFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
 		try {
 			httpService = (HttpService) LFApplication.instance()
 					.service("http");
+			uid = getArguments().getString("uid");
+			String url = String.format(BMAP_SHOP_DETAIL, uid,
+					Const.BMAP_API_KEY);
+			httpService.get(url, null, httpCallback);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Logger.e(Tag, "init error", e);
 		}
-
-		uid = getArguments().getString("uid");
-		String url = String.format(BMAP_SHOP_DETAIL, uid, Const.BMAP_API_KEY);
-		httpService.get(url, null, httpCallback);
 	}
 
 	@Override
@@ -192,15 +190,5 @@ public class ShopDetailFragment extends LFFragment {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 	}
 }

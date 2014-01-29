@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.lynx.argus.R;
-import com.lynx.argus.app.BizFragment;
 import com.lynx.argus.biz.widget.listview.CornerListView;
+import com.lynx.lib.core.LFFragment;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -21,15 +21,15 @@ import java.util.Map;
  * 
  * @version 13-10-27 下午9:29
  */
-public class MoreFragment extends BizFragment implements
+public class MoreFragment extends LFFragment implements
 		AdapterView.OnItemClickListener {
 	public static final String Tag = "More";
 	private List<List<Map<String, String>>> data = new ArrayList<List<Map<String, String>>>();
-	private String[] mSettingItems = { "离线下载", "", "分享该软件给朋友", "评分", "",
-			"检查新版本", "意见反馈", "电话联系我们", "关于", "", "捐赠" };
-	private String[] mSettingItemMethods = { "setting_offline", "", "shareApp",
-			"jmupToMarket", "", "setting_check_new_version",
-			"feedBackSuggestion", "callUs", "about", "", "setting_donate" };
+	private String[] mSettingItems = { "离线下载", "", "分享给朋友", "评分", "", "检查新版本",
+			"意见反馈", "联系我们", "关于", "", "捐赠" };
+	private String[] mSettingItemMethods = { "offlineSetting", "", "shareApp",
+			"jmupToMarket", "", "newVersionCheck", "feedback", "contract",
+			"about", "", "donate" };
 	private HashMap<String, String> mSettingItemMethodMap = new HashMap<String, String>();
 
 	public MoreFragment() {
@@ -63,13 +63,13 @@ public class MoreFragment extends BizFragment implements
 					LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT);
 			if (i == 0 && i == (size - 1)) {
-				lp.setMargins(15, 10, 15, 10);
+				lp.setMargins(15, 20, 15, 20);
 			} else if (i == 0) {
-				lp.setMargins(15, 10, 15, 5);
+				lp.setMargins(15, 20, 15, 10);
 			} else if (i == (size - 1)) {
-				lp.setMargins(15, 5, 15, 10);
+				lp.setMargins(15, 10, 15, 20);
 			} else {
-				lp.setMargins(15, 5, 15, 5);
+				lp.setMargins(15, 10, 15, 10);
 			}
 			cornerListView.setLayoutParams(lp);
 			cornerListView.setCacheColorHint(0);
@@ -112,7 +112,7 @@ public class MoreFragment extends BizFragment implements
 		}
 	}
 
-	public void initData() {
+	private void initData() {
 		data.clear();
 		List<Map<String, String>> listData = new ArrayList<Map<String, String>>();
 
@@ -132,23 +132,27 @@ public class MoreFragment extends BizFragment implements
 		data.add(listData);
 	}
 
-	public void setting_offline() {
-
-	}
-
-	public void setting_donate() {
-
-	}
-
-	public void setting_check_new_version() {
-
-	}
-
-	public void checkNewVersion(String result) {
+	public void offlineSetting() {
 
 	}
 
 	public void shareApp() {
+
+	}
+
+	public void jmupToMarket() {
+
+	}
+
+	public void newVersionCheck() {
+
+	}
+
+	public void feedback() {
+
+	}
+
+	public void contract() {
 
 	}
 
@@ -157,15 +161,7 @@ public class MoreFragment extends BizFragment implements
 		tabActivity.pushFragment(aboutFragment);
 	}
 
-	public void callUs() {
-
-	}
-
-	public void jmupToMarket() {
-
-	}
-
-	public void feedBackSuggestion() {
+	public void donate() {
 
 	}
 }
