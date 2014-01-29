@@ -100,7 +100,7 @@ public class PluginStoreFragment extends BizFragment {
 			@Override
 			public void onClick(View v) {
 				DownloadCenterFragment downloadFragment = new DownloadCenterFragment();
-				tabActivity.pushFragment(downloadFragment, true);
+				tabActivity.pushFragment(downloadFragment);
 			}
 		});
 

@@ -21,6 +21,8 @@ import java.util.List;
  * @version 13-10-29 上午11:30
  */
 public class DexModuleLoader {
+	private static final String Tag = "DexModuleLoader";
+
 	protected HttpService httpService;
 	protected Context context;
 	protected String basicDir; // /data/data/app.name/files/prefrix/module
@@ -95,6 +97,7 @@ public class DexModuleLoader {
 					break;
 				}
 			} catch (Exception e) {
+				Logger.e(dexModule.module(), "download dex file error", e);
 				switch (status) {
 				case INSTALL:
 					dispatchChange(DexModuleListener.DEX_INSTALL_FAIL);
@@ -210,7 +213,7 @@ public class DexModuleLoader {
 			JSONObject json = new JSONObject(str);
 			dexModule = DexUtil.json2dexModule(type, json);
 		} catch (Exception e) {
-			Logger.w("dexmodule", "no local config found");
+			Logger.w(dexModule.module(), "no local config found", e);
 		} finally {
 			if (fis != null) {
 				try {
@@ -234,7 +237,7 @@ public class DexModuleLoader {
 				saveConfig(module);
 				dexModule = module;
 			} catch (Exception e) {
-				e.printStackTrace();
+				Logger.e(dexModule.module(), "init config error", e);
 			}
 		}
 

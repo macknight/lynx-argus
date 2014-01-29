@@ -58,7 +58,7 @@ public class PluginManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Logger.w(Tag, "获取动态模块更新配置失败");
+					Logger.w(Tag, "获取动态模块更新配置服务器返回错误");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
@@ -71,18 +71,18 @@ public class PluginManager {
 								DexType.PLUGIN, jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
-						e.printStackTrace();
+                        Logger.w(Tag, "获取动态模块更新配置内容错误", e);
 					}
 				}
 			} catch (Exception e) {
-				Logger.w(Tag, "获取动态模块更新配置异常", e);
+				Logger.e(Tag, "获取动态模块更新配置异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			Logger.w(Tag, "获取插件更新配置失败", t);
+			Logger.e(Tag, "获取插件更新配置失败" + strMsg, t);
 		}
 	};
 
@@ -135,6 +135,7 @@ public class PluginManager {
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.put(loader.module(), loader);
 		} catch (Exception e) {
+            Logger.e(Tag, "add pluginloader error", e);
 			removePluginLoader((Plugin) loader.dexModule(), null);
 		}
 	}
@@ -163,6 +164,7 @@ public class PluginManager {
 						DexModuleListener.DEX_UNINSTALL_SUCCESS);
 			}
 		} catch (Exception e) {
+            Logger.e(Tag, "remove pluginloader error", e);
 			if (listener != null) {
 				listener.onStatusChanged(plugin,
 						DexModuleListener.DEX_UNINSTALL_FAIL);
@@ -208,7 +210,7 @@ public class PluginManager {
 				}
 			}
 		} catch (Exception e) {
-
+			Logger.e(Tag, "load local plugins error", e);
 		} finally {
 			if (fis != null) {
 				try {
@@ -226,7 +228,6 @@ public class PluginManager {
 			plugins = String.format("%s|%s", plugins, key);
 		}
 		return plugins.length() > 1 ? plugins.substring(1) : null;
-		// return "local";
 	}
 
 	/**
@@ -267,6 +268,7 @@ public class PluginManager {
 		} catch (Exception e) {
 			config.delete();
 			configOld.renameTo(config);
+			Logger.e(Tag, "save config error", e);
 		} finally {
 			if (fos != null) {
 				try {

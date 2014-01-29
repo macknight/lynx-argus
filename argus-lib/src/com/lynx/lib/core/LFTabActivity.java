@@ -56,10 +56,10 @@ public abstract class LFTabActivity extends LFActivity {
 		animResPopOut = resOut;
 	}
 
-	public void pushFragment(LFFragment fragment, boolean shouldAnimate) {
+	public void pushFragment(LFFragment fragment) {
 		FragmentManager fm = getFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
-		if (shouldAnimate) {
+		if (fragment.shouldAnimate()) {
 			ft.setCustomAnimations(animResPushIn, animResPushOut);
 		}
 		ft.replace(resContent, fragment);

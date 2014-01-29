@@ -23,7 +23,7 @@ import java.util.Map;
  * @version 13-11-17 上午1:32
  */
 public abstract class ServiceManager {
-	private static final String Tag = "serviceManager";
+	private static final String Tag = "ServiceManager";
 	private static final String LM_API_SERVICE_CONFIG = "/dex/service";
 	public static final String PREFIX = "service";
 
@@ -69,19 +69,17 @@ public abstract class ServiceManager {
 						// 无需通知上层，直接更新
 						update(module);
 					} catch (Exception e) {
-
+                        Logger.e(Tag, "服务更新配置数据解析异常", e);
 					}
 				}
 			} catch (Exception e) {
-				Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT)
-						.show();
+                Logger.e(Tag, "服务更新配置数据解析异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-			super.onFailure(t, strMsg);
-			Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT).show();
+            Logger.w(Tag, "获取服务更新配置失败"+ strMsg , t);
 		}
 	};
 

@@ -68,7 +68,7 @@ public class PluginCenterFragment extends BizFragment {
 			@Override
 			public void onClick(View v) {
 				PluginStoreFragment pluginStoreFragment = new PluginStoreFragment();
-				tabActivity.pushFragment(pluginStoreFragment, true);
+				tabActivity.pushFragment(pluginStoreFragment);
 			}
 		});
 
@@ -91,7 +91,7 @@ public class PluginCenterFragment extends BizFragment {
 				Bundle bundle = new Bundle();
 				bundle.putString("query", "美食");
 				slf.setArguments(bundle);
-				tabActivity.pushFragment(slf, true);
+				tabActivity.pushFragment(slf);
 			} else {
 				Intent i = new Intent(getActivity(), LFDexActivity.class);
 				i.putExtra("module", plugin.module());

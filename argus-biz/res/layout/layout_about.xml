@@ -50,7 +50,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="5dp"
                 android:textSize="@dimen/font_size_default"
-                android:textColor="@color/Grey"/>
+                android:textColor="@color/DeepSkyBlue"/>
     </LinearLayout>
 
     <WebView
