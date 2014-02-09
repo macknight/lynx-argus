@@ -1,9 +1,7 @@
 package com.lynx.lib.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.*;
@@ -42,8 +40,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * Deletes the contents of {@code dir}. Throws an IOException if any file
-	 * could not be deleted, or if {@code dir} is not a readable directory.
+	 * Deletes the contents of dir. Throws an IOException if any file
+	 * could not be deleted, or if dir is not a readable directory.
 	 */
 	public static void deleteFile(File file) throws IOException {
 		if (file.exists()) {
@@ -56,14 +54,23 @@ public class FileUtil {
 					if (f.isDirectory()) {
 						deleteFile(f);
 					}
-					if (!f.delete()) {
+					if (!forceDelete(f)) {
 						throw new IOException("failed to delete file: " + f);
 					}
 				}
-			} else {
-				file.delete();
 			}
+
 		}
+	}
+
+	private static boolean forceDelete(File f) {
+		boolean result = f.delete();
+		int tryCount = 0;
+
+		while (!result && tryCount++ < 5) {
+			result = f.delete();
+		}
+		return result;
 	}
 
 	public static void closeQuietly(Closeable closeable) {
@@ -80,6 +87,7 @@ public class FileUtil {
 	/**
 	 * 将数据存储到sdcard上
 	 * 
+	 * @param file
 	 * @param data
 	 * @return
 	 */
@@ -110,7 +118,9 @@ public class FileUtil {
 			return false;
 		} finally {
 			try {
-				out.close();
+				if (out != null) {
+					out.close();
+				}
 			} catch (Exception e) {
 
 			}
@@ -128,7 +138,6 @@ public class FileUtil {
 	}
 
 	private static boolean saveByteArray(File file, byte[] data) {
-		BufferedOutputStream bos = null;
 		FileOutputStream fos = null;
 		try {
 			String parent = file.getParent();
@@ -148,13 +157,6 @@ public class FileUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if (bos != null) {
-				try {
-					bos.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				}
-			}
 			if (fos != null) {
 				try {
 					fos.close();
@@ -198,14 +200,4 @@ public class FileUtil {
 		return false;
 	}
 
-	public static Bitmap getBitmapFromAssert(Context context, String filename) {
-		try {
-			InputStream instream = context.getAssets().open(filename);
-			return BitmapFactory.decodeStream(instream);
-		} catch (Exception e) {
-
-		}
-
-		return null;
-	}
 }

@@ -11,7 +11,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
-import com.lynx.argus.biz.misc.LocationInfoFragment;
+import com.lynx.argus.biz.plugin.demo.DemoFragment;
 import com.lynx.argus.biz.plugin.model.PluginCenterAdapter;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFDexActivity;
@@ -87,8 +87,8 @@ public class PluginCenterFragment extends LFFragment {
 				long id) {
 			Plugin plugin = plugins.get(position);
 			if (position == 0) {
-				LocationInfoFragment locationInfoFragment = new LocationInfoFragment();
-				tabActivity.pushFragment(locationInfoFragment);
+				DemoFragment demoFragment = new DemoFragment();
+				tabActivity.pushFragment(demoFragment);
 			} else {
 				Intent i = new Intent(getActivity(), LFDexActivity.class);
 				i.putExtra("module", plugin.module());
@@ -126,7 +126,7 @@ public class PluginCenterFragment extends LFFragment {
 		plugins.clear();
 
 		Plugin plugin = new Plugin("demo", 1, "实验", null, null, null, "试验田",
-				"com.lynx.argus.biz.misc.LocationInfoFragment", 1);
+				"com.lynx.argus.biz.plugin.demo.DemoFragment", 1);
 		plugins.add(plugin);
 
 		if (application.pluginLoaders() == null) {

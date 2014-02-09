@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
-
 import com.lynx.argus.R;
+import com.lynx.lib.core.LFEnvironment;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.Logger;
 
@@ -30,21 +30,34 @@ public class AboutFragment extends LFFragment {
 			Bundle bundle) throws Exception {
 		View v = inflater.inflate(R.layout.layout_about, container, false);
 
-		tvVersion = (TextView) v.findViewById(R.id.more_about_version);
-		PackageInfo pinfo;
+		tvVersion = (TextView) v.findViewById(R.id.tv_more_about_version);
+		String version = "unknown version";
 		try {
-			pinfo = tabActivity.getPackageManager().getPackageInfo(
-					tabActivity.getPackageName(),
-					PackageManager.GET_CONFIGURATIONS);
-			tvVersion.setText(pinfo.versionName);
+			PackageManager packageManager = tabActivity.getPackageManager();
+			if (packageManager != null) {
+				PackageInfo pinfo = LFEnvironment.pkgInfo();
+				version = pinfo.versionName;
+			}
 		} catch (Exception e) {
 			Logger.e(Tag, "load resource from assert error", e);
 		}
+
+		tvVersion.setText(version);
+		tvVersion.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (LFEnvironment.isDebug()) {
+					SysInfoFragment sysInfoFragment = new SysInfoFragment();
+					tabActivity.pushFragment(sysInfoFragment);
+				}
+			}
+		});
 
 		wvAbout = (WebView) v.findViewById(R.id.more_about_link);
 		wvAbout.setBackgroundColor(0); // 设置背景色
 		wvAbout.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		wvAbout.loadUrl("file:///android_asset/more_about.html");
+
 		return v;
 	}
 }

@@ -9,6 +9,7 @@ import com.lynx.lib.core.dex.DexModuleLoader.DexType;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
+import com.lynx.lib.util.FileUtil;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -71,7 +72,7 @@ public class PluginManager {
 								DexType.PLUGIN, jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
-                        Logger.w(Tag, "获取动态模块更新配置内容错误", e);
+						Logger.w(Tag, "获取动态模块更新配置内容错误", e);
 					}
 				}
 			} catch (Exception e) {
@@ -135,7 +136,7 @@ public class PluginManager {
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.put(loader.module(), loader);
 		} catch (Exception e) {
-            Logger.e(Tag, "add pluginloader error", e);
+			Logger.e(Tag, "add pluginloader error", e);
 			removePluginLoader((Plugin) loader.dexModule(), null);
 		}
 	}
@@ -164,7 +165,7 @@ public class PluginManager {
 						DexModuleListener.DEX_UNINSTALL_SUCCESS);
 			}
 		} catch (Exception e) {
-            Logger.e(Tag, "remove pluginloader error", e);
+			Logger.e(Tag, "remove pluginloader error", e);
 			if (listener != null) {
 				listener.onStatusChanged(plugin,
 						DexModuleListener.DEX_UNINSTALL_FAIL);
@@ -227,6 +228,9 @@ public class PluginManager {
 		for (String key : pluginLoaders.keySet()) {
 			plugins = String.format("%s|%s", plugins, key);
 		}
+
+		deleteNoUseFolder();
+
 		return plugins.length() > 1 ? plugins.substring(1) : null;
 	}
 
@@ -280,4 +284,23 @@ public class PluginManager {
 			configOld.delete();
 		}
 	}
+
+	/**
+	 * 删除卸载插件的残余文件
+	 */
+	private void deleteNoUseFolder() {
+		String pluginBaseDir = "/data/data/app.name/files/plugin";
+		File pluginBase = new File(pluginBaseDir);
+		if (pluginBase.exists()) {
+			File[] files = pluginBase.listFiles();
+			for (File file : files) {
+				try {
+					FileUtil.deleteFile(file);
+				} catch (Exception e) {
+					Logger.w(Tag, "删除卸载插件的残余文件异常", e);
+				}
+			}
+		}
+	}
+
 }

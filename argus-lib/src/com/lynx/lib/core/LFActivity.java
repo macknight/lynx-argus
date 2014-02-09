@@ -1,7 +1,10 @@
 package com.lynx.lib.core;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.inputmethod.InputMethodManager;
 
 /**
  * 支持UI动态加载
@@ -68,5 +71,20 @@ public abstract class LFActivity extends Activity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			if (getCurrentFocus() != null) {
+				if (getCurrentFocus().getWindowToken() != null) {
+					imm.hideSoftInputFromWindow(getCurrentFocus()
+							.getWindowToken(),
+							InputMethodManager.HIDE_NOT_ALWAYS);
+				}
+			}
+		}
+		return super.onTouchEvent(event);
 	}
 }

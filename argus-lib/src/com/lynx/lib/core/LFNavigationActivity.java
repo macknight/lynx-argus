@@ -2,11 +2,8 @@ package com.lynx.lib.core;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.inputmethod.InputMethodManager;
 
 import java.util.Stack;
 
@@ -77,25 +74,10 @@ public abstract class LFNavigationActivity extends LFActivity {
 	}
 
 	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-		if (event.getAction() == MotionEvent.ACTION_DOWN) {
-			if (getCurrentFocus() != null) {
-				if (getCurrentFocus().getWindowToken() != null) {
-					imm.hideSoftInputFromWindow(getCurrentFocus()
-							.getWindowToken(),
-							InputMethodManager.HIDE_NOT_ALWAYS);
-				}
-			}
-		}
-		return super.onTouchEvent(event);
-	}
-
-	@Override
 	public void onBackPressed() {
 		if (!stack.lastElement().onBackPressed()) {
 			if (stack.size() == 1) {
-                rollback();
+				rollback();
 				super.onBackPressed();
 			} else {
 				popFragment();

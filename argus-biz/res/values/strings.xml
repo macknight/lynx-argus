@@ -21,19 +21,29 @@
 	<string name="more_about_copyright_3">All Rights Reserved.</string>
 
 
+	<string name="lint_sys_info_nav_title">系统信息</string>
+	<string name="lint_sys_info_basic">系统信息</string>
+	<string name="lint_sys_info_service">Service信息</string>
+	<string name="lint_sys_info_service_name">服务名:</string>
+	<string name="lint_sys_info_service_clazz">实现类:</string>
+	<string name="lint_sys_info_service_version">版本:</string>
+
 	<string name="location_info_tip">定位信息详情</string>
 	<string name="tv_cell_info_tip">基站信息</string>
 	<string name="tv_cell_type_tip">Type</string>
 	<string name="tv_cell_mcc_tip">MCC</string>
 	<string name="tv_cell_mnc_tip">MNC</string>
-	<string name="tv_cell_cid_tip">CID</string>
 	<string name="tv_cell_lac_tip">LAC</string>
+	<string name="tv_cell_cid_tip">CID</string>
+	<string name="tv_cell_bid_tip">BAC</string>
+	<string name="tv_cell_nid_tip">NID</string>
+	<string name="tv_cell_sid_tip">SID</string>
 	<string name="tv_cell_asu_tip">ASU</string>
 	<string name="tv_wifi_info_tip">wifi信息</string>
 	<string name="tv_wifi_ssid_tip">SSID</string>
 	<string name="tv_wifi_mac_tip">MAC</string>
 	<string name="tv_wifi_dbm_tip">dBm</string>
-	<string name="tv_coord_info_tip">定位经纬度</string>
+	<string name="tv_coord_info_tip">经纬度</string>
 	<string name="tv_coord_source_tip">Source</string>
 	<string name="tv_coord_lat_tip">Lat</string>
 	<string name="tv_coord_lng_tip">Lng</string>

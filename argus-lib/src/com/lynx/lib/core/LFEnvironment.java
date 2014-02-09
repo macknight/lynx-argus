@@ -167,14 +167,15 @@ public class LFEnvironment {
 		return Logger.level() != Logger.AppLevel.PRODUCT;
 	}
 
-	private static PackageInfo pkgInfo() {
+	public static PackageInfo pkgInfo() {
 		if (packageInfo == null) {
 			try {
-				packageInfo = LFApplication
-						.instance()
-						.getPackageManager()
-						.getPackageInfo(
-								LFApplication.instance().getPackageName(), 0);
+				PackageManager packageManager = LFApplication.instance()
+						.getPackageManager();
+				if (packageManager != null) {
+					packageInfo = packageManager.getPackageInfo(LFApplication
+							.instance().getPackageName(), 0);
+				}
 			} catch (PackageManager.NameNotFoundException e) {
 
 			}

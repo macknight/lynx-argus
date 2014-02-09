@@ -1,4 +1,4 @@
-package com.lynx.argus.biz.misc;
+package com.lynx.argus.biz.more;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -24,7 +24,7 @@ import java.util.List;
  * @author chris.liu
  * @addtime 14-1-29 下午9:44
  */
-public class LocationInfoFragment extends LFFragment {
+public class SysInfoFragment extends LFFragment {
 
 	private static final List<BasicNameValuePair> SYS_INFO = new ArrayList<BasicNameValuePair>();
 	private GeoService geoService;
@@ -52,55 +52,79 @@ public class LocationInfoFragment extends LFFragment {
 		SYS_INFO.add(new BasicNameValuePair("user", android.os.Build.USER));
 	}
 
-	public LocationInfoFragment() {
+	public SysInfoFragment() {
 		geoService = (GeoService) LFApplication.instance().service("geo");
-
 	}
 
 	@Override
 	protected View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_location_info, container, false);
+		View view = inflater
+				.inflate(R.layout.layout_sys_info, container, false);
+		addCellInfo(view);
+		addWifiInfo(view);
+		addSysInfo(view);
+		addServiceInfo(view);
+		return view;
+	}
 
-		TableLayout tlCellInfo = (TableLayout) v
-				.findViewById(R.id.tl_loc_info_cell);
-		TableLayout tlWifiInfo = (TableLayout) v
-				.findViewById(R.id.tl_loc_info_wifi);
-		TableLayout tlCoordInfo = (TableLayout) v
-				.findViewById(R.id.tl_loc_info_coord);
-		TableLayout tlSysInfo = (TableLayout) v
-				.findViewById(R.id.tl_loc_info_sys);
-
+	private void addCellInfo(View parent) {
+		TableLayout tlCellInfo = (TableLayout) parent
+				.findViewById(R.id.tl_sys_info_cell);
+		TextView tvCellTitle = (TextView) parent
+				.findViewById(R.id.tv_sys_info_cell_title);
 		List<Cell> cells = geoService.cells();
-		float[] cell_weights = { 0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 0.5f };
+		float[] layoutWeights = { 0.5f, 1.0f, 1.0f, 1.0f, 0.5f };
 		if (cells != null && cells.size() > 0) {
+			tvCellTitle.setText(tvCellTitle.getText()
+					+ cells.get(0).type().name());
+			Cell firstCell = cells.get(0);
+			List<String> data = new ArrayList<String>();
+			if (firstCell instanceof GSMCell) {
+				data.add(tabActivity.getString(R.string.tv_cell_mcc_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_mnc_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_lac_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_cid_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_asu_tip));
+			} else {
+				data = new ArrayList<String>();
+				data.add(tabActivity.getString(R.string.tv_cell_mcc_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_sid_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_nid_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_bid_tip));
+				data.add(tabActivity.getString(R.string.tv_cell_asu_tip));
+			}
+			addRow(tlCellInfo, data, false, 0, layoutWeights);
+
 			for (int i = 0; i < cells.size(); ++i) {
-				List<String> data = new ArrayList<String>();
+				data = new ArrayList<String>();
 				Cell cell = cells.get(i);
 				if (cell instanceof GSMCell) {
 					GSMCell gsmCell = (GSMCell) cell;
-					data.add(cell.type().name());
 					data.add(gsmCell.mcc() + "");
 					data.add(gsmCell.mnc() + "");
 					data.add(gsmCell.lac() + "");
 					data.add(gsmCell.cid() + "");
 					data.add(gsmCell.asu() + "");
-					addRow(tlCellInfo, data, i == cells.size() - 1, i,
-							cell_weights);
+					addRow(tlCellInfo, data, i == cells.size() - 1, i + 1,
+							layoutWeights);
 				} else if (cell instanceof CDMACell) {
-					data.add(cell.type().name());
 					CDMACell cdmaCell = (CDMACell) cell;
 					data.add(cdmaCell.mcc() + "");
 					data.add(cdmaCell.sid() + "");
 					data.add(cdmaCell.nid() + "");
 					data.add(cdmaCell.bid() + "");
 					data.add("0");
-					addRow(tlCellInfo, data, i == cells.size() - 1, i,
-							cell_weights);
+					addRow(tlCellInfo, data, i == cells.size() - 1, i + 1,
+							layoutWeights);
 				}
 			}
 		}
+	}
 
+	private void addWifiInfo(View parent) {
+		TableLayout tlWifiInfo = (TableLayout) parent
+				.findViewById(R.id.tl_sys_info_wifi);
 		List<Wifi> wifis = geoService.wifis();
 		float[] wifi_weights = { 0.5f, 1.0f, 0.3f };
 		if (wifis != null && wifis.size() > 0) {
@@ -113,7 +137,11 @@ public class LocationInfoFragment extends LFFragment {
 				addRow(tlWifiInfo, data, i == wifis.size() - 1, i, wifi_weights);
 			}
 		}
+	}
 
+	private void addSysInfo(View parent) {
+		TableLayout tlCoordInfo = (TableLayout) parent
+				.findViewById(R.id.tl_sys_info_coord);
 		List<Coord> coords = geoService.coords();
 		float[] coord_weights = { 1.0f, 1.0f, 1.0f, 0.7f, 1.0f };
 		if (coords != null && coords.size() > 0) {
@@ -129,6 +157,11 @@ public class LocationInfoFragment extends LFFragment {
 						coord_weights);
 			}
 		}
+	}
+
+	private void addServiceInfo(View parent) {
+		TableLayout tlSysInfo = (TableLayout) parent
+				.findViewById(R.id.tl_sys_info_os);
 
 		float[] sys_weights = { 0.3f, 0.6f };
 		for (int i = 0; i < SYS_INFO.size(); ++i) {
@@ -137,7 +170,6 @@ public class LocationInfoFragment extends LFFragment {
 			data.add(SYS_INFO.get(i).getValue());
 			addRow(tlSysInfo, data, i == SYS_INFO.size() - 1, i, sys_weights);
 		}
-		return v;
 	}
 
 	private void addRow(TableLayout parent, List<String> data, boolean islst,
@@ -156,7 +188,7 @@ public class LocationInfoFragment extends LFFragment {
 			text_bg_color = text_bg_color_0;
 		}
 
-		TableRow.LayoutParams params = null;
+		TableRow.LayoutParams params;
 
 		TableRow tr = new TableRow(tabActivity);
 		tr.setLayoutParams(new ViewGroup.LayoutParams(
@@ -192,4 +224,5 @@ public class LocationInfoFragment extends LFFragment {
 				ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 	}
+
 }

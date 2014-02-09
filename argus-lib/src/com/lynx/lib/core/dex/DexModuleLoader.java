@@ -328,7 +328,6 @@ public class DexModuleLoader {
 				}
 				file.delete();
 			}
-
 		}
 
 		File dexFile = new File(dexPath);

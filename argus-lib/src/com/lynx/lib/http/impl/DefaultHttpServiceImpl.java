@@ -1,8 +1,8 @@
 package com.lynx.lib.http.impl;
 
+import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.handler.HttpHandler;
 import com.lynx.lib.http.handler.RetryHandler;
 import com.lynx.lib.http.handler.SyncRequestHandler;
@@ -10,6 +10,8 @@ import org.apache.http.*;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.*;
+import org.apache.http.client.params.CookiePolicy;
+import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.params.ConnManagerParams;
 import org.apache.http.conn.params.ConnPerRouteBean;
@@ -101,6 +103,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 		httpContext = new SyncBasicHttpContext(new BasicHttpContext());
 		httpClient = new DefaultHttpClient(cm, httpParams);
+		HttpClientParams.setCookiePolicy(httpClient.getParams(), CookiePolicy.BROWSER_COMPATIBILITY);
 		httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
 			public void process(HttpRequest request, HttpContext context) {
 				if (!request.containsHeader(HEADER_ACCEPT_ENCODING)) {

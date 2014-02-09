@@ -27,114 +27,22 @@
 				android:padding="10dp">
 
 			<TextView
+					android:id="@+id/tv_sys_info_cell_title"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:gravity="center_horizontal"
 					android:text="@string/tv_cell_info_tip"
-					android:textColor="@color/Grey"
-					android:textSize="@dimen/font_size_default"/>
+					android:textColor="@color/DeepSkyBlue"
+					android:textSize="@dimen/font_size_large"
+					android:background="@drawable/textfield_bg_def_holo_light"/>
 
 			<TableLayout
-					android:id="@+id/tl_loc_info_cell"
-					android:layout_width="wrap_content"
+					android:id="@+id/tl_sys_info_cell"
+					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:background="@drawable/bg_frame"
 					android:shrinkColumns="1,2"
-					android:stretchColumns="0,2,4,6,8">
-
-				<TableRow
-						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:background="@color/DarkGrey">
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="0.5"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_type_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-
-					<View android:layout_width="1dp"
-					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="0.5"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_mcc_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-
-					<View android:layout_width="1dp"
-					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_mnc_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-
-					<View android:layout_width="1dp"
-					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_cid_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-
-					<View android:layout_width="1dp"
-					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="1"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_lac_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-
-					<View android:layout_width="1dp"
-					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
-
-					<TextView
-							android:layout_width="0dp"
-							android:layout_weight="0.5"
-							android:ellipsize="end"
-							android:gravity="center"
-							android:singleLine="true"
-							android:text="@string/tv_cell_asu_tip"
-							android:textColor="@color/Grey"
-							android:textSize="@dimen/font_size_small"
-							android:textStyle="bold"/>
-				</TableRow>
-
-			</TableLayout>
+					android:stretchColumns="0,2,4,6,8"/>
 
 			<TextView
 					android:layout_width="match_parent"
@@ -142,11 +50,12 @@
 					android:layout_marginTop="10dp"
 					android:gravity="center_horizontal"
 					android:text="@string/tv_wifi_info_tip"
-					android:textColor="#000"
-					android:textSize="@dimen/font_size_default"/>
+					android:textColor="@color/DeepSkyBlue"
+					android:textSize="@dimen/font_size_large"
+					android:background="@drawable/textfield_bg_def_holo_light"/>
 
 			<TableLayout
-					android:id="@+id/tl_loc_info_wifi"
+					android:id="@+id/tl_sys_info_wifi"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:background="@drawable/bg_frame"
@@ -154,8 +63,7 @@
 
 				<TableRow
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:background="@color/DarkGrey">
+						android:layout_height="wrap_content">
 
 					<TextView
 							android:layout_width="0dp"
@@ -170,7 +78,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -185,7 +93,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -207,11 +115,12 @@
 					android:layout_marginTop="10dp"
 					android:gravity="center_horizontal"
 					android:text="@string/tv_coord_info_tip"
-					android:textColor="#000"
-					android:textSize="@dimen/font_size_default"/>
+					android:textColor="@color/DeepSkyBlue"
+					android:textSize="@dimen/font_size_large"
+					android:background="@drawable/textfield_bg_def_holo_light"/>
 
 			<TableLayout
-					android:id="@+id/tl_loc_info_coord"
+					android:id="@+id/tl_sys_info_coord"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:background="@drawable/bg_frame"
@@ -219,8 +128,7 @@
 
 				<TableRow
 						android:layout_width="match_parent"
-						android:layout_height="wrap_content"
-						android:background="@color/DarkGrey">
+						android:layout_height="wrap_content">
 
 					<TextView
 							android:layout_width="0dp"
@@ -235,7 +143,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -250,7 +158,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -265,7 +173,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -280,7 +188,7 @@
 
 					<View android:layout_width="1dp"
 					      android:layout_height="match_parent"
-					      android:background="@color/Thistle"/>
+					      android:background="@color/DeepSkyBlue"/>
 
 					<TextView
 							android:layout_width="0dp"
@@ -302,15 +210,34 @@
 					android:layout_marginTop="10dp"
 					android:gravity="center_horizontal"
 					android:text="@string/tv_sys_info_tip"
-					android:textColor="#000"
-					android:textSize="@dimen/font_size_default"/>
+					android:textColor="@color/DeepSkyBlue"
+					android:textSize="@dimen/font_size_large"
+					android:background="@drawable/textfield_bg_def_holo_light"/>
 
 			<TableLayout
-					android:id="@+id/tl_loc_info_sys"
+					android:id="@+id/tl_sys_info_os"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
 					android:background="@drawable/bg_frame"
 					android:stretchColumns="0,2,4,6,8"/>
+
+			<TextView
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="10dp"
+					android:gravity="center_horizontal"
+					android:text="@string/lint_sys_info_service"
+					android:textColor="@color/DeepSkyBlue"
+					android:textSize="@dimen/font_size_large"
+					android:background="@drawable/textfield_bg_def_holo_light"/>
+
+			<ListView
+					android:id="@+id/lv_sys_info_service"
+					android:layout_width="match_parent"
+					android:layout_height="0dp"
+					android:layout_weight="0.4"
+					android:cacheColorHint="@android:color/transparent"
+					android:scrollbars="none"/>
 		</LinearLayout>
 
 	</ScrollView>

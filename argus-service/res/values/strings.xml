@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">argus-service</string>
-
-    <string name="lint_sys_info_nav_title">系统信息</string>
-    <string name="lint_sys_info_basic">系统信息</string>
-    <string name="lint_sys_info_service">Service信息</string>
-    <string name="lint_sys_info_service_name">服务名:</string>
-    <string name="lint_sys_info_service_clazz">实现类:</string>
-    <string name="lint_sys_info_service_version">版本:</string>
+	<string name="app_name">argus-service</string>
 </resources>
