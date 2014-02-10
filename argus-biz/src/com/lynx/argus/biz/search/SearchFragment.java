@@ -5,9 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.lynx.argus.R;
+import com.lynx.argus.biz.search.model.SuggestionAdapter;
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
@@ -33,81 +35,24 @@ import java.util.Map;
 public class SearchFragment extends LFFragment {
 	public static final String Tag = "Search";
 
-	private static final String BMAP_API_PLACE_SUGGESSTION = "/suggestion";
-
-	private HttpService httpService;
-
 	public SearchFragment() {
-		httpService = (HttpService) LFApplication.instance().service("http");
+
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 		View view = inflater.inflate(R.layout.layout_search, container, false);
-		EditText edSegguestion = (EditText)view.findViewById(R.id.et_search_keyword);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-
+		AutoCompleteTextView actvSearch = (AutoCompleteTextView) view
+				.findViewById(R.id.actv_search_keyword);
+		String keyword = actvSearch.getText().toString();
+		SuggestionAdapter suggestionAdapter = new SuggestionAdapter(tabActivity);
+		actvSearch.setAdapter(suggestionAdapter);
 		return view;
 	}
 
-	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
-		@Override
-		public void onSuccess(Object o) {
-			super.onSuccess(o);
-			try {
-				JSONObject joResult = new JSONObject(o.toString());
-				if (joResult.getInt("status") == 0) {
-					JSONArray jaResult = joResult.getJSONArray("result");
-					parseSuggestion(jaResult);
-				} else {
-					Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT)
-							.show();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public void onFailure(Throwable t, String strMsg) {
-			super.onFailure(t, strMsg);
-		}
-	};
-
-	private void getSuggestion(String query, String city) {
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
-		params.add(new BasicNameValuePair("output", "json"));
-		params.add(new BasicNameValuePair("query", query));
-		params.add(new BasicNameValuePair("region", city));
-		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
-				BMAP_API_PLACE_SUGGESSTION, param);
-		httpService.get(url, null, httpCallback);
-	}
-
-	private void parseSuggestion(JSONArray data) {
-		if (data == null || data.length() == 0) {
-			return;
-		}
-		for (int i = 0; i < data.length(); ++i) {
-			try {
-				Map<String, Object> suggestion = new HashMap<String, Object>();
-				JSONObject joSuggestion = data.getJSONObject(i);
-
-				String name = joSuggestion.getString("name");
-				String district = joSuggestion.getString("district");
-				String city = "";
-				try {
-					city = joSuggestion.getString("city");
-				} catch (Exception e) {
-
-				}
-
-			} catch (Exception e) {
-
-			}
-		}
-	}
 }

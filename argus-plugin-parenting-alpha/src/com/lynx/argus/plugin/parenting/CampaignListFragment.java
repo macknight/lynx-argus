@@ -79,16 +79,16 @@ public class CampaignListFragment extends LFFragment {
 	};
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 		httpService = (HttpService) LFApplication.instance().service("http");
 
-		View view = inflater.inflate(R.layout.layout_campaignlist, container,
-				false);
-		Logger.i(Tag, "view is null? " + view);
+		View view = inflater.inflate(R.layout.layout_campaignlist, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		prlvCampaign = (PullToRefreshListView) view
-				.findViewById(R.id.prlv_campaignlist);
+		prlvCampaign = (PullToRefreshListView) view.findViewById(R.id.prlv_campaignlist);
 		adapter = new CampaignListAdapter(navActivity, campaignItems);
 		prlvCampaign.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
@@ -97,23 +97,21 @@ public class CampaignListFragment extends LFFragment {
 		prlvCampaign.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
-				getCampaignList();
+				getCampaigns();
 			}
 		});
 
 		return view;
 	}
 
-	private void getCampaignList() {
+	private void getCampaigns() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-
 		params.add(new BasicNameValuePair("app", "activity"));
 		params.add(new BasicNameValuePair("act", "m"));
 		params.add(new BasicNameValuePair("page", curPage + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s",
-				ParentingFragment.LM_API_PARENT_DOMAIN, LM_API_CAMPAIGN_LIST,
-				param);
+		String url = String.format("%s%s?%s", ParentingFragment.LM_API_PARENT_DOMAIN,
+				LM_API_CAMPAIGN_LIST, param);
 		httpService.get(url, null, httpCallback);
 	}
 
@@ -133,16 +131,14 @@ public class CampaignListFragment extends LFFragment {
 					String shopId = joShop.getString("store_id");
 					String shopName = joShop.getString("store_name");
 					String price = joShop.getString("market_price");
-					String snapUrl = String.format("%s/%s",
-							ParentingFragment.LM_API_PARENT_DOMAIN,
+					String snapUrl = String.format("%s/%s", ParentingFragment.LM_API_PARENT_DOMAIN,
 							joShop.getString("default_image"));
 					String startTime = joShop.getString("start_time");
 					String endTime = joShop.getString("end_time");
 					String place = joShop.getString("place");
 					String region = joShop.getString("regions");
-					CampaignListItem campaignListItem = new CampaignListItem(
-							id, name, shopId, shopName, price, snapUrl,
-							startTime, endTime, place, region);
+					CampaignListItem campaignListItem = new CampaignListItem(id, name, shopId,
+							shopName, price, snapUrl, startTime, endTime, place, region);
 					campaignItems.add(campaignListItem);
 				} catch (Exception e) {
 

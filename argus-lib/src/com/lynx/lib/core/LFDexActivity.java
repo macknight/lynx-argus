@@ -38,8 +38,7 @@ public class LFDexActivity extends LFNavigationActivity {
 
 	protected void loadModule(Bundle savedInstanceState) {
 		FrameLayout rootView = new FrameLayout(this);
-		rootView.setLayoutParams(new ViewGroup.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT,
+		rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT));
 		rootView.setId(android.R.id.primary);
 		setContentView(rootView);
@@ -63,8 +62,8 @@ public class LFDexActivity extends LFNavigationActivity {
 				throw new Exception("not such module exist:" + module);
 			}
 
-			DexClassLoader dcl = new DexClassLoader(moduleLoader.srcPath(),
-					moduleLoader.dexDir(), null, super.getClassLoader());
+			DexClassLoader dcl = new DexClassLoader(moduleLoader.srcPath(), moduleLoader.dexDir(),
+					null, super.getClassLoader());
 			dexClassLoader = dcl;
 
 			AssetManager am = AssetManager.class.newInstance();
@@ -73,8 +72,8 @@ public class LFDexActivity extends LFNavigationActivity {
 			dexAssetManager = am;
 
 			Resources superRes = super.getResources();
-			dexResources = new Resources(getAssets(),
-					superRes.getDisplayMetrics(), superRes.getConfiguration());
+			dexResources = new Resources(getAssets(), superRes.getDisplayMetrics(),
+					superRes.getConfiguration());
 
 			dexTheme = dexResources.newTheme();
 			dexTheme.setTo(super.getTheme());
@@ -86,10 +85,14 @@ public class LFDexActivity extends LFNavigationActivity {
 
 			DexModule dexModule = moduleLoader.dexModule();
 			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
-				LFFragment f = (LFFragment) getClassLoader().loadClass(
-						dexModule.clazz()).newInstance();
-				if (f != null) {
-					pushFragment(f);
+				ClassLoader classLoader = getClassLoader();
+				if (classLoader == null) {
+					throw new Exception("load classloader error");
+				}
+				Class<?> clazz = classLoader.loadClass(dexModule.clazz());
+				LFFragment fragment = (LFFragment) clazz.newInstance();
+				if (fragment != null) {
+					pushFragment(fragment);
 				}
 			}
 		} catch (Throwable e) {

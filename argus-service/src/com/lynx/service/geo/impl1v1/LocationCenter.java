@@ -75,12 +75,10 @@ public class LocationCenter {
 		this.context = geoService.context();
 		cellInfoManager = new CellInfoManager(this);
 		wifiInfoManager = new WifiInfoManager(this);
-		locationManager = (LocationManager) context
-				.getSystemService(Context.LOCATION_SERVICE);
+		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 
 		try {
-			Method getService = context.getClass().getMethod("service",
-					String.class);
+			Method getService = context.getClass().getMethod("service", String.class);
 			httpService = (HttpService) getService.invoke(context, "http");
 		} catch (Exception e) {
 			Logger.e(Tag, "location center init error", e);
@@ -94,8 +92,7 @@ public class LocationCenter {
 		timerTask = new TimerTask() {
 			@Override
 			public void run() {
-				if (loop.intValue() >= INTERVAL_COUNT
-						|| status.intValue() >= 0x11111) {
+				if (loop.intValue() >= INTERVAL_COUNT || status.intValue() >= 0x11111) {
 					stopPrv();
 					locate();
 					return;
@@ -109,17 +106,14 @@ public class LocationCenter {
 		cellInfoManager.start();
 		wifiInfoManager.start();
 		// 监听系统network定位数据
-		if (locationManager.getAllProviders().contains(
-				LocationManager.NETWORK_PROVIDER)) {
-			locationManager.requestLocationUpdates(
-					LocationManager.NETWORK_PROVIDER, 10000, 500,
+		if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 500,
 					locationListener);
 		}
 		// 监听系统network定位数据
-		if (locationManager.getAllProviders().contains(
-				LocationManager.GPS_PROVIDER)) {
-			locationManager.requestLocationUpdates(
-					LocationManager.GPS_PROVIDER, 10000, 500, locationListener);
+		if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER)) {
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 500,
+					locationListener);
 		}
 
 		geoService.onLocationChanged(GeoService.LocationStatus.ONGOING);
@@ -172,23 +166,20 @@ public class LocationCenter {
 				source = CoordSource.GPS;
 				status.set(status.intValue() | GPS_LOC_FIN);
 			}
-			Coord coord = new Coord(source, lat, lng,
-					(int) location.getAccuracy(), System.currentTimeMillis()
-							- location.getTime());
+			Coord coord = new Coord(source, lat, lng, (int) location.getAccuracy(),
+					System.currentTimeMillis() - location.getTime());
 			coords3thPart.add(coord);
 			Logger.i(Tag, coord.toString());
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			Toast.makeText(context, provider + "服务未打开", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(context, provider + "服务未打开", Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			Toast.makeText(context, "GPS定位开启一次，将在60s后关闭", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(context, "GPS定位开启一次，将在60s后关闭", Toast.LENGTH_SHORT).show();
 		}
 
 		@Override
@@ -216,19 +207,16 @@ public class LocationCenter {
 						double lng = jolocation.getDouble("lng");
 						lng = LocationUtil.format(lng, 4);
 						int acc = jolocation.getInt("acc");
-						coord = new Coord(Coord.CoordSource.AMAP, lat, lng,
-								acc, 0);
+						coord = new Coord(Coord.CoordSource.AMAP, lat, lng, acc, 0);
 						try {
-							JSONObject joAddr = jolocation
-									.getJSONObject("addr");
+							JSONObject joAddr = jolocation.getJSONObject("addr");
 							String province = joAddr.getString("province");
 							String city = joAddr.getString("city");
 							String region = joAddr.getString("region");
 							String street = joAddr.getString("street");
 							String num = joAddr.getString("num");
 
-							addr = new Address(province, city, region, street
-									+ tip, num);
+							addr = new Address(province, city, region, street + tip, num);
 						} catch (Exception e) {
 							Logger.e(Tag, "cant get address now", e);
 						}
@@ -292,9 +280,8 @@ public class LocationCenter {
 		if (wifiInfoManager.wifis2str() != null) {
 			param.put("wifi", wifiInfoManager.wifis2str());
 		}
-		httpService.post(
-				String.format("%s%s", Const.LM_API_DOMAIN, LM_API_LOCATION),
-				param, httpCallback);
+		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_LOCATION), param,
+				httpCallback);
 	}
 
 	public Context context() {

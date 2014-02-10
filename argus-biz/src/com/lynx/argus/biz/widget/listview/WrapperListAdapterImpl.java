@@ -19,8 +19,7 @@ import android.widget.WrapperListAdapter;
  * @author tjerk
  * @version 6/9/12 4:41 PM
  */
-public abstract class WrapperListAdapterImpl extends BaseAdapter implements
-		WrapperListAdapter {
+public abstract class WrapperListAdapterImpl extends BaseAdapter implements WrapperListAdapter {
 	protected ListAdapter wrapped;
 
 	public WrapperListAdapterImpl(ListAdapter wrapped) {

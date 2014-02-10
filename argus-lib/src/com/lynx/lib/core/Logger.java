@@ -27,23 +27,19 @@ public class Logger {
 	}
 
 	public static int i(String tag, String msg) {
-		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, msg)
-				: -1;
+		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, msg) : -1;
 	}
 
 	public static int i(String tag, Throwable tr) {
-		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, "", tr)
-				: -1;
+		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, "", tr) : -1;
 	}
 
 	public static int i(String tag, String msg, Throwable tr) {
-		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log
-				.i(tag, msg, tr) : -1;
+		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, msg, tr) : -1;
 	}
 
 	public static int w(String tag, String msg) {
-		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg)
-				: -1;
+		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg) : -1;
 	}
 
 	public static int w(String tag, Throwable tr) {
@@ -51,18 +47,15 @@ public class Logger {
 	}
 
 	public static int w(String tag, String msg, Throwable tr) {
-		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg, tr)
-				: -1;
+		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg, tr) : -1;
 	}
 
 	public static int e(String tag, String msg) {
-		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg)
-				: -1;
+		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg) : -1;
 	}
 
 	public static int e(String tag, String msg, Throwable tr) {
-		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg, tr)
-				: -1;
+		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg, tr) : -1;
 	}
 
 	public enum AppLevel {

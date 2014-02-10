@@ -115,8 +115,7 @@ public class DexUtil {
 			String md5 = json.getString(Plugin.K_MD5);
 			String clazz = json.getString(Plugin.K_CLAZZ);
 			int category = json.getInt(Plugin.K_CATEGORY);
-			return new Plugin(module, version, name, icon, url, md5, desc,
-					clazz, category);
+			return new Plugin(module, version, name, icon, url, md5, desc, clazz, category);
 		} catch (Exception e) {
 
 		}

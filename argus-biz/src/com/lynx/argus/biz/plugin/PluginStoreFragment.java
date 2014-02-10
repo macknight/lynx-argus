@@ -55,11 +55,15 @@ public class PluginStoreFragment extends LFFragment {
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater
-				.inflate(R.layout.layout_pluginstore, container, false);
+			Bundle savedInstanceState) throws Exception {
+		View view = inflater.inflate(R.layout.layout_pluginstore, container,
+				false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		p2raselv = (P2RASEListView) v.findViewById(R.id.p2raselv_pluginstore);
+		p2raselv = (P2RASEListView) view
+				.findViewById(R.id.p2raselv_pluginstore);
 
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		p2raselv.setLoadingDrawable(drawable);
@@ -94,7 +98,7 @@ public class PluginStoreFragment extends LFFragment {
 			}
 		}, R.id.btn_pluginstore_install, R.id.btn_pluginstore_uninstall);
 
-		ImageButton ibDownload = (ImageButton) v
+		ImageButton ibDownload = (ImageButton) view
 				.findViewById(R.id.ib_pluginstore_download);
 		ibDownload.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -104,7 +108,7 @@ public class PluginStoreFragment extends LFFragment {
 			}
 		});
 
-		ImageButton ibBack = (ImageButton) v
+		ImageButton ibBack = (ImageButton) view
 				.findViewById(R.id.ib_pluginstore_back);
 		ibBack.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -113,7 +117,7 @@ public class PluginStoreFragment extends LFFragment {
 			}
 		});
 
-		return v;
+		return view;
 	}
 
 	@Override

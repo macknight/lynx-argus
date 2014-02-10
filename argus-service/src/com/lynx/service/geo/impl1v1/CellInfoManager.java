@@ -39,8 +39,7 @@ public class CellInfoManager {
 
 	public CellInfoManager(Context context) {
 		this.locationCenter = null;
-		telManager = (TelephonyManager) context
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		telManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 	}
 
 	public CellInfoManager(LocationCenter locationCenter) {
@@ -107,19 +106,16 @@ public class CellInfoManager {
 					mcc = Integer.parseInt(s.substring(0, 3));
 				}
 
-				Method mBid = cellLocation.getClass().getMethod(
-						"getBaseStationId", new Class[0]);
-				Method mSid = cellLocation.getClass().getMethod("getSystemId",
-						new Class[0]);
-				Method mNid = cellLocation.getClass().getMethod("getNetworkId",
-						new Class[0]);
+				Method mBid = cellLocation.getClass().getMethod("getBaseStationId", new Class[0]);
+				Method mSid = cellLocation.getClass().getMethod("getSystemId", new Class[0]);
+				Method mNid = cellLocation.getClass().getMethod("getNetworkId", new Class[0]);
 				bid = (Integer) mBid.invoke(cellLocation, new Object[0]);
 				sid = (Integer) mSid.invoke(cellLocation, new Object[0]);
 				nid = (Integer) mNid.invoke(cellLocation, new Object[0]);
-				Method mLat = cellLocation.getClass().getMethod(
-						"getBaseStationLatitude", new Class[0]);
-				Method mLng = cellLocation.getClass().getMethod(
-						"getBaseStationLongitude", new Class[0]);
+				Method mLat = cellLocation.getClass().getMethod("getBaseStationLatitude",
+						new Class[0]);
+				Method mLng = cellLocation.getClass().getMethod("getBaseStationLongitude",
+						new Class[0]);
 				int lat = (Integer) mLat.invoke(cellLocation, new Object[0]);
 				int lng = (Integer) mLng.invoke(cellLocation, new Object[0]);
 
@@ -161,13 +157,11 @@ public class CellInfoManager {
 			}
 
 			try {
-				List<NeighboringCellInfo> neighborCells = telManager
-						.getNeighboringCellInfo();
+				List<NeighboringCellInfo> neighborCells = telManager.getNeighboringCellInfo();
 				if (neighborCells != null) {
 					Method method_lac = null;
 					try {
-						method_lac = NeighboringCellInfo.class
-								.getMethod("getLac");
+						method_lac = NeighboringCellInfo.class.getMethod("getLac");
 					} catch (Exception e) {
 						method_lac = null;
 					}
@@ -183,8 +177,7 @@ public class CellInfoManager {
 						}
 
 						if (!(cid <= 0) || cid == 0xFFFF) {
-							Cell cell = new GSMCell(mcc, mnc, cid, lac,
-									nCell.getRssi());
+							Cell cell = new GSMCell(mcc, mnc, cid, lac, nCell.getRssi());
 							cells.add(cell);
 						}
 					}

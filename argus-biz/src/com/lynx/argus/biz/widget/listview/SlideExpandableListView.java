@@ -12,7 +12,7 @@ import com.lynx.argus.biz.widget.listview.AbstractSlideExpandableListAdapter.Sav
 /**
  * Simple subclass of listview which does nothing more than wrap any ListAdapter
  * in a SlideExpandalbeListAdapter
- *
+ * 
  * @author zhufeng.liu
  * @version 13-11-19 下午3:55
  */
@@ -27,8 +27,7 @@ class SlideExpandableListView extends ListView {
 		super(context, attrs);
 	}
 
-	public SlideExpandableListView(Context context, AttributeSet attrs,
-			int defStyle) {
+	public SlideExpandableListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -61,8 +60,7 @@ class SlideExpandableListView extends ListView {
 	public void enableExpandOnItemClick() {
 		this.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				SlideExpandableListAdapter adapter = (SlideExpandableListAdapter) getAdapter();
 				adapter.getExpandToggleView(view).performClick();
 			}

@@ -41,14 +41,18 @@ public class LFEnvironment {
 			StringBuilder sb = new StringBuilder("MApi 1.0 (");
 
 			try {
-				Context c = LFApplication.instance();
-				PackageInfo packageInfo = c.getPackageManager().getPackageInfo(
-						c.getPackageName(), 0);
+				Context context = LFApplication.instance();
+				PackageManager pkgManager = context.getPackageManager();
+				if (pkgManager == null) {
+					throw new Exception("get package info error");
+				}
+
+				PackageInfo packageInfo = pkgManager.getPackageInfo(context.getPackageName(), 0);
 
 				sb.append(packageInfo.packageName);
 				sb.append(" ").append(packageInfo.versionName);
 			} catch (Exception e) {
-				sb.append("com.dianping.v1 5.6");
+				sb.append("com.lynx.argus 1.0.0");
 			}
 
 			// 只是保护一下
@@ -64,8 +68,8 @@ public class LFEnvironment {
 				sb.append(")");
 				ua = sb.toString();
 			} catch (Exception e) {
-				ua = "MApi 1.0 (com.dianping.v1 5.6 null null; Android "
-						+ Build.VERSION.RELEASE + ")";
+				ua = "MApi 1.0 (com.lynx.argus 1.0.0 null null; Android " + Build.VERSION.RELEASE
+						+ ")";
 			}
 		}
 		return ua;
@@ -80,8 +84,7 @@ public class LFEnvironment {
 		if (imei == null) {
 			// update cached imei when identity changed. including brand, model,
 			// radio and system version
-			String deviceIdentity = Build.VERSION.RELEASE + ";" + Build.MODEL
-					+ ";" + Build.BRAND;
+			String deviceIdentity = Build.VERSION.RELEASE + ";" + Build.MODEL + ";" + Build.BRAND;
 			if (deviceIdentity.length() > 64) {
 				deviceIdentity = deviceIdentity.substring(0, 64);
 			}
@@ -93,8 +96,7 @@ public class LFEnvironment {
 			String cachedImei = null;
 			try {
 				// do not use file storage, use cached instead
-				File path = new File(LFApplication.instance().getCacheDir(),
-						"cached_imei");
+				File path = new File(LFApplication.instance().getCacheDir(), "cached_imei");
 				FileInputStream fis = new FileInputStream(path);
 				byte[] buf = new byte[1024];
 				int l = fis.read(buf);
@@ -105,6 +107,7 @@ public class LFEnvironment {
 				int b = str.indexOf('\n', a + 1);
 				cachedImei = str.substring(a + 1, b);
 			} catch (Exception e) {
+
 			}
 
 			if (deviceIdentity.equals(cachedIdentity)) {
@@ -116,9 +119,8 @@ public class LFEnvironment {
 			// cache fail, read from telephony manager
 			if (imei == null) {
 				try {
-					TelephonyManager tel = (TelephonyManager) LFApplication
-							.instance().getSystemService(
-									Context.TELEPHONY_SERVICE);
+					TelephonyManager tel = (TelephonyManager) LFApplication.instance()
+							.getSystemService(Context.TELEPHONY_SERVICE);
 					imei = tel.getDeviceId();
 					if (imei != null) {
 						if (imei.length() < 8) {
@@ -137,21 +139,20 @@ public class LFEnvironment {
 						}
 					}
 				} catch (Exception e) {
+
 				}
 				if (imei != null) {
 					try {
-						File path = new File(LFApplication.instance()
-								.getCacheDir(), "cached_imei");
+						File path = new File(LFApplication.instance().getCacheDir(), "cached_imei");
 						FileOutputStream fos = new FileOutputStream(path);
 						String str = deviceIdentity + "\n" + imei + "\n";
 						fos.write(str.getBytes("UTF-8"));
 						fos.close();
 					} catch (Exception e) {
-					}
+
+						}
 				} else {
-					File path = new File(
-							LFApplication.instance().getCacheDir(),
-							"cached_imei");
+					File path = new File(LFApplication.instance().getCacheDir(), "cached_imei");
 					path.delete();
 				}
 			}
@@ -170,11 +171,10 @@ public class LFEnvironment {
 	public static PackageInfo pkgInfo() {
 		if (packageInfo == null) {
 			try {
-				PackageManager packageManager = LFApplication.instance()
-						.getPackageManager();
+				PackageManager packageManager = LFApplication.instance().getPackageManager();
 				if (packageManager != null) {
-					packageInfo = packageManager.getPackageInfo(LFApplication
-							.instance().getPackageName(), 0);
+					packageInfo = packageManager.getPackageInfo(LFApplication.instance()
+							.getPackageName(), 0);
 				}
 			} catch (PackageManager.NameNotFoundException e) {
 
@@ -187,8 +187,7 @@ public class LFEnvironment {
 	private static String source() {
 		if (!sourceInited) {
 			try {
-				InputStream ins = LFApplication.instance.getAssets().open(
-						"source.txt");
+				InputStream ins = LFApplication.instance.getAssets().open("source.txt");
 				byte[] bytes = new byte[0x100];
 				int l = ins.read(bytes);
 				if (l > 0) {

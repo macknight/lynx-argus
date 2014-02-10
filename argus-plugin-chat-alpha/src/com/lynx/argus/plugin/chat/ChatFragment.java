@@ -52,8 +52,12 @@ public class ChatFragment extends LFFragment {
 	private List<Msg> msgs = new ArrayList<Msg>();
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_chat, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
 		account = getArguments().getString("account");
 
@@ -70,23 +74,21 @@ public class ChatFragment extends LFFragment {
 
 		msgAdapter = new MsgAdapter(navActivity, msgs);
 
-		View v = inflater.inflate(R.layout.layout_chat, container, false);
-		TextView tvTitle = (TextView) v.findViewById(R.id.tv_chat_title);
+		TextView tvTitle = (TextView) view.findViewById(R.id.tv_chat_title);
 		tvTitle.setText(fromUser);
-		lvMsg = (ListView) v.findViewById(R.id.lv_msg);
+		lvMsg = (ListView) view.findViewById(R.id.lv_msg);
 		lvMsg.setAdapter(msgAdapter);
 
-		etMsg = (EditText) v.findViewById(R.id.et_msg);
+		etMsg = (EditText) view.findViewById(R.id.et_msg);
 
-		Button btSend = (Button) v.findViewById(R.id.btn_send);
+		Button btSend = (Button) view.findViewById(R.id.btn_send);
 		btSend.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				String content = etMsg.getText().toString();
 				if (content.length() > 0) {
 					try {
-						Msg chatMsg = new Msg(account, content, new Date()
-								.getTime(), false);
+						Msg chatMsg = new Msg(account, content, new Date().getTime(), false);
 						chat.sendMessage(content);
 						android.os.Message msg = handler.obtainMessage();
 						msg.what = MSG_SEND_SUCCESS;
@@ -98,15 +100,15 @@ public class ChatFragment extends LFFragment {
 				}
 			}
 		});
-		return v;
+		return view;
 	}
 
 	private MessageListener msgListener = new MessageListener() {
 		@Override
 		public void processMessage(Chat chat, Message message) {
 			try {
-				Msg chatMsg = new Msg(message.getFrom(), message.getBody(),
-						new Date().getTime(), true);
+				Msg chatMsg = new Msg(message.getFrom(), message.getBody(), new Date().getTime(),
+						true);
 				android.os.Message msg = handler.obtainMessage();
 				msg.what = MSG_TEXT_RECEIVED_SUCCESS;
 				msg.obj = chatMsg;

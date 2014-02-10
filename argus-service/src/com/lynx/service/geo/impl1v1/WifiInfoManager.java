@@ -39,8 +39,7 @@ public class WifiInfoManager {
 
 	public WifiInfoManager(Context context) {
 		this.locationCenter = null;
-		wifiManager = (android.net.wifi.WifiManager) context
-				.getSystemService(Context.WIFI_SERVICE);
+		wifiManager = (android.net.wifi.WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		networkManager = new NetworkManager(context);
 		isEnable = wifiManager.isWifiEnabled();
 	}
@@ -99,10 +98,8 @@ public class WifiInfoManager {
 		dhcpInfo = wifiManager.getDhcpInfo();
 		WifiInfo conn_wifi = wifiManager.getConnectionInfo();
 		Wifi cur_wifi = null;
-		if (networkManager.state() == NetworkState.NETWORK_WIFI
-				&& conn_wifi != null) {
-			cur_wifi = new Wifi(conn_wifi.getSSID(), conn_wifi.getBSSID(),
-					conn_wifi.getRssi());
+		if (networkManager.state() == NetworkState.NETWORK_WIFI && conn_wifi != null) {
+			cur_wifi = new Wifi(conn_wifi.getSSID(), conn_wifi.getBSSID(), conn_wifi.getRssi());
 			wifis.add(cur_wifi);
 		}
 

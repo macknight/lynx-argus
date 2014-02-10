@@ -21,11 +21,9 @@ public interface HttpService {
 	/*******************************************************************/
 	void get(String url, HttpCallback<? extends Object> callBack);
 
-	void get(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack);
+	void get(String url, HttpParam params, HttpCallback<? extends Object> callBack);
 
-	void get(String url, Header[] headers, HttpParam params,
-			HttpCallback<? extends Object> callBack);
+	void get(String url, Header[] headers, HttpParam params, HttpCallback<? extends Object> callBack);
 
 	/********************************************************************/
 	/*
@@ -45,17 +43,16 @@ public interface HttpService {
 	/*******************************************************************/
 	void post(String url, HttpCallback<? extends Object> callBack);
 
-	void post(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack);
+	void post(String url, HttpParam params, HttpCallback<? extends Object> callBack);
 
 	void post(String url, HttpEntity entity, String contentType,
 			HttpCallback<? extends Object> callBack);
 
-	<T> void post(String url, Header[] headers, HttpParam params,
-			String contentType, HttpCallback<T> callBack);
+	<T> void post(String url, Header[] headers, HttpParam params, String contentType,
+			HttpCallback<T> callBack);
 
-	void post(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack);
+	void post(String url, Header[] headers, HttpEntity entity, String contentType,
+			HttpCallback<? extends Object> callBack);
 
 	/********************************************************************/
 	/*
@@ -68,11 +65,9 @@ public interface HttpService {
 
 	Object postSync(String url, HttpEntity entity, String contentType);
 
-	Object postSync(String url, Header[] headers, HttpParam params,
-			String contentType);
+	Object postSync(String url, Header[] headers, HttpParam params, String contentType);
 
-	Object postSync(String url, Header[] headers, HttpEntity entity,
-			String contentType);
+	Object postSync(String url, Header[] headers, HttpEntity entity, String contentType);
 
 	/********************************************************************/
 	/*
@@ -81,14 +76,13 @@ public interface HttpService {
 	/*******************************************************************/
 	void put(String url, HttpCallback<? extends Object> callBack);
 
-	void put(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack);
+	void put(String url, HttpParam params, HttpCallback<? extends Object> callBack);
 
 	void put(String url, HttpEntity entity, String contentType,
 			HttpCallback<? extends Object> callBack);
 
-	void put(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack);
+	void put(String url, Header[] headers, HttpEntity entity, String contentType,
+			HttpCallback<? extends Object> callBack);
 
 	/********************************************************************/
 	/*
@@ -101,8 +95,7 @@ public interface HttpService {
 
 	Object putSync(String url, HttpEntity entity, String contentType);
 
-	Object putSync(String url, Header[] headers, HttpEntity entity,
-			String contentType);
+	Object putSync(String url, Header[] headers, HttpEntity entity, String contentType);
 
 	/********************************************************************/
 	/*
@@ -111,8 +104,7 @@ public interface HttpService {
 	/*******************************************************************/
 	void delete(String url, HttpCallback<? extends Object> callBack);
 
-	void delete(String url, Header[] headers,
-			HttpCallback<? extends Object> callBack);
+	void delete(String url, Header[] headers, HttpCallback<? extends Object> callBack);
 
 	/********************************************************************/
 	/*
@@ -128,8 +120,7 @@ public interface HttpService {
 	 * 下載
 	 */
 	/*******************************************************************/
-	HttpHandler<File> download(String url, String target,
-			HttpCallback<File> callback);
+	HttpHandler<File> download(String url, String target, HttpCallback<File> callback);
 
 	HttpHandler<File> download(String url, String target, boolean isResume,
 			HttpCallback<File> callback);
@@ -137,6 +128,6 @@ public interface HttpService {
 	HttpHandler<File> download(String url, HttpParam params, String target,
 			HttpCallback<File> callback);
 
-	HttpHandler<File> download(String url, HttpParam params, String target,
-			boolean isResume, HttpCallback<File> callback);
+	HttpHandler<File> download(String url, HttpParam params, String target, boolean isResume,
+			HttpCallback<File> callback);
 }

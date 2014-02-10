@@ -55,7 +55,7 @@ public class ShopListFragment extends LFFragment {
 
 		@Override
 		public void onSuccess(Object s) {
-			parseShopListInfoFromApi(s.toString());
+			parseShops(s.toString());
 			handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_SUCCESS);
 		}
 
@@ -80,42 +80,42 @@ public class ShopListFragment extends LFFragment {
 	};
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 		httpService = (HttpService) LFApplication.instance().service("http");
-		View view = inflater
-				.inflate(R.layout.layout_shoplist, container, false);
-		prlvShoplist = (PullToRefreshListView) view
-				.findViewById(R.id.prlv_shoplist);
+		View view = inflater.inflate(R.layout.layout_shoplist, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+
+		prlvShoplist = (PullToRefreshListView) view.findViewById(R.id.prlv_shoplist);
 		adapter = new ShopListAdapter(navActivity, shopList);
 		prlvShoplist.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prlvShoplist.setLoadingDrawable(drawable);
 
-		prlvShoplist
-				.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener() {
-					@Override
-					public void onRefresh() {
-						getShopList();
-					}
-				});
+		prlvShoplist.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				getShops();
+			}
+		});
 
 		return view;
 	}
 
-	private void getShopList() {
+	private void getShops() {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
 		params.add(new BasicNameValuePair("app", "list"));
 		params.add(new BasicNameValuePair("act", "mlist"));
 		params.add(new BasicNameValuePair("page", curPage + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s",
-				ParentingFragment.LM_API_PARENT_DOMAIN,
+		String url = String.format("%s%s?%s", ParentingFragment.LM_API_PARENT_DOMAIN,
 				LM_API_PARENTING_SHOPLIST, param);
 		httpService.get(url, null, httpCallback);
 	}
 
-	private void parseShopListInfoFromApi(String data) {
+	private void parseShops(String data) {
 		try {
 			JSONObject joResult = new JSONObject(data);
 			JSONArray jaResult = joResult.getJSONArray("data");
@@ -130,19 +130,15 @@ public class ShopListFragment extends LFFragment {
 					String storeId = joShop.getString("store_id");
 					String shopName = joShop.getString("shop_name");
 					String shopId = joShop.getString("store_id");
-					String snapUrl = String.format("%s/%s",
-							ParentingFragment.LM_API_PARENT_DOMAIN,
+					String snapUrl = String.format("%s/%s", ParentingFragment.LM_API_PARENT_DOMAIN,
 							joShop.getString("default_image"));
 					String lng = joShop.getString("map_lng");
 					String lat = joShop.getString("map_lat");
-					GeoPoint latlng = new GeoPoint(Double.parseDouble(lat),
-							Double.parseDouble(lng));
+					GeoPoint latlng = new GeoPoint(Double.parseDouble(lat), Double.parseDouble(lng));
 					String region = joShop.getString("region_name");
-					int reviewNum = Integer.parseInt(joShop
-							.getString("reviews"));
-					ShopListItem shopListItem = new ShopListItem(storeId,
-							storeName, shopId, shopName, snapUrl, latlng,
-							region, reviewNum);
+					int reviewNum = Integer.parseInt(joShop.getString("reviews"));
+					ShopListItem shopListItem = new ShopListItem(storeId, storeName, shopId,
+							shopName, snapUrl, latlng, region, reviewNum);
 					shopList.add(shopListItem);
 				} catch (Exception e) {
 

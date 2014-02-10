@@ -109,8 +109,7 @@ public class ScaleGestureDetector {
 	 * {@link OnScaleGestureListener#onScaleBegin(ScaleGestureDetector)} returns
 	 * {@code true}.
 	 */
-	public static class SimpleOnScaleGestureListener implements
-			OnScaleGestureListener {
+	public static class SimpleOnScaleGestureListener implements OnScaleGestureListener {
 
 		@Override
 		public boolean onScale(final ScaleGestureDetector detector) {
@@ -184,8 +183,7 @@ public class ScaleGestureDetector {
 
 	private boolean mSloppyGesture;
 
-	public ScaleGestureDetector(final Context context,
-			final OnScaleGestureListener listener) {
+	public ScaleGestureDetector(final Context context, final OnScaleGestureListener listener) {
 		final ViewConfiguration config = ViewConfiguration.get(context);
 		this.mContext = context;
 		this.mListener = listener;
@@ -303,8 +301,7 @@ public class ScaleGestureDetector {
 				// We have a new multi-finger gesture
 
 				// as orientation can change, query the metrics in touch down
-				final DisplayMetrics metrics = this.mContext.getResources()
-						.getDisplayMetrics();
+				final DisplayMetrics metrics = this.mContext.getResources().getDisplayMetrics();
 				this.mRightSlopEdge = metrics.widthPixels - this.mEdgeSlop;
 				this.mBottomSlopEdge = metrics.heightPixels - this.mEdgeSlop;
 
@@ -328,10 +325,10 @@ public class ScaleGestureDetector {
 				final float x1 = ScaleGestureDetector.getRawX(event, 1);
 				final float y1 = ScaleGestureDetector.getRawY(event, 1);
 
-				final boolean p0sloppy = (x0 < edgeSlop) || (y0 < edgeSlop)
-						|| (x0 > rightSlop) || (y0 > bottomSlop);
-				final boolean p1sloppy = (x1 < edgeSlop) || (y1 < edgeSlop)
-						|| (x1 > rightSlop) || (y1 > bottomSlop);
+				final boolean p0sloppy = (x0 < edgeSlop) || (y0 < edgeSlop) || (x0 > rightSlop)
+						|| (y0 > bottomSlop);
+				final boolean p1sloppy = (x1 < edgeSlop) || (y1 < edgeSlop) || (x1 > rightSlop)
+						|| (y1 > bottomSlop);
 
 				if (p0sloppy && p1sloppy) {
 					this.mFocusX = -1;
@@ -363,10 +360,10 @@ public class ScaleGestureDetector {
 					final float x1 = ScaleGestureDetector.getRawX(event, 1);
 					final float y1 = ScaleGestureDetector.getRawY(event, 1);
 
-					final boolean p0sloppy = (x0 < edgeSlop) || (y0 < edgeSlop)
-							|| (x0 > rightSlop) || (y0 > bottomSlop);
-					final boolean p1sloppy = (x1 < edgeSlop) || (y1 < edgeSlop)
-							|| (x1 > rightSlop) || (y1 > bottomSlop);
+					final boolean p0sloppy = (x0 < edgeSlop) || (y0 < edgeSlop) || (x0 > rightSlop)
+							|| (y0 > bottomSlop);
+					final boolean p1sloppy = (x1 < edgeSlop) || (y1 < edgeSlop) || (x1 > rightSlop)
+							|| (y1 > bottomSlop);
 
 					if (p0sloppy && p1sloppy) {
 						this.mFocusX = -1;
@@ -379,8 +376,7 @@ public class ScaleGestureDetector {
 						this.mFocusY = event.getY(0);
 					} else {
 						this.mSloppyGesture = false;
-						this.mGestureInProgress = this.mListener
-								.onScaleBegin(this);
+						this.mGestureInProgress = this.mListener.onScaleBegin(this);
 					}
 				}
 				break;

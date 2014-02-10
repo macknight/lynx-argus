@@ -19,9 +19,8 @@ public class ShopListItem {
 	private String region;
 	private int reviewNum;
 
-	public ShopListItem(String storeId, String storeName, String shopId,
-			String shopName, String snapUrl, GeoPoint latlng, String region,
-			int reviewNum) {
+	public ShopListItem(String storeId, String storeName, String shopId, String shopName,
+			String snapUrl, GeoPoint latlng, String region, int reviewNum) {
 		this.storeId = storeId;
 		this.storeName = storeName;
 		this.shopId = shopId;

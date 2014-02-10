@@ -19,8 +19,7 @@ public abstract class ServiceLoader extends DexModuleLoader {
 	 * @param defaultClazz
 	 *            默认服务版本
 	 */
-	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz)
-			throws Exception {
+	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz) throws Exception {
 		super(DexType.SERVICE, dexModule, DexStatus.UPDATE);
 
 		if (clazz == null) {
@@ -63,8 +62,7 @@ public abstract class ServiceLoader extends DexModuleLoader {
 		beforeLoad();
 		deleteOldFile();
 		try {
-			DexClassLoader cl = new DexClassLoader(srcPath, dexDir, null,
-					context.getClassLoader());
+			DexClassLoader cl = new DexClassLoader(srcPath, dexDir, null, context.getClassLoader());
 			clazz = (Class<Service>) cl.loadClass(dexModule.clazz());
 		} catch (Exception e) {
 			// TODO: roll back to the default service

@@ -20,8 +20,7 @@ public class PluginLoadErrorFragment extends LFFragment {
 	private String message; // 加载失败提示
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return ViewUtil.createLoadErrorView(inflater);
 	}
 

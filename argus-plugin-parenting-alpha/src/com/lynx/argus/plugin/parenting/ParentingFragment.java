@@ -22,17 +22,17 @@ public class ParentingFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		navActivity.setPopAnimation(R.animator.slide_in_left,
-				R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right,
-				R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View view = inflater.inflate(R.layout.layout_parenting, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_parenting, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
 		Button btn = (Button) view.findViewById(R.id.btn_campaign);
 		btn.setOnClickListener(new View.OnClickListener() {

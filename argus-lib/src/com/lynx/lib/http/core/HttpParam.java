@@ -44,8 +44,7 @@ public class HttpParam {
 		init();
 		int len = keyVals.length;
 		if (len % 2 != 0) {
-			throw new IllegalArgumentException(
-					"supplied arguments must be even");
+			throw new IllegalArgumentException("supplied arguments must be even");
 		}
 
 		for (int i = 0; i < len; i += 2) {
@@ -73,11 +72,9 @@ public class HttpParam {
 		put(key, instream, filename, null);
 	}
 
-	public void put(String key, InputStream instream, String filename,
-			String contentType) {
+	public void put(String key, InputStream instream, String filename, String contentType) {
 		if (key != null && instream != null) {
-			fileParams.put(key,
-					new FileWrapper(instream, filename, contentType));
+			fileParams.put(key, new FileWrapper(instream, filename, contentType));
 		}
 	}
 
@@ -89,8 +86,7 @@ public class HttpParam {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (ConcurrentHashMap.Entry<String, String> entry : urlParams
-				.entrySet()) {
+		for (ConcurrentHashMap.Entry<String, String> entry : urlParams.entrySet()) {
 			if (sb.length() > 0)
 				sb.append("&");
 
@@ -99,8 +95,7 @@ public class HttpParam {
 			sb.append(entry.getValue());
 		}
 
-		for (ConcurrentHashMap.Entry<String, FileWrapper> entry : fileParams
-				.entrySet()) {
+		for (ConcurrentHashMap.Entry<String, FileWrapper> entry : fileParams.entrySet()) {
 			if (sb.length() > 0)
 				sb.append("&");
 
@@ -118,25 +113,22 @@ public class HttpParam {
 		if (!fileParams.isEmpty()) {
 			MultiPartEntity multiPartEntity = new MultiPartEntity();
 			// Add string params
-			for (ConcurrentHashMap.Entry<String, String> entry : urlParams
-					.entrySet()) {
+			for (ConcurrentHashMap.Entry<String, String> entry : urlParams.entrySet()) {
 				multiPartEntity.addPart(entry.getKey(), entry.getValue());
 			}
 			// Add file params
 			int currentIndex = 0;
 			int lastIndex = fileParams.entrySet().size() - 1;
-			for (ConcurrentHashMap.Entry<String, FileWrapper> entry : fileParams
-					.entrySet()) {
+			for (ConcurrentHashMap.Entry<String, FileWrapper> entry : fileParams.entrySet()) {
 				FileWrapper file = entry.getValue();
 				if (file.instream != null) {
 					boolean isLast = currentIndex == lastIndex;
 					if (file.contentType != null) {
-						multiPartEntity.addPart(entry.getKey(),
-								file.getFileName(), file.instream,
+						multiPartEntity.addPart(entry.getKey(), file.getFileName(), file.instream,
 								file.contentType, isLast);
 					} else {
-						multiPartEntity.addPart(entry.getKey(),
-								file.getFileName(), file.instream, isLast);
+						multiPartEntity.addPart(entry.getKey(), file.getFileName(), file.instream,
+								isLast);
 					}
 				}
 				currentIndex++;
@@ -161,8 +153,7 @@ public class HttpParam {
 	protected List<BasicNameValuePair> getParamsList() {
 		List<BasicNameValuePair> lparams = new LinkedList<BasicNameValuePair>();
 
-		for (ConcurrentHashMap.Entry<String, String> entry : urlParams
-				.entrySet()) {
+		for (ConcurrentHashMap.Entry<String, String> entry : urlParams.entrySet()) {
 			lparams.add(new BasicNameValuePair(entry.getKey(), entry.getValue()));
 		}
 
@@ -178,8 +169,7 @@ public class HttpParam {
 		public String fileName;
 		public String contentType;
 
-		public FileWrapper(InputStream instream, String filename,
-				String contentType) {
+		public FileWrapper(InputStream instream, String filename, String contentType) {
 			this.instream = instream;
 			this.fileName = filename;
 			this.contentType = contentType;

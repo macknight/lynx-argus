@@ -51,8 +51,7 @@ public class LoadingLayout extends RelativeLayout {
 		mHeaderText.setGravity(Gravity.CENTER);
 
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
+				ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		mHeaderText.setLayoutParams(params);
 		mHeaderText.setTextColor(0xFF000000);
@@ -61,8 +60,7 @@ public class LoadingLayout extends RelativeLayout {
 		addView(mHeaderText);
 
 		mSubHeaderText = new TextView(context);
-		params = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
+		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_IN_PARENT);
 		mSubHeaderText.setLayoutParams(params);
@@ -71,8 +69,7 @@ public class LoadingLayout extends RelativeLayout {
 		addView(mSubHeaderText);
 
 		mHeaderImage = new ImageView(context);
-		params = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.WRAP_CONTENT,
+		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
 				ViewGroup.LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.setMargins(70, 0, 0, 0);
@@ -84,9 +81,8 @@ public class LoadingLayout extends RelativeLayout {
 		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 
 		final Interpolator interpolator = new LinearInterpolator();
-		mRotateAnimation = new RotateAnimation(0, 360,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
+		mRotateAnimation = new RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f,
+				Animation.RELATIVE_TO_SELF, 0.5f);
 		mRotateAnimation.setInterpolator(interpolator);
 		mRotateAnimation.setDuration(DEFAULT_ROTATION_ANIMATION_DURATION);
 		mRotateAnimation.setRepeatCount(Animation.INFINITE);
@@ -187,8 +183,7 @@ public class LoadingLayout extends RelativeLayout {
 	}
 
 	public void onPullY(float scaleOfHeight) {
-		mHeaderImageMatrix.setRotate(scaleOfHeight * 90, mRotationPivotX,
-				mRotationPivotY);
+		mHeaderImageMatrix.setRotate(scaleOfHeight * 90, mRotationPivotX, mRotationPivotY);
 		mHeaderImage.setImageMatrix(mHeaderImageMatrix);
 	}
 

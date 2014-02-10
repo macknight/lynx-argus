@@ -12,8 +12,7 @@ import android.widget.GridView;
  * 
  * @version 13-8-30 下午1:33
  */
-public class PullToRefreshGridView extends
-		PullToRefreshAdapterViewBase<GridView> {
+public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView> {
 
 	public PullToRefreshGridView(Context context) {
 		super(context);
@@ -33,8 +32,7 @@ public class PullToRefreshGridView extends
 	}
 
 	@Override
-	protected final GridView createRefreshableView(Context context,
-			AttributeSet attrs) {
+	protected final GridView createRefreshableView(Context context, AttributeSet attrs) {
 		GridView gv = new InternalGridView(context, attrs);
 		return gv;
 	}

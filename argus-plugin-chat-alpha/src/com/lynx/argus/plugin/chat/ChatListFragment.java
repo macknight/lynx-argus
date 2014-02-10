@@ -27,20 +27,23 @@ public class ChatListFragment extends LFFragment {
 	private ChatAdapter chatAdapter;
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 
 		final String account = getArguments().getString("account");
 
 		chatlist.clear();
 		chatAdapter = new ChatAdapter(navActivity, chatlist);
-		View v = inflater.inflate(R.layout.layout_chatlist, container, false);
-		ListView lvChat = (ListView) v.findViewById(R.id.lv_chats);
+		View view = inflater.inflate(R.layout.layout_chatlist, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+
+		ListView lvChat = (ListView) view.findViewById(R.id.lv_chats);
 		lvChat.setAdapter(chatAdapter);
 		lvChat.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view,
-					int position, long id) {
+			public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 				ChatFragment chatFragment = new ChatFragment();
 				Bundle bundle = new Bundle();
 				bundle.putString("account", account);
@@ -49,12 +52,11 @@ public class ChatListFragment extends LFFragment {
 			}
 		});
 		initData();
-		return v;
+		return view;
 	}
 
 	private void initData() {
-		ChatListItem chat = new ChatListItem("珍妮花", "上海人民已阵亡",
-				new Date().getTime());
+		ChatListItem chat = new ChatListItem("珍妮花", "上海人民已阵亡", new Date().getTime());
 		chatAdapter.addChat(chat);
 		chat = new ChatListItem("lily", "南京人民已阵亡", new Date().getTime());
 		chatAdapter.addChat(chat);

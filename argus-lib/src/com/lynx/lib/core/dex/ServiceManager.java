@@ -34,8 +34,7 @@ public abstract class ServiceManager {
 
 	public ServiceManager() {
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service(
-				"http");
+		this.httpService = (HttpService) LFApplication.instance().service("http");
 
 		File tmp = new File(context.getFilesDir(), PREFIX);
 		if (!tmp.exists()) {
@@ -56,30 +55,29 @@ public abstract class ServiceManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT).show();
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						DexModule module = DexUtil.json2dexModule(
-								DexType.SERVICE, jaPlugin.getJSONObject(i));
+						DexModule module = DexUtil.json2dexModule(DexType.SERVICE,
+								jaPlugin.getJSONObject(i));
 						// 无需通知上层，直接更新
 						update(module);
 					} catch (Exception e) {
-                        Logger.e(Tag, "服务更新配置数据解析异常", e);
+						Logger.e(Tag, "服务更新配置数据解析异常", e);
 					}
 				}
 			} catch (Exception e) {
-                Logger.e(Tag, "服务更新配置数据解析异常", e);
+				Logger.e(Tag, "服务更新配置数据解析异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-            Logger.w(Tag, "获取服务更新配置失败 "+ strMsg , t);
+			Logger.w(Tag, "获取服务更新配置失败 " + strMsg, t);
 		}
 	};
 
@@ -89,8 +87,8 @@ public abstract class ServiceManager {
 	public void updateCheck() {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN,
-				LM_API_SERVICE_CONFIG), param, callback);
+		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_SERVICE_CONFIG), param,
+				callback);
 	}
 
 	private void update(DexModule dexModule) {

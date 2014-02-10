@@ -32,12 +32,11 @@ public abstract class LFFragment extends Fragment {
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		try {
 			return onLoadView(inflater, container, savedInstanceState);
 		} catch (Exception e) {
-            Logger.e(Tag, "onLoadView error", e);
+			Logger.e(Tag, "onLoadView error", e);
 			// 当加载页面错误时载入默认错误提示页面
 			return ViewUtil.createLoadErrorView(inflater);
 		}
@@ -51,8 +50,8 @@ public abstract class LFFragment extends Fragment {
 	 * @param savedInstanceState
 	 * @return
 	 */
-	protected abstract View onLoadView(LayoutInflater inflater,
-			ViewGroup container, Bundle savedInstanceState) throws Exception;
+	protected abstract View onLoadView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) throws Exception;
 
 	public boolean shouldAdd() {
 		return true;
@@ -67,8 +66,7 @@ public abstract class LFFragment extends Fragment {
 	}
 
 	@Override
-	public void onActivityResult(int requestCode, int resultCode,
-			Intent data) {
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 	}
 

@@ -18,9 +18,8 @@ public class CampaignListItem {
 	private String place;
 	private String region;
 
-	public CampaignListItem(String id, String name, String shopId,
-			String shopName, String price, String snapUrl, String startTime,
-			String endTime, String place, String region) {
+	public CampaignListItem(String id, String name, String shopId, String shopName, String price,
+			String snapUrl, String startTime, String endTime, String place, String region) {
 		this.id = id;
 		this.name = name;
 		this.shopId = shopId;

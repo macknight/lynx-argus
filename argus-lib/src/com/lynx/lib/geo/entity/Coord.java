@@ -21,8 +21,7 @@ public class Coord implements Serializable {
 
 	}
 
-	public Coord(CoordSource source, double lat, double lng, int acc,
-			long elapse) {
+	public Coord(CoordSource source, double lat, double lng, int acc, long elapse) {
 		this.source = source;
 		this.lat = lat;
 		this.lng = lng;

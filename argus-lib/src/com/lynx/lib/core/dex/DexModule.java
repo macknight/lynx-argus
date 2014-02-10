@@ -21,8 +21,7 @@ public class DexModule {
 	private String desc; // 动态模块描述
 	private String clazz; // 入口类名
 
-	public DexModule(String module, int version, String url, String md5,
-			String desc, String clazz) {
+	public DexModule(String module, int version, String url, String md5, String desc, String clazz) {
 		this.module = module;
 		this.version = version;
 		this.url = url;

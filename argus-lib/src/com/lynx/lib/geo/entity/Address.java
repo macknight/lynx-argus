@@ -15,8 +15,7 @@ public class Address implements Serializable {
 	private String street;
 	private String more;
 
-	public Address(String province, String city, String region, String street,
-			String more) {
+	public Address(String province, String city, String region, String street, String more) {
 		this.province = province;
 		this.city = city;
 		this.region = region;

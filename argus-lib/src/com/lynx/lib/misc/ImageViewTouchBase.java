@@ -59,10 +59,8 @@ public class ImageViewTouchBase extends ImageView {
 
 	public static final String LOG_TAG = "image";
 
-	public static float easeOut(float time, final float start, final float end,
-			final float duration) {
-		return (end * (((time = (time / duration) - 1) * time * time) + 1))
-				+ start;
+	public static float easeOut(float time, final float start, final float end, final float duration) {
+		return (end * (((time = (time / duration) - 1) * time * time) + 1)) + start;
 	}
 
 	public ImageViewTouchBase(final Context context) {
@@ -103,8 +101,8 @@ public class ImageViewTouchBase extends ImageView {
 			return null;
 		}
 		final Matrix m = getImageViewMatrix();
-		final RectF rect = new RectF(0, 0, this.mBitmapDisplayed.getBitmap()
-				.getWidth(), this.mBitmapDisplayed.getBitmap().getHeight());
+		final RectF rect = new RectF(0, 0, this.mBitmapDisplayed.getBitmap().getWidth(),
+				this.mBitmapDisplayed.getBitmap().getHeight());
 		m.mapRect(rect);
 		return rect;
 	}
@@ -160,8 +158,7 @@ public class ImageViewTouchBase extends ImageView {
 	 * @param bitmap
 	 * @param matrix
 	 */
-	protected void getProperBaseMatrix(final RotateBitmap bitmap,
-			final Matrix matrix) {
+	protected void getProperBaseMatrix(final RotateBitmap bitmap, final Matrix matrix) {
 		final float viewWidth = getWidth();
 		final float viewHeight = getHeight();
 		final float w = bitmap.getWidth();
@@ -172,8 +169,8 @@ public class ImageViewTouchBase extends ImageView {
 		final float scale = Math.min(widthScale, heightScale);
 		matrix.postConcat(bitmap.getRotateMatrix());
 		matrix.postScale(scale, scale);
-		matrix.postTranslate((viewWidth - (w * scale)) / this.MAX_ZOOM,
-				(viewHeight - (h * scale)) / this.MAX_ZOOM);
+		matrix.postTranslate((viewWidth - (w * scale)) / this.MAX_ZOOM, (viewHeight - (h * scale))
+				/ this.MAX_ZOOM);
 	}
 
 	public float getScale() {
@@ -197,17 +194,15 @@ public class ImageViewTouchBase extends ImageView {
 		if (this.mBitmapDisplayed.getBitmap() == null) {
 			return 1F;
 		}
-		final float fw = (float) this.mBitmapDisplayed.getWidth()
-				/ (float) this.mThisWidth;
-		final float fh = (float) this.mBitmapDisplayed.getHeight()
-				/ (float) this.mThisHeight;
+		final float fw = (float) this.mBitmapDisplayed.getWidth() / (float) this.mThisWidth;
+		final float fh = (float) this.mBitmapDisplayed.getHeight() / (float) this.mThisHeight;
 		final float max = Math.max(fw, fh) * 4;
 		return max;
 	}
 
 	@Override
-	protected void onLayout(final boolean changed, final int left,
-			final int top, final int right, final int bottom) {
+	protected void onLayout(final boolean changed, final int left, final int top, final int right,
+			final int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
 		this.mThisWidth = right - left;
 		this.mThisHeight = bottom - top;
@@ -233,8 +228,7 @@ public class ImageViewTouchBase extends ImageView {
 		center(true, true);
 	}
 
-	protected void postScale(final float scale, final float centerX,
-			final float centerY) {
+	protected void postScale(final float scale, final float centerX, final float centerY) {
 		this.mSuppMatrix.postScale(scale, scale, centerX, centerY);
 		setImageMatrix(Command.Zoom, getImageViewMatrix());
 	}
@@ -248,8 +242,7 @@ public class ImageViewTouchBase extends ImageView {
 		panBy(x, y);
 	}
 
-	protected void scrollBy(final float distanceX, final float distanceY,
-			final float durationMs) {
+	protected void scrollBy(final float distanceX, final float distanceY, final float durationMs) {
 		final float dx = distanceX;
 		final float dy = distanceY;
 		final long startTime = System.currentTimeMillis();
@@ -262,10 +255,8 @@ public class ImageViewTouchBase extends ImageView {
 			public void run() {
 				final long now = System.currentTimeMillis();
 				final float currentMs = Math.min(durationMs, now - startTime);
-				final float x = ImageViewTouchBase.easeOut(currentMs, 0, dx,
-						durationMs);
-				final float y = ImageViewTouchBase.easeOut(currentMs, 0, dy,
-						durationMs);
+				final float x = ImageViewTouchBase.easeOut(currentMs, 0, dx, durationMs);
+				final float y = ImageViewTouchBase.easeOut(currentMs, 0, dy, durationMs);
 				panBy((x - this.old_x), (y - this.old_y));
 				this.old_x = x;
 				this.old_y = y;
@@ -306,8 +297,7 @@ public class ImageViewTouchBase extends ImageView {
 		setImageRotateBitmapReset(new RotateBitmap(bitmap, 0), reset);
 	}
 
-	public void setImageBitmapReset(final Bitmap bitmap, final int rotation,
-			final boolean reset) {
+	public void setImageBitmapReset(final Bitmap bitmap, final int rotation, final boolean reset) {
 		setImageRotateBitmapReset(new RotateBitmap(bitmap, rotation), reset);
 	}
 
@@ -315,8 +305,7 @@ public class ImageViewTouchBase extends ImageView {
 		setImageMatrix(matrix);
 	}
 
-	public void setImageRotateBitmapReset(final RotateBitmap bitmap,
-			final boolean reset) {
+	public void setImageRotateBitmapReset(final RotateBitmap bitmap, final boolean reset) {
 		Log.d(ImageViewTouchBase.LOG_TAG, "setImageRotateBitmapReset");
 
 		final int viewWidth = getWidth();
@@ -325,8 +314,7 @@ public class ImageViewTouchBase extends ImageView {
 
 				@Override
 				public void run() {
-					setImageBitmapReset(bitmap.getBitmap(),
-							bitmap.getRotation(), reset);
+					setImageBitmapReset(bitmap.getBitmap(), bitmap.getRotation(), reset);
 				}
 			};
 			return;
@@ -352,8 +340,7 @@ public class ImageViewTouchBase extends ImageView {
 		}
 	}
 
-	public void setOnBitmapChangedListener(
-			final OnBitmapChangedListener listener) {
+	public void setOnBitmapChangedListener(final OnBitmapChangedListener listener) {
 		this.mListener = listener;
 	}
 
@@ -367,12 +354,10 @@ public class ImageViewTouchBase extends ImageView {
 		if ((bitmapRect.left >= 0) && (bitmapRect.right <= width)) {
 			scrollRect.left = 0;
 		}
-		if (((bitmapRect.top + scrollRect.top) >= 0)
-				&& (bitmapRect.bottom > height)) {
+		if (((bitmapRect.top + scrollRect.top) >= 0) && (bitmapRect.bottom > height)) {
 			scrollRect.top = (int) (0 - bitmapRect.top);
 		}
-		if (((bitmapRect.bottom + scrollRect.top) <= (height - 0))
-				&& (bitmapRect.top < 0)) {
+		if (((bitmapRect.bottom + scrollRect.top) <= (height - 0)) && (bitmapRect.top < 0)) {
 			scrollRect.top = (int) ((height - 0) - bitmapRect.bottom);
 		}
 		if ((bitmapRect.left + scrollRect.left) >= 0) {
@@ -407,8 +392,8 @@ public class ImageViewTouchBase extends ImageView {
 		center(true, true);
 	}
 
-	protected void zoomTo(final float scale, final float centerX,
-			final float centerY, final float durationMs) {
+	protected void zoomTo(final float scale, final float centerX, final float centerY,
+			final float durationMs) {
 		// Log.d( LOG_TAG, "zoomTo: " + scale + ", " + centerX + ": " + centerY
 		// );
 		final long startTime = System.currentTimeMillis();

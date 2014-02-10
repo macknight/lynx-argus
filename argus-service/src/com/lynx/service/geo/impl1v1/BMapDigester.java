@@ -12,8 +12,8 @@ import java.security.MessageDigest;
 public class BMapDigester {
 	private static char _fldif[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/."
 			.toCharArray();
-	private static char a[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8',
-			'9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	private static char a[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c',
+			'd', 'e', 'f' };
 
 	private static char[] digest(byte abyte0[]) {
 		char ac[] = new char[32];
@@ -67,32 +67,29 @@ public class BMapDigester {
 	public static String digest(String s) {
 		try {
 			String s1 = "UTF-8";
-			char ac[] = digest((new StringBuilder()).append(s).append("webgis")
-					.toString().getBytes(s1));
+			char ac[] = digest((new StringBuilder()).append(s).append("webgis").toString()
+					.getBytes(s1));
 			byte abyte0[] = s.getBytes(s1);
 			byte abyte1[] = new byte[abyte0.length + 2];
 			for (int i = 0; i < abyte0.length; i++)
 				abyte1[i] = abyte0[i];
 
-			abyte1[abyte0.length] = (byte) (255 & Integer.parseInt(
-					String.copyValueOf(ac, 10, 2), 16));
+			abyte1[abyte0.length] = (byte) (255 & Integer.parseInt(String.copyValueOf(ac, 10, 2),
+					16));
 			abyte1[abyte0.length + 1] = (byte) (255 & Integer.parseInt(
 					String.copyValueOf(ac, 20, 2), 16));
 			String s2 = "";
-			s2 = (new StringBuilder())
-					.append(s2)
-					.append((char) (255 & Integer.parseInt(
-							String.copyValueOf(ac, 6, 2), 16))).toString();
-			s2 = (new StringBuilder())
-					.append(s2)
-					.append((char) (255 & Integer.parseInt(
-							String.copyValueOf(ac, 16, 2), 16))).toString();
-			s2 = (new StringBuilder())
-					.append(s2)
-					.append((char) (255 & Integer.parseInt(
-							String.copyValueOf(ac, 26, 2), 16))).toString();
-			char ac1[] = digest((new StringBuilder()).append(s2)
-					.append("webgis").toString().getBytes("iso-8859-1"));
+			s2 = (new StringBuilder()).append(s2)
+					.append((char) (255 & Integer.parseInt(String.copyValueOf(ac, 6, 2), 16)))
+					.toString();
+			s2 = (new StringBuilder()).append(s2)
+					.append((char) (255 & Integer.parseInt(String.copyValueOf(ac, 16, 2), 16)))
+					.toString();
+			s2 = (new StringBuilder()).append(s2)
+					.append((char) (255 & Integer.parseInt(String.copyValueOf(ac, 26, 2), 16)))
+					.toString();
+			char ac1[] = digest((new StringBuilder()).append(s2).append("webgis").toString()
+					.getBytes("iso-8859-1"));
 			int j = abyte1.length;
 			int k = s2.length();
 			byte abyte2[] = new byte[j + k];

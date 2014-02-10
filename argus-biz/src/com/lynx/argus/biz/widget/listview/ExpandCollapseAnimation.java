@@ -40,10 +40,8 @@ public class ExpandCollapseAnimation extends Animation {
 		mLayoutParams = ((LinearLayout.LayoutParams) view.getLayoutParams());
 		mType = type;
 		if (mType == EXPAND) {
-
 			mLayoutParams.bottomMargin = -mEndHeight;
 		} else {
-
 			mLayoutParams.bottomMargin = 0;
 		}
 		view.setVisibility(View.VISIBLE);
@@ -55,8 +53,7 @@ public class ExpandCollapseAnimation extends Animation {
 		super.applyTransformation(interpolatedTime, t);
 		if (interpolatedTime < 1.0f) {
 			if (mType == EXPAND) {
-				mLayoutParams.bottomMargin = -mEndHeight
-						+ (int) (mEndHeight * interpolatedTime);
+				mLayoutParams.bottomMargin = -mEndHeight + (int) (mEndHeight * interpolatedTime);
 			} else {
 				mLayoutParams.bottomMargin = -(int) (mEndHeight * interpolatedTime);
 			}

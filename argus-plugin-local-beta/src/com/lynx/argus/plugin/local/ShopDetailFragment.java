@@ -34,8 +34,7 @@ public class ShopDetailFragment extends LFFragment {
 		super.onCreate(savedInstanceState);
 
 		try {
-			httpService = (HttpService) LFApplication.instance()
-					.service("http");
+			httpService = (HttpService) LFApplication.instance().service("http");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,14 +45,16 @@ public class ShopDetailFragment extends LFFragment {
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_local_shop_detail, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_local_shop_detail, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		initUI(v);
+		initUI(view);
 
-		return v;
+		return view;
 	}
 
 	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
@@ -66,8 +67,7 @@ public class ShopDetailFragment extends LFFragment {
 					JSONObject joShop = joResult.getJSONObject("result");
 					updateUI(joShop);
 				} else {
-					Toast.makeText(getActivity(), "获取商家信息失败",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(navActivity, "获取商家信息失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 
@@ -142,32 +142,28 @@ public class ShopDetailFragment extends LFFragment {
 
 			float overallRate = 0;
 			try {
-				overallRate = Float.parseFloat(joDetail
-						.getString("overall_rating"));
+				overallRate = Float.parseFloat(joDetail.getString("overall_rating"));
 			} catch (Exception e) {
 			}
 			rbOverall.setRating(overallRate);
 
 			float tasteRate = 0;
 			try {
-				tasteRate = Float
-						.parseFloat(joDetail.getString("taste_rating"));
+				tasteRate = Float.parseFloat(joDetail.getString("taste_rating"));
 			} catch (Exception e) {
 			}
 			rbTaste.setRating(tasteRate);
 
 			float serviceRate = 0;
 			try {
-				serviceRate = Float.parseFloat(joDetail
-						.getString("service_rating"));
+				serviceRate = Float.parseFloat(joDetail.getString("service_rating"));
 			} catch (Exception e) {
 			}
 			rbService.setRating(serviceRate);
 
 			float envRate = 0;
 			try {
-				envRate = Float.parseFloat(joDetail
-						.getString("environment_rating"));
+				envRate = Float.parseFloat(joDetail.getString("environment_rating"));
 			} catch (Exception e) {
 			}
 			rbEnv.setRating(envRate);

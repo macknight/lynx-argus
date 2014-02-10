@@ -17,8 +17,8 @@ import java.security.MessageDigest;
  */
 public class StringUtil {
 
-	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5",
-			"6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
+	private final static String[] hexDigits = { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
+			"a", "b", "c", "d", "e", "f" };
 
 	private StringUtil() {
 		throw new AssertionError("StringUtil shouldn't be instanced");
@@ -41,8 +41,8 @@ public class StringUtil {
 		return hexDigits[d1] + hexDigits[d2];
 	}
 
-	private static final String[] P_0 = new String[] { "", "0", "00", "000",
-			"0000", "00000", "000000", "0000000", "00000000" };
+	private static final String[] P_0 = new String[] { "", "0", "00", "000", "0000", "00000",
+			"000000", "0000000", "00000000" };
 
 	public static String fixHex(long l, int fixLen) {
 		String h = Long.toHexString(l);
@@ -67,8 +67,7 @@ public class StringUtil {
 		try {
 			resultString = new String(origin);
 			MessageDigest md = MessageDigest.getInstance("MD5");
-			resultString = byteArrayToHexString(md.digest(resultString
-					.getBytes()));
+			resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
 		} catch (Exception ex) {
 		}
 		return resultString;
@@ -83,16 +82,15 @@ public class StringUtil {
 		case 2:
 			return String.valueOf(ls[0]) + split + String.valueOf(ls[1]);
 		case 3:
-			return String.valueOf(ls[0]) + split + String.valueOf(ls[1])
-					+ split + String.valueOf(ls[2]);
+			return String.valueOf(ls[0]) + split + String.valueOf(ls[1]) + split
+					+ String.valueOf(ls[2]);
 		case 4:
-			return String.valueOf(ls[0]) + split + String.valueOf(ls[1])
-					+ split + String.valueOf(ls[2]) + split
-					+ String.valueOf(ls[3]);
+			return String.valueOf(ls[0]) + split + String.valueOf(ls[1]) + split
+					+ String.valueOf(ls[2]) + split + String.valueOf(ls[3]);
 		case 5:
-			return String.valueOf(ls[0]) + split + String.valueOf(ls[1])
-					+ split + String.valueOf(ls[2]) + split
-					+ String.valueOf(ls[3]) + split + String.valueOf(ls[4]);
+			return String.valueOf(ls[0]) + split + String.valueOf(ls[1]) + split
+					+ String.valueOf(ls[2]) + split + String.valueOf(ls[3]) + split
+					+ String.valueOf(ls[4]);
 		default:
 			StringBuffer sb = new StringBuffer(20 * ls.length);
 			sb.append(ls[0]);
@@ -206,8 +204,7 @@ public class StringUtil {
 		}
 	}
 
-	public static String stream2string(InputStream instream, String encoding)
-			throws IOException {
+	public static String stream2string(InputStream instream, String encoding) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int i = -1;
 		while ((i = instream.read()) != -1) {

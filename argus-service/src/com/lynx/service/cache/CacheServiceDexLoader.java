@@ -18,8 +18,8 @@ public class CacheServiceDexLoader extends ServiceLoader {
 	public static final String Tag = "cache";
 
 	private static final int minVersion = 101;
-	private static DexModule defModule = new DexModule("cache", 1, null, null,
-			"缓存服务", "com.lynx.service.cache.impl1v1.CacheServiceImpl");
+	private static DexModule defModule = new DexModule("cache", 1, null, null, "缓存服务",
+			"com.lynx.service.cache.impl1v1.CacheServiceImpl");
 
 	public CacheServiceDexLoader() throws Exception {
 		super(defModule, CacheServiceImpl.class);
@@ -34,8 +34,7 @@ public class CacheServiceDexLoader extends ServiceLoader {
 	protected void loadService() throws Exception {
 		try {
 			if (clazz != null) {
-				service = (Service) clazz.getConstructor(Context.class)
-						.newInstance(context);
+				service = (Service) clazz.getConstructor(Context.class).newInstance(context);
 			}
 
 			if (service == null) {

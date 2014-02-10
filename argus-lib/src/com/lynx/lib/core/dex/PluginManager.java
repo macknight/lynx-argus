@@ -40,8 +40,7 @@ public class PluginManager {
 
 	public PluginManager() {
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service(
-				"http");
+		this.httpService = (HttpService) LFApplication.instance().service("http");
 
 		File tmp = new File(context.getFilesDir(), PREFIX);
 		if (!tmp.exists()) {
@@ -68,8 +67,8 @@ public class PluginManager {
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						Plugin plugin = (Plugin) DexUtil.json2dexModule(
-								DexType.PLUGIN, jaPlugin.getJSONObject(i));
+						Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
+								jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
 						Logger.w(Tag, "获取动态模块更新配置内容错误", e);
@@ -108,8 +107,8 @@ public class PluginManager {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
 		param.put("apps", localPlugins());
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN,
-				LM_API_PLUGIN_CONFIG), param, callback);
+		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_PLUGIN_CONFIG), param,
+				callback);
 	}
 
 	public Map<String, PluginLoader> pluginLoaders() {
@@ -130,8 +129,7 @@ public class PluginManager {
 			if (jaMyPlugins == null) {
 				jaMyPlugins = new JSONArray();
 			}
-			JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN,
-					loader.dexModule());
+			JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
 			jaMyPlugins.put(jo);
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.put(loader.module(), loader);
@@ -152,8 +150,7 @@ public class PluginManager {
 					continue;
 				}
 				loader = pluginLoaders.get(key);
-				JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN,
-						loader.dexModule());
+				JSONObject jo = DexUtil.dexModule2json(DexType.PLUGIN, loader.dexModule());
 				ja.put(jo);
 			}
 
@@ -161,14 +158,12 @@ public class PluginManager {
 			saveConfig(MY_PLUGIN_CONFIG, jaMyPlugins);
 			pluginLoaders.remove(plugin.module());
 			if (listener != null) {
-				listener.onStatusChanged(plugin,
-						DexModuleListener.DEX_UNINSTALL_SUCCESS);
+				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_SUCCESS);
 			}
 		} catch (Exception e) {
 			Logger.e(Tag, "remove pluginloader error", e);
 			if (listener != null) {
-				listener.onStatusChanged(plugin,
-						DexModuleListener.DEX_UNINSTALL_FAIL);
+				listener.onStatusChanged(plugin, DexModuleListener.DEX_UNINSTALL_FAIL);
 			}
 		}
 	}
@@ -205,8 +200,7 @@ public class PluginManager {
 				Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
 						jaMyPlugins.getJSONObject(i));
 				if (plugin != null) {
-					PluginLoader loader = new PluginLoader(plugin,
-							DexStatus.UPDATE);
+					PluginLoader loader = new PluginLoader(plugin, DexStatus.UPDATE);
 					pluginLoaders.put(loader.module(), loader);
 				}
 			}
@@ -266,8 +260,7 @@ public class PluginManager {
 					config.delete();
 				}
 				configOld.renameTo(config);
-				throw new Exception("unable to move config from " + configTmp
-						+ " to " + config);
+				throw new Exception("unable to move config from " + configTmp + " to " + config);
 			}
 		} catch (Exception e) {
 			config.delete();

@@ -41,15 +41,20 @@
 				android:layout_centerVertical="true"
 				android:src="@drawable/search"/>
 
-		<EditText
-				android:id="@+id/et_search_keyword"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="5dp"
-				android:layout_marginLeft="40dp"
-				android:padding="8dp"
-				android:layout_toLeftOf="@+id/iv_search_vioce"
-				style="@style/edittext_style"/>
+        <AutoCompleteTextView
+                android:id="@+id/actv_search_keyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="40dp"
+                android:padding="8dp"
+                android:layout_toLeftOf="@+id/iv_search_vioce"
+                android:ems="10"
+                style="@style/edittext_style">
+
+            <requestFocus/>
+        </AutoCompleteTextView>
+
 		<ImageButton
 				android:id="@+id/iv_search_vioce"
 				android:layout_width="wrap_content"

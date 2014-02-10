@@ -45,13 +45,11 @@ public class RetryHandler implements HttpRequestRetryHandler {
 	}
 
 	@Override
-	public boolean retryRequest(IOException exception, int executionCount,
-			HttpContext context) {
+	public boolean retryRequest(IOException exception, int executionCount, HttpContext context) {
 		boolean retry = true;
 
-		Boolean b = (Boolean) context
-				.getAttribute(ExecutionContext.HTTP_REQ_SENT);
-		boolean sent = (b != null && b.booleanValue());
+		Boolean b = (Boolean) context.getAttribute(ExecutionContext.HTTP_REQ_SENT);
+		boolean sent = (b != null && b);
 
 		if (executionCount > maxRetries) {
 			// 尝试次数超过用户定义的测试，默认5次
@@ -68,8 +66,7 @@ public class RetryHandler implements HttpRequestRetryHandler {
 		if (retry) {
 			HttpUriRequest currentReq = (HttpUriRequest) context
 					.getAttribute(ExecutionContext.HTTP_REQUEST);
-			retry = currentReq != null
-					&& !"POST".equals(currentReq.getMethod());
+			retry = currentReq != null && !"POST".equals(currentReq.getMethod());
 		}
 
 		if (retry) {

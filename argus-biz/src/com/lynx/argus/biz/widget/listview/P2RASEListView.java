@@ -19,8 +19,7 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshAdapterViewBase;
  * @author chris.liu
  * @version 13-11-19 下午3:55
  */
-public class P2RASEListView extends
-		PullToRefreshAdapterViewBase<ActionSlideExpandableListView> {
+public class P2RASEListView extends PullToRefreshAdapterViewBase<ActionSlideExpandableListView> {
 
 	private LoadingLayout mHeaderLoadingView;
 	private LoadingLayout mFooterLoadingView;
@@ -81,23 +80,20 @@ public class P2RASEListView extends
 	}
 
 	@Override
-	protected final ActionSlideExpandableListView createRefreshableView(
-			Context context, AttributeSet attrs) {
+	protected final ActionSlideExpandableListView createRefreshableView(Context context,
+			AttributeSet attrs) {
 		ActionSlideExpandableListView lv = new InternalListView(context, attrs);
 		// Create Loading Views ready for use later
 		FrameLayout frame = new FrameLayout(context);
-		mHeaderLoadingView = new LoadingLayout(context,
-				Mode.PULL_DOWN_TO_REFRESH);
-		frame.addView(mHeaderLoadingView,
-				FrameLayout.LayoutParams.MATCH_PARENT,
+		mHeaderLoadingView = new LoadingLayout(context, Mode.PULL_DOWN_TO_REFRESH);
+		frame.addView(mHeaderLoadingView, FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT);
 		mHeaderLoadingView.setVisibility(View.GONE);
 		lv.addHeaderView(frame, null, false);
 
 		mLvFooterLoadingFrame = new FrameLayout(context);
 		mFooterLoadingView = new LoadingLayout(context, Mode.PULL_UP_TO_REFRESH);
-		mLvFooterLoadingFrame.addView(mFooterLoadingView,
-				FrameLayout.LayoutParams.MATCH_PARENT,
+		mLvFooterLoadingFrame.addView(mFooterLoadingView, FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.WRAP_CONTENT);
 		mFooterLoadingView.setVisibility(View.GONE);
 
@@ -121,8 +117,7 @@ public class P2RASEListView extends
 		// the header/footer views won't show so we use the
 		// normal method
 		ListAdapter adapter = getRefreshableView().getAdapter();
-		if (!getShowViewWhileRefreshing() || null == adapter
-				|| adapter.isEmpty()) {
+		if (!getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty()) {
 			super.resetHeader();
 			return;
 		}
@@ -191,8 +186,7 @@ public class P2RASEListView extends
 		// the header/footer views won't show so we use the
 		// normal method
 		ListAdapter adapter = getRefreshableView().getAdapter();
-		if (!getShowViewWhileRefreshing() || null == adapter
-				|| adapter.isEmpty()) {
+		if (!getShowViewWhileRefreshing() || null == adapter || adapter.isEmpty()) {
 			super.setRefreshingInternal(doScroll);
 			return;
 		}
@@ -241,8 +235,7 @@ public class P2RASEListView extends
 		}
 	}
 
-	class InternalListView extends ActionSlideExpandableListView implements
-			EmptyViewMethodAccessor {
+	class InternalListView extends ActionSlideExpandableListView implements EmptyViewMethodAccessor {
 
 		private boolean mAddedLvFooter = false;
 

@@ -17,8 +17,7 @@ public class LocationUtil {
 		throw new AssertionError("this class shouldn't be instanced");
 	}
 
-	public static final SimpleDateFormat sdf = new SimpleDateFormat(
-			"yyyy-MM-dd-HH-mm-ss");
+	public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 	public static final double EARTH_RADIUS = 6371000;
 
 	public static double latToRadians(double lat) {
@@ -26,8 +25,7 @@ public class LocationUtil {
 	}
 
 	public static double distanceTo(Coord coord1, Coord coord2) {
-		return distanceTo(coord1.lat(), coord1.lng(), coord2.lat(),
-				coord2.lng());
+		return distanceTo(coord1.lat(), coord1.lng(), coord2.lat(), coord2.lng());
 	}
 
 	public static double distanceTo(double a, double b, double c, double d) {
@@ -37,15 +35,15 @@ public class LocationUtil {
 		double lon2 = d / 180 * Math.PI;
 		double dlat = lat2 - lat1;
 		double dlon = lon2 - lon1;
-		double tmpA = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(lat1)
-				* Math.cos(lat2) * Math.sin(dlon / 2) * Math.sin(dlon / 2);
+		double tmpA = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(lat1) * Math.cos(lat2)
+				* Math.sin(dlon / 2) * Math.sin(dlon / 2);
 		double tempC = 2.0 * Math.atan2(Math.sqrt(tmpA), Math.sqrt(1.0 - tmpA));
 		return (int) (Math.ceil(EARTH_RADIUS * tempC));
 	}
 
 	public static String intToIpAddress(int param) {
-		return (param & 0xFF) + "." + (param >> 8 & 0xFF) + "."
-				+ (param >> 16 & 0xFF) + "." + (param >> 24);
+		return (param & 0xFF) + "." + (param >> 8 & 0xFF) + "." + (param >> 16 & 0xFF) + "."
+				+ (param >> 24);
 	}
 
 	public static String getCurrentTime() {

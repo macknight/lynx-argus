@@ -26,10 +26,8 @@ public abstract class LFTabActivity extends LFActivity {
 	protected TabHost tabHost;
 	protected String curTab;
 	protected int resContent = -1; // fragment根容器ID
-	private int animResPushIn = android.R.anim.fade_in,
-			animResPushOut = android.R.anim.fade_out;
-	private int animResPopIn = android.R.anim.fade_in,
-			animResPopOut = android.R.anim.fade_out;
+	private int animResPushIn = android.R.anim.fade_in, animResPushOut = android.R.anim.fade_out;
+	private int animResPopIn = android.R.anim.fade_in, animResPopOut = android.R.anim.fade_out;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +85,13 @@ public abstract class LFTabActivity extends LFActivity {
 					LFFragment frg = stack.pop();
 					stacks.get(tabHost.getCurrentTabTag()).push(frg);
 
-					FragmentTransaction ft = getFragmentManager()
-							.beginTransaction();
+					FragmentTransaction ft = getFragmentManager().beginTransaction();
 					ft.setCustomAnimations(animResPopIn, animResPopOut);
 
 					ft.replace(resContent, frg).commit();
 				}
 			} else {
-				getFragmentManager().beginTransaction()
-						.replace(resContent, fragment).commit();
+				getFragmentManager().beginTransaction().replace(resContent, fragment).commit();
 			}
 		}
 	}
@@ -106,8 +102,7 @@ public abstract class LFTabActivity extends LFActivity {
 		if (stacks.get(curTab).size() == 0) {
 			return;
 		}
-		stacks.get(curTab).lastElement()
-				.onActivityResult(requestCode, requestCode, data);
+		stacks.get(curTab).lastElement().onActivityResult(requestCode, requestCode, data);
 	}
 
 	/**
@@ -133,14 +128,14 @@ public abstract class LFTabActivity extends LFActivity {
 
 		static final class TabInfo {
 			private final String tag;
-			private final Class<?> clss;
+			private final Class<?> clazz;
 			private final Bundle args;
 			private Fragment fragment;
 
-			TabInfo(String _tag, Class<?> _class, Bundle _args) {
-				tag = _tag;
-				clss = _class;
-				args = _args;
+			TabInfo(String tag, Class<?> clazz, Bundle args) {
+				this.tag = tag;
+                this.clazz = clazz;
+                this.args = args;
 			}
 		}
 
@@ -160,8 +155,7 @@ public abstract class LFTabActivity extends LFActivity {
 			}
 		}
 
-		public TabManager(LFTabActivity activity, TabHost tabHost,
-				int mContainerId) {
+		public TabManager(LFTabActivity activity, TabHost tabHost, int mContainerId) {
 			mActivity = activity;
 			mTabHost = tabHost;
 			this.mContainerId = mContainerId;
@@ -174,11 +168,9 @@ public abstract class LFTabActivity extends LFActivity {
 
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager().findFragmentByTag(
-					tag);
+			info.fragment = mActivity.getFragmentManager().findFragmentByTag(tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
-				FragmentTransaction ft = mActivity.getFragmentManager()
-						.beginTransaction();
+				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
 				ft.detach(info.fragment);
 				ft.commit();
 			}
@@ -187,18 +179,19 @@ public abstract class LFTabActivity extends LFActivity {
 			mTabHost.addTab(tabSpec);
 		}
 
-		public void addInvisibleTab(TabHost.TabSpec tabSpec, Class<?> clss,
-				Bundle args, int childID) {
+		public void addInvisibleTab(TabHost.TabSpec tabSpec, Class<?> clss, Bundle args, int childID) {
 			tabSpec.setContent(new DummyTabFactory(mActivity));
 			String tag = tabSpec.getTag();
 			TabWidget tabWidget = mTabHost.getTabWidget();
+            if (tabWidget == null) {
+                return;
+            }
+
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager().findFragmentByTag(
-					tag);
+			info.fragment = mActivity.getFragmentManager().findFragmentByTag(tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
-				FragmentTransaction ft = mActivity.getFragmentManager()
-						.beginTransaction();
+				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
 				ft.detach(info.fragment);
 				ft.commit();
 			}
@@ -207,15 +200,18 @@ public abstract class LFTabActivity extends LFActivity {
 			mTabHost.addTab(tabSpec);
 
 			// Makes tab invisible
-			tabWidget.getChildAt(childID).setVisibility(View.GONE);
+            View widget = tabWidget.getChildAt(childID);
+            if (widget != null) {
+                widget.setVisibility(View.GONE);
+            }
+
 		}
 
 		@Override
 		public void onTabChanged(String tabId) {
 			TabInfo newTab = mTabs.get(tabId);
 			if (mLastTab != newTab) {
-				FragmentTransaction ft = mActivity.getFragmentManager()
-						.beginTransaction();
+				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
 				if (mLastTab != null) {
 					if (mLastTab.fragment != null) {
 						ft.detach(mLastTab.fragment);

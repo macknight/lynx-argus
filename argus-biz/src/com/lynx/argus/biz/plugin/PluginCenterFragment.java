@@ -54,15 +54,17 @@ public class PluginCenterFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_plugincenter, container,
+		View view = inflater.inflate(R.layout.layout_plugincenter, container,
 				false);
-
-		gvPlugin = (GridView) v.findViewById(R.id.gv_plugincenter);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+		gvPlugin = (GridView) view.findViewById(R.id.gv_plugincenter);
 
 		gvPlugin.setOnItemClickListener(onItemClickListener);
 		gvPlugin.setAdapter(adapter);
 
-		ImageButton ibStore = (ImageButton) v
+		ImageButton ibStore = (ImageButton) view
 				.findViewById(R.id.ib_plugincenter_store);
 		ibStore.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -72,7 +74,7 @@ public class PluginCenterFragment extends LFFragment {
 			}
 		});
 
-		return v;
+		return view;
 	}
 
 	@Override

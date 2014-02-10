@@ -1,5 +1,8 @@
 package com.lynx.lib.geo.entity;
 
+import com.lynx.lib.core.Logger;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 /**
@@ -30,7 +33,14 @@ public class Location implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("{coord:%s,addr:%s}", this.coord.toString(),
-				this.addr.toString());
+		try {
+			JSONObject jo = new JSONObject();
+			jo.put("coord", coord.toString());
+			jo.put("addr", addr.toString());
+			return jo.toString();
+		} catch (Exception e) {
+			Logger.e("Location", "location object serialized error", e);
+			return null;
+		}
 	}
 }

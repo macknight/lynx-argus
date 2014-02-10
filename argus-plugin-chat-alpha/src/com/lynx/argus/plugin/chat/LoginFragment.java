@@ -49,19 +49,21 @@ public class LoginFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		navActivity.setPopAnimation(R.animator.slide_in_left,
-				R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right,
-				R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_login, container, false);
-		etAccount = (EditText) v.findViewById(R.id.et_login_account);
-		etPwd = (EditText) v.findViewById(R.id.et_login_pwd);
-		Button btn = (Button) v.findViewById(R.id.btn_login_ok);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_login, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+
+		etAccount = (EditText) view.findViewById(R.id.et_login_account);
+		etPwd = (EditText) view.findViewById(R.id.et_login_pwd);
+		Button btn = (Button) view.findViewById(R.id.btn_login_ok);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -81,7 +83,7 @@ public class LoginFragment extends LFFragment {
 			}
 		});
 
-		btn = (Button) v.findViewById(R.id.btn_login_register);
+		btn = (Button) view.findViewById(R.id.btn_login_register);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -89,14 +91,14 @@ public class LoginFragment extends LFFragment {
 			}
 		});
 
-		btn = (Button) v.findViewById(R.id.btn_logint_forgot);
+		btn = (Button) view.findViewById(R.id.btn_logint_forgot);
 		btn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 
 			}
 		});
-		return v;
+		return view;
 	}
 
 	public void setConnection(XMPPConnection connection) {
@@ -109,8 +111,7 @@ public class LoginFragment extends LFFragment {
 			@Override
 			public void run() {
 				if (connection == null) {
-					config = new ConnectionConfiguration(SERVER_HOST,
-							SERVER_PORT);
+					config = new ConnectionConfiguration(SERVER_HOST, SERVER_PORT);
 					// config = new ConnectionConfiguration(SERVER_HOST,
 					// SERVER_PORT, SERVICE_NAME);
 

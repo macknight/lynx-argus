@@ -43,8 +43,7 @@ public abstract class DexManager {
 	}
 
 	public void installPlugin(Plugin plugin, DexModuleListener listener) {
-		pluginManager.addPluginLoader(new PluginLoader(plugin,
-				DexStatus.INSTALL), listener);
+		pluginManager.addPluginLoader(new PluginLoader(plugin, DexStatus.INSTALL), listener);
 	}
 
 	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {

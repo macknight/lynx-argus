@@ -66,19 +66,16 @@ public class StrictLineReader implements Closeable {
 			for (int i = pos; i != end; ++i) {
 				if (buf[i] == LF) {
 					int lineEnd = (i != pos && buf[i - 1] == CR) ? i - 1 : i;
-					String str = new String(buf, pos, lineEnd - pos,
-							charset.name());
+					String str = new String(buf, pos, lineEnd - pos, charset.name());
 					pos = i + 1;
 					return str;
 				}
 			}
 
-			ByteArrayOutputStream out = new ByteArrayOutputStream(end - pos
-					+ 80) {
+			ByteArrayOutputStream out = new ByteArrayOutputStream(end - pos + 80) {
 				@Override
 				public String toString() {
-					int length = (count > 0 && buf[count - 1] == CR) ? count - 1
-							: count;
+					int length = (count > 0 && buf[count - 1] == CR) ? count - 1 : count;
 					try {
 						return new String(buf, 0, length, charset.name());
 					} catch (UnsupportedEncodingException e) {

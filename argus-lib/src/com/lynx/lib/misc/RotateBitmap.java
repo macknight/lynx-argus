@@ -77,8 +77,7 @@ class RotateBitmap {
 		matrix.postRotate(this.mRotation);
 		matrix.postTranslate(cx, cx);
 
-		final RectF rect = new RectF(0, 0, this.mBitmapWidth,
-				this.mBitmapHeight);
+		final RectF rect = new RectF(0, 0, this.mBitmapWidth, this.mBitmapHeight);
 		matrix.mapRect(rect);
 		this.mWidth = (int) rect.width();
 		this.mHeight = (int) rect.height();

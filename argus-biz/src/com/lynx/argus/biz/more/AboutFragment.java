@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
+
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFEnvironment;
 import com.lynx.lib.core.LFFragment;
@@ -26,11 +27,14 @@ public class AboutFragment extends LFFragment {
 	private WebView wvAbout;
 
 	@Override
-	protected View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle bundle) throws Exception {
-		View v = inflater.inflate(R.layout.layout_about, container, false);
+	protected View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_about, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		tvVersion = (TextView) v.findViewById(R.id.tv_more_about_version);
+		tvVersion = (TextView) view.findViewById(R.id.tv_more_about_version);
 		String version = "unknown version";
 		try {
 			PackageManager packageManager = tabActivity.getPackageManager();
@@ -53,11 +57,11 @@ public class AboutFragment extends LFFragment {
 			}
 		});
 
-		wvAbout = (WebView) v.findViewById(R.id.more_about_link);
+		wvAbout = (WebView) view.findViewById(R.id.more_about_link);
 		wvAbout.setBackgroundColor(0); // 设置背景色
 		wvAbout.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 		wvAbout.loadUrl("file:///android_asset/more_about.html");
 
-		return v;
+		return view;
 	}
 }

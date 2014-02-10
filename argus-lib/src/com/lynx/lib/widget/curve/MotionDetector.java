@@ -33,8 +33,7 @@ public class MotionDetector {
 			localMotionIntent = MotionIntent.UNKNOWN;
 		float f1 = Math.abs(startPoint.getX() - latestEvent.getX());
 		float f2 = Math.abs(startPoint.getY() - latestEvent.getY());
-		if ((f1 < this.maxMovementInClickingPx)
-				&& (f2 < this.maxMovementInClickingPx)) {
+		if ((f1 < this.maxMovementInClickingPx) && (f2 < this.maxMovementInClickingPx)) {
 			localMotionIntent = MotionIntent.UNKNOWN;
 		}
 		if (1.5D * f1 > f2) {

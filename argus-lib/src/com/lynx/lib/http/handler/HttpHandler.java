@@ -22,8 +22,7 @@ import java.net.UnknownHostException;
  * 
  * @version 2013-4-17 下午10:51:12
  */
-public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
-		EntityCallback {
+public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements EntityCallback {
 	private final AbstractHttpClient client;
 	private final HttpContext context;
 
@@ -37,16 +36,15 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 	private boolean isResume = false; // 是否断点续传
 	private String charset;
 
-	public HttpHandler(AbstractHttpClient client, HttpContext context,
-			HttpCallback<T> callback, String charset) {
+	public HttpHandler(AbstractHttpClient client, HttpContext context, HttpCallback<T> callback,
+			String charset) {
 		this.client = client;
 		this.context = context;
 		this.callback = callback;
 		this.charset = charset;
 	}
 
-	private void makeRequestWithRetries(HttpUriRequest request)
-			throws IOException {
+	private void makeRequestWithRetries(HttpUriRequest request) throws IOException {
 		if (isResume && targetUrl != null) {
 			File downloadFile = new File(targetUrl);
 			long fileLen = 0;
@@ -59,8 +57,7 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 
 		boolean retry = true;
 		IOException cause = null;
-		HttpRequestRetryHandler retryHandler = client
-				.getHttpRequestRetryHandler();
+		HttpRequestRetryHandler retryHandler = client.getHttpRequestRetryHandler();
 		while (retry) {
 			try {
 				if (!isCancelled()) {
@@ -71,23 +68,19 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 				}
 				return;
 			} catch (UnknownHostException e) {
-				publishProgress(UPDATE_FAILURE, e,
-						"unknownHostException：can't resolve host");
+				publishProgress(UPDATE_FAILURE, e, "unknownHostException：can't resolve host");
 				return;
 			} catch (IOException e) {
 				cause = e;
-				retry = retryHandler.retryRequest(cause, ++executionCount,
-						context);
+				retry = retryHandler.retryRequest(cause, ++executionCount, context);
 			} catch (NullPointerException e) {
 				// HttpClient 4.0.x 之前的一个bug
 				// http://code.google.com/p/android/issues/detail?id=5255
 				cause = new IOException("NPE in HttpClient" + e.getMessage());
-				retry = retryHandler.retryRequest(cause, ++executionCount,
-						context);
+				retry = retryHandler.retryRequest(cause, ++executionCount, context);
 			} catch (Exception e) {
 				cause = new IOException("Exception" + e.getMessage());
-				retry = retryHandler.retryRequest(cause, ++executionCount,
-						context);
+				retry = retryHandler.retryRequest(cause, ++executionCount, context);
 			}
 		}
 		if (cause != null)
@@ -160,15 +153,12 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 	private void handleResponse(HttpResponse response) {
 		StatusLine status = response.getStatusLine();
 		if (status.getStatusCode() >= 300) {
-			String errorMsg = "response status error code:"
-					+ status.getStatusCode();
+			String errorMsg = "response status error code:" + status.getStatusCode();
 			if (status.getStatusCode() == 416 && isResume) {
 				errorMsg += " \n maybe you have download complete.";
 			}
-			publishProgress(
-					UPDATE_FAILURE,
-					new HttpResponseException(status.getStatusCode(), status
-							.getReasonPhrase()), errorMsg);
+			publishProgress(UPDATE_FAILURE, new HttpResponseException(status.getStatusCode(),
+					status.getReasonPhrase()), errorMsg);
 		} else {
 			try {
 				HttpEntity entity = response.getEntity();
@@ -176,11 +166,10 @@ public class HttpHandler<T> extends AsyncTask<Object, Object, Object> implements
 				if (entity != null) {
 					time = SystemClock.uptimeMillis();
 					if (targetUrl != null) {
-						responseBody = mFileEntityHandler.handleEntity(entity,
-								this, targetUrl, isResume);
+						responseBody = mFileEntityHandler.handleEntity(entity, this, targetUrl,
+								isResume);
 					} else {
-						responseBody = mStrEntityHandler.handleEntity(entity,
-								this, charset);
+						responseBody = mStrEntityHandler.handleEntity(entity, this, charset);
 					}
 
 				}

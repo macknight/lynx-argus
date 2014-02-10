@@ -21,15 +21,13 @@ import java.util.Map;
  * 
  * @version 13-10-27 下午9:29
  */
-public class MoreFragment extends LFFragment implements
-		AdapterView.OnItemClickListener {
+public class MoreFragment extends LFFragment implements AdapterView.OnItemClickListener {
 	public static final String Tag = "More";
 	private List<List<Map<String, String>>> data = new ArrayList<List<Map<String, String>>>();
-	private String[] mSettingItems = { "离线下载", "", "分享给朋友", "评分", "", "检查新版本",
-			"意见反馈", "联系我们", "关于", "", "捐赠" };
-	private String[] mSettingItemMethods = { "offlineSetting", "", "shareApp",
-			"jmupToMarket", "", "newVersionCheck", "feedback", "contract",
-			"about", "", "donate" };
+	private String[] mSettingItems = { "离线下载", "", "分享给朋友", "评分", "", "检查新版本", "意见反馈", "联系我们",
+			"关于", "", "捐赠" };
+	private String[] mSettingItemMethods = { "offlineSetting", "", "shareApp", "jmupToMarket", "",
+			"newVersionCheck", "feedback", "contract", "about", "", "donate" };
 	private HashMap<String, String> mSettingItemMethodMap = new HashMap<String, String>();
 
 	public MoreFragment() {
@@ -42,12 +40,14 @@ public class MoreFragment extends LFFragment implements
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_more, container, false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_more, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		LinearLayout cornerContainer = (LinearLayout) v
-				.findViewById(R.id.ll_more_container);
+		LinearLayout cornerContainer = (LinearLayout) view.findViewById(R.id.ll_more_container);
 
 		for (int i = 0; i < mSettingItems.length; i++) {
 			mSettingItemMethodMap.put(mSettingItems[i], mSettingItemMethods[i]);
@@ -59,8 +59,7 @@ public class MoreFragment extends LFFragment implements
 		SimpleAdapter adapter;
 		for (int i = 0; i < size; i++) {
 			cornerListView = new CornerListView(tabActivity);
-			lp = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT,
+			lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					LinearLayout.LayoutParams.WRAP_CONTENT);
 			if (i == 0 && i == (size - 1)) {
 				lp.setMargins(15, 20, 15, 20);
@@ -73,20 +72,17 @@ public class MoreFragment extends LFFragment implements
 			}
 			cornerListView.setLayoutParams(lp);
 			cornerListView.setCacheColorHint(0);
-			cornerListView.setDivider(getResources().getDrawable(
-					R.drawable.divider_h_gray));
+			cornerListView.setDivider(getResources().getDrawable(R.drawable.divider_h_gray));
 			cornerListView.setSelector(android.R.color.transparent);
 			cornerListView.setScrollbarFadingEnabled(false);
 			cornerContainer.addView(cornerListView);
 
-			adapter = new SimpleAdapter(tabActivity, data.get(i),
-					R.layout.layout_more_item, new String[] { "text" },
-					new int[] { R.id.tv_more_item_title });
+			adapter = new SimpleAdapter(tabActivity, data.get(i), R.layout.layout_more_item,
+					new String[] { "text" }, new int[] { R.id.tv_more_item_title });
 			cornerListView.setAdapter(adapter);
 			cornerListView.setOnItemClickListener(this);
 			int height = data.get(i).size()
-					* (int) getResources().getDimension(
-							R.dimen.more_item_height);
+					* (int) getResources().getDimension(R.dimen.more_item_height);
 			if (data.get(i).size() > 1) {
 				height -= data.get(i).size();
 			} else {
@@ -94,14 +90,12 @@ public class MoreFragment extends LFFragment implements
 			}
 			cornerListView.getLayoutParams().height = height;
 		}
-		return v;
+		return view;
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		TextView textView = (TextView) view
-				.findViewById(R.id.tv_more_item_title);
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		TextView textView = (TextView) view.findViewById(R.id.tv_more_item_title);
 		String key = textView.getText().toString();
 		Class<? extends MoreFragment> clazz = this.getClass();
 		try {

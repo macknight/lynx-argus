@@ -15,8 +15,8 @@ public class Plugin extends DexModule {
 	private String icon;
 	private int category;
 
-	public Plugin(String module, int version, String name, String icon,
-			String url, String md5, String desc, String clazz, int category) {
+	public Plugin(String module, int version, String name, String icon, String url, String md5,
+			String desc, String clazz, int category) {
 		super(module, version, url, md5, desc, clazz);
 		this.name = name;
 		this.icon = icon;

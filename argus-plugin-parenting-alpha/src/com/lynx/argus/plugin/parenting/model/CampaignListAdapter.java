@@ -58,17 +58,12 @@ public class CampaignListAdapter extends BaseAdapter {
 		}
 
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_campaignlist_item,
-					null);
+			view = View.inflate(context, R.layout.layout_campaignlist_item, null);
 			holder = new ViewHolder();
-			holder.ivSnap = (ImageView) view
-					.findViewById(R.id.iv_campaignlist_item_snap);
-			holder.tvName = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_title);
-			holder.tvTime = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_time);
-			holder.tvPrice = (TextView) view
-					.findViewById(R.id.tv_campignlist_item_price);
+			holder.ivSnap = (ImageView) view.findViewById(R.id.iv_campaignlist_item_snap);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_campignlist_item_title);
+			holder.tvTime = (TextView) view.findViewById(R.id.tv_campignlist_item_time);
+			holder.tvPrice = (TextView) view.findViewById(R.id.tv_campignlist_item_price);
 			view.setTag(holder);
 		} else {
 			view = convertView;
@@ -76,8 +71,7 @@ public class CampaignListAdapter extends BaseAdapter {
 		}
 
 		holder.tvName.setText("" + item.getName());
-		holder.tvTime.setText("" + item.getStartTime() + "-"
-				+ item.getEndTime());
+		holder.tvTime.setText("" + item.getStartTime() + "-" + item.getEndTime());
 		holder.tvPrice.setText("" + item.getPrice());
 
 		imgLoader.showAsyncImage(holder.ivSnap, item.getSnapUrl());

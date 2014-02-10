@@ -58,14 +58,10 @@ public class ChatAdapter extends BaseAdapter {
 		if (convertView == null) {
 			view = View.inflate(context, R.layout.layout_chatlist_item, null);
 			holder = new ViewHolder();
-			holder.ivAvatar = (ImageView) view
-					.findViewById(R.id.iv_chatlist_item_avatar);
-			holder.tvFrom = (TextView) view
-					.findViewById(R.id.tv_chatlist_item_from);
-			holder.tvSummary = (TextView) view
-					.findViewById(R.id.tv_chatList_item_summary);
-			holder.tvDate = (TextView) view
-					.findViewById(R.id.tv_chatlist_item_date);
+			holder.ivAvatar = (ImageView) view.findViewById(R.id.iv_chatlist_item_avatar);
+			holder.tvFrom = (TextView) view.findViewById(R.id.tv_chatlist_item_from);
+			holder.tvSummary = (TextView) view.findViewById(R.id.tv_chatList_item_summary);
+			holder.tvDate = (TextView) view.findViewById(R.id.tv_chatlist_item_date);
 			view.setTag(holder);
 		} else {
 			view = convertView;

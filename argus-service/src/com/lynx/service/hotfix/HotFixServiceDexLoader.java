@@ -14,8 +14,8 @@ public class HotFixServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "hotfix";
 
-	private static DexModule defModule = new DexModule("hotfix", 1, null, null,
-			"hot fix", "com.lynx.service.hotfix.impl1v1.HotFixServiceImpl");
+	private static DexModule defModule = new DexModule("hotfix", 1, null, null, "hot fix",
+			"com.lynx.service.hotfix.impl1v1.HotFixServiceImpl");
 
 	public HotFixServiceDexLoader() throws Exception {
 		super(defModule, HotFixServiceImpl.class);

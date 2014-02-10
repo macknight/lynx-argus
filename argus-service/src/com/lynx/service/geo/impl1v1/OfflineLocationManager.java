@@ -15,23 +15,19 @@ import org.json.JSONObject;
  */
 public class OfflineLocationManager {
 	private static final String Tag = "OfflineLocationManager";
-	private LocationDBHelper locDBHelper;
+	private LocationDBUtil locDBUtil;
 
 	public OfflineLocationManager(Context context) {
-		locDBHelper = new LocationDBHelper(context);
+		locDBUtil = new LocationDBUtil(context);
 	}
 
 	public void addLocation(Cell cell, Location location) {
-		Log.d(Tag,
-				String.format("add location into db(%s->%s,%s)",
-						cell.toString(), location));
+		Log.d(Tag, String.format("add location into db(%s->%s,%s)", cell.toString(), location));
 		try {
-			locDBHelper.add(cell.toString(), location);
-			locDBHelper.delete();
+			locDBUtil.add(cell.toString(), location);
+			locDBUtil.delete();
 		} catch (Exception e) {
-			Log.d(Tag,
-					"add location data into db error:"
-							+ e.getLocalizedMessage());
+			Log.d(Tag, "add location data into db error:" + e.getLocalizedMessage());
 		}
 	}
 
@@ -40,20 +36,16 @@ public class OfflineLocationManager {
 	 * @return
 	 */
 	public Location getLocation(Cell cell) {
-		Logger.i(
-				Tag,
-				String.format("get location from db of cell:%s",
-						cell.toString()));
-        Location location = null;
+		Logger.i(Tag, String.format("get location from db of cell:%s", cell.toString()));
+		Location location = null;
 		try {
-			Cursor cursor = locDBHelper.get(cell.toString());
+			Cursor cursor = locDBUtil.get(cell.toString());
 			if (cursor != null) {
 				cursor.moveToFirst();
 				String loc = cursor.getString(0);
-                JSONObject jo = new JSONObject(loc);
+				JSONObject jo = new JSONObject(loc);
 
 				cursor.close();
-				cursor = null;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

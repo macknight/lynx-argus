@@ -53,10 +53,8 @@ public class AsyncImageLoader {
 	}
 
 	private AsyncImageLoader() {
-		this.httpService = (HttpService) LFApplication.instance().service(
-				"http");
-		this.cacheService = (CacheService) LFApplication.instance().service(
-				"cache");
+		this.httpService = (HttpService) LFApplication.instance().service("http");
+		this.cacheService = (CacheService) LFApplication.instance().service("cache");
 		coreCPUNum = Runtime.getRuntime().availableProcessors();
 		executorService = Executors.newFixedThreadPool(coreCPUNum);
 	}
@@ -71,8 +69,7 @@ public class AsyncImageLoader {
 				// 调用callback对象的loadImage方法，并将图片路径和图片回传给adapter
 				task.listener.onSuccess(task.bitmap);
 				CacheType[] cacheTypes = { CacheType.Memory, CacheType.File };
-				cacheService.put(StringUtil.MD5Encode(task.path), task.bitmap,
-						cacheTypes);
+				cacheService.put(StringUtil.MD5Encode(task.path), task.bitmap, cacheTypes);
 				break;
 			case ASYNC_IMAGE_LOAD_FAIL:
 
@@ -103,8 +100,7 @@ public class AsyncImageLoader {
 			if (buf != null) {
 				bmp = BitmapFactory.decodeByteArray(buf, 0, buf.length);
 				if (bmp != null) {
-					cacheService.put(key, bmp,
-							new CacheType[] { CacheType.Memory });
+					cacheService.put(key, bmp, new CacheType[] { CacheType.Memory });
 				}
 			}
 		}
@@ -143,7 +139,7 @@ public class AsyncImageLoader {
 		@Override
 		public void run() {
 			try {
-                bitmap = ImageUtil.getbitmap(path);
+				bitmap = ImageUtil.getbitmap(path);
 				if (bitmap != null) {
 					Message msg = handler.obtainMessage();
 					msg.what = ASYNC_IMAGE_LOAD_SUCCESS;

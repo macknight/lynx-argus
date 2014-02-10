@@ -34,8 +34,7 @@ public class ImageUtil {
 		Bitmap bitmap = null;
 		try {
 			URL myFileUrl = new URL(imageUri);
-			HttpURLConnection conn = (HttpURLConnection) myFileUrl
-					.openConnection();
+			HttpURLConnection conn = (HttpURLConnection) myFileUrl.openConnection();
 			conn.setDoInput(true);
 			conn.connect();
 			InputStream is = conn.getInputStream();
@@ -73,8 +72,7 @@ public class ImageUtil {
 		float scaleWidht = ((float) w / width);
 		float scaleHeight = ((float) h / height);
 		matrix.postScale(scaleWidht, scaleHeight);
-		Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, width, height,
-				matrix, true);
+		Bitmap newbmp = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
 		return newbmp;
 	}
 
@@ -87,9 +85,9 @@ public class ImageUtil {
 	public static Bitmap drawableToBitmap(Drawable drawable) {
 		int width = drawable.getIntrinsicWidth();
 		int height = drawable.getIntrinsicHeight();
-		Bitmap bitmap = Bitmap.createBitmap(width, height, drawable
-				.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-				: Bitmap.Config.RGB_565);
+		Bitmap bitmap = Bitmap.createBitmap(width, height,
+				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+						: Bitmap.Config.RGB_565);
 		Canvas canvas = new Canvas(bitmap);
 		drawable.setBounds(0, 0, width, height);
 		drawable.draw(canvas);
@@ -109,8 +107,8 @@ public class ImageUtil {
 			return null;
 		}
 
-		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),
-				bitmap.getHeight(), Bitmap.Config.ARGB_8888);
+		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(),
+				Bitmap.Config.ARGB_8888);
 		Canvas canvas = new Canvas(output);
 
 		final int color = 0xff424242;
@@ -137,11 +135,11 @@ public class ImageUtil {
 		Matrix matrix = new Matrix();
 		matrix.preScale(1, -1);
 
-		Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2,
-				width, height / 2, matrix, false);
+		Bitmap reflectionImage = Bitmap.createBitmap(bitmap, 0, height / 2, width, height / 2,
+				matrix, false);
 
-		Bitmap bitmapWithReflection = Bitmap.createBitmap(width,
-				(height + height / 2), Bitmap.Config.ARGB_8888);
+		Bitmap bitmapWithReflection = Bitmap.createBitmap(width, (height + height / 2),
+				Bitmap.Config.ARGB_8888);
 
 		Canvas canvas = new Canvas(bitmapWithReflection);
 		canvas.drawBitmap(bitmap, 0, 0, null);
@@ -152,14 +150,13 @@ public class ImageUtil {
 
 		Paint paint = new Paint();
 		LinearGradient shader = new LinearGradient(0, bitmap.getHeight(), 0,
-				bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff,
-				0x00ffffff, Shader.TileMode.CLAMP);
+				bitmapWithReflection.getHeight() + reflectionGap, 0x70ffffff, 0x00ffffff,
+				Shader.TileMode.CLAMP);
 		paint.setShader(shader);
 		// Set the Transfer mode to be porter duff and destination in
 		paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
 		// Draw a rectangle using the paint with our linear gradient
-		canvas.drawRect(0, height, width, bitmapWithReflection.getHeight()
-				+ reflectionGap, paint);
+		canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap, paint);
 
 		return bitmapWithReflection;
 	}

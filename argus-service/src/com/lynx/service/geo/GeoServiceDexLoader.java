@@ -21,8 +21,8 @@ public class GeoServiceDexLoader extends ServiceLoader {
 
 	private List<LocationListener> listeners = null;
 
-	private static DexModule defModule = new DexModule("geo", 1, null, null,
-			"地理位置信息服务", "com.lynx.service.geo.impl1v1.GeoServiceImpl");
+	private static DexModule defModule = new DexModule("geo", 1, null, null, "地理位置信息服务",
+			"com.lynx.service.geo.impl1v1.GeoServiceImpl");
 
 	public GeoServiceDexLoader() throws Exception {
 		super(defModule, GeoServiceImpl.class);
@@ -41,8 +41,7 @@ public class GeoServiceDexLoader extends ServiceLoader {
 	protected void loadService() {
 		try {
 			if (clazz != null) {
-				service = (GeoService) clazz.getConstructor(Context.class)
-						.newInstance(context);
+				service = (GeoService) clazz.getConstructor(Context.class).newInstance(context);
 			}
 
 			if (service == null) {

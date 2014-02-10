@@ -7,7 +7,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import com.lynx.argus.R;
 
-
 /**
  * 圆角ListView
  */

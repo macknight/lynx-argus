@@ -48,12 +48,9 @@ public class ContactListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.layout_contract, null);
 
 			viewHolder = new ViewHolder();
-			viewHolder.contactName = (TextView) convertView
-					.findViewById(R.id.tv_contact_name);
-			viewHolder.contactNetID = (TextView) convertView
-					.findViewById(R.id.tv_contact_id);
-			viewHolder.presenceMode = (ImageView) convertView
-					.findViewById(R.id.presence_mode);
+			viewHolder.contactName = (TextView) convertView.findViewById(R.id.tv_contact_name);
+			viewHolder.contactNetID = (TextView) convertView.findViewById(R.id.tv_contact_id);
+			viewHolder.presenceMode = (ImageView) convertView.findViewById(R.id.presence_mode);
 
 			convertView.setTag(viewHolder);
 		} else {
@@ -66,8 +63,7 @@ public class ContactListAdapter extends BaseAdapter {
 		// set image for presence mode
 		String p = contactList.get(position).getPresence();
 		if (p.equals("unavailable")) {
-			viewHolder.presenceMode
-					.setImageResource(R.drawable.unavailable_mode);
+			viewHolder.presenceMode.setImageResource(R.drawable.unavailable_mode);
 		} else {
 			viewHolder.presenceMode.setImageResource(R.drawable.available_mode);
 		}

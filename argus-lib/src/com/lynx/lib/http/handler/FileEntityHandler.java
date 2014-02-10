@@ -26,8 +26,8 @@ public class FileEntityHandler {
 	}
 
 	@SuppressWarnings("resource")
-	public Object handleEntity(HttpEntity entity, EntityCallback callback,
-			String target, boolean isResume) throws IOException {
+	public Object handleEntity(HttpEntity entity, EntityCallback callback, String target,
+			boolean isResume) throws IOException {
 		if (TextUtils.isEmpty(target) || target.trim().length() == 0) {
 			return null;
 		}
@@ -62,8 +62,7 @@ public class FileEntityHandler {
 
 		int readLen = 0;
 		byte[] buf = new byte[1024];
-		while (!stop && !(cur >= count)
-				&& ((readLen = instream.read(buf, 0, 1024)) > 0)) {
+		while (!stop && !(cur >= count) && ((readLen = instream.read(buf, 0, 1024)) > 0)) {
 			outstream.write(buf, 0, readLen);
 			cur += readLen;
 			callback.callback(count, cur, false);

@@ -54,27 +54,20 @@ public class ShopListAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_shoplist_item,
-					null);
+			view = View.inflate(context, R.layout.layout_shoplist_item, null);
 			holder = new ViewHolder();
-			holder.ivSnap = (ImageView) view
-					.findViewById(R.id.iv_shoplist_item_snap);
-			holder.tvName = (TextView) view
-					.findViewById(R.id.tv_shoplist_item_title);
-			holder.tvShop = (TextView) view
-					.findViewById(R.id.tv_shoplist_item_shop);
-			holder.tvTime = (TextView) view
-					.findViewById(R.id.tv_shoplist_item_time);
-			holder.tvReview = (TextView) view
-					.findViewById(R.id.tv_shoplist_item_review);
+			holder.ivSnap = (ImageView) view.findViewById(R.id.iv_shoplist_item_snap);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_shoplist_item_title);
+			holder.tvShop = (TextView) view.findViewById(R.id.tv_shoplist_item_shop);
+			holder.tvTime = (TextView) view.findViewById(R.id.tv_shoplist_item_time);
+			holder.tvReview = (TextView) view.findViewById(R.id.tv_shoplist_item_review);
 			view.setTag(holder);
 		} else {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
 		ShopListItem item = data.get(position);
-		holder.tvName.setText(String.format("%s%s", item.storeName(),
-				item.shopName()));
+		holder.tvName.setText(String.format("%s%s", item.storeName(), item.shopName()));
 		holder.tvShop.setText("" + item.region());
 		holder.tvTime.setText(item.latlng().toString());
 		holder.tvReview.setText("" + item.reviewNum());

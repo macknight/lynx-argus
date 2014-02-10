@@ -13,8 +13,8 @@ import java.io.InputStream;
  * @version 2013-4-17 下午10:51:03
  */
 public class StringEntityHandler {
-	public Object handleEntity(HttpEntity entity, EntityCallback callback,
-			String charset) throws IOException {
+	public Object handleEntity(HttpEntity entity, EntityCallback callback, String charset)
+			throws IOException {
 		if (entity == null)
 			return null;
 

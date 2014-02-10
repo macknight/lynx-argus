@@ -18,9 +18,12 @@ public class ShoppingFragment extends LFFragment {
 	public static final String Tag = "shopping";
 
 	@Override
-	protected View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle bundle) throws Exception {
-		View v = inflater.inflate(R.layout.layout_shopping, container, false);
-		return v;
+	protected View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_shopping, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+		return view;
 	}
 }

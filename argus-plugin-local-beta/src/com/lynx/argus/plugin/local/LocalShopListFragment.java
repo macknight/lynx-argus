@@ -64,61 +64,55 @@ public class LocalShopListFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		try {
-			httpService = (HttpService) LFApplication.instance()
-					.service("http");
+			httpService = (HttpService) LFApplication.instance().service("http");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		navActivity.setPopAnimation(R.animator.slide_in_left,
-				R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right,
-				R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
+		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 
 		adapter = new ShopListAdapter(getActivity(), shops);
 
-		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF,
-				0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+		animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
+				Animation.RELATIVE_TO_SELF, 0.5f);
 		animRotate.setDuration(1500);
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_local_shoplist, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_local_shoplist, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		initLocationModule(v);
+		initLocationModule(view);
 
-		ptrlvShop = (PullToRefreshListView) v.findViewById(R.id.prlv_shop_list);
+		ptrlvShop = (PullToRefreshListView) view.findViewById(R.id.prlv_shop_list);
 		ptrlvShop.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		ptrlvShop.setLoadingDrawable(drawable);
 
-		ptrlvShop
-				.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
-					@Override
-					public void onRefresh() {
-						if (geoService == null) {
-							Toast.makeText(getActivity(), "定位模块不可用",
-									Toast.LENGTH_SHORT).show();
-							return;
-						} else if (geoService.coord() == null) {
-							geoService.locate(false);
-							return;
-						} else {
-							getLocalShop();
-						}
-					}
-				});
+		ptrlvShop.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				if (geoService == null) {
+					Toast.makeText(navActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
+				} else if (geoService.coord() == null) {
+					geoService.locate(false);
+				} else {
+					getLocalShop();
+				}
+			}
+		});
 
 		ptrlvShop.getRefreshableView().setOnItemClickListener(
 				new AdapterView.OnItemClickListener() {
 					@Override
-					public void onItemClick(AdapterView<?> parent, View view,
-							int position, long id) {
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 						ShopListItem shop = shops.get(position - 1);
 						ShopDetailFragment sdf = new ShopDetailFragment();
 						Bundle bundle = new Bundle();
@@ -128,8 +122,7 @@ public class LocalShopListFragment extends LFFragment {
 					}
 				});
 
-		ImageView ivIndicator = (ImageView) v
-				.findViewById(R.id.iv_loc_indicator);
+		ImageView ivIndicator = (ImageView) view.findViewById(R.id.iv_loc_indicator);
 		ivIndicator.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -139,7 +132,7 @@ public class LocalShopListFragment extends LFFragment {
 			}
 		});
 
-		return v;
+		return view;
 	}
 
 	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
@@ -166,6 +159,7 @@ public class LocalShopListFragment extends LFFragment {
 							try {
 								addr = joShop.getString("address");
 							} catch (Exception e) {
+
 							}
 
 							String tele = "";
@@ -176,8 +170,7 @@ public class LocalShopListFragment extends LFFragment {
 							}
 
 							String uid = joShop.getString("uid");
-							ShopListItem shop = new ShopListItem(uid, name,
-									addr, tele);
+							ShopListItem shop = new ShopListItem(uid, name, addr, tele);
 							shops.add(shop);
 						} catch (Exception e) {
 
@@ -185,8 +178,7 @@ public class LocalShopListFragment extends LFFragment {
 					}
 					adapter.setData(shops);
 				} else {
-					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(tabActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -197,7 +189,7 @@ public class LocalShopListFragment extends LFFragment {
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
 			ptrlvShop.onRefreshComplete();
-			Toast.makeText(getActivity(), "刷新失败", Toast.LENGTH_SHORT).show();
+			Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 		}
 	};
 
@@ -207,8 +199,7 @@ public class LocalShopListFragment extends LFFragment {
 			switch (msg.what) {
 			case 0:
 				ivLocIndicator.setBackgroundResource(R.anim.anim_indicator);
-				adIndicator = (AnimationDrawable) ivLocIndicator
-						.getBackground();
+				adIndicator = (AnimationDrawable) ivLocIndicator.getBackground();
 				adIndicator.setOneShot(false);
 				if (adIndicator.isRunning()) {
 					adIndicator.stop();
@@ -266,8 +257,7 @@ public class LocalShopListFragment extends LFFragment {
 		animRotate.cancel();
 
 		if (geoService == null) {
-			Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT)
-					.show();
+			Toast.makeText(navActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
 			return;
 		}
 
@@ -276,8 +266,8 @@ public class LocalShopListFragment extends LFFragment {
 			if (geoService.address() != null) {
 				tvLocAddr.setText(geoService.address().street());
 			} else {
-				String tip = String.format("%s,%s", geoService.coord().lat(),
-						geoService.coord().lng());
+				String tip = String.format("%s,%s", geoService.coord().lat(), geoService.coord()
+						.lng());
 				tvLocAddr.setText(tip);
 			}
 		}
@@ -309,12 +299,9 @@ public class LocalShopListFragment extends LFFragment {
 	private void getLocalShop() {
 		try {
 			if (geoService == null) {
-				Toast.makeText(getActivity(), "定位模块不可用", Toast.LENGTH_SHORT)
-						.show();
-				return;
+				Toast.makeText(navActivity, "定位模块不可用", Toast.LENGTH_SHORT).show();
 			} else if (geoService.coord() == null) {
 				geoService.locate(false);
-				return;
 			} else {
 				double lat = geoService.coord().lat();
 				double lng = geoService.coord().lng();
@@ -326,8 +313,8 @@ public class LocalShopListFragment extends LFFragment {
 				params.add(new BasicNameValuePair("location", lat + "," + lng));
 				params.add(new BasicNameValuePair("radius", 5000 + ""));
 				String param = URLEncodedUtils.format(params, "UTF-8");
-				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE,
-						BMAP_API_PLACE_SEARCH, param);
+				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE, BMAP_API_PLACE_SEARCH,
+						param);
 				httpService.get(url, null, httpCallback);
 
 				ptrlvShop.setRefreshing();

@@ -15,7 +15,7 @@ import java.util.Date;
  * 
  * @version 14-1-28 上午10:38
  */
-public class LocationDBHelper extends SQLiteOpenHelper {
+public class LocationDBUtil extends SQLiteOpenHelper {
 	private static final String DB_NAME = "location";
 	private static final int DB_VERSION = 1;
 	private static final String TABLE_NAME = "location";
@@ -27,15 +27,15 @@ public class LocationDBHelper extends SQLiteOpenHelper {
 
 	private static final long TIME_SPAN = 14 * 24 * 36001000;
 
-	public LocationDBHelper(Context context) {
+	public LocationDBUtil(Context context) {
 		super(context, DB_NAME, null, DB_VERSION);
 	}
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		String sql = "Create table " + TABLE_NAME + "(" + COL_ID
-				+ " integer primary key autoincrement," + COL_CELL + " text,"
-				+ COL_LOCATION + " text, " + COL_TIME + " text);";
+				+ " integer primary key autoincrement," + COL_CELL + " text," + COL_LOCATION
+				+ " text, " + COL_TIME + " text);";
 		db.execSQL(sql);
 	}
 
@@ -58,8 +58,8 @@ public class LocationDBHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		String where = String.format("%s='%s'", COL_CELL, cell);
 		if (db != null) {
-			return db.query(TABLE_NAME, new String[] { COL_LOCATION }, where,
-					null, null, null, null);
+			return db.query(TABLE_NAME, new String[] { COL_LOCATION }, where, null, null, null,
+					null);
 		}
 		return null;
 	}
@@ -90,8 +90,7 @@ public class LocationDBHelper extends SQLiteOpenHelper {
 
 	public void delete() {
 		SQLiteDatabase db = getWritableDatabase();
-		String where = String.format("%s<%s", COL_TIME, new Date().getTime()
-				- TIME_SPAN);
+		String where = String.format("%s<%s", COL_TIME, new Date().getTime() - TIME_SPAN);
 		if (db != null) {
 			db.delete(TABLE_NAME, where, null);
 		}

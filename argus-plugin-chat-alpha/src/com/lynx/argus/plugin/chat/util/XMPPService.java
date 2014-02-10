@@ -121,11 +121,9 @@ public class XMPPService extends Service {
 		Intent pending = new Intent(this, ChatFragment.class);
 		pending.putExtra("target", from);
 		pending.putExtra("msg", body);
-		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				pending, 0);
+		PendingIntent contentIntent = PendingIntent.getActivity(this, 0, pending, 0);
 
-		notification.setLatestEventInfo(this, "Message Received", info,
-				contentIntent);
+		notification.setLatestEventInfo(this, "Message Received", info, contentIntent);
 
 		notification.flags |= Notification.FLAG_AUTO_CANCEL;
 		notification.flags |= Notification.DEFAULT_SOUND;
@@ -147,21 +145,17 @@ public class XMPPService extends Service {
 					RosterEntry e = roster.getEntry(from);
 
 					if (loginFragment.isPendingSubscription(from)) {
-						connection.sendPacket(new Presence(
-								Presence.Type.subscribed));
+						connection.sendPacket(new Presence(Presence.Type.subscribed));
 					} else {
 						// show notification
-						Log.i(TAG,
-								"Subscription from " + from + "\nType: "
-										+ e.getType());
+						Log.i(TAG, "Subscription from " + from + "\nType: " + e.getType());
 						loginFragment.addRequest(from);
 						onSubscribe(subscription.getFrom());
 					}
 				} else if (type.equals(Presence.Type.subscribed)) {
 					if (loginFragment.isPendingSubscription(from)) {
 						try {
-							roster.createEntry(from,
-									loginFragment.getName(from), null);
+							roster.createEntry(from, loginFragment.getName(from), null);
 							loginFragment.removePendingSubscription(from);
 						} catch (XMPPException e) {
 							e.printStackTrace();
@@ -201,8 +195,7 @@ public class XMPPService extends Service {
 				public void presenceChanged(Presence p) {
 					String from = p.getFrom();
 					boolean cont = loginFragment.getContacts().contains(from);
-					Log.i(TAG, from + " is now " + p.getType() + " cont: "
-							+ cont);
+					Log.i(TAG, from + " is now " + p.getType() + " cont: " + cont);
 
 				}
 

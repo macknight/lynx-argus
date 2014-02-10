@@ -29,8 +29,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		public Thread newThread(Runnable r) {
-			Thread tread = new Thread(r, "AsyncTask #"
-					+ mCount.getAndIncrement());
+			Thread tread = new Thread(r, "AsyncTask #" + mCount.getAndIncrement());
 			tread.setPriority(Thread.NORM_PRIORITY - 1);
 			return tread;
 		}
@@ -42,9 +41,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	/**
 	 * An {@link Executor} that can be used to execute tasks in parallel.
 	 */
-	public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(
-			CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS,
-			sPoolWorkQueue, sThreadFactory,
+	public static final Executor THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(CORE_POOL_SIZE,
+			MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory,
 			new ThreadPoolExecutor.DiscardOldestPolicy());
 
 	/**
@@ -53,8 +51,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 */
 	public static final Executor SERIAL_EXECUTOR = new SerialExecutor();
 
-	public static final Executor DUAL_THREAD_EXECUTOR = Executors
-			.newFixedThreadPool(3, sThreadFactory);
+	public static final Executor DUAL_THREAD_EXECUTOR = Executors.newFixedThreadPool(3,
+			sThreadFactory);
 
 	private static final int MESSAGE_POST_RESULT = 0x1;
 	private static final int MESSAGE_POST_PROGRESS = 0x2;
@@ -134,8 +132,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 			public Result call() throws Exception {
 				mTaskInvoked.set(true);
 
-				android.os.Process
-						.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+				android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 				// noinspection unchecked
 				return postResult(doInBackground(mParams));
 			}
@@ -149,8 +146,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 				} catch (InterruptedException e) {
 					Logger.w(LOG_TAG, e);
 				} catch (ExecutionException e) {
-					throw new RuntimeException(
-							"An error occured while executing doInBackground()",
+					throw new RuntimeException("An error occured while executing doInBackground()",
 							e.getCause());
 				} catch (CancellationException e) {
 					postResultIfNotInvoked(null);
@@ -168,8 +164,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 
 	private Result postResult(Result result) {
 		@SuppressWarnings("unchecked")
-		Message message = sHandler.obtainMessage(MESSAGE_POST_RESULT,
-				new AsyncTaskResult<Result>(this, result));
+		Message message = sHandler.obtainMessage(MESSAGE_POST_RESULT, new AsyncTaskResult<Result>(
+				this, result));
 		message.sendToTarget();
 		return result;
 	}
@@ -376,8 +372,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @throws TimeoutException
 	 *             If the wait timed out.
 	 */
-	public final Result get(long timeout, TimeUnit unit)
-			throws InterruptedException, ExecutionException, TimeoutException {
+	public final Result get(long timeout, TimeUnit unit) throws InterruptedException,
+			ExecutionException, TimeoutException {
 		return mFuture.get(timeout, unit);
 	}
 
@@ -460,8 +456,8 @@ public abstract class AsyncTask<Params, Progress, Result> {
 	 * @see #execute(Object[])
 	 */
 	@SuppressWarnings("incomplete-switch")
-	public final AsyncTask<Params, Progress, Result> executeOnExecutor(
-			Executor exec, Params... params) {
+	public final AsyncTask<Params, Progress, Result> executeOnExecutor(Executor exec,
+			Params... params) {
 		if (mStatus != Status.PENDING) {
 			switch (mStatus) {
 			case RUNNING:
@@ -544,8 +540,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		}
 	}
 
-	private static abstract class WorkerRunnable<Params, Result> implements
-			Callable<Result> {
+	private static abstract class WorkerRunnable<Params, Result> implements Callable<Result> {
 		Params[] mParams;
 	}
 
@@ -554,8 +549,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 		final AsyncTask mTask;
 		final Data[] mData;
 
-		AsyncTaskResult(@SuppressWarnings("rawtypes") AsyncTask task,
-				Data... data) {
+		AsyncTaskResult(@SuppressWarnings("rawtypes") AsyncTask task, Data... data) {
 			mTask = task;
 			mData = data;
 		}

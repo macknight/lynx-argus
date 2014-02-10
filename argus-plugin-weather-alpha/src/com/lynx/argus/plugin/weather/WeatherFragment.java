@@ -17,11 +17,14 @@ public class WeatherFragment extends LFFragment {
 	private static final String LM_API_NEWS = "/parenting";
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_weather, container, false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_weather, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
 
-		return v;
+		return view;
 	}
 
 }

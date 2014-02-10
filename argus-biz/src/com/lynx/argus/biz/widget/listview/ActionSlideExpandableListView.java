@@ -29,13 +29,11 @@ public class ActionSlideExpandableListView extends SlideExpandableListView {
 		super(context, attrs);
 	}
 
-	public ActionSlideExpandableListView(Context context, AttributeSet attrs,
-			int defStyle) {
+	public ActionSlideExpandableListView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
-	public void setItemActionListener(OnActionClickListener listener,
-			int... buttonIds) {
+	public void setItemActionListener(OnActionClickListener listener, int... buttonIds) {
 		this.listener = listener;
 		this.buttonIds = buttonIds;
 	}
@@ -43,25 +41,21 @@ public class ActionSlideExpandableListView extends SlideExpandableListView {
 	public void setAdapter(ListAdapter adapter) {
 		super.setAdapter(new WrapperListAdapterImpl(adapter) {
 			@Override
-			public View getView(final int position, View view,
-					ViewGroup viewGroup) {
-				final View listView = wrapped
-						.getView(position, view, viewGroup);
+			public View getView(final int position, View view, ViewGroup viewGroup) {
+				final View listView = wrapped.getView(position, view, viewGroup);
 				// add the action listeners
 				if (buttonIds != null && listView != null) {
 					for (int id : buttonIds) {
 						View buttonView = listView.findViewById(id);
 						if (buttonView != null) {
-							buttonView.findViewById(id).setOnClickListener(
-									new OnClickListener() {
-										@Override
-										public void onClick(View view) {
-											if (listener != null) {
-												listener.onClick(listView,
-														view, position);
-											}
-										}
-									});
+							buttonView.findViewById(id).setOnClickListener(new OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									if (listener != null) {
+										listener.onClick(listView, view, position);
+									}
+								}
+							});
 						}
 					}
 				}

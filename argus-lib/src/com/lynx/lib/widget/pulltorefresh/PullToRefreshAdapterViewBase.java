@@ -18,8 +18,8 @@ import com.lynx.lib.core.Logger;
  * 
  * @version 13-8-30 下午1:33
  */
-public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
-		extends PullToRefreshBase<T> implements OnScrollListener {
+public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends
+		PullToRefreshBase<T> implements OnScrollListener {
 
 	static final boolean DEFAULT_SHOW_INDICATOR = true;
 
@@ -46,30 +46,26 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
 
 	abstract public ContextMenuInfo getContextMenuInfo();
 
-	public final void onScroll(final AbsListView view,
-			final int firstVisibleItem, final int visibleItemCount,
-			final int totalItemCount) {
+	public final void onScroll(final AbsListView view, final int firstVisibleItem,
+			final int visibleItemCount, final int totalItemCount) {
 
 		if (DEBUG) {
-			Logger.w(LOG_TAG, "First Visible: " + firstVisibleItem
-					+ ". Visible Count: " + visibleItemCount
-					+ ". Total Items: " + totalItemCount);
+			Logger.w(LOG_TAG, "First Visible: " + firstVisibleItem + ". Visible Count: "
+					+ visibleItemCount + ". Total Items: " + totalItemCount);
 		}
 
 		// If we have a OnItemVisibleListener, do check...
 		if (null != mOnLastItemVisibleListener) {
 
 			// Detect whether the last visible item has changed
-			final int lastVisibleItemIndex = firstVisibleItem
-					+ visibleItemCount;
+			final int lastVisibleItemIndex = firstVisibleItem + visibleItemCount;
 
 			/**
 			 * Check that the last item has changed, we have any items, and that
 			 * the last item is visible. lastVisibleItemIndex is a zero-based
 			 * index, so we add one to it to check against totalItemCount.
 			 */
-			if (visibleItemCount > 0
-					&& (lastVisibleItemIndex + 1) == totalItemCount) {
+			if (visibleItemCount > 0 && (lastVisibleItemIndex + 1) == totalItemCount) {
 				if (lastVisibleItemIndex != mSavedLastVisibleIndex) {
 					mSavedLastVisibleIndex = lastVisibleItemIndex;
 					mOnLastItemVisibleListener.onLastItemVisible();
@@ -79,13 +75,11 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
 
 		// Finally call OnScrollListener if we have one
 		if (null != mOnScrollListener) {
-			mOnScrollListener.onScroll(view, firstVisibleItem,
-					visibleItemCount, totalItemCount);
+			mOnScrollListener.onScroll(view, firstVisibleItem, visibleItemCount, totalItemCount);
 		}
 	}
 
-	public final void onScrollStateChanged(final AbsListView view,
-			final int scrollState) {
+	public final void onScrollStateChanged(final AbsListView view, final int scrollState) {
 		if (null != mOnScrollListener) {
 			mOnScrollListener.onScrollStateChanged(view, scrollState);
 		}
@@ -117,26 +111,22 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
 			newEmptyView.setClickable(true);
 
 			ViewParent newEmptyViewParent = newEmptyView.getParent();
-			if (null != newEmptyViewParent
-					&& newEmptyViewParent instanceof ViewGroup) {
+			if (null != newEmptyViewParent && newEmptyViewParent instanceof ViewGroup) {
 				((ViewGroup) newEmptyViewParent).removeView(newEmptyView);
 			}
 
-			mRefreshableViewHolder.addView(newEmptyView,
-					ViewGroup.LayoutParams.MATCH_PARENT,
+			mRefreshableViewHolder.addView(newEmptyView, ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.MATCH_PARENT);
 
 			if (mRefreshableView instanceof EmptyViewMethodAccessor) {
-				((EmptyViewMethodAccessor) mRefreshableView)
-						.setEmptyViewInternal(newEmptyView);
+				((EmptyViewMethodAccessor) mRefreshableView).setEmptyViewInternal(newEmptyView);
 			} else {
 				mRefreshableView.setEmptyView(newEmptyView);
 			}
 		}
 	}
 
-	public final void setOnLastItemVisibleListener(
-			OnLastItemVisibleListener listener) {
+	public final void setOnLastItemVisibleListener(OnLastItemVisibleListener listener) {
 		mOnLastItemVisibleListener = listener;
 	}
 
@@ -146,8 +136,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
 
 	protected void addRefreshableView(Context context, T refreshableView) {
 		mRefreshableViewHolder = new FrameLayout(context);
-		mRefreshableViewHolder.addView(refreshableView,
-				ViewGroup.LayoutParams.MATCH_PARENT,
+		mRefreshableViewHolder.addView(refreshableView, ViewGroup.LayoutParams.MATCH_PARENT,
 				ViewGroup.LayoutParams.MATCH_PARENT);
 		addView(mRefreshableViewHolder, new LinearLayout.LayoutParams(
 				LinearLayout.LayoutParams.MATCH_PARENT, 0, 1.0f));
@@ -226,26 +215,22 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView>
 
 	private boolean isLastItemVisible() {
 		final int count = mRefreshableView.getCount();
-		final int lastVisiblePosition = mRefreshableView
-				.getLastVisiblePosition();
+		final int lastVisiblePosition = mRefreshableView.getLastVisiblePosition();
 
 		if (DEBUG) {
-			Logger.w(LOG_TAG, "isLastItemVisible. Count: " + count
-					+ " Last Visible Pos: " + lastVisiblePosition);
+			Logger.w(LOG_TAG, "isLastItemVisible. Count: " + count + " Last Visible Pos: "
+					+ lastVisiblePosition);
 		}
 
 		if (count <= getNumberInternalViews()) {
 			return true;
 		} else if (lastVisiblePosition == count - 1) {
 
-			final int childIndex = lastVisiblePosition
-					- mRefreshableView.getFirstVisiblePosition();
-			final View lastVisibleChild = mRefreshableView
-					.getChildAt(childIndex);
+			final int childIndex = lastVisiblePosition - mRefreshableView.getFirstVisiblePosition();
+			final View lastVisibleChild = mRefreshableView.getChildAt(childIndex);
 
 			if (lastVisibleChild != null) {
-				return lastVisibleChild.getBottom() <= mRefreshableView
-						.getBottom();
+				return lastVisibleChild.getBottom() <= mRefreshableView.getBottom();
 			}
 		}
 

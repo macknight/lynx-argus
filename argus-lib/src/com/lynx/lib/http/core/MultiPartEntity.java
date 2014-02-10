@@ -59,8 +59,7 @@ public class MultiPartEntity implements HttpEntity {
 	public void addPart(final String key, final String value) {
 		writeFirstBoundaryIfNeeds();
 		try {
-			out.write(("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n")
-					.getBytes());
+			out.write(("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n").getBytes());
 			out.write(value.getBytes());
 			out.write(("\r\n--" + boundary + "\r\n").getBytes());
 		} catch (IOException e) {
@@ -68,18 +67,18 @@ public class MultiPartEntity implements HttpEntity {
 		}
 	}
 
-	public void addPart(final String key, final String filename,
-			final InputStream instream, final boolean isLst) {
+	public void addPart(final String key, final String filename, final InputStream instream,
+			final boolean isLst) {
 		addPart(key, filename, instream, "application/octet-stream", isLst);
 	}
 
-	public void addPart(final String key, final String filename,
-			final InputStream instream, String type, final boolean isLst) {
+	public void addPart(final String key, final String filename, final InputStream instream,
+			String type, final boolean isLst) {
 		writeFirstBoundaryIfNeeds();
 		try {
 			type = "Content-Type: " + type + "\r\n";
-			out.write(("Content-Disposition: form-data; name=\"" + key
-					+ "\"; filename=\"" + filename + "\"\r\n").getBytes());
+			out.write(("Content-Disposition: form-data; name=\"" + key + "\"; filename=\""
+					+ filename + "\"\r\n").getBytes());
 			out.write(type.getBytes());
 			out.write("Content-Transfer-Encoding: binary\r\n\r\n".getBytes());
 
@@ -112,8 +111,7 @@ public class MultiPartEntity implements HttpEntity {
 	}
 
 	@Override
-	public void consumeContent() throws IOException,
-			UnsupportedOperationException {
+	public void consumeContent() throws IOException, UnsupportedOperationException {
 		if (isStreaming()) {
 			throw new UnsupportedOperationException(
 					"Streaming entity does not implement #consumeContent()");
@@ -139,8 +137,7 @@ public class MultiPartEntity implements HttpEntity {
 
 	@Override
 	public Header getContentType() {
-		return new BasicHeader("Content-Type", "multipart/form-data; boundary="
-				+ boundary);
+		return new BasicHeader("Content-Type", "multipart/form-data; boundary=" + boundary);
 	}
 
 	@Override

@@ -41,8 +41,7 @@ public class DexModuleLoader {
 		this.type = type;
 		this.status = status;
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service(
-				"http");
+		this.httpService = (HttpService) LFApplication.instance().service("http");
 
 		File tmp = new File(context.getFilesDir(), type.type() + File.separator
 				+ newModule.module());
@@ -73,8 +72,7 @@ public class DexModuleLoader {
 		try {
 			deleteOldFile();
 		} catch (Exception e) {
-			Logger.e(dexModule.module(),
-					"unable to delete old module file" + e.getMessage());
+			Logger.e(dexModule.module(), "unable to delete old module file" + e.getMessage());
 		}
 	}
 
@@ -242,8 +240,8 @@ public class DexModuleLoader {
 		}
 
 		srcPath = srcDir + File.separator + dexModule.md5() + ".apk";
-		dexPath = new File(basicDir, "dex").getAbsolutePath() + File.separator
-				+ dexModule.md5() + ".dex";
+		dexPath = new File(basicDir, "dex").getAbsolutePath() + File.separator + dexModule.md5()
+				+ ".dex";
 	}
 
 	/**
@@ -265,8 +263,7 @@ public class DexModuleLoader {
 		}
 
 		try {
-			byte[] bytes = DexUtil.dexModule2json(type, module).toString()
-					.getBytes("UTF-8");
+			byte[] bytes = DexUtil.dexModule2json(type, module).toString().getBytes("UTF-8");
 			fos = new FileOutputStream(configTmp);
 			fos.write(bytes);
 			fos.close();
@@ -278,8 +275,7 @@ public class DexModuleLoader {
 					config.delete();
 				}
 				configOld.renameTo(config);
-				throw new Exception("unable to move config from " + configTmp
-						+ " to " + config);
+				throw new Exception("unable to move config from " + configTmp + " to " + config);
 			}
 		} catch (Exception e) {
 			config.delete();

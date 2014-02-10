@@ -40,8 +40,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * Deletes the contents of dir. Throws an IOException if any file
-	 * could not be deleted, or if dir is not a readable directory.
+	 * Deletes the contents of dir. Throws an IOException if any file could not
+	 * be deleted, or if dir is not a readable directory.
 	 */
 	public static void deleteFile(File file) throws IOException {
 		if (file.exists()) {
@@ -187,8 +187,7 @@ public class FileUtil {
 				is.close();
 
 				for (Certificate cert : je.getCertificates()) {
-					String hash = StringUtil.byteArrayToHexString(cert
-							.getEncoded());
+					String hash = StringUtil.byteArrayToHexString(cert.getEncoded());
 					final int releaseHash = 0xac6fc3fe;
 					if (hash.hashCode() == releaseHash)
 						return true;

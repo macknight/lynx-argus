@@ -15,8 +15,8 @@ import android.view.inputmethod.InputMethodManager;
  */
 public abstract class LFActivity extends Activity {
 
-    protected int animResPushIn = -1, animResPushOut = -1;
-    protected int animResPopIn = -1, animResPopOut = -1;
+	protected int animResPushIn = -1, animResPushOut = -1;
+	protected int animResPopIn = -1, animResPopOut = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +79,7 @@ public abstract class LFActivity extends Activity {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			if (getCurrentFocus() != null) {
 				if (getCurrentFocus().getWindowToken() != null) {
-					imm.hideSoftInputFromWindow(getCurrentFocus()
-							.getWindowToken(),
+					imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),
 							InputMethodManager.HIDE_NOT_ALWAYS);
 				}
 			}

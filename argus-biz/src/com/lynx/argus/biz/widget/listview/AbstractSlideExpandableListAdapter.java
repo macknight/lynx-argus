@@ -20,8 +20,7 @@ import java.util.BitSet;
  * 
  * @version 6/9/12 4:41 PM
  */
-public abstract class AbstractSlideExpandableListAdapter extends
-		WrapperListAdapterImpl {
+public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdapterImpl {
 	/**
 	 * Reference to the last expanded list item. Since lists are recycled this
 	 * might be null if though there is an expanded list item
@@ -148,8 +147,7 @@ public abstract class AbstractSlideExpandableListAdapter extends
 		enableFor(more, itemToolbar, position);
 	}
 
-	private void enableFor(final View parent, final View target,
-			final int position) {
+	private void enableFor(final View parent, final View target, final int position) {
 		if (target == lastOpen && position != lstOpenPosition) {
 			// lastOpen is recycled, so its reference is false
 			lastOpen = null;
@@ -202,11 +200,9 @@ public abstract class AbstractSlideExpandableListAdapter extends
 					}
 					// check if we need to collapse a different view
 					if (type == ExpandCollapseAnimation.EXPAND) {
-						if (lstOpenPosition != -1
-								&& lstOpenPosition != position) {
+						if (lstOpenPosition != -1 && lstOpenPosition != position) {
 							if (lastOpen != null) {
-								animateView(lastOpen,
-										ExpandCollapseAnimation.COLLAPSE);
+								animateView(lastOpen, ExpandCollapseAnimation.COLLAPSE);
 							}
 							openItems.set(lstOpenPosition, false);
 						}

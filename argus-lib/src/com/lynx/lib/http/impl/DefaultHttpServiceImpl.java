@@ -67,15 +67,14 @@ public class DefaultHttpServiceImpl implements HttpService {
 		private final AtomicInteger mCount = new AtomicInteger(1);
 
 		public Thread newThread(Runnable r) {
-			Thread tread = new Thread(r, "FinalHttp #"
-					+ mCount.getAndIncrement());
+			Thread tread = new Thread(r, "FinalHttp #" + mCount.getAndIncrement());
 			tread.setPriority(Thread.NORM_PRIORITY - 1);
 			return tread;
 		}
 	};
 
-	private static final Executor executor = Executors.newFixedThreadPool(
-			MAX_POOL_SIZE, sThreadFactory);
+	private static final Executor executor = Executors.newFixedThreadPool(MAX_POOL_SIZE,
+			sThreadFactory);
 
 	public DefaultHttpServiceImpl() {
 		BasicHttpParams httpParams = new BasicHttpParams();
@@ -88,22 +87,19 @@ public class DefaultHttpServiceImpl implements HttpService {
 		HttpConnectionParams.setSoTimeout(httpParams, SOCKET_TIMEOUT);
 		HttpConnectionParams.setConnectionTimeout(httpParams, SOCKET_TIMEOUT);
 		HttpConnectionParams.setTcpNoDelay(httpParams, true);
-		HttpConnectionParams.setSocketBufferSize(httpParams,
-				DEFAULT_SOCKET_BUFFER_SIZE);
+		HttpConnectionParams.setSocketBufferSize(httpParams, DEFAULT_SOCKET_BUFFER_SIZE);
 
 		HttpProtocolParams.setVersion(httpParams, HttpVersion.HTTP_1_1);
 
 		SchemeRegistry schemeRegistry = new SchemeRegistry();
-		schemeRegistry.register(new Scheme("http", PlainSocketFactory
-				.getSocketFactory(), 80));
-		schemeRegistry.register(new Scheme("https", SSLSocketFactory
-				.getSocketFactory(), 443));
-		ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(
-				httpParams, schemeRegistry);
+		schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+		schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
+		ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
 
 		httpContext = new SyncBasicHttpContext(new BasicHttpContext());
 		httpClient = new DefaultHttpClient(cm, httpParams);
-		HttpClientParams.setCookiePolicy(httpClient.getParams(), CookiePolicy.BROWSER_COMPATIBILITY);
+		HttpClientParams
+				.setCookiePolicy(httpClient.getParams(), CookiePolicy.BROWSER_COMPATIBILITY);
 		httpClient.addRequestInterceptor(new HttpRequestInterceptor() {
 			public void process(HttpRequest request, HttpContext context) {
 				if (!request.containsHeader(HEADER_ACCEPT_ENCODING)) {
@@ -125,8 +121,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 				if (encoding != null) {
 					for (HeaderElement element : encoding.getElements()) {
 						if (element.getName().equalsIgnoreCase(ENCODING_GZIP)) {
-							response.setEntity(new InflatingEntity(response
-									.getEntity()));
+							response.setEntity(new InflatingEntity(response.getEntity()));
 							break;
 						}
 					}
@@ -180,8 +175,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	 */
 	public void setSSLSocketFactory(SSLSocketFactory sslSocketFactory) {
 		Scheme scheme = new Scheme("https", sslSocketFactory, 443);
-		this.httpClient.getConnectionManager().getSchemeRegistry()
-				.register(scheme);
+		this.httpClient.getConnectionManager().getSchemeRegistry().register(scheme);
 	}
 
 	/**
@@ -210,10 +204,9 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public void get(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
-		sendRequest(httpClient, httpContext,
-				new HttpGet(getUrlWithQueryString(url, params)), null, callBack);
+	public void get(String url, HttpParam params, HttpCallback<? extends Object> callBack) {
+		sendRequest(httpClient, httpContext, new HttpGet(getUrlWithQueryString(url, params)), null,
+				callBack);
 	}
 
 	@Override
@@ -251,22 +244,20 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public void post(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	public void post(String url, HttpParam params, HttpCallback<? extends Object> callBack) {
 		post(url, paramsToEntity(params), null, callBack);
 	}
 
 	@Override
 	public void post(String url, HttpEntity entity, String contentType,
 			HttpCallback<? extends Object> callBack) {
-		sendRequest(httpClient, httpContext,
-				addEntityToRequestBase(new HttpPost(url), entity), contentType,
-				callBack);
+		sendRequest(httpClient, httpContext, addEntityToRequestBase(new HttpPost(url), entity),
+				contentType, callBack);
 	}
 
 	@Override
-	public <T> void post(String url, Header[] headers, HttpParam params,
-			String contentType, HttpCallback<T> callBack) {
+	public <T> void post(String url, Header[] headers, HttpParam params, String contentType,
+			HttpCallback<T> callBack) {
 		HttpEntityEnclosingRequestBase request = new HttpPost(url);
 		if (params != null)
 			request.setEntity(paramsToEntity(params));
@@ -276,10 +267,9 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public void post(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack) {
-		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
-				new HttpPost(url), entity);
+	public void post(String url, Header[] headers, HttpEntity entity, String contentType,
+			HttpCallback<? extends Object> callBack) {
+		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(new HttpPost(url), entity);
 		if (headers != null)
 			request.setHeaders(headers);
 		sendRequest(httpClient, httpContext, request, contentType, callBack);
@@ -302,8 +292,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public Object postSync(String url, Header[] headers, HttpParam params,
-			String contentType) {
+	public Object postSync(String url, Header[] headers, HttpParam params, String contentType) {
 		HttpEntityEnclosingRequestBase request = new HttpPost(url);
 		if (params != null)
 			request.setEntity(paramsToEntity(params));
@@ -313,10 +302,8 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public Object postSync(String url, Header[] headers, HttpEntity entity,
-			String contentType) {
-		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
-				new HttpPost(url), entity);
+	public Object postSync(String url, Header[] headers, HttpEntity entity, String contentType) {
+		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(new HttpPost(url), entity);
 		if (headers != null)
 			request.setHeaders(headers);
 		return sendSyncRequest(httpClient, httpContext, request, contentType);
@@ -329,24 +316,21 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public void put(String url, HttpParam params,
-			HttpCallback<? extends Object> callBack) {
+	public void put(String url, HttpParam params, HttpCallback<? extends Object> callBack) {
 		put(url, paramsToEntity(params), null, callBack);
 	}
 
 	@Override
 	public void put(String url, HttpEntity entity, String contentType,
 			HttpCallback<? extends Object> callBack) {
-		sendRequest(httpClient, httpContext,
-				addEntityToRequestBase(new HttpPut(url), entity), contentType,
-				callBack);
+		sendRequest(httpClient, httpContext, addEntityToRequestBase(new HttpPut(url), entity),
+				contentType, callBack);
 	}
 
 	@Override
-	public void put(String url, Header[] headers, HttpEntity entity,
-			String contentType, HttpCallback<? extends Object> callBack) {
-		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
-				new HttpPut(url), entity);
+	public void put(String url, Header[] headers, HttpEntity entity, String contentType,
+			HttpCallback<? extends Object> callBack) {
+		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(new HttpPut(url), entity);
 		if (headers != null)
 			request.setHeaders(headers);
 		sendRequest(httpClient, httpContext, request, contentType, callBack);
@@ -368,10 +352,8 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public Object putSync(String url, Header[] headers, HttpEntity entity,
-			String contentType) {
-		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(
-				new HttpPut(url), entity);
+	public Object putSync(String url, Header[] headers, HttpEntity entity, String contentType) {
+		HttpEntityEnclosingRequestBase request = addEntityToRequestBase(new HttpPut(url), entity);
 		if (headers != null)
 			request.setHeaders(headers);
 		return sendSyncRequest(httpClient, httpContext, request, contentType);
@@ -385,8 +367,7 @@ public class DefaultHttpServiceImpl implements HttpService {
 	}
 
 	@Override
-	public void delete(String url, Header[] headers,
-			HttpCallback<? extends Object> callBack) {
+	public void delete(String url, Header[] headers, HttpCallback<? extends Object> callBack) {
 		final HttpDelete delete = new HttpDelete(url);
 		if (headers != null)
 			delete.setHeaders(headers);
@@ -408,53 +389,49 @@ public class DefaultHttpServiceImpl implements HttpService {
 
 	// ---------------------下载---------------------------------------
 	@Override
-	public HttpHandler<File> download(String url, String target,
-			HttpCallback<File> callback) {
+	public HttpHandler<File> download(String url, String target, HttpCallback<File> callback) {
 		return download(url, null, target, false, callback);
 	}
 
 	@Override
-	public HttpHandler<File> download(String url, String target,
-			boolean isResume, HttpCallback<File> callback) {
+	public HttpHandler<File> download(String url, String target, boolean isResume,
+			HttpCallback<File> callback) {
 		return download(url, null, target, isResume, callback);
 	}
 
 	@Override
-	public HttpHandler<File> download(String url, HttpParam params,
-			String target, HttpCallback<File> callback) {
+	public HttpHandler<File> download(String url, HttpParam params, String target,
+			HttpCallback<File> callback) {
 		return download(url, params, target, false, callback);
 	}
 
 	@Override
-	public HttpHandler<File> download(String url, HttpParam params,
-			String target, boolean isResume, HttpCallback<File> callback) {
+	public HttpHandler<File> download(String url, HttpParam params, String target,
+			boolean isResume, HttpCallback<File> callback) {
 		final HttpGet get = new HttpGet(getUrlWithQueryString(url, params));
-		HttpHandler<File> handler = new HttpHandler<File>(httpClient,
-				httpContext, callback, charset);
+		HttpHandler<File> handler = new HttpHandler<File>(httpClient, httpContext, callback,
+				charset);
 		handler.executeOnExecutor(executor, get, target, isResume);
 		return handler;
 	}
 
-	protected <T> void sendRequest(DefaultHttpClient client,
-			HttpContext httpContext, HttpUriRequest uriRequest,
-			String contentType, HttpCallback<T> httpCallBack) {
+	protected <T> void sendRequest(DefaultHttpClient client, HttpContext httpContext,
+			HttpUriRequest uriRequest, String contentType, HttpCallback<T> httpCallBack) {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
 
-		new HttpHandler<T>(client, httpContext, httpCallBack, charset)
-				.executeOnExecutor(executor, uriRequest);
+		new HttpHandler<T>(client, httpContext, httpCallBack, charset).executeOnExecutor(executor,
+				uriRequest);
 
 	}
 
-	protected Object sendSyncRequest(DefaultHttpClient client,
-			HttpContext httpContext, HttpUriRequest uriRequest,
-			String contentType) {
+	protected Object sendSyncRequest(DefaultHttpClient client, HttpContext httpContext,
+			HttpUriRequest uriRequest, String contentType) {
 		if (contentType != null) {
 			uriRequest.addHeader("Content-Type", contentType);
 		}
-		return new SyncRequestHandler(client, httpContext, charset)
-				.sendRequest(uriRequest);
+		return new SyncRequestHandler(client, httpContext, charset).sendRequest(uriRequest);
 	}
 
 	public static String getUrlWithQueryString(String url, HttpParam params) {

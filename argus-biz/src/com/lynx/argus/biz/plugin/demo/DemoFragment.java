@@ -8,9 +8,9 @@ import com.lynx.argus.R;
 import com.lynx.lib.core.LFFragment;
 
 /**
- * 
+ *
  * @author zhufeng.liu
- * 
+ *
  * @version 13-9-16 上午10:29
  */
 public class DemoFragment extends LFFragment {
@@ -22,8 +22,10 @@ public class DemoFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) throws Exception {
-		View v = inflater.inflate(R.layout.layout_demo, container,
-				false);
-		return v;
+		View view = inflater.inflate(R.layout.layout_demo, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+		return view;
 	}
 }
