@@ -7,14 +7,12 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Toast;
+import com.lynx.argus.plugin.parenting.model.CampaignInfo;
 import com.lynx.argus.plugin.parenting.model.CampaignListAdapter;
-import com.lynx.argus.plugin.parenting.model.CampaignListItem;
-import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
 import org.apache.http.NameValuePair;
@@ -34,17 +32,10 @@ import java.util.List;
  */
 public class CampaignListFragment extends LFFragment {
 
-	private static final int MSG_LOAD_CAMP_LIST_SUCCESS = 1;
-	private static final int MSG_LOAD_CAMP_LIST_FAIL = 2;
-
-	private static final String LM_API_CAMPAIGN_LIST = "/index.php";
-
 	private static int curPage = 1;
 	private static int pageSize = 0;
 
-	private HttpService httpService;
-
-	private List<CampaignListItem> campaignItems = new ArrayList<CampaignListItem>();
+	private List<CampaignInfo> campaigns = new ArrayList<CampaignInfo>();
 	private CampaignListAdapter adapter;
 	private PullToRefreshListView prlvCampaign;
 
@@ -53,13 +44,13 @@ public class CampaignListFragment extends LFFragment {
 		public void onSuccess(Object o) {
 			super.onSuccess(o);
 			parseCampaign(o.toString());
-			handler.sendEmptyMessage(MSG_LOAD_CAMP_LIST_SUCCESS);
+			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			handler.sendEmptyMessage(MSG_LOAD_CAMP_LIST_FAIL);
+			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_FAIL);
 			Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 		}
 	};
@@ -69,10 +60,10 @@ public class CampaignListFragment extends LFFragment {
 		public void handleMessage(Message msg) {
 			prlvCampaign.onRefreshComplete();
 			switch (msg.what) {
-			case MSG_LOAD_CAMP_LIST_SUCCESS:
-				adapter.setData(campaignItems);
+			case ParentingFragment.MSG_LOAD_SUCCESS:
+				adapter.setData(campaigns);
 				break;
-			case MSG_LOAD_CAMP_LIST_FAIL:
+			case ParentingFragment.MSG_LOAD_FAIL:
 				break;
 			}
 		}
@@ -81,19 +72,23 @@ public class CampaignListFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 			throws Exception {
-		httpService = (HttpService) LFApplication.instance().service("http");
-
 		View view = inflater.inflate(R.layout.layout_campaignlist, container, false);
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
 
 		prlvCampaign = (PullToRefreshListView) view.findViewById(R.id.prlv_campaignlist);
-		adapter = new CampaignListAdapter(navActivity, campaignItems);
+		adapter = new CampaignListAdapter(navActivity, campaigns);
 		prlvCampaign.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prlvCampaign.setLoadingDrawable(drawable);
+		prlvCampaign.getRefreshableView().setOnItemClickListener(
+				new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+					}
+				});
 		prlvCampaign.setOnRefreshListener(new OnRefreshListener() {
 			@Override
 			public void onRefresh() {
@@ -111,7 +106,7 @@ public class CampaignListFragment extends LFFragment {
 		params.add(new BasicNameValuePair("page", curPage + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
 		String url = String.format("%s%s?%s", ParentingFragment.LM_API_PARENT_DOMAIN,
-				LM_API_CAMPAIGN_LIST, param);
+				ParentingFragment.LM_API_PARENT_INFO, param);
 		httpService.get(url, null, httpCallback);
 	}
 
@@ -122,24 +117,22 @@ public class CampaignListFragment extends LFFragment {
 			if (jaResult == null || jaResult.length() == 0) {
 				return;
 			}
-			campaignItems.clear();
+			campaigns.clear();
 			for (int i = 0; i < jaResult.length(); ++i) {
 				try {
 					JSONObject joShop = jaResult.getJSONObject(i);
-					String id = joShop.getString("goods_id");
-					String name = joShop.getString("goods_name");
-					String shopId = joShop.getString("store_id");
-					String shopName = joShop.getString("store_name");
-					String price = joShop.getString("market_price");
-					String snapUrl = String.format("%s/%s", ParentingFragment.LM_API_PARENT_DOMAIN,
-							joShop.getString("default_image"));
-					String startTime = joShop.getString("start_time");
-					String endTime = joShop.getString("end_time");
-					String place = joShop.getString("place");
-					String region = joShop.getString("regions");
-					CampaignListItem campaignListItem = new CampaignListItem(id, name, shopId,
-							shopName, price, snapUrl, startTime, endTime, place, region);
-					campaignItems.add(campaignListItem);
+					CampaignInfo campaignInfo = new CampaignInfo();
+					campaignInfo.setId(joShop.getString("goods_id"));
+					campaignInfo.setName(joShop.getString("goods_name"));
+					campaignInfo.setStoreId(joShop.getString("store_id"));
+					campaignInfo.setStoreName(joShop.getString("store_name"));
+					campaignInfo.setMarketPrice(joShop.getString("market_price"));
+					campaignInfo.setSnapUrl(joShop.getString("default_image"));
+					campaignInfo.setStartTime(joShop.getString("start_time"));
+					campaignInfo.setEndTime(joShop.getString("end_time"));
+					campaignInfo.setPlace(joShop.getString("place"));
+					campaignInfo.setRegion(joShop.getString("regions"));
+					campaigns.add(campaignInfo);
 				} catch (Exception e) {
 
 				}

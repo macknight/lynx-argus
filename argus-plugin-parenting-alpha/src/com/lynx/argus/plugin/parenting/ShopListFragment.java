@@ -1,5 +1,14 @@
 package com.lynx.argus.plugin.parenting;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -7,23 +16,15 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+
+import com.lynx.argus.plugin.parenting.model.ShopInfo;
 import com.lynx.argus.plugin.parenting.model.ShopListAdapter;
-import com.lynx.argus.plugin.parenting.model.ShopListItem;
-import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.geo.entity.GeoPoint;
 import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -33,19 +34,12 @@ import java.util.List;
  */
 public class ShopListFragment extends LFFragment {
 
-	private static final String LM_API_PARENTING_SHOPLIST = "/index.php";
-
-	private static final int MSG_LOAD_SHOP_LIST_SUCCESS = 1;
-	private static final int MSG_LOAD_SHOP_LIST_FAIL = 2;
-
 	private ShopListAdapter adapter;
-	private List<ShopListItem> shopList = new ArrayList<ShopListItem>();
+	private List<ShopInfo> shopList = new ArrayList<ShopInfo>();
 	private PullToRefreshListView prlvShoplist;
 
 	private static int curPage = 1;
 	private static int pageSize = 0;
-
-	private HttpService httpService;
 
 	private HttpCallback<Object> httpCallback = new HttpCallback<Object>() {
 		@Override
@@ -56,12 +50,12 @@ public class ShopListFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object s) {
 			parseShops(s.toString());
-			handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_SUCCESS);
+			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable throwable, String s) {
-			handler.sendEmptyMessage(MSG_LOAD_SHOP_LIST_FAIL);
+			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_FAIL);
 		}
 	};
 
@@ -70,10 +64,10 @@ public class ShopListFragment extends LFFragment {
 		public void handleMessage(Message msg) {
 			prlvShoplist.onRefreshComplete();
 			switch (msg.what) {
-			case MSG_LOAD_SHOP_LIST_SUCCESS:
+			case ParentingFragment.MSG_LOAD_SUCCESS:
 				adapter.setData(shopList);
 				break;
-			case MSG_LOAD_SHOP_LIST_FAIL:
+			case ParentingFragment.MSG_LOAD_FAIL:
 				break;
 			}
 		}
@@ -82,7 +76,6 @@ public class ShopListFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 			throws Exception {
-		httpService = (HttpService) LFApplication.instance().service("http");
 		View view = inflater.inflate(R.layout.layout_shoplist, container, false);
 		if (view == null) {
 			throw new Exception("页面初始化错误");
@@ -93,6 +86,18 @@ public class ShopListFragment extends LFFragment {
 		prlvShoplist.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prlvShoplist.setLoadingDrawable(drawable);
+		prlvShoplist.getRefreshableView().setOnItemClickListener(
+				new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						ShopDetailFragment sdf = new ShopDetailFragment();
+						ShopInfo shopSnap = shopList.get(position);
+						Bundle bundle = new Bundle();
+						bundle.putSerializable("shopInfo", shopSnap);
+						sdf.setArguments(bundle);
+						navActivity.pushFragment(sdf);
+					}
+				});
 
 		prlvShoplist.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener() {
 			@Override
@@ -111,7 +116,7 @@ public class ShopListFragment extends LFFragment {
 		params.add(new BasicNameValuePair("page", curPage + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
 		String url = String.format("%s%s?%s", ParentingFragment.LM_API_PARENT_DOMAIN,
-				LM_API_PARENTING_SHOPLIST, param);
+				ParentingFragment.LM_API_PARENT_INFO, param);
 		httpService.get(url, null, httpCallback);
 	}
 
@@ -124,22 +129,24 @@ public class ShopListFragment extends LFFragment {
 			}
 			shopList.clear();
 			for (int i = 0; i < jaResult.length(); ++i) {
+				ShopInfo shopInfo = new ShopInfo();
 				try {
 					JSONObject joShop = jaResult.getJSONObject(i);
-					String storeName = joShop.getString("store_name");
-					String storeId = joShop.getString("store_id");
-					String shopName = joShop.getString("shop_name");
-					String shopId = joShop.getString("store_id");
-					String snapUrl = String.format("%s/%s", ParentingFragment.LM_API_PARENT_DOMAIN,
-							joShop.getString("default_image"));
+					shopInfo.setStoreName(joShop.getString("store_name"));
+					shopInfo.setStoreId(joShop.getString("store_id"));
+					shopInfo.setShopName(joShop.getString("shop_name"));
+					shopInfo.setStoreId(joShop.getString("store_id"));
+					shopInfo.setRegion(joShop.getString("region_name"));
+					shopInfo.setSnapUrl(joShop.getString("default_image"));
+
 					String lng = joShop.getString("map_lng");
 					String lat = joShop.getString("map_lat");
 					GeoPoint latlng = new GeoPoint(Double.parseDouble(lat), Double.parseDouble(lng));
-					String region = joShop.getString("region_name");
+					shopInfo.setLatlng(latlng);
 					int reviewNum = Integer.parseInt(joShop.getString("reviews"));
-					ShopListItem shopListItem = new ShopListItem(storeId, storeName, shopId,
-							shopName, snapUrl, latlng, region, reviewNum);
-					shopList.add(shopListItem);
+					shopInfo.setReviewNum(reviewNum);
+
+					shopList.add(shopInfo);
 				} catch (Exception e) {
 
 				}

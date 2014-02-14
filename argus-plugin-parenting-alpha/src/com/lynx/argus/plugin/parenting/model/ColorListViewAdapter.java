@@ -1,30 +1,30 @@
 package com.lynx.argus.plugin.parenting.model;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
+
 import com.lynx.argus.plugin.parenting.ParentingFragment;
 import com.lynx.argus.plugin.parenting.R;
 import com.lynx.lib.misc.AsyncImageLoader;
 
-import java.util.List;
-
 /**
- * 
- * @author chris.liu
- * 
- * @version 14-1-13 上午11:25
+ * @author zhufeng.liu
+ * @version 14-2-13 下午5:08
  */
-public class ShopListAdapter extends BaseAdapter {
+public class ColorListViewAdapter extends BaseAdapter implements ListAdapter {
 
 	private Context context;
 	private List<ShopInfo> data;
 	private AsyncImageLoader imgLoader;
 
-	public ShopListAdapter(Context context, List<ShopInfo> data) {
+	public ColorListViewAdapter(Context context, List<ShopInfo> data) {
 		this.context = context;
 		this.data = data;
 		this.imgLoader = AsyncImageLoader.instance();
@@ -78,7 +78,7 @@ public class ShopListAdapter extends BaseAdapter {
 		return view;
 	}
 
-	static class ViewHolder {
+	class ViewHolder {
 		TextView tvName;
 		TextView tvShop;
 		ImageView ivSnap;

@@ -50,7 +50,6 @@ public class ShopListFragment extends LFFragment {
 	public static final int MSG_LOAD_SHOP_LIST_FIN = 3;
 
 	private GeoService geoService;
-	private HttpService httpService;
 
 	private List<ShopListItem> shops = new ArrayList<ShopListItem>();
 	private ShopListAdapter adapter;
@@ -71,8 +70,6 @@ public class ShopListFragment extends LFFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		httpService = (HttpService) LFApplication.instance().service("http");
-
 		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
 		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
 
@@ -264,14 +261,13 @@ public class ShopListFragment extends LFFragment {
 	 * 初始化定位相关模块
 	 */
 	private void initLocationModule(View v) {
-		geoService = (GeoService) LFApplication.instance().service("geo");
-
 		ivLocIndicator = (ImageView) v.findViewById(R.id.iv_loc_indicator);
 		tvLocAddr = (TextView) v.findViewById(R.id.tv_loc_addr);
 		ivLocRefresh = (ImageView) v.findViewById(R.id.iv_loc_refresh);
 		ivLocRefresh.setAnimation(animRotate);
 		animRotate.cancel();
 
+		geoService = (GeoService) LFApplication.instance().service("geo");
 		if (geoService == null) {
 			Toast.makeText(this.getActivity(), "定位模块不可用", Toast.LENGTH_SHORT).show();
 			return;

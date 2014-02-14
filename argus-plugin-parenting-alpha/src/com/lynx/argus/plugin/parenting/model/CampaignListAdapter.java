@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.lynx.argus.plugin.parenting.ParentingFragment;
 import com.lynx.argus.plugin.parenting.R;
 import com.lynx.lib.misc.AsyncImageLoader;
 
@@ -19,16 +20,16 @@ import java.util.List;
  */
 public class CampaignListAdapter extends BaseAdapter {
 	private Context context;
-	private List<CampaignListItem> data;
+	private List<CampaignInfo> data;
 	private AsyncImageLoader imgLoader;
 
-	public CampaignListAdapter(Context context, List<CampaignListItem> data) {
+	public CampaignListAdapter(Context context, List<CampaignInfo> data) {
 		this.context = context;
 		this.data = data;
 		this.imgLoader = AsyncImageLoader.instance();
 	}
 
-	public void setData(List<CampaignListItem> data) {
+	public void setData(List<CampaignInfo> data) {
 		this.data = data;
 		notifyDataSetChanged();
 	}
@@ -52,7 +53,7 @@ public class CampaignListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view;
 		ViewHolder holder;
-		CampaignListItem item = data.get(position);
+		CampaignInfo item = data.get(position);
 		if (item == null) {
 			return null;
 		}
@@ -74,7 +75,8 @@ public class CampaignListAdapter extends BaseAdapter {
 		holder.tvTime.setText("" + item.getStartTime() + "-" + item.getEndTime());
 		holder.tvPrice.setText("" + item.getPrice());
 
-		imgLoader.showAsyncImage(holder.ivSnap, item.getSnapUrl());
+		imgLoader.showAsyncImage(holder.ivSnap,
+				String.format("%s/%s", ParentingFragment.LM_API_PARENT_DOMAIN, item.getSnapUrl()));
 		return view;
 	}
 

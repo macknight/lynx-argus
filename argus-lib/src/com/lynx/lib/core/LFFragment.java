@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.lynx.lib.http.HttpService;
 import com.lynx.lib.util.ViewUtil;
 
 /**
@@ -17,8 +19,13 @@ import com.lynx.lib.util.ViewUtil;
 public abstract class LFFragment extends Fragment {
 	public static final String Tag = "LFFragment";
 
+	protected HttpService httpService;
 	protected LFTabActivity tabActivity = null;
 	protected LFNavigationActivity navActivity = null;
+
+	public LFFragment() {
+		httpService = (HttpService) LFApplication.instance().service("http");
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,10 @@ public abstract class LFFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		try {
+			if (httpService == null) {
+				throw new Exception("底层基础服务不可用");
+			}
+
 			return onLoadView(inflater, container, savedInstanceState);
 		} catch (Exception e) {
 			Logger.e(Tag, "onLoadView error", e);

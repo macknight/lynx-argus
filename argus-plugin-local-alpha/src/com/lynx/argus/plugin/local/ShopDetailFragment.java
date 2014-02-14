@@ -28,17 +28,12 @@ import java.util.List;
  * @version 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends LFFragment {
-	private HttpService httpService;
 	private String uid;
 
 	private TextView tvName, tvAddr, tvTele, tvPrice, tvTags, tvShopHours;
 	private RatingBar rbOverall, rbTaste, rbService, rbEnv;
 
 	private static final String BMAP_API_PLACE_SHOP_DETAIL = "/detail";
-
-	public ShopDetailFragment() {
-		httpService = (HttpService) LFApplication.instance().service("http");
-	}
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
