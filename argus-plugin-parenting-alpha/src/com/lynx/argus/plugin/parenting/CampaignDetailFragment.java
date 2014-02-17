@@ -22,15 +22,17 @@ import java.util.List;
  * @version 14-2-11 下午6:51
  */
 public class CampaignDetailFragment extends LFFragment {
+	private static final int MSG_LOAD_SUCCESS = 0;
+	private static final int MSG_LOAD_FAIL = 1;
 
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case ParentingFragment.MSG_LOAD_SUCCESS:
+			case MSG_LOAD_SUCCESS:
 				updateUI();
 				break;
-			case ParentingFragment.MSG_LOAD_FAIL:
+			case MSG_LOAD_FAIL:
 				break;
 			}
 		}
@@ -45,12 +47,12 @@ public class CampaignDetailFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object s) {
 			parseCampaignDetail(s.toString());
-			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_SUCCESS);
+			handler.sendEmptyMessage(MSG_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable throwable, String s) {
-			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_FAIL);
+			handler.sendEmptyMessage(MSG_LOAD_FAIL);
 		}
 	};
 

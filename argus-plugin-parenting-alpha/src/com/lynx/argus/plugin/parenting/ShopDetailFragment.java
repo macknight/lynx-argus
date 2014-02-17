@@ -29,16 +29,19 @@ import com.lynx.lib.http.HttpCallback;
  */
 public class ShopDetailFragment extends LFFragment {
 
+	private static final int MSG_LOAD_SUCCESS = 0;
+	private static final int MSG_LOAD_FAIL = 1;
+
 	private ShopInfo shopInfo;
 
 	private Handler handler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case ParentingFragment.MSG_LOAD_SUCCESS:
+			case MSG_LOAD_SUCCESS:
 				updateUI();
 				break;
-			case ParentingFragment.MSG_LOAD_FAIL:
+			case MSG_LOAD_FAIL:
 				break;
 			}
 		}
@@ -53,12 +56,12 @@ public class ShopDetailFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object s) {
 			parseShopDetail(s.toString());
-			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_SUCCESS);
+			handler.sendEmptyMessage(MSG_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable throwable, String s) {
-			handler.sendEmptyMessage(ParentingFragment.MSG_LOAD_FAIL);
+			handler.sendEmptyMessage(MSG_LOAD_FAIL);
 		}
 	};
 

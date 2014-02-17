@@ -82,7 +82,7 @@ public class PluginManager {
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			Logger.e(Tag, "获取插件更新配置失败" + strMsg, t);
+			Logger.e(Tag, "获取插件更新配置失败", t);
 		}
 	};
 

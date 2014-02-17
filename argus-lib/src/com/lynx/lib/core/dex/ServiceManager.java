@@ -55,7 +55,7 @@ public abstract class ServiceManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Toast.makeText(context, "获取服务更新配置失败", Toast.LENGTH_SHORT).show();
+                    Logger.w(Tag, "获取服务更新配置服务器返回错误");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
@@ -77,7 +77,7 @@ public abstract class ServiceManager {
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-			Logger.w(Tag, "获取服务更新配置失败 " + strMsg, t);
+			Logger.w(Tag, "获取服务更新配置失败", t);
 		}
 	};
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -30,26 +30,46 @@
                 android:background="@drawable/selector_def_item"/>
     </RelativeLayout>
 
-    <Button
-            android:id="@+id/btn_campaign"
+    <TextView
+            android:id="@+id/tv_hostcampaign_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="活动"/>
+            android:background="@drawable/textfield_disabled"
+            android:text="@string/hot_campaign_hint"
+            android:textColor="@color/DeepSkyBlue"
+            android:textSize="@dimen/font_size_large"/>
 
-    <Button
-            android:id="@+id/btn_shop"
+    <com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
+            android:id="@+id/prlv_hot_campaigns"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/horizontal_divider"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"
+            android:numColumns="2"
+            android:stretchMode="columnWidth">
+    </com.lynx.lib.widget.pulltorefresh.PullToRefreshListView>
+
+    <TextView
+            android:id="@+id/tv_hostshop_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_campaign"
-            android:text="商户"/>
+            android:layout_above="@+id/hlv_parenting_hot_shops"
+            android:background="@drawable/textfield_disabled"
+            android:text="@string/hot_shop_hint"
+            android:textColor="@color/DeepSkyBlue"
+            android:textSize="@dimen/font_size_large"/>
 
     <com.lynx.lib.widget.HorizontalListView
-            android:id="@+id/hlv_parenting_shops"
+            android:id="@+id/hlv_parenting_hot_shops"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:layout_marginBottom="20dp"
             android:layout_alignParentBottom="true">
     </com.lynx.lib.widget.HorizontalListView>
 
-</RelativeLayout>
+</LinearLayout>
 

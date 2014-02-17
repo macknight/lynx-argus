@@ -4,4 +4,6 @@
     <string name="campaign_hint">活动</string>
     <string name="shoplist_hint">商户</string>
 
+    <string name="hot_campaign_hint">热门活动推荐</string>
+    <string name="hot_shop_hint">热门商户推荐</string>
 </resources>

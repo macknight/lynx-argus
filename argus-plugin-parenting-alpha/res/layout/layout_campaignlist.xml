@@ -19,7 +19,7 @@
     </RelativeLayout>
 
     <com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
-            android:id="@+id/prlv_campaignlist"
+            android:id="@+id/prlv_hot_campaigns"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:cacheColorHint="@android:color/transparent"
