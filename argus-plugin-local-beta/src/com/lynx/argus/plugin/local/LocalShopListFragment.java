@@ -69,8 +69,8 @@ public class LocalShopListFragment extends LFFragment {
 			e.printStackTrace();
 		}
 
-		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.anim.slide_in_left, R.anim.slide_out_right);
+		navActivity.setPushAnimation(R.anim.slide_in_right, R.anim.slide_out_left);
 
 		adapter = new ShopListAdapter(getActivity(), shops);
 

@@ -44,15 +44,6 @@ public class LFDexActivity extends LFNavigationActivity {
 		setContentView(rootView);
 		rootView.setBackgroundColor(0xffffeed7);
 
-		// set background from image in the jar resources
-		// try {
-		// AssetManager am = getAssets();
-		// BitmapDrawable bg = new BitmapDrawable(null, am.open("bg.png"));
-		// rootView.setBackground(bg);
-		// } catch (Exception e) {
-		// Logger.e(Tag, "load background error", e);
-		// }
-
 		try {
 			String module = getIntent().getStringExtra("module");
 

@@ -20,6 +20,10 @@
         </copy>
         <javac encoding="utf-8" target="1.6" srcdir="${src.dir}"
                destdir="${outdir}" bootclasspath="${android.jar}">
+            <classpath>
+                <fileset dir="${external-lib}" includes="android-support-v4.jar"/>
+            </classpath>
+
         </javac>
     </target>
 

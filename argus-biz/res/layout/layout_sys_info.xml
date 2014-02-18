@@ -10,7 +10,7 @@
 			android:layout_height="40dp"
 			android:background="@drawable/tool_bar"
 			android:gravity="center"
-			android:text="@string/location_info_tip"
+			android:text="@string/sys_info_tip"
 			android:textColor="@color/Grey"
 			android:textSize="@dimen/font_size_large"/>
 
@@ -209,7 +209,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginTop="10dp"
 					android:gravity="center_horizontal"
-					android:text="@string/tv_sys_info_tip"
+					android:text="@string/sys_info_os_tip"
 					android:textColor="@color/DeepSkyBlue"
 					android:textSize="@dimen/font_size_large"
 					android:background="@drawable/textfield_bg_def_holo_light"/>
@@ -226,7 +226,7 @@
 					android:layout_height="wrap_content"
 					android:layout_marginTop="10dp"
 					android:gravity="center_horizontal"
-					android:text="@string/lint_sys_info_service"
+					android:text="@string/sys_info_service_tip"
 					android:textColor="@color/DeepSkyBlue"
 					android:textSize="@dimen/font_size_large"
 					android:background="@drawable/textfield_bg_def_holo_light"/>

@@ -1,8 +1,8 @@
 package com.lynx.lib.core;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.inputmethod.InputMethodManager;
 
@@ -13,10 +13,9 @@ import android.view.inputmethod.InputMethodManager;
  * 
  * @version 13-9-26 下午3:06
  */
-public abstract class LFActivity extends Activity {
+public abstract class LFActivity extends FragmentActivity {
 
-	protected int animResPushIn = -1, animResPushOut = -1;
-	protected int animResPopIn = -1, animResPopOut = -1;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

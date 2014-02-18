@@ -1,9 +1,9 @@
 package com.lynx.lib.core;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 
 import java.util.Stack;
 
@@ -16,6 +16,9 @@ import java.util.Stack;
  */
 public abstract class LFNavigationActivity extends LFActivity {
 	private Stack<LFFragment> stack;
+
+    protected int animResPushIn = -1, animResPushOut = -1;
+    protected int animResPopIn = -1, animResPopOut = -1;
 
 	protected int resContent = android.R.id.primary; // fragment根容器ID
 
@@ -36,7 +39,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 	}
 
 	public void pushFragment(LFFragment fragment, boolean shouldAnimate) {
-		FragmentManager fm = getFragmentManager();
+		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {
 			if (animResPushIn != -1 && animResPushOut != -1) {
@@ -59,7 +62,7 @@ public abstract class LFNavigationActivity extends LFActivity {
 		LFFragment fragment = stack.elementAt(stack.size() - 2);
 		stack.pop();
 
-		FragmentManager fm = getFragmentManager();
+		FragmentManager fm = getSupportFragmentManager();
 
 		FragmentTransaction ft = fm.beginTransaction();
 		if (fragment.shouldAnimate()) {

@@ -71,7 +71,7 @@ public class PluginManager {
 								jaPlugin.getJSONObject(i));
 						update(plugin);
 					} catch (Exception e) {
-						Logger.w(Tag, "获取动态模块更新配置内容错误", e);
+						Logger.e(Tag, "获取动态模块更新配置内容错误", e);
 					}
 				}
 			} catch (Exception e) {

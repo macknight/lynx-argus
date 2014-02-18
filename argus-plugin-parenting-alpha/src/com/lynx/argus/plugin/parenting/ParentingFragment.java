@@ -1,31 +1,37 @@
 package com.lynx.argus.plugin.parenting;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+
+import android.support.v4.app.Fragment;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import android.widget.Toast;
+
 import com.lynx.argus.plugin.parenting.model.CampaignInfo;
 import com.lynx.argus.plugin.parenting.model.CampaignListAdapter;
 import com.lynx.argus.plugin.parenting.model.HotShopListAdapter;
 import com.lynx.argus.plugin.parenting.model.ShopInfo;
 import com.lynx.argus.plugin.parenting.util.DataParser;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.widget.HorizontalListView;
+import com.lynx.lib.widget.pageindicator.CirclePageIndicator;
+import com.lynx.lib.widget.pageindicator.PageIndicator;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 亲子
@@ -47,11 +53,12 @@ public class ParentingFragment extends LFFragment {
 	private List<ShopInfo> shopInfos = new ArrayList<ShopInfo>();
 	private List<CampaignInfo> campaignInfos = new ArrayList<CampaignInfo>();
 
-	private HotShopListAdapter adapterShops;
-	private HorizontalListView hlvShops;
-
 	private CampaignListAdapter adapterCampains;
 	private PullToRefreshListView prlvCampaigns;
+
+	private ViewPager viewPager;
+	private PageIndicator pageIndicator;
+	private HotShopListAdapter hotShopsAdapter;
 
 	private static int curPage = 1;
 	private static int pageSize = 0;
@@ -60,12 +67,12 @@ public class ParentingFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object s) {
 			shopInfos = DataParser.parseShops(s.toString());
-			handler.sendEmptyMessage(ParentingFragment.MSG_SHOP_LOAD_SUCCESS);
+			handler.sendEmptyMessage(MSG_SHOP_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable throwable, String s) {
-			handler.sendEmptyMessage(ParentingFragment.MSG_SHOP_LOAD_FAIL);
+			handler.sendEmptyMessage(MSG_SHOP_LOAD_FAIL);
 		}
 	};
 
@@ -73,12 +80,12 @@ public class ParentingFragment extends LFFragment {
 		@Override
 		public void onSuccess(Object o) {
 			campaignInfos = DataParser.parseCampaign(o.toString());
-			handler.sendEmptyMessage(ParentingFragment.MSG_CAMPAIN_LOAD_SUCCESS);
+			handler.sendEmptyMessage(MSG_CAMPAIN_LOAD_SUCCESS);
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-			handler.sendEmptyMessage(ParentingFragment.MSG_CAMPAIN_LOAD_FAIL);
+			handler.sendEmptyMessage(MSG_CAMPAIN_LOAD_FAIL);
 			Toast.makeText(navActivity, "刷新失败", Toast.LENGTH_SHORT).show();
 		}
 	};
@@ -89,7 +96,7 @@ public class ParentingFragment extends LFFragment {
 			prlvCampaigns.onRefreshComplete();
 			switch (msg.what) {
 			case MSG_SHOP_LOAD_SUCCESS:
-				adapterShops.setData(shopInfos);
+				hotShopsAdapter.setData(shopInfos);
 				break;
 			case MSG_SHOP_LOAD_FAIL:
 				break;
@@ -106,8 +113,8 @@ public class ParentingFragment extends LFFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		navActivity.setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
-		navActivity.setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+		navActivity.setPopAnimation(R.anim.slide_in_left, R.anim.slide_out_right);
+		navActivity.setPushAnimation(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 
 	@Override
@@ -118,9 +125,22 @@ public class ParentingFragment extends LFFragment {
 			throw new Exception("页面初始化错误");
 		}
 
-		hlvShops = (HorizontalListView) view.findViewById(R.id.hlv_parenting_hot_shops);
-		adapterShops = new HotShopListAdapter(navActivity, shopInfos);
-		hlvShops.setAdapter(adapterShops);
+		hotShopsAdapter = new HotShopListAdapter(getChildFragmentManager(), shopInfos);
+		viewPager = (ViewPager) view.findViewById(R.id.vp_hot_shops);
+		viewPager.setAdapter(hotShopsAdapter);
+
+		CirclePageIndicator indicator = (CirclePageIndicator) view.findViewById(R.id.cpi_hot_shops);
+		indicator.setViewPager(viewPager);
+
+		final float density = getResources().getDisplayMetrics().density;
+		indicator.setBackgroundColor(0x00CCCCCC);
+		indicator.setRadius(3 * density);
+		indicator.setFillColor(0xCCCCCCCC);
+		indicator.setStrokeColor(0xFF000000);
+		indicator.setStrokeWidth(0);
+
+		pageIndicator = indicator;
+
 		getShops();
 
 		prlvCampaigns = (PullToRefreshListView) view.findViewById(R.id.prlv_hot_campaigns);
@@ -132,7 +152,11 @@ public class ParentingFragment extends LFFragment {
 				new AdapterView.OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        CampaignDetailFragment cdf = new CampaignDetailFragment();
 						ShopDetailFragment sdf = new ShopDetailFragment();
+                        Bundle param = new Bundle();
+                        param.putSerializable("ShopInfo", shopInfos.get(position));
+                        sdf.setArguments(param);
 						navActivity.pushFragment(sdf);
 					}
 				});
@@ -145,6 +169,21 @@ public class ParentingFragment extends LFFragment {
 		getCampaigns();
 
 		return view;
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+
+		try {
+			Field childFragmentManager = Fragment.class.getDeclaredField("mChildFragmentManager");
+			childFragmentManager.setAccessible(true);
+			childFragmentManager.set(this, null);
+		} catch (NoSuchFieldException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 	private void getShops() {
@@ -168,4 +207,5 @@ public class ParentingFragment extends LFFragment {
 				ParentingFragment.LM_API_PARENT_INFO, param);
 		httpService.get(url, httpCallbackCampaigns);
 	}
+
 }

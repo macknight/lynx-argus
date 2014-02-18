@@ -31,7 +31,7 @@
                       android:gravity="right"
                       android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
-                      android:text="@string/lint_sys_info_service_name"/>
+                      android:text="@string/sys_info_service_name_tip"/>
 
             <TextView android:id="@+id/tv_sys_info_item_name"
                       android:layout_width="0dp"
@@ -53,7 +53,7 @@
                       android:gravity="right"
                       android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
-                      android:text="@string/lint_sys_info_service_clazz"/>
+                      android:text="@string/sys_info_service_clazz_tip"/>
 
             <TextView android:id="@+id/tv_sys_info_item_clazz"
                       android:layout_width="0dp"
@@ -75,7 +75,7 @@
                       android:gravity="right"
                       android:textColor="@android:color/black"
                       android:textSize="@dimen/font_size_xsmall"
-                      android:text="@string/lint_sys_info_service_version"/>
+                      android:text="@string/sys_info_service_version_tip"/>
 
             <TextView android:id="@+id/tv_sys_info_item_version"
                       android:layout_width="0dp"

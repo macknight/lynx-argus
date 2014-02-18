@@ -77,7 +77,7 @@ public class ShopDetailFragment extends LFFragment {
 		if (bundle == null) {
 			throw new Exception("页面传入参数非法");
 		}
-		shopInfo = (ShopInfo) bundle.get("shopInfo");
+		shopInfo = (ShopInfo) bundle.get("ShopInfo");
 		if (shopInfo == null) {
 			throw new Exception("页面传入参数非法");
 		}

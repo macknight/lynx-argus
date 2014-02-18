@@ -70,8 +70,8 @@ public class BizTabActivity extends LFTabActivity {
 	protected void initUI() {
 		setContentView(R.layout.layout_main_tab);
 
-		setPopAnimation(R.animator.slide_in_left, R.animator.slide_out_right);
-		setPushAnimation(R.animator.slide_in_right, R.animator.slide_out_left);
+		setPopAnimation(R.anim.slide_in_left, R.anim.slide_out_right);
+		setPushAnimation(R.anim.slide_in_right, R.anim.slide_out_left);
 	}
 
 	@Override

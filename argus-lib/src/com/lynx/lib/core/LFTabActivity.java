@@ -1,18 +1,18 @@
 package com.lynx.lib.core;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.TabHost;
-import android.widget.TabWidget;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.View;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 
 /**
  * 类似IOS中UITabbarController,以复合栈式结构管理其中的Fragment
@@ -55,7 +55,7 @@ public abstract class LFTabActivity extends LFActivity {
 	}
 
 	public void pushFragment(LFFragment fragment, boolean shouldAnimate) {
-		FragmentManager fm = getFragmentManager();
+		FragmentManager fm = getSupportFragmentManager();
 		FragmentTransaction ft = fm.beginTransaction();
 		if (shouldAnimate) {
 			ft.setCustomAnimations(animResPushIn, animResPushOut);
@@ -85,13 +85,14 @@ public abstract class LFTabActivity extends LFActivity {
 					LFFragment frg = stack.pop();
 					stacks.get(tabHost.getCurrentTabTag()).push(frg);
 
-					FragmentTransaction ft = getFragmentManager().beginTransaction();
+					FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 					ft.setCustomAnimations(animResPopIn, animResPopOut);
 
 					ft.replace(resContent, frg).commit();
 				}
 			} else {
-				getFragmentManager().beginTransaction().replace(resContent, fragment).commit();
+				getSupportFragmentManager().beginTransaction().replace(resContent, fragment)
+						.commit();
 			}
 		}
 	}
@@ -106,14 +107,11 @@ public abstract class LFTabActivity extends LFActivity {
 	}
 
 	/**
-	 * This is a helper class that implements a generic mechanism for
-	 * associating fragments with the tabs in a tab host. It relies on a trick.
-	 * Normally a tab host has a simple API for supplying a View or Intent that
-	 * each tab will show. This is not sufficient for switching between
-	 * fragments. So instead we make the content part of the tab host 0dp high
-	 * (it is not shown) and the TabManager supplies its own dummy view to show
-	 * as the tab content. It listens to changes in tabs, and takes care of
-	 * switch to the correct fragment shown in a separate content area whenever
+	 * This is a helper class that implements a generic mechanism for associating fragments with the tabs in a tab host.
+	 * It relies on a trick. Normally a tab host has a simple API for supplying a View or Intent that each tab will
+	 * show. This is not sufficient for switching between fragments. So instead we make the content part of the tab host
+	 * 0dp high (it is not shown) and the TabManager supplies its own dummy view to show as the tab content. It listens
+	 * to changes in tabs, and takes care of switch to the correct fragment shown in a separate content area whenever
 	 * the selected tab changes.
 	 */
 	public static class TabManager implements TabHost.OnTabChangeListener {
@@ -134,8 +132,8 @@ public abstract class LFTabActivity extends LFActivity {
 
 			TabInfo(String tag, Class<?> clazz, Bundle args) {
 				this.tag = tag;
-                this.clazz = clazz;
-                this.args = args;
+				this.clazz = clazz;
+				this.args = args;
 			}
 		}
 
@@ -168,9 +166,9 @@ public abstract class LFTabActivity extends LFActivity {
 
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager().findFragmentByTag(tag);
+			info.fragment = mActivity.getSupportFragmentManager().findFragmentByTag(tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
-				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+				FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
 				ft.detach(info.fragment);
 				ft.commit();
 			}
@@ -183,15 +181,15 @@ public abstract class LFTabActivity extends LFActivity {
 			tabSpec.setContent(new DummyTabFactory(mActivity));
 			String tag = tabSpec.getTag();
 			TabWidget tabWidget = mTabHost.getTabWidget();
-            if (tabWidget == null) {
-                return;
-            }
+			if (tabWidget == null) {
+				return;
+			}
 
 			TabInfo info = new TabInfo(tag, clss, args);
 
-			info.fragment = mActivity.getFragmentManager().findFragmentByTag(tag);
+			info.fragment = mActivity.getSupportFragmentManager().findFragmentByTag(tag);
 			if (info.fragment != null && !info.fragment.isDetached()) {
-				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+				FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
 				ft.detach(info.fragment);
 				ft.commit();
 			}
@@ -200,10 +198,10 @@ public abstract class LFTabActivity extends LFActivity {
 			mTabHost.addTab(tabSpec);
 
 			// Makes tab invisible
-            View widget = tabWidget.getChildAt(childID);
-            if (widget != null) {
-                widget.setVisibility(View.GONE);
-            }
+			View widget = tabWidget.getChildAt(childID);
+			if (widget != null) {
+				widget.setVisibility(View.GONE);
+			}
 
 		}
 
@@ -211,7 +209,7 @@ public abstract class LFTabActivity extends LFActivity {
 		public void onTabChanged(String tabId) {
 			TabInfo newTab = mTabs.get(tabId);
 			if (mLastTab != newTab) {
-				FragmentTransaction ft = mActivity.getFragmentManager().beginTransaction();
+				FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
 				if (mLastTab != null) {
 					if (mLastTab.fragment != null) {
 						ft.detach(mLastTab.fragment);
