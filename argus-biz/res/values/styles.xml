@@ -49,6 +49,12 @@
 		<item name="android:background">@drawable/selector_edittext</item>
 	</style>
 
+	<style name="auotcomplete_style" parent="android:style/Widget.Holo.ListView.DropDown">
+		<item name="android:background">@drawable/selector_edittext</item>
+		<item name="android:popupBackground">@color/Whtie</item>
+		<item name="android:scrollbars">none</item>
+	</style>
+
 	<style name="AnimationFade">
 		<item name="android:windowEnterAnimation">@anim/anim_fade_in</item>
 		<item name="android:windowExitAnimation">@anim/anim_fade_out</item>

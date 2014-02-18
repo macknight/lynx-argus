@@ -27,11 +27,10 @@
 	</RelativeLayout>
 
 	<RelativeLayout
+			android:id="@+id/rl_search_box"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="50dp"
-			android:layout_marginLeft="10dp"
-			android:layout_marginRight="10dp"
 			android:background="@drawable/common_searchbox_home_bg"
 			android:orientation="horizontal">
 		<ImageView
@@ -41,19 +40,20 @@
 				android:layout_centerVertical="true"
 				android:src="@drawable/search"/>
 
-        <AutoCompleteTextView
-                android:id="@+id/actv_search_keyword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="40dp"
-                android:padding="8dp"
-                android:layout_toLeftOf="@+id/iv_search_vioce"
-                android:ems="10"
-                style="@style/edittext_style">
-
-            <requestFocus/>
-        </AutoCompleteTextView>
+		<AutoCompleteTextView
+				android:id="@+id/actv_search_keyword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="5dp"
+				android:layout_marginLeft="40dp"
+				android:layout_marginBottom="5dp"
+				android:padding="8dp"
+				android:layout_toLeftOf="@+id/iv_search_vioce"
+				android:dropDownAnchor="@id/rl_search_box"
+				android:dropDownWidth="match_parent"
+				android:dropDownVerticalOffset="-3dp"
+				style="@style/auotcomplete_style">
+		</AutoCompleteTextView>
 
 		<ImageButton
 				android:id="@+id/iv_search_vioce"

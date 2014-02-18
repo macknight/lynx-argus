@@ -1,23 +1,22 @@
 package com.lynx.argus.biz.search.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Toast;
+import com.lynx.argus.R;
+import com.lynx.lib.core.Const;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.Logger;
+import com.lynx.lib.http.HttpService;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Toast;
-
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.http.HttpService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author zhufeng.liu
@@ -32,7 +31,7 @@ public class SuggestionAdapter extends ArrayAdapter<String> {
 	private List<String> suggestions;
 
 	public SuggestionAdapter(Activity context) {
-		super(context, android.R.layout.simple_dropdown_item_1line);
+		super(context, R.layout.layout_autocomplete_item);
 		suggestions = new ArrayList<String>();
 		httpService = (HttpService) LFApplication.instance().service("http");
 	}
@@ -54,8 +53,6 @@ public class SuggestionAdapter extends ArrayAdapter<String> {
 			protected FilterResults performFiltering(CharSequence constraint) {
 				FilterResults filterResults = new FilterResults();
 				if (constraint != null) {
-					// A class that queries a web API, parses the data and
-					// returns an ArrayList<GoEuroGetSet>
 					List<SuggestionItem> newSuggestions = getSuggestion(constraint.toString(),
 							"上海");
 					suggestions.clear();
