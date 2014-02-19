@@ -9,11 +9,11 @@ package com.lynx.argus.plugin.parenting.model;
 public class CampaignInfo {
 	private String id;
 	private String name;
-    private String storeId;
-    private String storeName;
+	private String storeId;
+	private String storeName;
 	private String shopId;
 	private String shopName;
-    private String marketPrice;
+	private String marketPrice;
 	private String price;
 	private String snapUrl;
 	private String startTime;
@@ -41,23 +41,23 @@ public class CampaignInfo {
 		this.name = name;
 	}
 
-    public String getStoreId() {
-        return storeId;
-    }
+	public String getStoreId() {
+		return storeId;
+	}
 
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
-    }
+	public void setStoreId(String storeId) {
+		this.storeId = storeId;
+	}
 
-    public String getStoreName() {
-        return storeName;
-    }
+	public String getStoreName() {
+		return storeName;
+	}
 
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
-    }
+	public void setStoreName(String storeName) {
+		this.storeName = storeName;
+	}
 
-    public String getShopId() {
+	public String getShopId() {
 		return shopId;
 	}
 
@@ -73,15 +73,15 @@ public class CampaignInfo {
 		this.shopName = shopName;
 	}
 
-    public String getMarketPrice() {
-        return marketPrice;
-    }
+	public String getMarketPrice() {
+		return marketPrice;
+	}
 
-    public void setMarketPrice(String marketPrice) {
-        this.marketPrice = marketPrice;
-    }
+	public void setMarketPrice(String marketPrice) {
+		this.marketPrice = marketPrice;
+	}
 
-    public String getPrice() {
+	public String getPrice() {
 		return price;
 	}
 

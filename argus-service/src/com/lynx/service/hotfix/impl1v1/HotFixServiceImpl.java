@@ -1,6 +1,6 @@
 package com.lynx.service.hotfix.impl1v1;
 
-import com.lynx.service.hotfix.HotFixService;
+import com.lynx.lib.watchdog.WatchdogService;
 
 /**
  * 
@@ -8,7 +8,7 @@ import com.lynx.service.hotfix.HotFixService;
  * 
  * @version 13-11-17 下午7:34
  */
-public class HotFixServiceImpl implements HotFixService {
+public class HotFixServiceImpl implements WatchdogService {
 
 	@Override
 	public void start() {

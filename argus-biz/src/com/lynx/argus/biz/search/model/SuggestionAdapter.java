@@ -53,8 +53,7 @@ public class SuggestionAdapter extends ArrayAdapter<String> {
 			protected FilterResults performFiltering(CharSequence constraint) {
 				FilterResults filterResults = new FilterResults();
 				if (constraint != null) {
-					List<SuggestionItem> newSuggestions = getSuggestion(constraint.toString(),
-							"上海");
+					List<SuggestionItem> newSuggestions = getSuggestion(constraint.toString(), "上海");
 					suggestions.clear();
 					for (int i = 0; i < newSuggestions.size(); i++) {
 						suggestions.add(newSuggestions.get(i).name());

@@ -52,10 +52,9 @@ public class PluginCenterFragment extends LFFragment {
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View view = inflater.inflate(R.layout.layout_plugincenter, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_plugincenter, container, false);
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
@@ -64,8 +63,7 @@ public class PluginCenterFragment extends LFFragment {
 		gvPlugin.setOnItemClickListener(onItemClickListener);
 		gvPlugin.setAdapter(adapter);
 
-		ImageButton ibStore = (ImageButton) view
-				.findViewById(R.id.ib_plugincenter_store);
+		ImageButton ibStore = (ImageButton) view.findViewById(R.id.ib_plugincenter_store);
 		ibStore.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -85,8 +83,7 @@ public class PluginCenterFragment extends LFFragment {
 
 	private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Plugin plugin = plugins.get(position);
 			if (position == 0) {
 				DemoFragment demoFragment = new DemoFragment();
@@ -136,8 +133,7 @@ public class PluginCenterFragment extends LFFragment {
 		}
 
 		for (String key : application.pluginLoaders().keySet()) {
-			plugins.add((Plugin) application.pluginLoaders().get(key)
-					.dexModule());
+			plugins.add((Plugin) application.pluginLoaders().get(key).dexModule());
 		}
 	}
 }

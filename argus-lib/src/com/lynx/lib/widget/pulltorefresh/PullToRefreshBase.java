@@ -99,8 +99,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Get the mode that this view is currently in. This is only really useful
-	 * when using <code>Mode.BOTH</code>.
+	 * Get the mode that this view is currently in. This is only really useful when using <code>Mode.BOTH</code>.
 	 * 
 	 * @return Mode that the view is currently in
 	 */
@@ -109,11 +108,9 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Returns whether the Touch Events are filtered or not. If true is
-	 * returned, then the View will only use touch events where the difference
-	 * in the Y-axis is greater than the difference in the X-axis. This means
-	 * that the View will not interfere when it is used in a horizontal
-	 * scrolling View (such as a ViewPager).
+	 * Returns whether the Touch Events are filtered or not. If true is returned, then the View will only use touch
+	 * events where the difference in the Y-axis is greater than the difference in the X-axis. This means that the View
+	 * will not interfere when it is used in a horizontal scrolling View (such as a ViewPager).
 	 * 
 	 * @return boolean - true if the View is filtering Touch Events
 	 */
@@ -122,9 +119,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Get the mode that this view has been set to. If this returns
-	 * <code>Mode.BOTH</code>, you can use <code>getCurrentMode()</code> to
-	 * check which mode the view is currently in
+	 * Get the mode that this view has been set to. If this returns <code>Mode.BOTH</code>, you can use
+	 * <code>getCurrentMode()</code> to check which mode the view is currently in
 	 * 
 	 * @return Mode that the view has been set to
 	 */
@@ -133,8 +129,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Get the Wrapped Refreshable View. Anything returned here has already been
-	 * added to the content view.
+	 * Get the Wrapped Refreshable View. Anything returned here has already been added to the content view.
 	 * 
 	 * @return The View which is currently wrapped
 	 */
@@ -143,8 +138,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Get whether the 'Refreshing' View should be automatically shown when
-	 * refreshing. Returns true by default.
+	 * Get whether the 'Refreshing' View should be automatically shown when refreshing. Returns true by default.
 	 * 
 	 * @return - true if the Refreshing View will be show
 	 */
@@ -161,8 +155,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Returns whether the widget has disabled scrolling on the Refreshable View
-	 * while refreshing.
+	 * Returns whether the widget has disabled scrolling on the Refreshable View while refreshing.
 	 * 
 	 * @return true if the widget has disabled scrolling while refreshing
 	 */
@@ -251,8 +244,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Mark the current Refresh as complete. Will Reset the UI and hide the
-	 * Refreshing View
+	 * Mark the current Refresh as complete. Will Reset the UI and hide the Refreshing View
 	 */
 	public final void onRefreshComplete() {
 		if (mState != PULL_TO_REFRESH) {
@@ -329,8 +321,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * By default the Widget disabled scrolling on the Refreshable View while
-	 * refreshing. This method can change this behaviour.
+	 * By default the Widget disabled scrolling on the Refreshable View while refreshing. This method can change this
+	 * behaviour.
 	 * 
 	 * @param disableScrollingWhileRefreshing
 	 *            - true if you want to disable scrolling while refreshing
@@ -340,12 +332,10 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set the Touch Events to be filtered or not. If set to true, then the View
-	 * will only use touch events where the difference in the Y-axis is greater
-	 * than the difference in the X-axis. This means that the View will not
-	 * interfere when it is used in a horizontal scrolling View (such as a
-	 * ViewPager), but will restrict which types of finger scrolls will trigger
-	 * the View.
+	 * Set the Touch Events to be filtered or not. If set to true, then the View will only use touch events where the
+	 * difference in the Y-axis is greater than the difference in the X-axis. This means that the View will not
+	 * interfere when it is used in a horizontal scrolling View (such as a ViewPager), but will restrict which types of
+	 * finger scrolls will trigger the View.
 	 * 
 	 * @param filterEvents
 	 *            - true if you want to filter Touch Events. Default is true.
@@ -355,8 +345,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set the Last Updated Text. This displayed under the main label when
-	 * Pulling
+	 * Set the Last Updated Text. This displayed under the main label when Pulling
 	 * 
 	 * @param label
 	 *            - Label to set
@@ -390,9 +379,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	 * @param drawable
 	 *            - Drawable to display
 	 * @param mode
-	 *            - Controls which Header/Footer Views will be updated.
-	 *            <code>Mode.BOTH</code> will update all available, other values
-	 *            will update the relevant View.
+	 *            - Controls which Header/Footer Views will be updated. <code>Mode.BOTH</code> will update all
+	 *            available, other values will update the relevant View.
 	 */
 	public void setLoadingDrawable(Drawable drawable, Mode mode) {
 		if (null != mHeaderLayout && mode.canPullDown()) {
@@ -448,8 +436,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set Text to show when the Widget is being Pulled
-	 * <code>setPullLabel(releaseLabel, Mode.BOTH)</code>
+	 * Set Text to show when the Widget is being Pulled <code>setPullLabel(releaseLabel, Mode.BOTH)</code>
 	 * 
 	 * @param pullLabel
 	 *            - String to display
@@ -464,9 +451,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	 * @param pullLabel
 	 *            - String to display
 	 * @param mode
-	 *            - Controls which Header/Footer Views will be updated.
-	 *            <code>Mode.BOTH</code> will update all available, other values
-	 *            will update the relevant View.
+	 *            - Controls which Header/Footer Views will be updated. <code>Mode.BOTH</code> will update all
+	 *            available, other values will update the relevant View.
 	 */
 	public void setPullLabel(String pullLabel, Mode mode) {
 		if (null != mHeaderLayout && mode.canPullDown()) {
@@ -492,8 +478,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Sets the Widget to be in the refresh mState. The UI will be updated to
-	 * show the 'Refreshing' view.
+	 * Sets the Widget to be in the refresh mState. The UI will be updated to show the 'Refreshing' view.
 	 * 
 	 * @param doScroll
 	 *            - true if you want to force a scroll to the Refreshing view.
@@ -506,8 +491,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set Text to show when the Widget is refreshing
-	 * <code>setRefreshingLabel(releaseLabel, Mode.BOTH)</code>
+	 * Set Text to show when the Widget is refreshing <code>setRefreshingLabel(releaseLabel, Mode.BOTH)</code>
 	 * 
 	 * @param refreshingLabel
 	 *            - String to display
@@ -522,9 +506,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	 * @param refreshingLabel
 	 *            - String to display
 	 * @param mode
-	 *            - Controls which Header/Footer Views will be updated.
-	 *            <code>Mode.BOTH</code> will update all available, other values
-	 *            will update the relevant View.
+	 *            - Controls which Header/Footer Views will be updated. <code>Mode.BOTH</code> will update all
+	 *            available, other values will update the relevant View.
 	 */
 	public void setRefreshingLabel(String refreshingLabel, Mode mode) {
 		if (null != mHeaderLayout && mode.canPullDown()) {
@@ -536,8 +519,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set Text to show when the Widget is being pulled, and will refresh when
-	 * released. This is the same as calling
+	 * Set Text to show when the Widget is being pulled, and will refresh when released. This is the same as calling
 	 * <code>setReleaseLabel(releaseLabel, Mode.BOTH)</code>
 	 * 
 	 * @param releaseLabel
@@ -548,15 +530,13 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Set Text to show when the Widget is being pulled, and will refresh when
-	 * released
+	 * Set Text to show when the Widget is being pulled, and will refresh when released
 	 * 
 	 * @param releaseLabel
 	 *            - String to display
 	 * @param mode
-	 *            - Controls which Header/Footer Views will be updated.
-	 *            <code>Mode.BOTH</code> will update all available, other values
-	 *            will update the relevant View.
+	 *            - Controls which Header/Footer Views will be updated. <code>Mode.BOTH</code> will update all
+	 *            available, other values will update the relevant View.
 	 */
 	public void setReleaseLabel(String releaseLabel, Mode mode) {
 		if (null != mHeaderLayout && mode.canPullDown()) {
@@ -568,8 +548,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * A mutator to enable/disable whether the 'Refreshing' View should be
-	 * automatically shown when refreshing.
+	 * A mutator to enable/disable whether the 'Refreshing' View should be automatically shown when refreshing.
 	 * 
 	 * @param showView
 	 */
@@ -582,19 +561,16 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * This is implemented by derived classes to return the created View. If you
-	 * need to use a custom View (such as a custom ListView), override this
-	 * method and return an instance of your custom class.
+	 * This is implemented by derived classes to return the created View. If you need to use a custom View (such as a
+	 * custom ListView), override this method and return an instance of your custom class.
 	 * <p/>
-	 * Be sure to set the ID of the view in this method, especially if you're
-	 * using a ListActivity or ListFragment.
+	 * Be sure to set the ID of the view in this method, especially if you're using a ListActivity or ListFragment.
 	 * 
 	 * @param context
 	 *            Context to create view with
 	 * @param attrs
-	 *            AttributeSet from wrapped class. Means that anything you
-	 *            include in the XML layout declaration will be routed to the
-	 *            created View
+	 *            AttributeSet from wrapped class. Means that anything you include in the XML layout declaration will be
+	 *            routed to the created View
 	 * @return New instance of the Refreshable View
 	 */
 	protected abstract T createRefreshableView(Context context, AttributeSet attrs);
@@ -616,20 +592,18 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Implemented by derived class to return whether the View is in a mState
-	 * where the user can Pull to Refresh by scrolling down.
+	 * Implemented by derived class to return whether the View is in a mState where the user can Pull to Refresh by
+	 * scrolling down.
 	 * 
-	 * @return true if the View is currently the correct mState (for example,
-	 *         top of a ListView)
+	 * @return true if the View is currently the correct mState (for example, top of a ListView)
 	 */
 	protected abstract boolean isReadyForPullDown();
 
 	/**
-	 * Implemented by derived class to return whether the View is in a mState
-	 * where the user can Pull to Refresh by scrolling up.
+	 * Implemented by derived class to return whether the View is in a mState where the user can Pull to Refresh by
+	 * scrolling up.
 	 * 
-	 * @return true if the View is currently in the correct mState (for example,
-	 *         bottom of a ListView)
+	 * @return true if the View is currently in the correct mState (for example, bottom of a ListView)
 	 */
 	protected abstract boolean isReadyForPullUp();
 
@@ -756,8 +730,8 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Updates the View State when the mode has been set. This does not do any
-	 * checking that the mode is different to current state so always updates.
+	 * Updates the View State when the mode has been set. This does not do any checking that the mode is different to
+	 * current state so always updates.
 	 */
 	protected void updateUIForMode() {
 		// Remove Header, and then add Header Loading View again if needed
@@ -841,8 +815,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	/**
 	 * Actions a Pull Event
 	 * 
-	 * @return true if the Event has been handled, false if there has been no
-	 *         change
+	 * @return true if the Event has been handled, false if there has been no change
 	 */
 	private boolean pullEvent() {
 
@@ -889,8 +862,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	}
 
 	/**
-	 * Re-measure the Loading Views height, and adjust internal padding as
-	 * necessary
+	 * Re-measure the Loading Views height, and adjust internal padding as necessary
 	 */
 	private void refreshLoadingViewsHeight() {
 		if (mMode.canPullDown()) {
@@ -918,8 +890,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 
 	public static enum Mode {
 		/**
-		 * Only allow the user to Pull Down from the top to refresh, this is the
-		 * default.
+		 * Only allow the user to Pull Down from the top to refresh, this is the default.
 		 */
 		PULL_DOWN_TO_REFRESH(0x1),
 
@@ -929,20 +900,17 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 		PULL_UP_TO_REFRESH(0x2),
 
 		/**
-		 * Allow the user to both Pull Down from the top, and Pull Up from the
-		 * bottom to refresh.
+		 * Allow the user to both Pull Down from the top, and Pull Up from the bottom to refresh.
 		 */
 		BOTH(0x3);
 
 		/**
-		 * Maps an int to a specific mode. This is needed when saving state, or
-		 * inflating the view from XML where the mode is given through a attr
-		 * int.
+		 * Maps an int to a specific mode. This is needed when saving state, or inflating the view from XML where the
+		 * mode is given through a attr int.
 		 * 
 		 * @param modeInt
 		 *            - int to map a Mode to
-		 * @return Mode that modeInt maps to, or PULL_DOWN_TO_REFRESH by
-		 *         default.
+		 * @return Mode that modeInt maps to, or PULL_DOWN_TO_REFRESH by default.
 		 */
 		public static Mode mapIntToMode(int modeInt) {
 			switch (modeInt) {
@@ -988,8 +956,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	// ===========================================================
 
 	/**
-	 * Simple Listener that allows you to be notified when the user has scrolled
-	 * to the end of the AdapterView. See (
+	 * Simple Listener that allows you to be notified when the user has scrolled to the end of the AdapterView. See (
 	 * {@link PullToRefreshAdapterViewBase#setOnLastItemVisibleListener}.
 	 * 
 	 * @author Chris Banes
@@ -1011,31 +978,27 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	public static interface OnRefreshListener {
 
 		/**
-		 * onRefresh will be called for both Pull Down from top, and Pull Up
-		 * from Bottom
+		 * onRefresh will be called for both Pull Down from top, and Pull Up from Bottom
 		 */
 		public void onRefresh();
 
 	}
 
 	/**
-	 * An advanced version of the Listener to listen for callbacks to Refresh.
-	 * This listener is different as it allows you to differentiate between Pull
-	 * Ups, and Pull Downs.
+	 * An advanced version of the Listener to listen for callbacks to Refresh. This listener is different as it allows
+	 * you to differentiate between Pull Ups, and Pull Downs.
 	 * 
 	 * @author Chris Banes
 	 */
 	public static interface OnRefreshListener2 {
 
 		/**
-		 * onPullDownToRefresh will be called only when the user has Pulled Down
-		 * from the top, and released.
+		 * onPullDownToRefresh will be called only when the user has Pulled Down from the top, and released.
 		 */
 		public void onPullDownToRefresh();
 
 		/**
-		 * onPullUpToRefresh will be called only when the user has Pulled Up
-		 * from the bottom, and released.
+		 * onPullUpToRefresh will be called only when the user has Pulled Up from the bottom, and released.
 		 */
 		public void onPullUpToRefresh();
 
@@ -1066,17 +1029,15 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 		public void run() {
 
 			/**
-			 * Only set mStartTime if this is the first time we're starting,
-			 * else actually calculate the Y delta
+			 * Only set mStartTime if this is the first time we're starting, else actually calculate the Y delta
 			 */
 			if (mStartTime == -1) {
 				mStartTime = System.currentTimeMillis();
 			} else {
 
 				/**
-				 * We do do all calculations in long to reduce software float
-				 * calculations. We use 1000 as it gives us good accuracy and
-				 * small rounding errors
+				 * We do do all calculations in long to reduce software float calculations. We use 1000 as it gives us
+				 * good accuracy and small rounding errors
 				 */
 				long normalizedTime = (1000 * (System.currentTimeMillis() - mStartTime))
 						/ ANIMATION_DURATION_MS;

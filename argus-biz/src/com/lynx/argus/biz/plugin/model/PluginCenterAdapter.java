@@ -60,13 +60,10 @@ public class PluginCenterAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View.inflate(context, R.layout.layout_plugincenter_item,
-					null);
+			view = View.inflate(context, R.layout.layout_plugincenter_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view
-					.findViewById(R.id.tv_plugincenter_item_name);
-			holder.ivIcon = (ImageView) view
-					.findViewById(R.id.iv_plugincenter_item_icon);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_plugincenter_item_name);
+			holder.ivIcon = (ImageView) view.findViewById(R.id.iv_plugincenter_item_icon);
 			view.setTag(holder);
 		} else {
 			view = convertView;

@@ -30,8 +30,8 @@ public class HotShopListAdapter extends FragmentPagerAdapter {
 		return data.size();
 	}
 
-    public void setData(List<ShopInfo> data) {
-        this.data = data;
-        notifyDataSetChanged();
-    }
+	public void setData(List<ShopInfo> data) {
+		this.data = data;
+		notifyDataSetChanged();
+	}
 }

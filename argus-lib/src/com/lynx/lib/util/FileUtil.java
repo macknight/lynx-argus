@@ -40,8 +40,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * Deletes the contents of dir. Throws an IOException if any file could not
-	 * be deleted, or if dir is not a readable directory.
+	 * Deletes the contents of dir. Throws an IOException if any file could not be deleted, or if dir is not a readable
+	 * directory.
 	 */
 	public static void deleteFile(File file) throws IOException {
 		if (file.exists()) {

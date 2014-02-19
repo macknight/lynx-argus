@@ -113,12 +113,12 @@ public class HorizontalListView extends HorizontalScrollView {
 		case MotionEvent.ACTION_MOVE:
 			break;
 		case MotionEvent.ACTION_UP:
-            int distanceX = (int) event.getRawX() - downX;// 移动的距离
-            if (distanceX > 0) {
-                pageScroll(View.FOCUS_LEFT);
-            } else {
-                pageScroll(View.FOCUS_RIGHT);
-            }
+			int distanceX = (int) event.getRawX() - downX;// 移动的距离
+			if (distanceX > 0) {
+				pageScroll(View.FOCUS_LEFT);
+			} else {
+				pageScroll(View.FOCUS_RIGHT);
+			}
 			break;
 		default:
 			break;

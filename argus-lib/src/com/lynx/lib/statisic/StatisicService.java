@@ -1,4 +1,4 @@
-package com.lynx.service.statisic;
+package com.lynx.lib.statisic;
 
 /**
  * 统计service,提供统一的app日志记录发送服务

@@ -23,91 +23,72 @@ import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 
 /**
- * Detects transformation gestures involving more than one pointer
- * ("multitouch") using the supplied {@link android.view.MotionEvent}s. The
- * {@link OnScaleGestureListener} callback will notify users when a particular
- * gesture event has occurred. This class should only be used with
- * {@link android.view.MotionEvent}s reported via touch.
+ * Detects transformation gestures involving more than one pointer ("multitouch") using the supplied
+ * {@link android.view.MotionEvent}s. The {@link OnScaleGestureListener} callback will notify users when a particular
+ * gesture event has occurred. This class should only be used with {@link android.view.MotionEvent}s reported via touch.
  * 
  * To use this class:
  * <ul>
- * <li>Create an instance of the {@code ScaleGestureDetector} for your
- * {@link android.view.View}
- * <li>In the {@link android.view.View#onTouchEvent(android.view.MotionEvent)}
- * method ensure you call {@link #onTouchEvent(android.view.MotionEvent)}. The
- * methods defined in your callback will be executed when the events occur.
+ * <li>Create an instance of the {@code ScaleGestureDetector} for your {@link android.view.View}
+ * <li>In the {@link android.view.View#onTouchEvent(android.view.MotionEvent)} method ensure you call
+ * {@link #onTouchEvent(android.view.MotionEvent)}. The methods defined in your callback will be executed when the
+ * events occur.
  * </ul>
  */
 public class ScaleGestureDetector {
 	/**
-	 * The listener for receiving notifications when gestures occur. If you want
-	 * to listen for all the different gestures then implement this interface.
-	 * If you only want to listen for a subset it might be easier to extend
+	 * The listener for receiving notifications when gestures occur. If you want to listen for all the different
+	 * gestures then implement this interface. If you only want to listen for a subset it might be easier to extend
 	 * {@link SimpleOnScaleGestureListener}.
 	 * 
 	 * An application will receive events in the following order:
 	 * <ul>
 	 * <li>One {@link OnScaleGestureListener#onScaleBegin(ScaleGestureDetector)}
-	 * <li>Zero or more
-	 * {@link OnScaleGestureListener#onScale(ScaleGestureDetector)}
+	 * <li>Zero or more {@link OnScaleGestureListener#onScale(ScaleGestureDetector)}
 	 * <li>One {@link OnScaleGestureListener#onScaleEnd(ScaleGestureDetector)}
 	 * </ul>
 	 */
 	public interface OnScaleGestureListener {
 		/**
-		 * Responds to scaling events for a gesture in progress. Reported by
-		 * pointer motion.
+		 * Responds to scaling events for a gesture in progress. Reported by pointer motion.
 		 * 
 		 * @param detector
-		 *            The detector reporting the event - use this to retrieve
-		 *            extended info about event state.
-		 * @return Whether or not the detector should consider this event as
-		 *         handled. If an event was not handled, the detector will
-		 *         continue to accumulate movement until an event is handled.
-		 *         This can be useful if an application, for example, only wants
-		 *         to update scaling factors if the change is greater than 0.01.
+		 *            The detector reporting the event - use this to retrieve extended info about event state.
+		 * @return Whether or not the detector should consider this event as handled. If an event was not handled, the
+		 *         detector will continue to accumulate movement until an event is handled. This can be useful if an
+		 *         application, for example, only wants to update scaling factors if the change is greater than 0.01.
 		 */
 		public boolean onScale(ScaleGestureDetector detector);
 
 		/**
-		 * Responds to the beginning of a scaling gesture. Reported by new
-		 * pointers going down.
+		 * Responds to the beginning of a scaling gesture. Reported by new pointers going down.
 		 * 
 		 * @param detector
-		 *            The detector reporting the event - use this to retrieve
-		 *            extended info about event state.
-		 * @return Whether or not the detector should continue recognizing this
-		 *         gesture. For example, if a gesture is beginning with a focal
-		 *         point outside of a region where it makes sense,
-		 *         onScaleBegin() may return false to ignore the rest of the
-		 *         gesture.
+		 *            The detector reporting the event - use this to retrieve extended info about event state.
+		 * @return Whether or not the detector should continue recognizing this gesture. For example, if a gesture is
+		 *         beginning with a focal point outside of a region where it makes sense, onScaleBegin() may return
+		 *         false to ignore the rest of the gesture.
 		 */
 		public boolean onScaleBegin(ScaleGestureDetector detector);
 
 		/**
-		 * Responds to the end of a scale gesture. Reported by existing pointers
-		 * going up.
+		 * Responds to the end of a scale gesture. Reported by existing pointers going up.
 		 * 
-		 * Once a scale has ended, {@link ScaleGestureDetector#getFocusX()} and
-		 * {@link ScaleGestureDetector#getFocusY()} will return the location of
-		 * the pointer remaining on the screen.
+		 * Once a scale has ended, {@link ScaleGestureDetector#getFocusX()} and {@link ScaleGestureDetector#getFocusY()}
+		 * will return the location of the pointer remaining on the screen.
 		 * 
 		 * @param detector
-		 *            The detector reporting the event - use this to retrieve
-		 *            extended info about event state.
+		 *            The detector reporting the event - use this to retrieve extended info about event state.
 		 */
 		public void onScaleEnd(ScaleGestureDetector detector);
 	}
 
 	/**
-	 * A convenience class to extend when you only want to listen for a subset
-	 * of scaling-related events. This implements all methods in
-	 * {@link OnScaleGestureListener} but does nothing.
-	 * {@link OnScaleGestureListener#onScale(ScaleGestureDetector)} returns
-	 * {@code false} so that a subclass can retrieve the accumulated scale
-	 * factor in an overridden onScaleEnd.
-	 * {@link OnScaleGestureListener#onScaleBegin(ScaleGestureDetector)} returns
-	 * {@code true}.
+	 * A convenience class to extend when you only want to listen for a subset of scaling-related events. This
+	 * implements all methods in {@link OnScaleGestureListener} but does nothing.
+	 * {@link OnScaleGestureListener#onScale(ScaleGestureDetector)} returns {@code false} so that a subclass can
+	 * retrieve the accumulated scale factor in an overridden onScaleEnd.
+	 * {@link OnScaleGestureListener#onScaleBegin(ScaleGestureDetector)} returns {@code true}.
 	 */
 	public static class SimpleOnScaleGestureListener implements OnScaleGestureListener {
 
@@ -128,19 +109,16 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * This value is the threshold ratio between our previous combined pressure
-	 * and the current combined pressure. We will only fire an onScale event if
-	 * the computed ratio between the current and previous event pressures is
-	 * greater than this value. When pressure decreases rapidly between events
-	 * the position values can often be imprecise, as it usually indicates that
-	 * the user is in the process of lifting a pointer off of the device. Its
-	 * value was tuned experimentally.
+	 * This value is the threshold ratio between our previous combined pressure and the current combined pressure. We
+	 * will only fire an onScale event if the computed ratio between the current and previous event pressures is greater
+	 * than this value. When pressure decreases rapidly between events the position values can often be imprecise, as it
+	 * usually indicates that the user is in the process of lifting a pointer off of the device. Its value was tuned
+	 * experimentally.
 	 */
 	private static final float PRESSURE_THRESHOLD = 0.67f;
 
 	/**
-	 * MotionEvent has no getRawX(int) method; simulate it pending future API
-	 * approval.
+	 * MotionEvent has no getRawX(int) method; simulate it pending future API approval.
 	 */
 	private static float getRawX(final MotionEvent event, final int pointerIndex) {
 		final float offset = event.getX() - event.getRawX();
@@ -148,8 +126,7 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * MotionEvent has no getRawY(int) method; simulate it pending future API
-	 * approval.
+	 * MotionEvent has no getRawY(int) method; simulate it pending future API approval.
 	 */
 	private static float getRawY(final MotionEvent event, final int pointerIndex) {
 		final float offset = event.getY() - event.getRawY();
@@ -191,8 +168,7 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Return the current distance between the two pointers forming the gesture
-	 * in progress.
+	 * Return the current distance between the two pointers forming the gesture in progress.
 	 * 
 	 * @return Distance between pointers in pixels.
 	 */
@@ -215,11 +191,9 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Get the X coordinate of the current gesture's focal point. If a gesture
-	 * is in progress, the focal point is directly between the two pointers
-	 * forming the gesture. If a gesture is ending, the focal point is the
-	 * location of the remaining pointer on the screen. If
-	 * {@link #isInProgress()} would return false, the result of this function
+	 * Get the X coordinate of the current gesture's focal point. If a gesture is in progress, the focal point is
+	 * directly between the two pointers forming the gesture. If a gesture is ending, the focal point is the location of
+	 * the remaining pointer on the screen. If {@link #isInProgress()} would return false, the result of this function
 	 * is undefined.
 	 * 
 	 * @return X coordinate of the focal point in pixels.
@@ -229,11 +203,9 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Get the Y coordinate of the current gesture's focal point. If a gesture
-	 * is in progress, the focal point is directly between the two pointers
-	 * forming the gesture. If a gesture is ending, the focal point is the
-	 * location of the remaining pointer on the screen. If
-	 * {@link #isInProgress()} would return false, the result of this function
+	 * Get the Y coordinate of the current gesture's focal point. If a gesture is in progress, the focal point is
+	 * directly between the two pointers forming the gesture. If a gesture is ending, the focal point is the location of
+	 * the remaining pointer on the screen. If {@link #isInProgress()} would return false, the result of this function
 	 * is undefined.
 	 * 
 	 * @return Y coordinate of the focal point in pixels.
@@ -243,8 +215,7 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Return the previous distance between the two pointers forming the gesture
-	 * in progress.
+	 * Return the previous distance between the two pointers forming the gesture in progress.
 	 * 
 	 * @return Previous distance between pointers in pixels.
 	 */
@@ -258,9 +229,8 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Return the scaling factor from the previous scale event to the current
-	 * event. This value is defined as ({@link #getCurrentSpan()} /
-	 * {@link #getPreviousSpan()}).
+	 * Return the scaling factor from the previous scale event to the current event. This value is defined as (
+	 * {@link #getCurrentSpan()} / {@link #getPreviousSpan()}).
 	 * 
 	 * @return The current scaling factor.
 	 */
@@ -272,8 +242,8 @@ public class ScaleGestureDetector {
 	}
 
 	/**
-	 * Return the time difference in milliseconds between the previous accepted
-	 * scaling event and the current scaling event.
+	 * Return the time difference in milliseconds between the previous accepted scaling event and the current scaling
+	 * event.
 	 * 
 	 * @return Time difference since the last scaling event in milliseconds.
 	 */
@@ -284,8 +254,7 @@ public class ScaleGestureDetector {
 	/**
 	 * Returns {@code true} if a two-finger scale gesture is in progress.
 	 * 
-	 * @return {@code true} if a scale gesture is in progress, {@code false}
-	 *         otherwise.
+	 * @return {@code true} if a scale gesture is in progress, {@code false} otherwise.
 	 */
 	public boolean isInProgress() {
 		return this.mGestureInProgress;

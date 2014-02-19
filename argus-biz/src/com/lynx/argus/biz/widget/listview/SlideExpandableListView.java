@@ -10,8 +10,7 @@ import android.widget.ListView;
 import com.lynx.argus.biz.widget.listview.AbstractSlideExpandableListAdapter.SavedState;
 
 /**
- * Simple subclass of listview which does nothing more than wrap any ListAdapter
- * in a SlideExpandalbeListAdapter
+ * Simple subclass of listview which does nothing more than wrap any ListAdapter in a SlideExpandalbeListAdapter
  * 
  * @author zhufeng.liu
  * @version 13-11-19 下午3:55
@@ -49,13 +48,12 @@ class SlideExpandableListView extends ListView {
 	}
 
 	/**
-	 * Registers a OnItemClickListener for this listview which will expand the
-	 * item by default. Any other OnItemClickListener will be overriden.
+	 * Registers a OnItemClickListener for this listview which will expand the item by default. Any other
+	 * OnItemClickListener will be overriden.
 	 * <p/>
 	 * To undo call setOnItemClickListener(null)
 	 * <p/>
-	 * Important: This method call setOnItemClickListener, so the value will be
-	 * reset
+	 * Important: This method call setOnItemClickListener, so the value will be reset
 	 */
 	public void enableExpandOnItemClick() {
 		this.setOnItemClickListener(new OnItemClickListener() {

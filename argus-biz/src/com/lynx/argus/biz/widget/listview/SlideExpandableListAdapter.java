@@ -6,9 +6,8 @@ import android.widget.ListAdapter;
 import com.lynx.argus.R;
 
 /**
- * ListAdapter that adds sliding functionality to a list. Uses
- * R.id.expandalbe_toggle_button and R.id.expandable id's if no ids are given in
- * the contructor.
+ * ListAdapter that adds sliding functionality to a list. Uses R.id.expandalbe_toggle_button and R.id.expandable id's if
+ * no ids are given in the contructor.
  * 
  * @author tjerk
  * 

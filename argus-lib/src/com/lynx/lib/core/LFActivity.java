@@ -15,8 +15,6 @@ import android.view.inputmethod.InputMethodManager;
  */
 public abstract class LFActivity extends FragmentActivity {
 
-
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -65,7 +65,7 @@ public class CirclePageIndicator extends View implements PageIndicator {
 	}
 
 	public CirclePageIndicator(Context context, AttributeSet attrs) {
-        super(context, attrs);
+		super(context, attrs);
 		if (isInEditMode())
 			return;
 

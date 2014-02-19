@@ -55,8 +55,7 @@ public class BizPluginManager {
 	}
 
 	private BizPluginManager() {
-		this.httpService = (HttpService) LFApplication.instance().service(
-				"http");
+		this.httpService = (HttpService) LFApplication.instance().service("http");
 		this.application = BizApplication.instance();
 		File tmp = new File(application.getFilesDir(), PREFIX);
 		if (!tmp.exists()) {
@@ -89,12 +88,10 @@ public class BizPluginManager {
 					joPluginAtStore = joPlugins;
 					loadPluginAtStore();
 				} else {
-					Toast.makeText(application, "插件市场更新失败", Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(application, "插件市场更新失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
-				Toast.makeText(application, "插件市场更新失败", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(application, "插件市场更新失败", Toast.LENGTH_SHORT).show();
 			}
 			dispatchMessage(MSG_STORE_UPDATE_FIN);
 		}
@@ -112,13 +109,11 @@ public class BizPluginManager {
 	public void updatePluginStore() {
 		try {
 			if (joPluginAtStore != null
-					&& System.currentTimeMillis()
-							- joPluginAtStore.getLong(K_LST_UPDATE) > 100 * 60 * 60 * 1000) {
+					&& System.currentTimeMillis() - joPluginAtStore.getLong(K_LST_UPDATE) > 100 * 60 * 60 * 1000) {
 				dispatchMessage(MSG_STORE_UPDATE_FIN);
 				return;
 			}
-			String url = String.format("%s%s", Const.LM_API_DOMAIN,
-					LM_API_ALL_PLUGIN);
+			String url = String.format("%s%s", Const.LM_API_DOMAIN, LM_API_ALL_PLUGIN);
 			httpService.post(url, storeUpdateCallback);
 		} catch (Exception e) {
 			dispatchMessage(MSG_STORE_UPDATE_FIN);
@@ -226,8 +221,7 @@ public class BizPluginManager {
 					config.delete();
 				}
 				configOld.renameTo(config);
-				throw new Exception("unable to move config from " + configTmp
-						+ " to " + config);
+				throw new Exception("unable to move config from " + configTmp + " to " + config);
 			}
 		} catch (Exception e) {
 			config.delete();

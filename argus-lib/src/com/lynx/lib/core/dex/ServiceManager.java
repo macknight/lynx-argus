@@ -55,7 +55,7 @@ public abstract class ServiceManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-                    Logger.w(Tag, "获取服务更新配置服务器返回错误");
+					Logger.w(Tag, "获取服务更新配置服务器返回错误");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");

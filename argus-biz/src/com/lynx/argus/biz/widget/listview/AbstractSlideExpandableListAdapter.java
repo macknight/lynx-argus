@@ -12,9 +12,8 @@ import android.widget.ListAdapter;
 import java.util.BitSet;
 
 /**
- * Wraps a ListAdapter to give it expandable list view functionality. The main
- * thing it does is add a listener to the getToggleButton which expands the
- * getExpandableView for each list item.
+ * Wraps a ListAdapter to give it expandable list view functionality. The main thing it does is add a listener to the
+ * getToggleButton which expands the getExpandableView for each list item.
  * 
  * @author tjerk
  * 
@@ -22,33 +21,31 @@ import java.util.BitSet;
  */
 public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdapterImpl {
 	/**
-	 * Reference to the last expanded list item. Since lists are recycled this
-	 * might be null if though there is an expanded list item
+	 * Reference to the last expanded list item. Since lists are recycled this might be null if though there is an
+	 * expanded list item
 	 */
 	private View lastOpen = null;
 	/**
-	 * The position of the last expanded list item. If -1 there is no list item
-	 * expanded. Otherwise it points to the position of the last expanded list
-	 * item
+	 * The position of the last expanded list item. If -1 there is no list item expanded. Otherwise it points to the
+	 * position of the last expanded list item
 	 */
 	private int lstOpenPosition = -1;
 
 	/**
-	 * Default Animation duration Set animation duration with @see
-	 * setAnimationDuration
+	 * Default Animation duration Set animation duration with @see setAnimationDuration
 	 */
 	private int animationDuration = 330;
 
 	/**
-	 * A list of positions of all list items that are expanded. Normally only
-	 * one is expanded. But a mode to expand multiple will be added soon.
+	 * A list of positions of all list items that are expanded. Normally only one is expanded. But a mode to expand
+	 * multiple will be added soon.
 	 * <p/>
 	 * If an item onj position x is open, its bit is set
 	 */
 	private BitSet openItems = new BitSet();
 	/**
-	 * We remember, for each collapsable view its height. So we dont need to
-	 * recalculate. The height is calculated just before the view is drawn.
+	 * We remember, for each collapsable view its height. So we dont need to recalculate. The height is calculated just
+	 * before the view is drawn.
 	 */
 	private final SparseIntArray viewHeights = new SparseIntArray(10);
 
@@ -64,16 +61,14 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	}
 
 	/**
-	 * This method is used to get the Button view that should expand or collapse
-	 * the Expandable View. <br/>
+	 * This method is used to get the Button view that should expand or collapse the Expandable View. <br/>
 	 * Normally it will be implemented as:
 	 * 
 	 * <pre>
 	 * return parent.findViewById(R.id.expand_toggle_button)
 	 * </pre>
 	 * <p/>
-	 * A listener will be attached to the button which will either expand or
-	 * collapse the expandable view
+	 * A listener will be attached to the button which will either expand or collapse the expandable view
 	 * 
 	 * @param parent
 	 *            the list view item
@@ -84,9 +79,8 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	public abstract View getExpandToggleView(View parent);
 
 	/**
-	 * This method is used to get the view that will be hidden initially and
-	 * expands or collapse when the ExpandToggleButton is pressed @see
-	 * getExpandToggleButton <br/>
+	 * This method is used to get the view that will be hidden initially and expands or collapse when the
+	 * ExpandToggleButton is pressed @see getExpandToggleButton <br/>
 	 * Normally it will be implemented as:
 	 * 
 	 * <pre>
@@ -95,16 +89,14 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	 * 
 	 * @param parent
 	 *            the list view item
-	 * @return a child of parent which is a view (or often ViewGroup) that can
-	 *         be collapsed and expanded
+	 * @return a child of parent which is a view (or often ViewGroup) that can be collapsed and expanded
 	 * @ensure return!=null
 	 * @see #getExpandToggleView(android.view.View)
 	 */
 	public abstract View getExpandableView(View parent);
 
 	/**
-	 * Gets the duration of the collapse animation in ms. Default is 330ms.
-	 * Override this method to change the default.
+	 * Gets the duration of the collapse animation in ms. Default is 330ms. Override this method to change the default.
 	 * 
 	 * @return the duration of the anim in ms
 	 */
@@ -129,11 +121,9 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	}
 
 	/**
-	 * Check's if any position is currently Expanded To collapse the open item @see
-	 * collapseLastOpen
+	 * Check's if any position is currently Expanded To collapse the open item @see collapseLastOpen
 	 * 
-	 * @return boolean True if there is currently an item expanded, otherwise
-	 *         false
+	 * @return boolean True if there is currently an item expanded, otherwise false
 	 */
 	public boolean isAnyItemExpanded() {
 		return lstOpenPosition != -1;
@@ -235,8 +225,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	 * @param target
 	 *            the view to animate
 	 * @param type
-	 *            the animation type, either ExpandCollapseAnimation.COLLAPSE or
-	 *            ExpandCollapseAnimation.EXPAND
+	 *            the animation type, either ExpandCollapseAnimation.COLLAPSE or ExpandCollapseAnimation.EXPAND
 	 */
 	private void animateView(final View target, final int type) {
 		Animation anim = new ExpandCollapseAnimation(target, type);
@@ -245,8 +234,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	}
 
 	/**
-	 * Closes the current open item. If it is current visible it will be closed
-	 * with an animation.
+	 * Closes the current open item. If it is current visible it will be closed with an animation.
 	 * 
 	 * @return true if an item was closed, false otherwise
 	 */

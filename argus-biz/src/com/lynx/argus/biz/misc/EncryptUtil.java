@@ -13,5 +13,5 @@ public class EncryptUtil {
 
 	private native String decrypt(String input);
 
-    private native String encrypt(String input);
+	private native String encrypt(String input);
 }

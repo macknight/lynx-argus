@@ -150,7 +150,7 @@ public class LFEnvironment {
 						fos.close();
 					} catch (Exception e) {
 
-						}
+					}
 				} else {
 					File path = new File(LFApplication.instance().getCacheDir(), "cached_imei");
 					path.delete();

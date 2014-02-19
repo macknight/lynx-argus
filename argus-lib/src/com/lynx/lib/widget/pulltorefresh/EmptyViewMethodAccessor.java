@@ -3,8 +3,7 @@ package com.lynx.lib.widget.pulltorefresh;
 import android.view.View;
 
 /**
- * Interface that allows PullToRefreshBase to hijack the call to
- * AdapterView.setEmptyView()
+ * Interface that allows PullToRefreshBase to hijack the call to AdapterView.setEmptyView()
  * 
  * @author zhufeng.liu
  * 
@@ -21,8 +20,7 @@ public interface EmptyViewMethodAccessor {
 	public void setEmptyViewInternal(View emptyView);
 
 	/**
-	 * Should call PullToRefreshBase.setEmptyView() which will then
-	 * automatically call through to setEmptyViewInternal()
+	 * Should call PullToRefreshBase.setEmptyView() which will then automatically call through to setEmptyViewInternal()
 	 * 
 	 * @param emptyView
 	 *            to set as Empty View

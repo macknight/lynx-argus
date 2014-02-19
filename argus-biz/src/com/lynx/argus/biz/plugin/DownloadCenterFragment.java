@@ -28,16 +28,14 @@ public class DownloadCenterFragment extends LFFragment {
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View view = inflater.inflate(R.layout.layout_downloadcenter, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_downloadcenter, container, false);
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
 
-		ImageButton ibBack = (ImageButton) view
-				.findViewById(R.id.ib_downloadcenter_back);
+		ImageButton ibBack = (ImageButton) view.findViewById(R.id.ib_downloadcenter_back);
 		ibBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

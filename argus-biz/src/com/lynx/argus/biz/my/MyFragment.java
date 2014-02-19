@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ImageButton;
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFFragment;
 
@@ -19,10 +20,13 @@ public class MyFragment extends LFFragment {
 	public static final String Tag = "My";
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.layout_my, container, false);
-		return v;
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_my, container, false);
+		if (view == null) {
+			throw new Exception("页面初始化错误");
+		}
+		return view;
 	}
 
 }

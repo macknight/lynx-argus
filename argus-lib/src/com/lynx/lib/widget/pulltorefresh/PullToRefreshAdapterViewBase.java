@@ -61,9 +61,8 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 			final int lastVisibleItemIndex = firstVisibleItem + visibleItemCount;
 
 			/**
-			 * Check that the last item has changed, we have any items, and that
-			 * the last item is visible. lastVisibleItemIndex is a zero-based
-			 * index, so we add one to it to check against totalItemCount.
+			 * Check that the last item has changed, we have any items, and that the last item is visible.
+			 * lastVisibleItemIndex is a zero-based index, so we add one to it to check against totalItemCount.
 			 */
 			if (visibleItemCount > 0 && (lastVisibleItemIndex + 1) == totalItemCount) {
 				if (lastVisibleItemIndex != mSavedLastVisibleIndex) {
@@ -88,13 +87,11 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 	/**
 	 * Sets the Empty View to be used by the Adapter View.
 	 * <p/>
-	 * We need it handle it ourselves so that we can Pull-to-Refresh when the
-	 * Empty View is shown.
+	 * We need it handle it ourselves so that we can Pull-to-Refresh when the Empty View is shown.
 	 * <p/>
-	 * Please note, you do <strong>not</strong> usually need to call this method
-	 * yourself. Calling setEmptyView on the AdapterView will automatically call
-	 * this method and set everything up. This includes when the Android
-	 * Framework automatically sets the Empty View based on it's ID.
+	 * Please note, you do <strong>not</strong> usually need to call this method yourself. Calling setEmptyView on the
+	 * AdapterView will automatically call this method and set everything up. This includes when the Android Framework
+	 * automatically sets the Empty View based on it's ID.
 	 * 
 	 * @param newEmptyView
 	 *            - Empty View to be used
@@ -143,8 +140,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 	}
 
 	/**
-	 * Returns the number of Adapter View Footer Views. This will always return
-	 * 0 for non-ListView views.
+	 * Returns the number of Adapter View Footer Views. This will always return 0 for non-ListView views.
 	 * 
 	 * @return 0 for non-ListView views, possibly 1 for ListView
 	 */
@@ -153,8 +149,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 	}
 
 	/**
-	 * Returns the number of Adapter View Header Views. This will always return
-	 * 0 for non-ListView views.
+	 * Returns the number of Adapter View Header Views. This will always return 0 for non-ListView views.
 	 * 
 	 * @return 0 for non-ListView views, possibly 1 for ListView
 	 */

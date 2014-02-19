@@ -59,21 +59,14 @@ public class PluginStoreAdapter extends BaseAdapter {
 		View view;
 		ViewHolder holder;
 		if (convertView == null) {
-			view = View
-					.inflate(context, R.layout.layout_pluginstore_item, null);
+			view = View.inflate(context, R.layout.layout_pluginstore_item, null);
 			holder = new ViewHolder();
-			holder.tvName = (TextView) view
-					.findViewById(R.id.tv_pluginstore_item_name);
-			holder.tvDesc = (TextView) view
-					.findViewById(R.id.tv_pluginstore_item_desc);
-			holder.ivIcon = (ImageView) view
-					.findViewById(R.id.iv_pluginstore_item_icon);
-			holder.ivStatus = (ImageView) view
-					.findViewById(R.id.iv_pluginstore_item_status);
-			holder.btnInstall = (Button) view
-					.findViewById(R.id.btn_pluginstore_install);
-			holder.btnUninstall = (Button) view
-					.findViewById(R.id.btn_pluginstore_uninstall);
+			holder.tvName = (TextView) view.findViewById(R.id.tv_pluginstore_item_name);
+			holder.tvDesc = (TextView) view.findViewById(R.id.tv_pluginstore_item_desc);
+			holder.ivIcon = (ImageView) view.findViewById(R.id.iv_pluginstore_item_icon);
+			holder.ivStatus = (ImageView) view.findViewById(R.id.iv_pluginstore_item_status);
+			holder.btnInstall = (Button) view.findViewById(R.id.btn_pluginstore_install);
+			holder.btnUninstall = (Button) view.findViewById(R.id.btn_pluginstore_uninstall);
 			view.setTag(holder);
 		} else {
 			view = convertView;

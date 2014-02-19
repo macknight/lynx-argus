@@ -1,4 +1,4 @@
-package com.lynx.service.hotfix;
+package com.lynx.lib.watchdog;
 
 import com.lynx.lib.core.dex.Service;
 
@@ -9,7 +9,7 @@ import com.lynx.lib.core.dex.Service;
  * 
  * @version 13-9-12 下午1:34
  */
-public interface HotFixService extends Service {
+public interface WatchdogService extends Service {
 
 	/**
 	 * 启动后只执行一次的修复逻辑

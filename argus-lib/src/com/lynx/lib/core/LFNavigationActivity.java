@@ -17,8 +17,8 @@ import java.util.Stack;
 public abstract class LFNavigationActivity extends LFActivity {
 	private Stack<LFFragment> stack;
 
-    protected int animResPushIn = -1, animResPushOut = -1;
-    protected int animResPopIn = -1, animResPopOut = -1;
+	protected int animResPushIn = -1, animResPushOut = -1;
+	protected int animResPopIn = -1, animResPopOut = -1;
 
 	protected int resContent = android.R.id.primary; // fragment根容器ID
 

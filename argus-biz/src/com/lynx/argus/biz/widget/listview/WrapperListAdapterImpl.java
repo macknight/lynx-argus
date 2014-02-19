@@ -8,11 +8,9 @@ import android.widget.ListAdapter;
 import android.widget.WrapperListAdapter;
 
 /**
- * Implementation of a WrapperListAdapter interface in which method delegates to
- * the wrapped adapter.
+ * Implementation of a WrapperListAdapter interface in which method delegates to the wrapped adapter.
  * <p/>
- * Extend this class if you only want to change a few methods of the wrapped
- * adapter.
+ * Extend this class if you only want to change a few methods of the wrapped adapter.
  * <p/>
  * The wrapped adapter is available to subclasses as the "wrapped" field.
  * 

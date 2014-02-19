@@ -54,24 +54,21 @@ public class PluginStoreFragment extends LFFragment {
 	}
 
 	@Override
-	public View onLoadView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) throws Exception {
-		View view = inflater.inflate(R.layout.layout_pluginstore, container,
-				false);
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
+		View view = inflater.inflate(R.layout.layout_pluginstore, container, false);
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
 
-		p2raselv = (P2RASEListView) view
-				.findViewById(R.id.p2raselv_pluginstore);
+		p2raselv = (P2RASEListView) view.findViewById(R.id.p2raselv_pluginstore);
 
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		p2raselv.setLoadingDrawable(drawable);
 
 		ActionSlideExpandableListView aselv = (ActionSlideExpandableListView) p2raselv
 				.getRefreshableView();
-		adapter = new PluginStoreAdapter(tabActivity,
-				pluginManager.pluginsAtStore());
+		adapter = new PluginStoreAdapter(tabActivity, pluginManager.pluginsAtStore());
 		aselv.setAdapter(adapter);
 
 		p2raselv.setOnRefreshListener(new OnRefreshListener() {
@@ -98,8 +95,7 @@ public class PluginStoreFragment extends LFFragment {
 			}
 		}, R.id.btn_pluginstore_install, R.id.btn_pluginstore_uninstall);
 
-		ImageButton ibDownload = (ImageButton) view
-				.findViewById(R.id.ib_pluginstore_download);
+		ImageButton ibDownload = (ImageButton) view.findViewById(R.id.ib_pluginstore_download);
 		ibDownload.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -108,8 +104,7 @@ public class PluginStoreFragment extends LFFragment {
 			}
 		});
 
-		ImageButton ibBack = (ImageButton) view
-				.findViewById(R.id.ib_pluginstore_back);
+		ImageButton ibBack = (ImageButton) view.findViewById(R.id.ib_pluginstore_back);
 		ibBack.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -168,11 +163,9 @@ public class PluginStoreFragment extends LFFragment {
 		private ImageView ivOpt;
 
 		public InstallPopWindow() {
-			super(LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.MATCH_PARENT);
+			super(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-			View view = View.inflate(tabActivity,
-					R.layout.layout_plugin_install, null);
+			View view = View.inflate(tabActivity, R.layout.layout_plugin_install, null);
 			this.setContentView(view);
 
 			ivOpt = (ImageView) view.findViewById(R.id.iv_pluginstore_opt);
@@ -183,11 +176,9 @@ public class PluginStoreFragment extends LFFragment {
 
 			setFocusable(true);
 			setOutsideTouchable(false);
-			setBackgroundDrawable(getResources().getDrawable(
-					R.drawable.shape_round_bg));
+			setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_round_bg));
 
-			animInstalling = new RotateAnimation(-80, 0,
-					Animation.RELATIVE_TO_SELF, 0.5f,
+			animInstalling = new RotateAnimation(-80, 0, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
 			LinearInterpolator lin = new LinearInterpolator();
 			animInstalling.setInterpolator(lin);

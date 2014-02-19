@@ -20,8 +20,8 @@ public interface GeoService extends Service {
 	LocationStatus status();
 
 	/**
-	 * get the best coordinate by server, if can be decided, return only one
-	 * coordinate result, else, return a coordinate list
+	 * get the best coordinate by server, if can be decided, return only one coordinate result, else, return a
+	 * coordinate list
 	 * 
 	 * @param refresh
 	 * @return

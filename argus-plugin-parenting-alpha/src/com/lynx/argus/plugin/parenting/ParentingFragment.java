@@ -152,11 +152,11 @@ public class ParentingFragment extends LFFragment {
 				new AdapterView.OnItemClickListener() {
 					@Override
 					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        CampaignDetailFragment cdf = new CampaignDetailFragment();
+						// CampaignDetailFragment cdf = new CampaignDetailFragment();
 						ShopDetailFragment sdf = new ShopDetailFragment();
-                        Bundle param = new Bundle();
-                        param.putSerializable("ShopInfo", shopInfos.get(position));
-                        sdf.setArguments(param);
+						Bundle param = new Bundle();
+						param.putSerializable("ShopInfo", shopInfos.get(position));
+						sdf.setArguments(param);
 						navActivity.pushFragment(sdf);
 					}
 				});

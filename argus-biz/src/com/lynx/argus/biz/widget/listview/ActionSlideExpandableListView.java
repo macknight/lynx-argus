@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 
 /**
- * A more specific expandable listview in which the expandable area consist of
- * some buttons which are context actions for the item itself.
+ * A more specific expandable listview in which the expandable area consist of some buttons which are context actions
+ * for the item itself.
  * <p/>
- * It handles event binding for those buttons and allow for adding a listener
- * that will be invoked if one of those buttons are pressed.
+ * It handles event binding for those buttons and allow for adding a listener that will be invoked if one of those
+ * buttons are pressed.
  * 
  * @author tjerk
  * 
@@ -65,8 +65,7 @@ public class ActionSlideExpandableListView extends SlideExpandableListView {
 	}
 
 	/**
-	 * Interface for callback to be invoked whenever an action is clicked in the
-	 * expandle area of the list item.
+	 * Interface for callback to be invoked whenever an action is clicked in the expandle area of the list item.
 	 */
 	public interface OnActionClickListener {
 		/**

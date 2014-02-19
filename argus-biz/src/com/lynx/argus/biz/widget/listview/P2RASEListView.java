@@ -150,9 +150,8 @@ public class P2RASEListView extends PullToRefreshAdapterViewBase<ActionSlideExpa
 		originalLoadingLayout.setVisibility(View.VISIBLE);
 
 		/**
-		 * Scroll so the View is at the same Y as the ListView header/footer,
-		 * but only scroll if we've pulled to refresh and it's positioned
-		 * correctly
+		 * Scroll so the View is at the same Y as the ListView header/footer, but only scroll if we've pulled to refresh
+		 * and it's positioned correctly
 		 */
 		if (scroll && getState() != MANUAL_REFRESHING) {
 			getRefreshableView().setSelection(selection);
@@ -246,9 +245,8 @@ public class P2RASEListView extends PullToRefreshAdapterViewBase<ActionSlideExpa
 		@Override
 		public void draw(Canvas canvas) {
 			/**
-			 * This is a bit hacky, but ListView has got a bug in it when using
-			 * Header/Footer Views and the list is empty. This masks the issue
-			 * so that it doesn't cause an FC. See Issue #66.
+			 * This is a bit hacky, but ListView has got a bug in it when using Header/Footer Views and the list is
+			 * empty. This masks the issue so that it doesn't cause an FC. See Issue #66.
 			 */
 			try {
 				super.draw(canvas);
