@@ -57,34 +57,33 @@ public class SatelliteMenu extends FrameLayout {
 	private boolean closeItemsOnClick = DEFAULT_CLOSE_ON_CLICK;
 
 	public SatelliteMenu(Context context) {
-		super(context);
-		init(context, null, 0);
+		this(context, null);
 	}
 
 	public SatelliteMenu(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(context, attrs, 0);
+		this(context, attrs, 0);
 	}
 
 	public SatelliteMenu(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
-		init(context, attrs, defStyle);
+		init();
 	}
 
-	private void init(Context context, AttributeSet attrs, int defStyle) {
-		LayoutInflater.from(context).inflate(R.layout.sat_main, this, true);
-		imgMain = (ImageView) findViewById(R.id.sat_main);
-
-		mainRotateLeft = SatelliteAnimationUtil.createMainButtonAnimation(context);
-		mainRotateRight = SatelliteAnimationUtil.createMainButtonInverseAnimation(context);
+	private void init() {
+		imgMain = new ImageView(getContext());
+		// TODO need to add imageview layout param
+		mainRotateLeft = SatelliteAnimationUtil.createMainButtonAnimation(getContext());
+		mainRotateRight = SatelliteAnimationUtil.createMainButtonInverseAnimation(getContext());
 
 		Animation.AnimationListener plusAnimationListener = new Animation.AnimationListener() {
 			@Override
 			public void onAnimationStart(Animation animation) {
+
 			}
 
 			@Override
 			public void onAnimationRepeat(Animation animation) {
+
 			}
 
 			@Override
@@ -160,27 +159,27 @@ public class SatelliteMenu extends FrameLayout {
 			int finalX = SatelliteAnimationUtil.getTranslateX(degrees[index], satelliteDistance);
 			int finalY = SatelliteAnimationUtil.getTranslateY(degrees[index], satelliteDistance);
 
-			ImageView itemView = (ImageView) LayoutInflater.from(getContext()).inflate(
-					R.layout.sat_item_cr, this, false);
-			ImageView cloneView = (ImageView) LayoutInflater.from(getContext()).inflate(
-					R.layout.sat_item_cr, this, false);
-			itemView.setTag(menuItem.getId());
-			cloneView.setVisibility(View.GONE);
-			itemView.setVisibility(View.GONE);
+			ImageView ivItem = new ImageView(getContext());
+			ImageView ivClone = new ImageView(getContext());
+			// TODO need add imageview layout param
 
-			cloneView.setOnClickListener(internalItemClickListener);
-			cloneView.setTag(menuItem.getId());
-			FrameLayout.LayoutParams layoutParams = getLayoutParams(cloneView);
+			ivItem.setTag(menuItem.getId());
+			ivClone.setVisibility(View.GONE);
+			ivItem.setVisibility(View.GONE);
+
+			ivClone.setOnClickListener(internalItemClickListener);
+			ivClone.setTag(menuItem.getId());
+			FrameLayout.LayoutParams layoutParams = getLayoutParams(ivClone);
 			layoutParams.bottomMargin = Math.abs(finalY);
 			layoutParams.leftMargin = Math.abs(finalX);
-			cloneView.setLayoutParams(layoutParams);
+			ivClone.setLayoutParams(layoutParams);
 
 			if (menuItem.getImgResId() > 0) {
-				itemView.setImageResource(menuItem.getImgResId());
-				cloneView.setImageResource(menuItem.getImgResId());
+				ivItem.setImageResource(menuItem.getImgResId());
+				ivClone.setImageResource(menuItem.getImgResId());
 			} else if (menuItem.getDrawable() != null) {
-				itemView.setImageDrawable(menuItem.getDrawable());
-				cloneView.setImageDrawable(menuItem.getDrawable());
+				ivItem.setImageDrawable(menuItem.getDrawable());
+				ivClone.setImageDrawable(menuItem.getDrawable());
 			}
 
 			Animation itemOut = SatelliteAnimationUtil.createItemOutAnimation(getContext(), index,
@@ -189,25 +188,24 @@ public class SatelliteMenu extends FrameLayout {
 					expandDuration, finalX, finalY);
 			Animation itemClick = SatelliteAnimationUtil.createItemClickAnimation(getContext());
 
-			menuItem.setIv(itemView);
-			menuItem.setIvClone(cloneView);
+			menuItem.setIv(ivItem);
+			menuItem.setIvClone(ivClone);
 			menuItem.setAnimIn(itemIn);
 			menuItem.setAnimOut(itemOut);
 			menuItem.setAnimClick(itemClick);
 			menuItem.setX(finalX);
 			menuItem.setY(finalY);
 
-			itemIn.setAnimationListener(new SatelliteAnimationListener(itemView, true,
-					viewToItemMap));
-			itemOut.setAnimationListener(new SatelliteAnimationListener(itemView, false,
+			itemIn.setAnimationListener(new SatelliteAnimationListener(ivItem, true, viewToItemMap));
+			itemOut.setAnimationListener(new SatelliteAnimationListener(ivItem, false,
 					viewToItemMap));
 			itemClick.setAnimationListener(new SatelliteItemClickAnimationListener(this, menuItem
 					.getId()));
 
-			this.addView(itemView);
-			this.addView(cloneView);
-			viewToItemMap.put(itemView, menuItem);
-			viewToItemMap.put(cloneView, menuItem);
+			this.addView(ivItem);
+			this.addView(ivClone);
+			viewToItemMap.put(ivItem, menuItem);
+			viewToItemMap.put(ivClone, menuItem);
 			index++;
 		}
 
