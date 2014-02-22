@@ -1,15 +1,19 @@
 package com.lynx.service.cache.impl1v1;
 
-import android.content.Context;
-import android.os.Environment;
-import android.text.TextUtils;
-import android.util.Log;
-import com.lynx.lib.util.FileUtil;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ref.SoftReference;
+import java.util.HashMap;
+import java.util.Map;
+
+import android.content.Context;
+import android.os.Environment;
+import android.text.TextUtils;
+import android.util.Log;
+
+import com.lynx.lib.util.FileUtil;
 
 /**
  * 

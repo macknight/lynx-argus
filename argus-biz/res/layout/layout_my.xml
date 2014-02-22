@@ -3,16 +3,29 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="45dp"
-	                android:background="@drawable/tool_bar">
-		<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/tool_bar">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-				android:gravity="center"
-				android:textColor="@color/Grey"
-				android:textSize="@dimen/font_size_xlarge"
-				android:text="@string/main_tab_title_my"/>
-	</RelativeLayout>
+                android:gravity="center"
+                android:textColor="@color/Grey"
+                android:textSize="@dimen/font_size_xlarge"
+                android:text="@string/main_tab_title_my"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <com.lynx.lib.widget.AsyncImageView
+                android:id="@+id/aiv_my_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/black_loading"
+                android:layout_centerInParent="true"/>
+    </RelativeLayout>
+
 </LinearLayout>
