@@ -156,6 +156,7 @@ public class MoreFragment extends LFFragment implements AdapterView.OnItemClickL
 	}
 
 	public void donate() {
-
+        GuideFragment guideFragment = new GuideFragment();
+        tabActivity.pushFragment(guideFragment);
 	}
 }

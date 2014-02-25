@@ -196,6 +196,7 @@ public class BizPluginManager {
 	 * @throws Exception
 	 */
 	private void saveConfig(String fileName, Object data) throws Exception {
+        // TODO 改为数据库存储配置
 		File config = new File(basicDir, fileName);
 		File configTmp = new File(basicDir, "tmp");
 		File configOld = new File(basicDir, "old");

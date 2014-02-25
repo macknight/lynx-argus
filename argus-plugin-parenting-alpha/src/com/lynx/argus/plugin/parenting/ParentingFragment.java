@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.support.v4.app.Fragment;
+import android.widget.ImageButton;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -124,6 +125,15 @@ public class ParentingFragment extends LFFragment {
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
+
+        ImageButton ibSearch = (ImageButton)view.findViewById(R.id.ib_shop_search);
+        ibSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                GuideFragment guideFragment = new GuideFragment();
+                navActivity.pushFragment(guideFragment);
+            }
+        });
 
 		hotShopsAdapter = new HotShopListAdapter(getChildFragmentManager(), shopInfos);
 		viewPager = (ViewPager) view.findViewById(R.id.vp_hot_shops);

@@ -9,7 +9,7 @@ package com.lynx.lib.core;
 public class Const {
 
 	// 线上环境域名
-	public static String LM_API_DOMAIN = "http://58.210.101.202:59102/lynx-web";
+	public static String LM_API_DOMAIN = "http://m.maskerliu.eu.cloudbees.net/";
 
 	public static String BMAP_API_KEY = "EAaacd071ed10ccc5653a49b9fbd2923";
 	public static String BMAP_API_PLACE = "http://api.map.baidu.com/place/v2";

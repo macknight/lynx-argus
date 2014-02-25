@@ -28,7 +28,7 @@ public class MyFragment extends LFFragment {
 		}
 
 		AsyncImageView aivTest = (AsyncImageView) view.findViewById(R.id.aiv_my_test);
-		aivTest.setFile("http://www.hahaertong.com/data/files/store_46754/shop/small_201306011754221139.jpg");
+		aivTest.setSrcURI("http://www.hahaertong.com/data/files/store_46754/shop/small_201306011754221139.jpg");
 		return view;
 	}
 
