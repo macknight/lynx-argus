@@ -1,14 +1,12 @@
 package com.lynx.argus.plugin.timemachine;
 
-import android.app.ActionBar;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.Window;
-import com.lynx.argus.plugin.timemachine.NavigationDrawerFragment.NavigationDrawerCallbacks;
+import android.widget.Button;
+
 import com.lynx.lib.core.LFFragment;
 
 /**
@@ -18,72 +16,40 @@ import com.lynx.lib.core.LFFragment;
  * 
  * @version 3/7/14 4:24 PM
  */
-public class TimeMachineFragment extends LFFragment implements NavigationDrawerCallbacks {
-
-	/**
-	 * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-	 */
-	private NavigationDrawerFragment mNavigationDrawerFragment;
-
-	/**
-	 * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-	 */
-	private CharSequence mTitle;
+public class TimeMachineFragment extends LFFragment {
 
 	@Override
 	protected View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle bundle)
 			throws Exception {
 		View view = inflater.inflate(R.layout.layout_timemachine, container, false);
 
-		navActivity.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager()
-				.findFragmentById(R.id.navigation_drawer);
-		mTitle = navActivity.getTitle();
+		Button btn = (Button) view.findViewById(R.id.btn_line);
+		btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LineFragment lineFragment = new LineFragment();
+				navActivity.pushFragment(lineFragment);
+			}
+		});
 
-		// Set up the drawer.
-		mNavigationDrawerFragment.setUp(R.id.navigation_drawer,
-				(DrawerLayout) view.findViewById(R.id.drawer_layout));
+		btn = (Button) view.findViewById(R.id.btn_pie);
+		btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ClockPieFragment clockPieFragment = new ClockPieFragment();
+				navActivity.pushFragment(clockPieFragment);
+			}
+		});
+
+		btn = (Button) view.findViewById(R.id.btn_bar);
+		btn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				BarFragment barFragment = new BarFragment();
+				navActivity.pushFragment(barFragment);
+			}
+		});
 
 		return view;
 	}
-
-	@Override
-	public void onNavigationDrawerItemSelected(int position) {
-		// update the main content by replacing fragments
-		FragmentManager fragmentManager = getFragmentManager();
-		switch (position) {
-		case 0:
-			fragmentManager.beginTransaction().replace(R.id.container, new LineFragment()).commit();
-			break;
-		case 1:
-			fragmentManager.beginTransaction().replace(R.id.container, new BarFragment()).commit();
-			break;
-		case 2:
-			fragmentManager.beginTransaction().replace(R.id.container, new ClockPieFragment())
-					.commit();
-			break;
-		}
-	}
-
-	public void onSectionAttached(int number) {
-		switch (number) {
-		case 1:
-			mTitle = getString(R.string.title_section1);
-			break;
-		case 2:
-			mTitle = getString(R.string.title_section2);
-			break;
-		case 3:
-			mTitle = getString(R.string.title_section3);
-			break;
-		}
-	}
-
-	public void restoreActionBar() {
-		ActionBar actionBar = navActivity.getActionBar();
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-		actionBar.setDisplayShowTitleEnabled(true);
-		actionBar.setTitle(mTitle);
-	}
-
 }

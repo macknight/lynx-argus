@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+import com.lynx.lib.util.DisplayUtil;
 
 /**
  * Created by Dacer on 11/11/13.
@@ -69,12 +70,12 @@ public class BarView extends View {
 		fgPaint = new Paint(bgPaint);
 		fgPaint.setColor(FOREGROUND_COLOR);
 		rect = new Rect();
-		topMargin = MyUtils.dip2px(context, 5);
-		int textSize = MyUtils.sp2px(context, 15);
-		barWidth = MyUtils.dip2px(context, 22);
-		MINI_BAR_WIDTH = MyUtils.dip2px(context, 22);
-		BAR_SIDE_MARGIN = MyUtils.dip2px(context, 22);
-		TEXT_TOP_MARGIN = MyUtils.dip2px(context, 5);
+		topMargin = DisplayUtil.dip2px(context, 5);
+		int textSize = DisplayUtil.sp2px(context, 15);
+		barWidth = DisplayUtil.dip2px(context, 22);
+		MINI_BAR_WIDTH = DisplayUtil.dip2px(context, 22);
+		BAR_SIDE_MARGIN = DisplayUtil.dip2px(context, 22);
+		TEXT_TOP_MARGIN = DisplayUtil.dip2px(context, 5);
 		textPaint = new Paint();
 		textPaint.setAntiAlias(true);
 		textPaint.setColor(TEXT_COLOR);

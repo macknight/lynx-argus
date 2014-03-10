@@ -8,14 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.widget.charts.BarView;
 
 /**
- * Created by Dacer on 11/15/13.
+ * 
+ * @author chris
+ * 
+ * @version 3/8/14 6:34 PM
  */
-public class BarFragment extends Fragment {
+public class BarFragment extends LFFragment {
+
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 		View rootView = inflater.inflate(R.layout.layout_bar, container, false);
 		final BarView barView = (BarView) rootView.findViewById(R.id.bar_view);
 		Button button = (Button) rootView.findViewById(R.id.bar_button);
@@ -25,6 +31,7 @@ public class BarFragment extends Fragment {
 				randomSet(barView);
 			}
 		});
+
 		randomSet(barView);
 		return rootView;
 	}

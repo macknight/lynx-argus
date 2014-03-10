@@ -8,16 +8,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.widget.charts.LineView;
 
 /**
- * Created by Dacer on 11/15/13.
+ *
+ * @author chris
+ *
+ * @version 3/8/14 6:34 PM
  */
-public class LineFragment extends Fragment {
+public class LineFragment extends LFFragment {
 	int randomint = 9;
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+			throws Exception {
 		View rootView = inflater.inflate(R.layout.layout_line, container, false);
 		final LineView lineView = (LineView) rootView.findViewById(R.id.line_view);
 

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
+import com.lynx.lib.util.DisplayUtil;
 
 /**
  * Created by Dacer on 11/13/13.
@@ -60,9 +61,9 @@ public class PieView extends View {
 
 	public PieView(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		textSize = MyUtils.sp2px(context, 15);
-		lineThickness = MyUtils.dip2px(context, 1);
-		lineLength = MyUtils.dip2px(context, 10);
+		textSize = DisplayUtil.sp2px(context, 15);
+		lineThickness = DisplayUtil.dip2px(context, 1);
+		lineLength = DisplayUtil.dip2px(context, 10);
 
 		textPaint = new Paint();
 		textPaint.setAntiAlias(true);
