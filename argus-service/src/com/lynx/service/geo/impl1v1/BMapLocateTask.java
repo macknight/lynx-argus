@@ -122,10 +122,10 @@ public class BMapLocateTask {
 
 		if (wifis != null && wifis.size() != 0) {
 			tmp += "&wf=";
-			for (int i = 0; i < wifis.size(); ++i) {
-				tmp += wifis.get(i).mac().replaceAll(":", "") + ";" + Math.abs(wifis.get(i).dBm())
-						+ ";|";
-			}
+            for (Wifi wifi : wifis) {
+                tmp += wifi.mac().replaceAll(":", "") + ";" + Math.abs(wifi.dBm())
+                        + ";|";
+            }
 			tmp = tmp.substring(0, tmp.length() - 1);
 		}
 		tmp += "&addr=detail&coor=gcj02&os=android&prod=default&im=";

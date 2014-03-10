@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFApplication;
@@ -194,14 +195,13 @@ public class SysInfoFragment extends LFFragment {
 		TableRow.LayoutParams params;
 
 		TableRow tr = new TableRow(tabActivity);
-		tr.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT));
+		tr.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
 		tr.setBackgroundColor(text_bg_color);
 
 		for (int i = 0; i < data.size(); ++i) {
 			String str_value = data.get(i);
 			TextView tv_value = new TextView(tabActivity);
-			params = new TableRow.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, weights[i]);
+			params = new LayoutParams(0, LayoutParams.WRAP_CONTENT, weights[i]);
 			tv_value.setLayoutParams(params);
 			tv_value.setEllipsize(TextUtils.TruncateAt.END);
 			tv_value.setSingleLine(true);
@@ -214,14 +214,14 @@ public class SysInfoFragment extends LFFragment {
 
 			if (i < data.size() - 1) {
 				line = new View(tabActivity);
-				params = new TableRow.LayoutParams(1, ViewGroup.LayoutParams.MATCH_PARENT);
+				params = new TableRow.LayoutParams(1, LayoutParams.MATCH_PARENT);
 				line.setLayoutParams(params);
 				line.setBackgroundColor(line_color);
 				tr.addView(line);
 			}
 		}
-		parent.addView(tr, new TableLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
+		parent.addView(tr, new TableLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.MATCH_PARENT));
 	}
 
 }

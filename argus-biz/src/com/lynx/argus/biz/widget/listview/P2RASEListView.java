@@ -86,15 +86,14 @@ public class P2RASEListView extends PullToRefreshAdapterViewBase<ActionSlideExpa
 		// Create Loading Views ready for use later
 		FrameLayout frame = new FrameLayout(context);
 		mHeaderLoadingView = new LoadingLayout(context, Mode.PULL_DOWN_TO_REFRESH);
-		frame.addView(mHeaderLoadingView, FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT);
+		frame.addView(mHeaderLoadingView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		mHeaderLoadingView.setVisibility(View.GONE);
 		lv.addHeaderView(frame, null, false);
 
 		mLvFooterLoadingFrame = new FrameLayout(context);
 		mFooterLoadingView = new LoadingLayout(context, Mode.PULL_UP_TO_REFRESH);
-		mLvFooterLoadingFrame.addView(mFooterLoadingView, FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.WRAP_CONTENT);
+		mLvFooterLoadingFrame.addView(mFooterLoadingView, LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT);
 		mFooterLoadingView.setVisibility(View.GONE);
 
 		// Set it to this so it can be used in ListActivity/ListFragment

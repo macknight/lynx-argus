@@ -1,7 +1,10 @@
 package com.lynx.lib.util;
 
+import android.content.Context;
 import android.graphics.*;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
 import com.lynx.lib.core.Logger;
 
 import java.io.IOException;
@@ -77,25 +80,6 @@ public class ImageUtil {
 	}
 
 	/**
-	 * 将Drawable转化为Bitmap
-	 * 
-	 * @param drawable
-	 * @return
-	 */
-	public static Bitmap drawableToBitmap(Drawable drawable) {
-		int width = drawable.getIntrinsicWidth();
-		int height = drawable.getIntrinsicHeight();
-		Bitmap bitmap = Bitmap.createBitmap(width, height,
-				drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-						: Bitmap.Config.RGB_565);
-		Canvas canvas = new Canvas(bitmap);
-		drawable.setBounds(0, 0, width, height);
-		drawable.draw(canvas);
-		return bitmap;
-
-	}
-
-	/**
 	 * 获得圆角图片的方法
 	 * 
 	 * @param bitmap
@@ -159,5 +143,58 @@ public class ImageUtil {
 		canvas.drawRect(0, height, width, bitmapWithReflection.getHeight() + reflectionGap, paint);
 
 		return bitmapWithReflection;
+	}
+
+	/**
+	 * bitmap转drawable
+	 * 
+	 * @param bitmap
+	 * @return
+	 */
+	public static Drawable bitmap2Drawable(Bitmap bitmap) {
+		return new BitmapDrawable(null, bitmap);
+	}
+
+	/**
+	 * Drawable 转 bitmap
+	 * 
+	 * @param drawable
+	 * @return
+	 */
+	public static Bitmap drawable2Bitmap(Drawable drawable) {
+		if (drawable instanceof BitmapDrawable) {
+			return ((BitmapDrawable) drawable).getBitmap();
+		} else if (drawable instanceof NinePatchDrawable) {
+			Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable
+					.getIntrinsicHeight(),
+					drawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
+							: Bitmap.Config.RGB_565);
+			Canvas canvas = new Canvas(bitmap);
+			drawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
+			drawable.draw(canvas);
+			return bitmap;
+		} else {
+			return null;
+		}
+	}
+
+	public static Drawable getDrawableFromAssets(Context context, String fileName) {
+		Drawable drawable = null;
+
+		return drawable;
+	}
+
+	public static NinePatchDrawable getNinePatchDrawableFromAssets(Context context, String fileName) {
+		InputStream stream = null;
+		try {
+			stream = context.getAssets().open(fileName);
+		} catch (IOException e) {
+			// TODO is need to add log? currently not
+		}
+
+		Bitmap bitmap = BitmapFactory.decodeStream(stream);
+		byte[] chunk = bitmap.getNinePatchChunk();
+		boolean bResult = NinePatch.isNinePatchChunk(chunk);
+		return new NinePatchDrawable(null, bitmap, chunk, new Rect(), null);
 	}
 }

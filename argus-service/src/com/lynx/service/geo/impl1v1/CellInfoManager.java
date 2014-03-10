@@ -109,9 +109,9 @@ public class CellInfoManager {
 				Method mBid = cellLocation.getClass().getMethod("getBaseStationId", new Class[0]);
 				Method mSid = cellLocation.getClass().getMethod("getSystemId", new Class[0]);
 				Method mNid = cellLocation.getClass().getMethod("getNetworkId", new Class[0]);
-				bid = (Integer) mBid.invoke(cellLocation, new Object[0]);
-				sid = (Integer) mSid.invoke(cellLocation, new Object[0]);
-				nid = (Integer) mNid.invoke(cellLocation, new Object[0]);
+				bid = (Integer) mBid.invoke(cellLocation);
+				sid = (Integer) mSid.invoke(cellLocation);
+				nid = (Integer) mNid.invoke(cellLocation);
 				Method mLat = cellLocation.getClass().getMethod("getBaseStationLatitude",
 						new Class[0]);
 				Method mLng = cellLocation.getClass().getMethod("getBaseStationLongitude",

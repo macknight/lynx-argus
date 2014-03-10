@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.LinearLayout.LayoutParams;
 import com.lynx.argus.R;
 import com.lynx.argus.biz.widget.listview.CornerListView;
 import com.lynx.lib.core.LFFragment;
@@ -59,8 +60,7 @@ public class MoreFragment extends LFFragment implements AdapterView.OnItemClickL
 		SimpleAdapter adapter;
 		for (int i = 0; i < size; i++) {
 			cornerListView = new CornerListView(tabActivity);
-			lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
+			lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 			if (i == 0 && i == (size - 1)) {
 				lp.setMargins(15, 20, 15, 20);
 			} else if (i == 0) {
@@ -156,7 +156,7 @@ public class MoreFragment extends LFFragment implements AdapterView.OnItemClickL
 	}
 
 	public void donate() {
-        GuideFragment guideFragment = new GuideFragment();
-        tabActivity.pushFragment(guideFragment);
+		GuideFragment guideFragment = new GuideFragment();
+		tabActivity.pushFragment(guideFragment);
 	}
 }

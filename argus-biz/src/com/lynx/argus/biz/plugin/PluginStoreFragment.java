@@ -7,6 +7,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -14,6 +15,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.PopupWindow;
 
 import com.lynx.argus.R;
@@ -96,7 +98,7 @@ public class PluginStoreFragment extends LFFragment {
 		}, R.id.btn_pluginstore_install, R.id.btn_pluginstore_uninstall);
 
 		ImageButton ibDownload = (ImageButton) view.findViewById(R.id.ib_pluginstore_download);
-		ibDownload.setOnClickListener(new View.OnClickListener() {
+		ibDownload.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				DownloadCenterFragment downloadFragment = new DownloadCenterFragment();
@@ -105,7 +107,7 @@ public class PluginStoreFragment extends LFFragment {
 		});
 
 		ImageButton ibBack = (ImageButton) view.findViewById(R.id.ib_pluginstore_back);
-		ibBack.setOnClickListener(new View.OnClickListener() {
+		ibBack.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				tabActivity.onBackPressed();
@@ -163,7 +165,7 @@ public class PluginStoreFragment extends LFFragment {
 		private ImageView ivOpt;
 
 		public InstallPopWindow() {
-			super(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+			super(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
 
 			View view = View.inflate(tabActivity, R.layout.layout_plugin_install, null);
 			this.setContentView(view);

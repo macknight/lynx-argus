@@ -1,5 +1,8 @@
 package com.lynx.argus.biz.plugin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
@@ -7,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
+
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.argus.biz.plugin.demo.DemoFragment;
@@ -18,9 +23,6 @@ import com.lynx.lib.core.LFDexActivity;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
@@ -81,7 +83,7 @@ public class PluginCenterFragment extends LFFragment {
 		pluginManager.removeMsgHandler(handler);
 	}
 
-	private AdapterView.OnItemClickListener onItemClickListener = new AdapterView.OnItemClickListener() {
+	private OnItemClickListener onItemClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Plugin plugin = plugins.get(position);

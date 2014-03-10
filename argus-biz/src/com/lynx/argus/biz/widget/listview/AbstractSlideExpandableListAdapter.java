@@ -6,7 +6,9 @@ import android.util.SparseIntArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
 
 import java.util.BitSet;
@@ -160,7 +162,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 			public void onClick(final View view) {
 				Animation a = target.getAnimation();
 				if (a != null && a.hasStarted() && !a.hasEnded()) {
-					a.setAnimationListener(new Animation.AnimationListener() {
+					a.setAnimationListener(new AnimationListener() {
 						@Override
 						public void onAnimationStart(Animation animation) {
 
@@ -208,8 +210,7 @@ public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdap
 	}
 
 	private void updateExpandable(View target, int position) {
-		final LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) target
-				.getLayoutParams();
+		final LayoutParams params = (LayoutParams) target.getLayoutParams();
 		if (openItems.get(position)) {
 			target.setVisibility(View.VISIBLE);
 			params.bottomMargin = 0;

@@ -3,12 +3,15 @@ package com.lynx.lib.core;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.content.res.Resources.Theme;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout.LayoutParams;
 import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.PluginLoader;
+import com.lynx.lib.util.ImageUtil;
 import dalvik.system.DexClassLoader;
 
 /**
@@ -38,11 +41,14 @@ public class LFDexActivity extends LFNavigationActivity {
 
 	protected void loadModule(Bundle savedInstanceState) {
 		FrameLayout rootView = new FrameLayout(this);
-		rootView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-				ViewGroup.LayoutParams.MATCH_PARENT));
+		rootView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT));
 		rootView.setId(android.R.id.primary);
 		setContentView(rootView);
 		rootView.setBackgroundColor(0xffffeed7);
+
+        Drawable drawable = ImageUtil.getNinePatchDrawableFromAssets(this, "bg.9.png");
+        rootView.setBackgroundDrawable(drawable);
 
 		try {
 			String module = getIntent().getStringExtra("module");

@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -47,7 +48,7 @@ public class AboutFragment extends LFFragment {
 		}
 
 		tvVersion.setText(version);
-		tvVersion.setOnClickListener(new View.OnClickListener() {
+		tvVersion.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				if (LFEnvironment.isDebug()) {

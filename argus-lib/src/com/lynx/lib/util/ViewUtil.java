@@ -46,12 +46,7 @@ public class ViewUtil {
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.setMargins(50, 0, 0, 50);
 		iv.setLayoutParams(params);
-		try {
-			BitmapDrawable bg = new BitmapDrawable(null, am.open("err.png"));
-			iv.setImageDrawable(bg);
-		} catch (Exception e) {
-			Logger.e(Tag, "load icon error", e);
-		}
+        iv.setImageDrawable(ImageUtil.getNinePatchDrawableFromAssets(context, "err.png"));
 		view.addView(iv);
 
 		TextView tv = new TextView(context);
