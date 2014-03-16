@@ -1,16 +1,17 @@
 package com.lynx.argus.biz.plugin.model;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.lynx.argus.R;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.misc.AsyncImageLoader;
-
-import java.util.List;
 
 /**
  * 
@@ -71,8 +72,8 @@ public class PluginCenterAdapter extends BaseAdapter {
 		}
 
 		Plugin item = plugins.get(position);
-		holder.tvName.setText(item.name());
-		imgLoader.showAsyncImage(holder.ivIcon, item.icon());
+		holder.tvName.setText(item.getName());
+		imgLoader.showAsyncImage(holder.ivIcon, item.getIcon());
 		return view;
 	}
 

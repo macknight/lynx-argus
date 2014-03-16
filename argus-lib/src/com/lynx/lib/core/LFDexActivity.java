@@ -81,12 +81,12 @@ public class LFDexActivity extends LFNavigationActivity {
 				return;
 
 			DexModule dexModule = moduleLoader.dexModule();
-			if (dexModule != null && !TextUtils.isEmpty(dexModule.clazz())) {
+			if (dexModule != null && !TextUtils.isEmpty(dexModule.getClazz())) {
 				ClassLoader classLoader = getClassLoader();
 				if (classLoader == null) {
 					throw new Exception("load classloader error");
 				}
-				Class<?> clazz = classLoader.loadClass(dexModule.clazz());
+				Class<?> clazz = classLoader.loadClass(dexModule.getClazz());
 				LFFragment fragment = (LFFragment) clazz.newInstance();
 				if (fragment != null) {
 					pushFragment(fragment);

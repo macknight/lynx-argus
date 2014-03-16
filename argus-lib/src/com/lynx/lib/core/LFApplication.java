@@ -1,17 +1,18 @@
 package com.lynx.lib.core;
 
+import java.util.Map;
+
 import android.app.Application;
 import android.content.res.Configuration;
+
 import com.google.gson.Gson;
+import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.DexManager;
-import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.core.dex.PluginLoader;
 import com.lynx.lib.db.DBService;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
-
-import java.util.Map;
 
 /**
  * 
@@ -121,7 +122,7 @@ public abstract class LFApplication extends Application {
 	 * 
 	 * @param plugin
 	 */
-	public void installPlugin(Plugin plugin, DexModuleListener listener) {
+	public void installPlugin(Plugin plugin, DexListener listener) {
 		dexManager.installPlugin(plugin, listener);
 	}
 
@@ -130,7 +131,7 @@ public abstract class LFApplication extends Application {
 	 * 
 	 * @param plugin
 	 */
-	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {
+	public void uninstallPlugin(Plugin plugin, DexListener listener) {
 		dexManager.uninstallPlugin(plugin, listener);
 	}
 }

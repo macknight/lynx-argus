@@ -1,7 +1,10 @@
 package com.lynx.service.geo;
 
 import android.content.Context;
+import com.lynx.lib.core.LFActivity;
+import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
@@ -21,11 +24,18 @@ public class GeoServiceDexLoader extends ServiceLoader {
 
 	private List<LocationListener> listeners = null;
 
-	private static DexModule defModule = new DexModule("geo", 1, null, null, "地理位置信息服务",
-			"com.lynx.service.geo.impl1v1.GeoServiceImpl");
+	private static Service defService;
+
+	static {
+		defService = new Service();
+		defService.setModule("geo");
+		defService.setClazz("com.lynx.service.geo.impl1v1.GeoServiceImpl");
+		defService.setVersion(1);
+		defService.setDesc("地理位置信息服务");
+	}
 
 	public GeoServiceDexLoader() throws Exception {
-		super(defModule, GeoServiceImpl.class);
+		super(defService, GeoServiceImpl.class);
 	}
 
 	@Override
@@ -40,6 +50,7 @@ public class GeoServiceDexLoader extends ServiceLoader {
 	@Override
 	protected void loadService() {
 		try {
+			Context context = LFApplication.instance();
 			if (clazz != null) {
 				service = (GeoService) clazz.getConstructor(Context.class).newInstance(context);
 			}

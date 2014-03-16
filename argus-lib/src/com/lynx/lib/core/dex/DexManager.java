@@ -1,7 +1,5 @@
 package com.lynx.lib.core.dex;
 
-import com.lynx.lib.core.dex.DexModuleLoader.DexStatus;
-
 import java.util.Map;
 
 /**
@@ -26,7 +24,7 @@ public abstract class DexManager {
 
 	protected abstract void initServiceManager();
 
-	public Service service(String name) {
+	public IService service(String name) {
 		return serviceManager.service(name);
 	}
 
@@ -42,11 +40,11 @@ public abstract class DexManager {
 		return pluginManager.getPluginLoader(name);
 	}
 
-	public void installPlugin(Plugin plugin, DexModuleListener listener) {
-		pluginManager.addPluginLoader(new PluginLoader(plugin, DexStatus.INSTALL), listener);
+	public void installPlugin(Plugin plugin, DexListener listener) {
+		pluginManager.addPluginLoader(plugin, listener);
 	}
 
-	public void uninstallPlugin(Plugin plugin, DexModuleListener listener) {
+	public void uninstallPlugin(Plugin plugin, DexListener listener) {
 		pluginManager.removePluginLoader(plugin, listener);
 	}
 }

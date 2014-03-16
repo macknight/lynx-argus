@@ -1,13 +1,13 @@
 package com.lynx.lib.geo;
 
-import com.lynx.lib.core.dex.Service;
+import java.util.List;
+
+import com.lynx.lib.core.dex.IService;
 import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
 import com.lynx.lib.geo.entity.Wifi;
-
-import java.util.List;
 
 /**
  * 
@@ -15,7 +15,7 @@ import java.util.List;
  * 
  * @version 13-8-27 下午5:52
  */
-public interface GeoService extends Service {
+public interface GeoService extends IService {
 
 	LocationStatus status();
 

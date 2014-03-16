@@ -21,7 +21,7 @@ import com.lynx.argus.biz.plugin.model.PluginCenterAdapter;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFDexActivity;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.dex.DexModuleListener;
+import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.Plugin;
 
 /**
@@ -92,7 +92,7 @@ public class PluginCenterFragment extends LFFragment {
 				tabActivity.pushFragment(demoFragment);
 			} else {
 				Intent i = new Intent(getActivity(), LFDexActivity.class);
-				i.putExtra("module", plugin.module());
+				i.putExtra("module", plugin.getModule());
 				startActivity(i);
 			}
 		}
@@ -102,21 +102,20 @@ public class PluginCenterFragment extends LFFragment {
 
 		@Override
 		public boolean interested(int msg) {
-			return DexModuleListener.DEX_INSTALL_SUCCESS == msg
-					|| DexModuleListener.DEX_INSTALL_FAIL == msg
-					|| DexModuleListener.DEX_UNINSTALL_SUCCESS == msg
-					|| DexModuleListener.DEX_UNINSTALL_FAIL == msg;
+			return DexListener.DEX_INSTALL_SUCCESS == msg || DexListener.DEX_INSTALL_FAIL == msg
+					|| DexListener.DEX_UNINSTALL_SUCCESS == msg
+					|| DexListener.DEX_UNINSTALL_FAIL == msg;
 		}
 
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case DexModuleListener.DEX_DOWNLOAD_SUCCESS:
-			case DexModuleListener.DEX_DOWNLOAD_FAIL:
-			case DexModuleListener.DEX_INSTALL_SUCCESS:
-			case DexModuleListener.DEX_INSTALL_FAIL:
-			case DexModuleListener.DEX_UNINSTALL_SUCCESS:
-			case DexModuleListener.DEX_UNINSTALL_FAIL:
+			case DexListener.DEX_DOWNLOAD_SUCCESS:
+			case DexListener.DEX_DOWNLOAD_FAIL:
+			case DexListener.DEX_INSTALL_SUCCESS:
+			case DexListener.DEX_INSTALL_FAIL:
+			case DexListener.DEX_UNINSTALL_SUCCESS:
+			case DexListener.DEX_UNINSTALL_FAIL:
 				loadMyPlugins();
 				break;
 			}
@@ -126,8 +125,13 @@ public class PluginCenterFragment extends LFFragment {
 	private void loadMyPlugins() {
 		plugins.clear();
 
-		Plugin plugin = new Plugin("demo", 1, "实验", null, null, null, "试验田",
-				"com.lynx.argus.biz.plugin.demo.DemoFragment", 1);
+		Plugin plugin = new Plugin();
+		plugin.setModule("demo");
+		plugin.setName("科学实验");
+		plugin.setClazz("com.lynx.argus.biz.plugin.demo.DemoFragment");
+		plugin.setVersion(1);
+		plugin.setDesc("试验田");
+		plugin.setCategory(1);
 		plugins.add(plugin);
 
 		if (application.pluginLoaders() == null) {

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_argus-lib" default="compile.module.argus-lib">
+  <dirname property="module.argus-lib.basedir" file="${ant.file.module_argus-lib}"/>
+  
+  <property name="module.jdk.home.argus-lib" value="${jdk.home.android_api_18_platform}"/>
+  <property name="module.jdk.bin.argus-lib" value="${jdk.bin.android_api_18_platform}"/>
+  <property name="module.jdk.classpath.argus-lib" value="jdk.classpath.android_api_18_platform"/>
+  
+  <property name="compiler.args.argus-lib" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="argus-lib.output.dir" value="${module.argus-lib.basedir}/../out/production/argus-lib"/>
+  <property name="argus-lib.testoutput.dir" value="${module.argus-lib.basedir}/../out/test/argus-lib"/>
+  
+  <path id="argus-lib.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="argus-lib.module.production.classpath">
+    <path refid="${module.jdk.classpath.argus-lib}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.gson.classpath"/>
+  </path>
+  
+  <path id="argus-lib.runtime.production.module.classpath">
+    <pathelement location="${argus-lib.output.dir}"/>
+  </path>
+  
+  <path id="argus-lib.module.classpath">
+    <path refid="${module.jdk.classpath.argus-lib}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.gson.classpath"/>
+    <pathelement location="${argus-lib.output.dir}"/>
+  </path>
+  
+  <path id="argus-lib.runtime.module.classpath">
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.gson.classpath"/>
+    <pathelement location="${argus-lib.testoutput.dir}"/>
+    <pathelement location="${argus-lib.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.argus-lib">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.argus-lib">
+    <patternset refid="excluded.from.module.argus-lib"/>
+  </patternset>
+  
+  <path id="argus-lib.module.sourcepath">
+    <dirset dir="${module.argus-lib.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.argus-lib" depends="compile.module.argus-lib.production,compile.module.argus-lib.tests" description="Compile module argus-lib"/>
+  
+  <target name="compile.module.argus-lib.production" depends="register.custom.compilers" description="Compile module argus-lib; production classes">
+    <mkdir dir="${argus-lib.output.dir}"/>
+    <javac2 destdir="${argus-lib.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.argus-lib}/javac">
+      <compilerarg line="${compiler.args.argus-lib}"/>
+      <bootclasspath refid="argus-lib.module.bootclasspath"/>
+      <classpath refid="argus-lib.module.production.classpath"/>
+      <src refid="argus-lib.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.argus-lib"/>
+    </javac2>
+    
+    <copy todir="${argus-lib.output.dir}">
+      <fileset dir="${module.argus-lib.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.argus-lib.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.argus-lib.tests" depends="register.custom.compilers,compile.module.argus-lib.production" description="compile module argus-lib; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.argus-lib" description="cleanup module">
+    <delete dir="${argus-lib.output.dir}"/>
+    <delete dir="${argus-lib.testoutput.dir}"/>
+  </target>
+</project>

@@ -1,5 +1,6 @@
 package com.lynx.lib.cache;
 
+import com.lynx.lib.core.dex.IService;
 import com.lynx.lib.core.dex.Service;
 
 /**
@@ -8,7 +9,7 @@ import com.lynx.lib.core.dex.Service;
  * 
  * @version 13-9-17 下午10:02
  */
-public interface CacheService extends Service {
+public interface CacheService extends IService {
 
 	/**
 	 * 以指定方式将数据放入CacheService中,默认放入内存缓存

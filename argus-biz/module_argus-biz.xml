@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_argus-biz" default="compile.module.argus-biz">
+  <dirname property="module.argus-biz.basedir" file="${ant.file.module_argus-biz}"/>
+  
+  <property name="module.jdk.home.argus-biz" value="${jdk.home.android_api_18_platform}"/>
+  <property name="module.jdk.bin.argus-biz" value="${jdk.bin.android_api_18_platform}"/>
+  <property name="module.jdk.classpath.argus-biz" value="jdk.classpath.android_api_18_platform"/>
+  
+  <property name="compiler.args.argus-biz" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="argus-biz.output.dir" value="${module.argus-biz.basedir}/../out/production/argus-biz"/>
+  <property name="argus-biz.testoutput.dir" value="${module.argus-biz.basedir}/../out/test/argus-biz"/>
+  
+  <path id="argus-biz.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="argus-biz.module.production.classpath">
+    <path refid="${module.jdk.classpath.argus-biz}"/>
+    <pathelement location="${argus-service.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.argus-lib.classpath"/>
+    <path refid="library.asmack-0.8.9.classpath"/>
+    <path refid="library.mapbar.classpath"/>
+    <path refid="library.gson.classpath"/>
+  </path>
+  
+  <path id="argus-biz.runtime.production.module.classpath">
+    <path refid="argus-service.runtime.production.module.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.argus-lib.classpath"/>
+    <path refid="library.asmack-0.8.9.classpath"/>
+    <path refid="library.mapbar.classpath"/>
+    <path refid="library.gson.classpath"/>
+    <pathelement location="${argus-biz.output.dir}"/>
+  </path>
+  
+  <path id="argus-biz.module.classpath">
+    <path refid="${module.jdk.classpath.argus-biz}"/>
+    <pathelement location="${argus-service.testoutput.dir}"/>
+    <pathelement location="${argus-service.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.argus-lib.classpath"/>
+    <path refid="library.asmack-0.8.9.classpath"/>
+    <path refid="library.mapbar.classpath"/>
+    <path refid="library.gson.classpath"/>
+    <pathelement location="${argus-biz.output.dir}"/>
+  </path>
+  
+  <path id="argus-biz.runtime.module.classpath">
+    <path refid="argus-service.runtime.module.classpath"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.argus-lib.classpath"/>
+    <path refid="library.asmack-0.8.9.classpath"/>
+    <path refid="library.mapbar.classpath"/>
+    <path refid="library.gson.classpath"/>
+    <pathelement location="${argus-biz.testoutput.dir}"/>
+    <pathelement location="${argus-biz.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.argus-biz">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.argus-biz">
+    <patternset refid="excluded.from.module.argus-biz"/>
+  </patternset>
+  
+  <path id="argus-biz.module.sourcepath">
+    <dirset dir="${module.argus-biz.basedir}">
+      <include name="src"/>
+      <include name="gen"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.argus-biz" depends="compile.module.argus-biz.production,compile.module.argus-biz.tests" description="Compile module argus-biz"/>
+  
+  <target name="compile.module.argus-biz.production" depends="register.custom.compilers,compile.module.argus-service" description="Compile module argus-biz; production classes">
+    <mkdir dir="${argus-biz.output.dir}"/>
+    <javac2 destdir="${argus-biz.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.argus-biz}/javac">
+      <compilerarg line="${compiler.args.argus-biz}"/>
+      <bootclasspath refid="argus-biz.module.bootclasspath"/>
+      <classpath refid="argus-biz.module.production.classpath"/>
+      <src refid="argus-biz.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.argus-biz"/>
+    </javac2>
+    
+    <copy todir="${argus-biz.output.dir}">
+      <fileset dir="${module.argus-biz.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.argus-biz.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.argus-biz.tests" depends="register.custom.compilers,compile.module.argus-biz.production" description="compile module argus-biz; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.argus-biz" description="cleanup module">
+    <delete dir="${argus-biz.output.dir}"/>
+    <delete dir="${argus-biz.testoutput.dir}"/>
+  </target>
+</project>

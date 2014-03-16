@@ -1,9 +1,9 @@
 package com.lynx.lib.core.dex;
 
-import com.lynx.lib.util.FileUtil;
-
 import java.io.File;
 import java.io.IOException;
+
+import com.lynx.lib.util.FileUtil;
 
 /**
  * 动态Fragment加载器
@@ -12,10 +12,10 @@ import java.io.IOException;
  * 
  * @version 13-9-29 下午4:12
  */
-public class PluginLoader extends DexModuleLoader {
+public class PluginLoader extends DexLoader {
 
 	public PluginLoader(Plugin plugin, DexStatus status) {
-		super(DexType.PLUGIN, plugin, status);
+		super(plugin, status);
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package com.lynx.lib.core.dex;
 
+import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
 import dalvik.system.DexClassLoader;
 
@@ -9,18 +10,18 @@ import dalvik.system.DexClassLoader;
  * 
  * @version 13-8-30 下午11:29
  */
-public abstract class ServiceLoader extends DexModuleLoader {
+public abstract class ServiceLoader extends DexLoader {
 	protected Class<?> clazz;
-	protected Service service;
+	protected IService service;
 
 	/**
-	 * @param dexModule
+	 * @param service
 	 *            动态服务配置
 	 * @param defaultClazz
 	 *            默认服务版本
 	 */
-	public ServiceLoader(DexModule dexModule, Class<?> defaultClazz) throws Exception {
-		super(DexType.SERVICE, dexModule, DexStatus.UPDATE);
+	public ServiceLoader(Service service, Class<?> defaultClazz) throws Exception {
+		super(service, DexStatus.UPDATE);
 
 		if (clazz == null) {
 			clazz = defaultClazz;
@@ -48,7 +49,7 @@ public abstract class ServiceLoader extends DexModuleLoader {
 	 */
 	protected abstract void afterLoad();
 
-	public Service service() {
+	public IService service() {
 		return service;
 	}
 
@@ -62,11 +63,12 @@ public abstract class ServiceLoader extends DexModuleLoader {
 		beforeLoad();
 		deleteOldFile();
 		try {
-			DexClassLoader cl = new DexClassLoader(srcPath, dexDir, null, context.getClassLoader());
-			clazz = (Class<Service>) cl.loadClass(dexModule.clazz());
+			DexClassLoader cl = new DexClassLoader(srcPath, dexDir, null, LFApplication.instance()
+					.getClassLoader());
+			clazz = cl.loadClass(dexModule.getClazz());
 		} catch (Exception e) {
 			// TODO: roll back to the default service
-			Logger.e(dexModule.module(), "replace service error", e);
+			Logger.e(dexModule.getModule(), "replace service error", e);
 		}
 
 		loadService();

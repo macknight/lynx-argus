@@ -1,4 +1,4 @@
-package com.lynx.lib.core.d;
+package com.lynx.lib.core.dex;
 
 /**
  * @author chris

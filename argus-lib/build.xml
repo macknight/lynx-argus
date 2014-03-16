@@ -19,9 +19,10 @@
             <fileset dir="${asset.dir}"/>
         </copy>
         <javac encoding="utf-8" target="1.6" srcdir="${src.dir}"
-               destdir="${outdir}" bootclasspath="${android.jar}">
+               destdir="${outdir}" bootclasspath="${android.jar}" source="1.6">
             <classpath>
                 <fileset dir="${external-lib}" includes="android-support-v4.jar"/>
+                <fileset dir="${external-lib}" includes="gson.jar"/>
             </classpath>
 
         </javac>

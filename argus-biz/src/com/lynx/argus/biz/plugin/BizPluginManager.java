@@ -1,24 +1,24 @@
 package com.lynx.argus.biz.plugin;
 
-import android.widget.Toast;
-import com.lynx.argus.app.BizApplication;
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.dex.DexModule;
-import com.lynx.lib.core.dex.DexModuleListener;
-import com.lynx.lib.core.dex.DexModuleLoader.DexType;
-import com.lynx.lib.core.dex.DexUtil;
-import com.lynx.lib.core.dex.Plugin;
-import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.widget.Toast;
+
+import com.lynx.argus.app.BizApplication;
+import com.lynx.lib.core.Const;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.dex.DexListener;
+import com.lynx.lib.core.dex.DexLoader;
+import com.lynx.lib.core.dex.Plugin;
+import com.lynx.lib.http.HttpCallback;
+import com.lynx.lib.http.HttpService;
 
 /**
  * 
@@ -70,9 +70,9 @@ public class BizPluginManager {
 		}
 	}
 
-	private DexModuleListener listener = new DexModuleListener() {
+	private DexListener listener = new DexListener() {
 		@Override
-		public void onStatusChanged(DexModule dexModule, int status) {
+		public void onStatusChanged(DexLoader dexLoader, int status) {
 			dispatchMessage(status);
 		}
 	};
@@ -196,7 +196,7 @@ public class BizPluginManager {
 	 * @throws Exception
 	 */
 	private void saveConfig(String fileName, Object data) throws Exception {
-        // TODO 改为数据库存储配置
+		// TODO 改为数据库存储配置
 		File config = new File(basicDir, fileName);
 		File configTmp = new File(basicDir, "tmp");
 		File configOld = new File(basicDir, "old");
@@ -256,8 +256,8 @@ public class BizPluginManager {
 		pluginsAtStore.clear();
 		for (int i = 0; i < jaPlugin.length(); ++i) {
 			try {
-				Plugin plugin = (Plugin) DexUtil.json2dexModule(DexType.PLUGIN,
-						jaPlugin.getJSONObject(i));
+				Plugin plugin = application.gson().fromJson(jaPlugin.getJSONObject(i).toString(),
+						Plugin.class);
 				if (plugin != null) {
 					pluginsAtStore.add(plugin);
 				}

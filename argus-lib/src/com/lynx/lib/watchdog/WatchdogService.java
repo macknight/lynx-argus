@@ -1,6 +1,6 @@
 package com.lynx.lib.watchdog;
 
-import com.lynx.lib.core.dex.Service;
+import com.lynx.lib.core.dex.IService;
 
 /**
  * 线上bug fix入口
@@ -9,7 +9,7 @@ import com.lynx.lib.core.dex.Service;
  * 
  * @version 13-9-12 下午1:34
  */
-public interface WatchdogService extends Service {
+public interface WatchdogService extends IService {
 
 	/**
 	 * 启动后只执行一次的修复逻辑

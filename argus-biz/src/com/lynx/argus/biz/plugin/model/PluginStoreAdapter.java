@@ -1,5 +1,7 @@
 package com.lynx.argus.biz.plugin.model;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +9,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.lynx.argus.R;
 import com.lynx.argus.app.BizApplication;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.misc.AsyncImageLoader;
-
-import java.util.List;
 
 /**
  * 
@@ -74,9 +75,9 @@ public class PluginStoreAdapter extends BaseAdapter {
 		}
 
 		Plugin item = data.get(position);
-		holder.tvName.setText(item.name());
-		holder.tvDesc.setText(item.desc());
-		if (application.hasPlugin(item.module())) {
+		holder.tvName.setText(item.getName());
+		holder.tvDesc.setText(item.getDesc());
+		if (application.hasPlugin(item.getModule())) {
 			holder.ivStatus.setImageResource(R.drawable.plugin_installed);
 			holder.btnInstall.setEnabled(false);
 			holder.btnUninstall.setEnabled(true);
@@ -85,7 +86,7 @@ public class PluginStoreAdapter extends BaseAdapter {
 			holder.btnInstall.setEnabled(true);
 			holder.btnUninstall.setEnabled(false);
 		}
-		imgLoader.showAsyncImage(holder.ivIcon, item.icon());
+		imgLoader.showAsyncImage(holder.ivIcon, item.getIcon());
 		return view;
 	}
 

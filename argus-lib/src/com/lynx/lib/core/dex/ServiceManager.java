@@ -1,20 +1,17 @@
 package com.lynx.lib.core.dex;
 
-import android.content.Context;
-import android.widget.Toast;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
-import com.lynx.lib.core.dex.DexModuleLoader.DexType;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 
@@ -27,14 +24,14 @@ public abstract class ServiceManager {
 	private static final String LM_API_SERVICE_CONFIG = "/dex/service";
 	public static final String PREFIX = "service";
 
-	private Context context;
+	private LFApplication context;
 	private HttpService httpService;
 
 	private Map<String, ServiceLoader> serviceLoaders = new HashMap<String, ServiceLoader>();
 
 	public ServiceManager() {
 		this.context = LFApplication.instance();
-		this.httpService = (HttpService) LFApplication.instance().service("http");
+		this.httpService = (HttpService) context.service("http");
 
 		File tmp = new File(context.getFilesDir(), PREFIX);
 		if (!tmp.exists()) {
@@ -62,10 +59,16 @@ public abstract class ServiceManager {
 				// 获取插件更新配置
 				for (int i = 0; i < jaPlugin.length(); ++i) {
 					try {
-						DexModule module = DexUtil.json2dexModule(DexType.SERVICE,
-								jaPlugin.getJSONObject(i));
-						// 无需通知上层，直接更新
-						update(module);
+						Service service = context.gson().fromJson(
+								jaPlugin.getJSONObject(i).toString(), Service.class);
+						if (service != null) {
+							// 无需通知上层，直接更新
+							ServiceLoader loader = serviceLoaders.get(service.getModule());
+							if (loader != null) {
+								// service 有新的动态更新
+                                loader.update(service);
+							}
+						}
 					} catch (Exception e) {
 						Logger.e(Tag, "服务更新配置数据解析异常", e);
 					}
@@ -91,19 +94,7 @@ public abstract class ServiceManager {
 				callback);
 	}
 
-	private void update(DexModule dexModule) {
-		try {
-			ServiceLoader dexLoader = serviceLoaders.get(dexModule.module());
-			if (dexLoader != null) {
-				// service 有新的动态更新
-				dexLoader.update(dexModule);
-			}
-		} catch (Exception e) {
-			Logger.e(Tag, "update service error", e);
-		}
-	}
-
-	public Service service(String name) {
+	public IService service(String name) {
 		ServiceLoader loader = serviceLoaders.get(name);
 		if (loader != null) {
 			return loader.service();

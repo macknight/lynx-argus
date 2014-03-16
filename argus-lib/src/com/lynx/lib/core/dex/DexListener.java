@@ -7,7 +7,8 @@ package com.lynx.lib.core.dex;
  * 
  * @version 13-11-21 下午8:30
  */
-public interface DexModuleListener {
+public interface DexListener {
+
 	public static final int DEX_HAS_UPDATE = 0; // 有更新
 	public static final int DEX_DOWNLOAD_SUCCESS = 1; // 动态模块下载成功
 	public static final int DEX_DOWNLOAD_FAIL = 2; // 动态模块下载失败
@@ -16,6 +17,6 @@ public interface DexModuleListener {
 	public static final int DEX_UNINSTALL_SUCCESS = 5; // 动态模块卸载成功
 	public static final int DEX_UNINSTALL_FAIL = 6; // 动态模块卸载失败
 
-	void onStatusChanged(DexModule dexModule, int status);
+	void onStatusChanged(DexLoader dexLoader, int status);
 
 }

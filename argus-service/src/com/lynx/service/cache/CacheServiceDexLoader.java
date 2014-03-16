@@ -2,7 +2,9 @@ package com.lynx.service.cache;
 
 import android.content.Context;
 
+import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.dex.DexModule;
+import com.lynx.lib.core.dex.IService;
 import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.service.cache.impl1v1.CacheServiceImpl;
@@ -17,12 +19,18 @@ public class CacheServiceDexLoader extends ServiceLoader {
 
 	public static final String Tag = "cache";
 
-	private static final int minVersion = 101;
-	private static DexModule defModule = new DexModule("cache", 1, null, null, "缓存服务",
-			"com.lynx.service.cache.impl1v1.CacheServiceImpl");
+	private static Service defService;
+
+	static {
+		defService = new Service();
+		defService.setModule("cache");
+		defService.setClazz("com.lynx.service.cache.impl1v1.CacheServiceImpl");
+		defService.setVersion(1);
+		defService.setDesc("缓存服务");
+	}
 
 	public CacheServiceDexLoader() throws Exception {
-		super(defModule, CacheServiceImpl.class);
+		super(defService, CacheServiceImpl.class);
 	}
 
 	@Override
@@ -33,8 +41,9 @@ public class CacheServiceDexLoader extends ServiceLoader {
 	@Override
 	protected void loadService() throws Exception {
 		try {
+			Context context = LFApplication.instance();
 			if (clazz != null) {
-				service = (Service) clazz.getConstructor(Context.class).newInstance(context);
+				service = (IService) clazz.getConstructor(Context.class).newInstance(context);
 			}
 
 			if (service == null) {

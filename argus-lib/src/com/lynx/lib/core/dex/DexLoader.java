@@ -1,6 +1,5 @@
-package com.lynx.lib.core.d;
+package com.lynx.lib.core.dex;
 
-import android.content.Context;
 import android.text.TextUtils;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.Logger;
