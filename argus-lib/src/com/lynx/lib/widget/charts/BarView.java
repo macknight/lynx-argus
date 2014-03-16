@@ -12,7 +12,8 @@ import android.view.View;
 import com.lynx.lib.util.DisplayUtil;
 
 /**
- * Created by Dacer on 11/11/13.
+ * @author zhufeng.liu
+ * @version 14-3-15 4:54 pm
  */
 public class BarView extends View {
 	private ArrayList<Float> percentList;

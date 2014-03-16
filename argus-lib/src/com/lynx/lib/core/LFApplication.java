@@ -2,10 +2,12 @@ package com.lynx.lib.core;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import com.google.gson.Gson;
 import com.lynx.lib.core.dex.DexManager;
 import com.lynx.lib.core.dex.DexModuleListener;
 import com.lynx.lib.core.dex.Plugin;
 import com.lynx.lib.core.dex.PluginLoader;
+import com.lynx.lib.db.DBService;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 
@@ -22,7 +24,9 @@ public abstract class LFApplication extends Application {
 	protected static LFApplication instance;
 
 	private static HttpService httpService;
+	private static DBService dbService;
 	protected DexManager dexManager;
+	private static Gson gson;
 
 	public static LFApplication instance() {
 		if (instance == null) {
@@ -39,6 +43,9 @@ public abstract class LFApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		httpService = new DefaultHttpServiceImpl();
+		dbService = DBService.create(this, "argus");
+        gson = new Gson();
+
 		initDexManager();
 	}
 
@@ -76,6 +83,14 @@ public abstract class LFApplication extends Application {
 		}
 		return dexManager.service(name);
 	}
+
+	public DBService dbService() {
+		return dbService;
+	}
+
+    public Gson gson() {
+        return gson;
+    }
 
 	public Map<String, PluginLoader> pluginLoaders() {
 		return dexManager.pluginLoaders();

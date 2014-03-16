@@ -46,7 +46,7 @@ public class ViewUtil {
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.setMargins(50, 0, 0, 50);
 		iv.setLayoutParams(params);
-        iv.setImageDrawable(ImageUtil.getDrawableFromAssets(context, "err.png"));
+        iv.setImageDrawable(ImageUtil.getImageDrawableFromAssets(context, "images/err.png"));
 		view.addView(iv);
 
 		TextView tv = new TextView(context);

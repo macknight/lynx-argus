@@ -4,8 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import com.lynx.argus.R;
+import com.lynx.argus.biz.plugin.model.User;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.core.Logger;
+import com.lynx.lib.db.DBService;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * 
@@ -26,6 +33,21 @@ public class DemoFragment extends LFFragment {
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
+
+		DBService db = DBService.create(tabActivity, "argus");
+		List<User> users = db.findAll(User.class);// 查询所有的用户
+        if (users == null || users.size() <=0) {
+            User user = new User();
+            user.setName("探索者");
+            user.setRegisterDate(new Date());
+            db.save(user);
+
+            users = db.findAll(User.class);
+        }
+
+		TextView tvCount = (TextView) view.findViewById(R.id.tv_count);
+		tvCount.setText(users.get(0).getName() + ":" + users.get(0).getRegisterDate());
+
 		return view;
 	}
 }

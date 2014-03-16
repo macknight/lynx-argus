@@ -9,7 +9,8 @@ import android.view.View;
 import com.lynx.lib.util.DisplayUtil;
 
 /**
- * Created by Dacer on 11/13/13.
+ * @author zhufeng.liu
+ * @version 14-3-15 3:44 pm
  */
 public class PieView extends View {
 

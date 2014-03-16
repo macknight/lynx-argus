@@ -1,7 +1,8 @@
 package com.lynx.lib.widget.charts;
 
 /**
- * Created by Dacer on 11/14/13.
+ * @author zhufeng.liu
+ * @version 14-3-15 3:54 pm
  */
 public class PieHelper {
 

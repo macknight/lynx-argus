@@ -1,16 +1,19 @@
 package com.lynx.lib.util;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
+
 import android.content.Context;
 import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
-import com.lynx.lib.core.Logger;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.lynx.lib.core.Logger;
 
 /**
  * 
@@ -19,7 +22,7 @@ import java.net.URL;
  * @version 13-11-15 下午1:38
  */
 public class ImageUtil {
-	private static final String TAG = "ImageUtil";
+	private static final String Tag = "ImageUtil";
 
 	private ImageUtil() {
 		throw new AssertionError("ImageUtil shouldn't be instanced");
@@ -54,7 +57,7 @@ public class ImageUtil {
 		try {
 			return BitmapFactory.decodeStream(stream);
 		} catch (Exception e) {
-			Logger.e(TAG, "bitmap convert error", e);
+			Logger.e(Tag, "bitmap convert error", e);
 		}
 
 		return null;
@@ -178,23 +181,20 @@ public class ImageUtil {
 		}
 	}
 
-	public static Drawable getDrawableFromAssets(Context context, String fileName) {
-		Drawable drawable = null;
-
-		return drawable;
-	}
-
-	public static NinePatchDrawable getNinePatchDrawableFromAssets(Context context, String fileName) {
-		InputStream stream = null;
+	public static Drawable getImageDrawableFromAssets(Context context, String fileName) {
 		try {
-			stream = context.getAssets().open(fileName);
-		} catch (IOException e) {
-			// TODO is need to add log? currently not
+			InputStream stream = context.getAssets().open("images/" + fileName);
+			Bitmap bitmap = BitmapFactory.decodeStream(stream);
+			byte[] chunk = bitmap.getNinePatchChunk();
+			boolean isNinePatch = NinePatch.isNinePatchChunk(chunk);
+			if (isNinePatch) {
+				return new NinePatchDrawable(null, bitmap, chunk, new Rect(), null);
+			} else {
+				return bitmap2Drawable(bitmap);
+			}
+		} catch (Exception e) {
+			Logger.e(Tag, "get drawable from assets error", e);
+			return null;
 		}
-
-		Bitmap bitmap = BitmapFactory.decodeStream(stream);
-		byte[] chunk = bitmap.getNinePatchChunk();
-		boolean bResult = NinePatch.isNinePatchChunk(chunk);
-		return new NinePatchDrawable(null, bitmap, chunk, new Rect(), null);
 	}
 }

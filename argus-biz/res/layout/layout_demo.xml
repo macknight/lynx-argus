@@ -9,4 +9,9 @@
 	          android:textSize="@dimen/font_size_xlarge"
 	          android:text="this is plugin ui demo field"/>
 
+    <TextView android:id="@+id/tv_count"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

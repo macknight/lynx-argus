@@ -2,19 +2,20 @@ package com.lynx.lib.widget.charts;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import android.content.Context;
 import android.graphics.*;
-import android.graphics.drawable.NinePatchDrawable;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ScrollView;
 import com.lynx.lib.util.DisplayUtil;
 import com.lynx.lib.util.ImageUtil;
 
 /**
- * Created by Dacer on 11/4/13. Edited by Lee youngchan 21/1/14
+ * @author zhufeng.liu
+ * @version 14-3-15 4:24 pm
  */
 public class LineView extends View {
 	private int mViewHeight;
@@ -45,9 +46,9 @@ public class LineView extends View {
 	private Dot selectedDot;
 
 	private int topLineLength = DisplayUtil.dip2px(getContext(), 12);; // | | ←this
-																	// -+-+-
+																		// -+-+-
 	private int sideLineLength = DisplayUtil.dip2px(getContext(), 45) / 3 * 2;// --+--+--+--+--+--+--
-																			// ↑this
+																				// ↑this
 	private int backgroundGridWidth = DisplayUtil.dip2px(getContext(), 45);
 
 	// Constants
@@ -69,20 +70,10 @@ public class LineView extends View {
 
 	private int showPopupType = SHOW_POPUPS_NONE;
 
-	public void setShowPopup(int popupType) {
-		this.showPopupType = popupType;
-	}
-
-	// 점선표시
 	private Boolean drawDotLine = false;
-	// 라인컬러
-	private String[] colorArray = { "#e74c3c", "#2980b9", "#1abc9c" };
-	// popup 컬러
-	private String[] popupColorArray = { "popup_blue.9.png", "popup_green.9.png", "popup_red.9.png" };
 
-	public void setDrawDotLine(Boolean drawDotLine) {
-		this.drawDotLine = drawDotLine;
-	}
+    private int resId;
+	private List<String> colors;
 
 	private Runnable animator = new Runnable() {
 		@Override
@@ -97,7 +88,7 @@ public class LineView extends View {
 				}
 			}
 			if (needNewFrame) {
-				postDelayed(this, 25);
+				postDelayed(this, 5);
 			}
 			invalidate();
 		}
@@ -174,8 +165,8 @@ public class LineView extends View {
 		this.dataLists = dataLists;
 		for (ArrayList<Integer> list : dataLists) {
 			if (list.size() > bottomTextList.size()) {
-				throw new RuntimeException("dacer.LineView error:"
-						+ " dataList.size() > bottomTextList.size() !!!");
+				throw new RuntimeException(
+						"dacer.LineView error: dataList.size() > bottomTextList.size() !!!");
 			}
 		}
 		int biggestData = 0;
@@ -261,10 +252,8 @@ public class LineView extends View {
 					int x = xCoordinateList.get(i);
 					int y = yCoordinateList.get(verticalGridNum - dataLists.get(k).get(i));
 					if (i > drawDotSize - 1) {
-						// 도트리스트를 추가한다.
 						drawDotLists.get(k).add(new Dot(x, 0, x, y, dataLists.get(k).get(i), k));
 					} else {
-						// 도트리스트에 타겟을 설정한다.
 						drawDotLists.get(k).set(
 								i,
 								drawDotLists.get(k).get(i)
@@ -304,21 +293,22 @@ public class LineView extends View {
 			int MinValue = Collections.min(dataLists.get(k));
 			for (Dot d : drawDotLists.get(k)) {
 				if (showPopupType == SHOW_POPUPS_All)
-					drawPopup(canvas, String.valueOf(d.data), d.getPoint(), popupColorArray[k % 3]);
+					drawPopup(canvas, String.valueOf(d.data), d.getPoint(),
+							getColor(k % (colors.size() + 1)));
 				else if (showPopupType == SHOW_POPUPS_MAXMIN_ONLY) {
 					if (d.data == MaxValue)
-						drawPopup(canvas, String.valueOf(d.data), d.getPoint(),
-								popupColorArray[k % 3]);
+						drawPopup(canvas, String.valueOf(d.data), d.getPoint(), getColor(k
+								% (colors.size() + 1)));
+
 					if (d.data == MinValue)
-						drawPopup(canvas, String.valueOf(d.data), d.getPoint(),
-								popupColorArray[k % 3]);
+						drawPopup(canvas, String.valueOf(d.data), d.getPoint(), getColor(k
+								% (colors.size() + 1)));
 				}
 			}
 		}
-		// 선택한 dot 만 popup 이 뜨게 한다.
 		if (showPopup && selectedDot != null) {
 			drawPopup(canvas, String.valueOf(selectedDot.data), selectedDot.getPoint(),
-					popupColorArray[selectedDot.linenumber % 3]);
+					getColor(selectedDot.linenumber % (colors.size() + 1)));
 		}
 	}
 
@@ -329,22 +319,26 @@ public class LineView extends View {
 	 * @param point
 	 *            The Point consists of the x y coordinates from left bottom to right top. Like is
 	 * 
-	 *            3 2 1 0 1 2 3 4 5
 	 */
-	private void drawPopup(Canvas canvas, String num, Point point, String fileName) {
+	private void drawPopup(Canvas canvas, String num, Point point, int textColor) {
 		boolean singularNum = (num.length() == 1);
 		int sidePadding = DisplayUtil.dip2px(getContext(), singularNum ? 8 : 5);
 		int x = point.x;
 		int y = point.y - DisplayUtil.dip2px(getContext(), 5);
 		Rect popupTextRect = new Rect();
 		popupTextPaint.getTextBounds(num, 0, num.length(), popupTextRect);
+		popupTextPaint.setColor(textColor);
 		Rect r = new Rect(x - popupTextRect.width() / 2 - sidePadding, y - popupTextRect.height()
 				- bottomTriangleHeight - popupTopPadding * 2 - popupBottomMargin, x
 				+ popupTextRect.width() / 2 + sidePadding, y + popupTopPadding - popupBottomMargin);
 
-		NinePatchDrawable popup = ImageUtil.getNinePatchDrawableFromAssets(getContext(), fileName);
-		popup.setBounds(r);
-		popup.draw(canvas);
+		try {
+			Drawable popup = getResources().getDrawable(resId);
+			popup.setBounds(r);
+			popup.draw(canvas);
+		} catch (Exception e) {
+
+		}
 		canvas.drawText(num, x, y - bottomTriangleHeight - popupBottomMargin, popupTextPaint);
 	}
 
@@ -357,7 +351,6 @@ public class LineView extends View {
 		return r.height();
 	}
 
-	// 도트그리기
 	private void drawDots(Canvas canvas) {
 		Paint bigCirPaint = new Paint();
 		bigCirPaint.setAntiAlias(true);
@@ -365,7 +358,7 @@ public class LineView extends View {
 		smallCirPaint.setColor(Color.parseColor("#FFFFFF"));
 		if (drawDotLists != null && !drawDotLists.isEmpty()) {
 			for (int k = 0; k < drawDotLists.size(); k++) {
-				bigCirPaint.setColor(Color.parseColor(colorArray[k % 3]));
+				bigCirPaint.setColor(getColor(k % colors.size()));
 				for (Dot dot : drawDotLists.get(k)) {
 					canvas.drawCircle(dot.x, dot.y, DOT_OUTER_CIR_RADIUS, bigCirPaint);
 					canvas.drawCircle(dot.x, dot.y, DOT_INNER_CIR_RADIUS, smallCirPaint);
@@ -374,13 +367,12 @@ public class LineView extends View {
 		}
 	}
 
-	// 선그리기
 	private void drawLines(Canvas canvas) {
 		Paint linePaint = new Paint();
 		linePaint.setAntiAlias(true);
 		linePaint.setStrokeWidth(DisplayUtil.dip2px(getContext(), 2));
 		for (int k = 0; k < drawDotLists.size(); k++) {
-			linePaint.setColor(Color.parseColor(colorArray[k % 3]));
+			linePaint.setColor(getColor(k % (colors.size() + 1)));
 			for (int i = 0; i < drawDotLists.get(k).size() - 1; i++) {
 				canvas.drawLine(drawDotLists.get(k).get(i).x, drawDotLists.get(k).get(i).y,
 						drawDotLists.get(k).get(i + 1).x, drawDotLists.get(k).get(i + 1).y,
@@ -496,7 +488,27 @@ public class LineView extends View {
 		return true;
 	}
 
-	class Dot {
+	public void setColors(List<String> colors) {
+		this.colors = colors;
+	}
+
+	public int getColor(int idx) {
+		return Color.parseColor(colors.get(idx));
+	}
+
+	public void setDrawDotLine(Boolean drawDotLine) {
+		this.drawDotLine = drawDotLine;
+	}
+
+	public void setShowPopup(int popupType) {
+		this.showPopupType = popupType;
+	}
+
+    public void setPopupResId(int resId) {
+        this.resId = resId;
+    }
+
+    class Dot {
 		int x;
 		int y;
 		int data;

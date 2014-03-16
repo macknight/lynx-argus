@@ -47,7 +47,7 @@ public class LFDexActivity extends LFNavigationActivity {
 		setContentView(rootView);
 		rootView.setBackgroundColor(0xffffeed7);
 
-        Drawable drawable = ImageUtil.getNinePatchDrawableFromAssets(this, "bg.9.png");
+        Drawable drawable = ImageUtil.getImageDrawableFromAssets(this, "bg.9.png");
         rootView.setBackgroundDrawable(drawable);
 
 		try {

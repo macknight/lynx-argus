@@ -8,7 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.util.ImageUtil;
 import com.lynx.lib.widget.charts.BarView;
 
 /**
@@ -22,9 +24,9 @@ public class BarFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 			throws Exception {
-		View rootView = inflater.inflate(R.layout.layout_bar, container, false);
-		final BarView barView = (BarView) rootView.findViewById(R.id.bar_view);
-		Button button = (Button) rootView.findViewById(R.id.bar_button);
+		View view = inflater.inflate(R.layout.layout_bar, container, false);
+		final BarView barView = (BarView) view.findViewById(R.id.bar_view);
+		Button button = (Button) view.findViewById(R.id.bar_button);
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -33,11 +35,12 @@ public class BarFragment extends LFFragment {
 		});
 
 		randomSet(barView);
-		return rootView;
+
+		return view;
 	}
 
 	private void randomSet(BarView barView) {
-		int random = (int) (Math.random() * 20) + 6;
+		int random = (int) (Math.random() * 10) + 6;
 		ArrayList<String> test = new ArrayList<String>();
 		for (int i = 0; i < random; i++) {
 			test.add("test");
