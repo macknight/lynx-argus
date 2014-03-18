@@ -34,20 +34,6 @@ public class DemoFragment extends LFFragment {
 			throw new Exception("页面初始化错误");
 		}
 
-		DBService db = DBService.create(tabActivity, "argus");
-		List<User> users = db.findAll(User.class);// 查询所有的用户
-        if (users == null || users.size() <=0) {
-            User user = new User();
-            user.setName("探索者");
-            user.setRegisterDate(new Date());
-            db.save(user);
-
-            users = db.findAll(User.class);
-        }
-
-		TextView tvCount = (TextView) view.findViewById(R.id.tv_count);
-		tvCount.setText(users.get(0).getName() + ":" + users.get(0).getRegisterDate());
-
 		return view;
 	}
 }

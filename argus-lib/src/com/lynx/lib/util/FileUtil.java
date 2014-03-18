@@ -59,7 +59,7 @@ public class FileUtil {
 					}
 				}
 			}
-
+            file.delete();
 		}
 	}
 

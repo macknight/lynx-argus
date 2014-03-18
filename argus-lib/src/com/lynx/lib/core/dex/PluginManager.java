@@ -134,7 +134,6 @@ public class PluginManager {
 
 	public void removePluginLoader(Plugin plugin, DexListener listener) {
 		PluginLoader loader = pluginLoaders.remove(plugin.getModule());
-
 		if (loader == null) {
 			Logger.e(Tag, String.format("no such pluginloader[%s] find", plugin.getModule()));
 			return;

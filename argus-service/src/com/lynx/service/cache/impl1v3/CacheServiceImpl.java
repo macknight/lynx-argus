@@ -1,5 +1,8 @@
 package com.lynx.service.cache.impl1v3;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.lynx.lib.cache.CacheService;
 
 /**
@@ -10,6 +13,15 @@ import com.lynx.lib.cache.CacheService;
  */
 public class CacheServiceImpl implements CacheService {
 	public static final String Tag = "cache";
+	private Cache cache;
+
+	public CacheServiceImpl(Context context) {
+		try {
+			cache = Cache.getInstance(context);
+		} catch (Exception e) {
+			Log.e(Tag, "init cache service error", e);
+		}
+	}
 
 	@Override
 	public void start() {

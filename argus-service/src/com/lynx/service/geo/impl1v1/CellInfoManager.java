@@ -159,19 +159,19 @@ public class CellInfoManager {
 			try {
 				List<NeighboringCellInfo> neighborCells = telManager.getNeighboringCellInfo();
 				if (neighborCells != null) {
-					Method method_lac = null;
+					Method methodLac = null;
 					try {
-						method_lac = NeighboringCellInfo.class.getMethod("getLac");
+						methodLac = NeighboringCellInfo.class.getMethod("getLac");
 					} catch (Exception e) {
-						method_lac = null;
+						methodLac = null;
 					}
 
 					for (NeighboringCellInfo nCell : neighborCells) {
 						cid = nCell.getCid();
 						lac = 0;
-						if (method_lac != null) {
+						if (methodLac != null) {
 							try {
-								lac = (Integer) method_lac.invoke(nCell);
+								lac = (Integer) methodLac.invoke(nCell);
 							} catch (Exception e) {
 							}
 						}

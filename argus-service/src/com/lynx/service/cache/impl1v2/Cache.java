@@ -34,10 +34,7 @@ public class Cache extends FileCache {
 	}
 
 	public void pinFiles(Collection<String> fileNames) {
-		Iterator it = fileNames.iterator();
-
-		while (it.hasNext()) {
-			String file = (String) it.next();
+		for (String file : fileNames) {
 			System.out.println("Filename to pin : " + file);
 			if (fileSet.contains(file)) {
 				System.out.println(file + " already pinned.");
@@ -77,10 +74,7 @@ public class Cache extends FileCache {
 	}
 
 	public void unpinFiles(Collection<String> fileNames) {
-		Iterator it = fileNames.iterator();
-
-		while (it.hasNext()) {
-			String file = (String) it.next();
+		for (String file : fileNames) {
 			System.out.println("Filename to unpin : " + file);
 			if (fileSet.contains(file)) {
 				CacheEntry entry = utils.getCacheEntry(fileQ, file, qLock);
