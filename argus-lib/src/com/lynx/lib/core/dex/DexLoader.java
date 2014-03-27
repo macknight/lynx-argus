@@ -168,7 +168,7 @@ public abstract class DexLoader {
 	 */
 	public boolean isAviable() {
         File file = new File(srcPath);
-        if (!file.exists() || file.length() < 1024) {
+        if (!file.exists()) {
             return false;
         }
 		return true;

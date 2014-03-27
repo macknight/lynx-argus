@@ -1,13 +1,5 @@
 package com.lynx.lib.misc;
 
-/**
- * Created with IntelliJ IDEA.
- * User: chris.liu
- * Date: 13-11-15 下午1:37
- */
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
