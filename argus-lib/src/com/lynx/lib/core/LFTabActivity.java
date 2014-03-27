@@ -6,13 +6,16 @@ import java.util.Stack;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import com.lynx.lib.util.ImageUtil;
 
 /**
  * 类似IOS中UITabbarController,以复合栈式结构管理其中的Fragment
@@ -36,6 +39,10 @@ public abstract class LFTabActivity extends LFActivity {
 		initUI();
 		initTabHost();
 		initTabContents();
+
+		FrameLayout rootView = (FrameLayout) findViewById(resContent);
+        Drawable drawable = ImageUtil.getImageDrawableFromAssets(this, "bg.9.png");
+        rootView.setBackgroundDrawable(drawable);
 	}
 
 	protected abstract void initUI();
@@ -107,12 +114,11 @@ public abstract class LFTabActivity extends LFActivity {
 	}
 
 	/**
-	 * This is a helper class that implements a generic mechanism for associating fragments with the tabs in a tab host.
-	 * It relies on a trick. Normally a tab host has a simple API for supplying a View or Intent that each tab will
-	 * show. This is not sufficient for switching between fragments. So instead we make the content part of the tab host
-	 * 0dp high (it is not shown) and the TabManager supplies its own dummy view to show as the tab content. It listens
-	 * to changes in tabs, and takes care of switch to the correct fragment shown in a separate content area whenever
-	 * the selected tab changes.
+	 * This is a helper class that implements a generic mechanism for associating fragments with the tabs in a tab host. It relies on a
+	 * trick. Normally a tab host has a simple API for supplying a View or Intent that each tab will show. This is not sufficient for
+	 * switching between fragments. So instead we make the content part of the tab host 0dp high (it is not shown) and the TabManager
+	 * supplies its own dummy view to show as the tab content. It listens to changes in tabs, and takes care of switch to the correct
+	 * fragment shown in a separate content area whenever the selected tab changes.
 	 */
 	public static class TabManager implements TabHost.OnTabChangeListener {
 

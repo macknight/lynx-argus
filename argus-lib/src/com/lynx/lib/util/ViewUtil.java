@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 import com.lynx.lib.core.Logger;
 
@@ -36,22 +37,23 @@ public class ViewUtil {
 		AssetManager am = context.getAssets();
 
 		ViewGroup view = new RelativeLayout(context);
-		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-				ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+		RelativeLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT);
 		view.setLayoutParams(params);
 
 		ImageView iv = new ImageView(context);
-		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
+		int width = DisplayUtil.dip2px(context, 86);
+		int height = DisplayUtil.dip2px(context, 169);
+		params = new LayoutParams(width, height);
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
-		params.setMargins(50, 0, 0, 50);
+		params.setMargins(100, 0, 0, 50);
 		iv.setLayoutParams(params);
-        iv.setImageDrawable(ImageUtil.getImageDrawableFromAssets(context, "images/err.png"));
+		iv.setImageDrawable(ImageUtil.getImageDrawableFromAssets(context, "err.png"));
 		view.addView(iv);
 
 		TextView tv = new TextView(context);
-		params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
+		params = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.CENTER_VERTICAL);
 		params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 		params.setMargins(0, 0, 100, 0);

@@ -58,7 +58,7 @@ public class ShopListFragment extends LFFragment {
 	private static final String BMAP_API_PLACE_SEARCH = "/search";
 
 	private Animation animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
-			Animation.RELATIVE_TO_SELF, 0.5f);;
+			Animation.RELATIVE_TO_SELF, 0.5f);
 	private AnimationDrawable adIndicator;
 	private TextView tvLocAddr;
 	private ImageView ivLocIndicator, ivLocRefresh;

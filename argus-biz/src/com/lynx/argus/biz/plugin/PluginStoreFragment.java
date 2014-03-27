@@ -25,6 +25,7 @@ import com.lynx.argus.biz.widget.listview.P2RASEListView;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.Plugin;
+import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.Mode;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 
 /**
@@ -63,7 +64,7 @@ public class PluginStoreFragment extends LFFragment {
 		}
 
 		p2raselv = (P2RASEListView) view.findViewById(R.id.p2raselv_pluginstore);
-
+		p2raselv.setMode(Mode.PULL_DOWN_TO_REFRESH);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		p2raselv.setLoadingDrawable(drawable);
 
@@ -175,7 +176,8 @@ public class PluginStoreFragment extends LFFragment {
 
 			setFocusable(true);
 			setOutsideTouchable(false);
-			setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_round_bg));
+
+			setBackgroundDrawable(null);
 
 			animInstalling = new RotateAnimation(-80, 0, Animation.RELATIVE_TO_SELF, 0.5f,
 					Animation.RELATIVE_TO_SELF, 0.5f);
@@ -197,11 +199,18 @@ public class PluginStoreFragment extends LFFragment {
 		public void onSuccess() {
 			ivOpt.clearAnimation();
 			ivOpt.setImageResource(R.drawable.plugin_opt_success);
+			dismiss();
 		}
 
 		public void onFail() {
 			ivOpt.clearAnimation();
 			ivOpt.setImageResource(R.drawable.plugin_opt_fail);
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+
+			}
+			dismiss();
 		}
 
 		public void show(View parent) {

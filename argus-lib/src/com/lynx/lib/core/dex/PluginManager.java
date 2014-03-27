@@ -101,7 +101,7 @@ public class PluginManager {
 
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
-		param.put("plugins", localPlugins());
+		param.put("app", localPlugins());
 		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_PLUGIN_CONFIG), param,
 				callback);
 	}

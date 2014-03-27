@@ -17,7 +17,6 @@ import dalvik.system.DexClassLoader;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-30 上午10:10
  */
 public class LFDexActivity extends LFNavigationActivity {
@@ -32,14 +31,12 @@ public class LFDexActivity extends LFNavigationActivity {
 
 	private static Theme defTheme; // 系统原有主题
 
+	private boolean runOnlyOnce = false;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		defTheme = this.getTheme();
 
-		loadModule(savedInstanceState);
-	}
-
-	protected void loadModule(Bundle savedInstanceState) {
 		FrameLayout rootView = new FrameLayout(this);
 		rootView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT));
@@ -47,14 +44,21 @@ public class LFDexActivity extends LFNavigationActivity {
 		setContentView(rootView);
 		rootView.setBackgroundColor(0xffffeed7);
 
-        Drawable drawable = ImageUtil.getImageDrawableFromAssets(this, "bg.9.png");
-        rootView.setBackgroundDrawable(drawable);
+		Drawable drawable = ImageUtil.getImageDrawableFromAssets(this, "bg.9.png");
+		rootView.setBackgroundDrawable(drawable);
 
+		loadModule(savedInstanceState);
+	}
+
+	protected void loadModule(Bundle savedInstanceState) {
 		try {
 			String module = getIntent().getStringExtra("module");
 
 			moduleLoader = LFApplication.instance().pluginLoader(module);
-
+			if (moduleLoader.isAviable()) {
+				throw new Exception(String.format("the module[%s] is unaviable",
+						moduleLoader.module()));
+			}
 			if (moduleLoader == null || moduleLoader.dexModule() == null) {
 				throw new Exception("not such module exist:" + module);
 			}
@@ -75,7 +79,12 @@ public class LFDexActivity extends LFNavigationActivity {
 			dexTheme = dexResources.newTheme();
 			dexTheme.setTo(super.getTheme());
 
-			super.onCreate(savedInstanceState);
+			getFragmentManager();
+
+			if (!runOnlyOnce) {
+				super.onCreate(savedInstanceState);
+				runOnlyOnce = true;
+			}
 
 			if (savedInstanceState != null)
 				return;
@@ -96,8 +105,10 @@ public class LFDexActivity extends LFNavigationActivity {
 			Logger.e(Tag, "load dex ui error", e);
 
 			rollback();
-
-			super.onCreate(savedInstanceState);
+			if (!runOnlyOnce) {
+				super.onCreate(savedInstanceState);
+				runOnlyOnce = true;
+			}
 
 			LFFragment f = new PluginLoadErrorFragment();
 			pushFragment(f);
@@ -110,6 +121,10 @@ public class LFDexActivity extends LFNavigationActivity {
 		dexResources = super.getResources();
 		dexClassLoader = super.getClassLoader();
 		dexTheme = defTheme;
+	}
+
+	private void runOnlyOnce(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override

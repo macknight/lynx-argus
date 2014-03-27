@@ -16,7 +16,7 @@ import java.util.List;
  * @author chris
  * @version 3/15/14 8:30 PM
  */
-public class DexLoader {
+public abstract class DexLoader {
 	private static final String Tag = "DexModuleLoader";
 
 	private static final String PREFIX_PLUGIN = "plugin";
@@ -25,7 +25,7 @@ public class DexLoader {
 	protected HttpService httpService;
 
 	protected String prefix;
-	protected static String basicDir; // /data/data/app.name/files/prefrix/module
+	protected String basicDir; // /data/data/app.name/files/prefrix/module
 	protected String dexDir; // /data/data/app.name/files/prefrix/module/dex
 	protected String dexPath; // /data/data/app.name/files/prefrix/module/dex/xxxxxx.dex
 	protected String srcDir; // /data/data/app.name/files/prefrix/module/src
@@ -159,6 +159,19 @@ public class DexLoader {
 	 */
 	public String module() {
 		return dexModule.getModule();
+	}
+
+	/**
+	 * 模块是否可用
+	 * 
+	 * @return
+	 */
+	public boolean isAviable() {
+        File file = new File(srcPath);
+        if (!file.exists() || file.length() < 1024) {
+            return false;
+        }
+		return true;
 	}
 
 	/**

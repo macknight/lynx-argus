@@ -17,15 +17,16 @@ import android.graphics.drawable.Drawable;
  * @version 14-2-24 下午5:19
  */
 public class Cache {
+    private static final String PREFIX = "Argus";
 	public static final int TIME_HOUR = 60 * 60;
 	public static final int TIME_DAY = TIME_HOUR * 24;
-	private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 mb
+	private static final int MAX_SIZE = 1024 * 1024 * 10; // 50 mb
 	private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
 	private static Map<String, Cache> mInstanceMap = new HashMap<String, Cache>();
 	private CacheManager mCache;
 
 	public static Cache getInstance(Context ctx) {
-		return get(ctx, "Argus");
+		return get(ctx, PREFIX);
 	}
 
 	public static Cache get(Context ctx, String cacheName) {
@@ -38,7 +39,7 @@ public class Cache {
 	}
 
 	public static Cache get(Context ctx, long max_zise, int max_count) {
-		File f = new File(ctx.getCacheDir(), "Argus");
+		File f = new File(ctx.getCacheDir(), PREFIX);
 		return get(f, max_zise, max_count);
 	}
 

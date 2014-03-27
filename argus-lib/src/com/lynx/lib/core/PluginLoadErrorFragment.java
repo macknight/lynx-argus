@@ -11,7 +11,6 @@ import com.lynx.lib.util.ViewUtil;
  * UI模块动态加载失败提示fragment
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-26 下午3:23
  */
 public class PluginLoadErrorFragment extends LFFragment {
@@ -22,20 +21,5 @@ public class PluginLoadErrorFragment extends LFFragment {
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		return ViewUtil.createLoadErrorView(inflater);
-	}
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-	}
-
-	@Override
-	public boolean onBackPressed() {
-		return false;
-	}
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 	}
 }

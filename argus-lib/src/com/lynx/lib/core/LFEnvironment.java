@@ -35,7 +35,7 @@ public class LFEnvironment {
 	 * 
 	 * @return
 	 */
-	public String userAgent() {
+	public static String userAgent() {
 
 		if (ua == null) {
 			StringBuilder sb = new StringBuilder("MApi 1.0 (");

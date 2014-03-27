@@ -53,8 +53,6 @@ public class LineFragment extends LFFragment {
 			}
 		});
 
-
-
 		randomSet(lineView);
 		return rootView;
 	}
@@ -90,7 +88,7 @@ public class LineFragment extends LFFragment {
             dataList5.add((int) (Math.random() * random));
         }
 
-		ArrayList<ArrayList<Integer>> dataLists = new ArrayList<ArrayList<Integer>>();
+		List<List<Integer>> dataLists = new ArrayList<List<Integer>>();
 		dataLists.add(dataList);
 		dataLists.add(dataList2);
 		dataLists.add(dataList3);

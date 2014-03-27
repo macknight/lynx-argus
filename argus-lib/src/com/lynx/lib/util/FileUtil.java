@@ -14,7 +14,6 @@ import java.util.jar.JarFile;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 上午11:39
  */
 public class FileUtil {
@@ -53,24 +52,13 @@ public class FileUtil {
 				for (File f : files) {
 					if (f.isDirectory()) {
 						deleteFile(f);
-					}
-					if (!forceDelete(f)) {
-						throw new IOException("failed to delete file: " + f);
-					}
+					} else {
+                        f.delete();
+                    }
 				}
 			}
             file.delete();
 		}
-	}
-
-	private static boolean forceDelete(File f) {
-		boolean result = f.delete();
-		int tryCount = 0;
-
-		while (!result && tryCount++ < 5) {
-			result = f.delete();
-		}
-		return result;
 	}
 
 	public static void closeQuietly(Closeable closeable) {

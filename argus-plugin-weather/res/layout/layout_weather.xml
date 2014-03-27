@@ -6,72 +6,173 @@
               android:baselineAligned="false"
               android:orientation="vertical">
 
-	<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical">
-		<TextView
-				android:id="@+id/tv_weather_city"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:textColor="@android:color/white"
-				android:layout_margin="15dp"
-				android:textSize="35dp"
-				android:textStyle="bold"
-				android:text="上海"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:orientation="vertical">
+        <TextView
+                android:id="@+id/tv_weather_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:layout_margin="15dp"
+                android:textSize="35dp"
+                android:textStyle="bold"
+                android:text="上海"/>
 
-		<ImageView
-				android:id="@+id/iv_weather_status"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/tv_weather_city"
-				android:padding="15dp"
-				android:contentDescription="@null"
-				android:src="@drawable/day9"/>
+        <ImageView
+                android:id="@+id/iv_weather_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weather_city"
+                android:padding="15dp"
+                android:contentDescription="@null"
+                android:src="@drawable/icon_weather_night_00"/>
 
-		<TextView
-				android:id="@+id/tv_weather_temp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_centerInParent="true"
-				android:textColor="@android:color/white"
-				android:textSize="35dp"
-				android:textStyle="bold"
-				android:text="14 C"/>
-		<TextView
-				android:id="@+id/tv_weather_detail_temp"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/tv_weather_temp"
-				android:layout_centerHorizontal="true"
-				android:textColor="@android:color/white"
-				android:textSize="15dp"
-				android:textStyle="bold"
-				android:text="17/9 C"/>
+        <TextView
+                android:id="@+id/tv_weather_temp_max"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/iv_weather_status"
+                android:layout_marginTop="50dp"
+                android:textColor="@android:color/white"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="11℃"/>
 
-		<TextView
-				android:id="@+id/tv_weather_plut"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_margin="5dp"
-				android:layout_alignParentRight="true"
-				android:textColor="@color/GreenYellow"
-				android:textSize="15dp"
-				android:textStyle="bold"
-				android:text="182(轻度污染)"/>
+        <TextView
+                android:id="@+id/tv_weather_temp_min"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weather_temp_max"
+                android:layout_toRightOf="@+id/iv_weather_status"
+                android:textColor="@android:color/white"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="5℃"/>
 
-	</RelativeLayout>
+        <TextView
+                android:id="@+id/tv_weather_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weather_temp_min"
+                android:layout_toRightOf="@+id/iv_weather_status"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:text="小雨转多云"/>
 
-	<ScrollView
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:scrollbars="none">
+        <TextView
+                android:id="@+id/tv_weather_wind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_weather_detail"
+                android:layout_toRightOf="@+id/iv_weather_status"
+                android:textColor="@android:color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:text="东北风3-4级转北风4-5级"/>
 
-		<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content">
+        <TextView
+                android:id="@+id/tv_weather_plut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/GreenYellow"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:text="182(轻度污染)"/>
 
-		</LinearLayout>
-	</ScrollView>
+        <ImageButton
+                android:id="@+id/ib_weather_refresh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_menu_refresh"
+                android:background="@null"/>
+
+    </RelativeLayout>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:background="@drawable/h_divider"/>
+
+    <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            android:scrollbars="none">
+
+        <com.lynx.lib.widget.charts.LineView
+                android:id="@+id/lv_temp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+    </HorizontalScrollView>
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.08"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/details_bg">
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true">
+
+            <ImageButton
+                    android:id="@+id/ib_weather_addcity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_menu_add"
+                    android:background="@drawable/selector_item_def"/>
+
+            <ImageButton
+                    android:id="@+id/ib_weather_trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ib_weather_addcity"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_menu_trend"
+                    android:background="@drawable/selector_item_def"/>
+
+            <ImageButton
+                    android:id="@+id/ib_weather_main"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ib_weather_trend"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_menu_main"
+                    android:background="@drawable/selector_item_def"/>
+
+            <ImageButton
+                    android:id="@+id/ib_weather_share"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/ib_weather_main"
+                    android:layout_centerVertical="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_menu_share"
+                    android:background="@drawable/selector_item_def"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+
 </LinearLayout>
 

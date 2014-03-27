@@ -24,16 +24,14 @@ public class LineView extends View {
 	private boolean autoSetGridWidth = true;
 	private int dataOfAGird = 10;
 	private int bottomTextHeight = 0;
-	private ArrayList<String> bottomTextList;
+	private List<String> bottomTextList;
 
-	private ArrayList<ArrayList<Integer>> dataLists;
-	private ArrayList<Integer> dataList;
+	private List<List<Integer>> dataLists;
 
-	private ArrayList<Integer> xCoordinateList = new ArrayList<Integer>();
-	private ArrayList<Integer> yCoordinateList = new ArrayList<Integer>();
+	private List<Integer> xCoordinateList = new ArrayList<Integer>();
+	private List<Integer> yCoordinateList = new ArrayList<Integer>();
 
-	private ArrayList<ArrayList<Dot>> drawDotLists = new ArrayList<ArrayList<Dot>>();
-	private ArrayList<Dot> drawDotList = new ArrayList<Dot>();
+	private List<List<Dot>> drawDotLists = new ArrayList<List<Dot>>();
 
 	private Paint bottomTextPaint = new Paint();
 	private int bottomTextDescent;
@@ -45,10 +43,8 @@ public class LineView extends View {
 
 	private Dot selectedDot;
 
-	private int topLineLength = DisplayUtil.dip2px(getContext(), 12);; // | | ←this
-																		// -+-+-
-	private int sideLineLength = DisplayUtil.dip2px(getContext(), 45) / 3 * 2;// --+--+--+--+--+--+--
-																				// ↑this
+	private int topLineLength = DisplayUtil.dip2px(getContext(), 12);
+	private int sideLineLength = DisplayUtil.dip2px(getContext(), 45) / 3 * 2;
 	private int backgroundGridWidth = DisplayUtil.dip2px(getContext(), 45);
 
 	// Constants
@@ -72,14 +68,14 @@ public class LineView extends View {
 
 	private Boolean drawDotLine = false;
 
-    private int resId;
+	private int resId;
 	private List<String> colors;
 
 	private Runnable animator = new Runnable() {
 		@Override
 		public void run() {
 			boolean needNewFrame = false;
-			for (ArrayList<Dot> data : drawDotLists) {
+			for (List<Dot> data : drawDotLists) {
 				for (Dot dot : data) {
 					dot.update();
 					if (!dot.isAtRest()) {
@@ -107,7 +103,7 @@ public class LineView extends View {
 		popupTextPaint.setTextAlign(Paint.Align.CENTER);
 
 		bottomTextPaint.setAntiAlias(true);
-		bottomTextPaint.setTextSize(DisplayUtil.sp2px(getContext(), 12));
+		bottomTextPaint.setTextSize(DisplayUtil.sp2px(getContext(), 11));
 		bottomTextPaint.setTextAlign(Paint.Align.CENTER);
 		bottomTextPaint.setStyle(Paint.Style.FILL);
 		bottomTextPaint.setColor(BOTTOM_TEXT_COLOR);
@@ -120,8 +116,7 @@ public class LineView extends View {
 	 * @param bottomTextList
 	 *            The String ArrayList in the bottom.
 	 */
-	public void setBottomTextList(ArrayList<String> bottomTextList) {
-		this.dataList = null;
+	public void setBottomTextList(List<String> bottomTextList) {
 		this.bottomTextList = bottomTextList;
 
 		Rect r = new Rect();
@@ -160,17 +155,17 @@ public class LineView extends View {
 	 * @param dataLists
 	 *            The Integer ArrayLists for showing, dataList.size() must < bottomTextList.size()
 	 */
-	public void setDataList(ArrayList<ArrayList<Integer>> dataLists) {
+	public void setDataList(List<List<Integer>> dataLists) {
 		selectedDot = null;
 		this.dataLists = dataLists;
-		for (ArrayList<Integer> list : dataLists) {
+		for (List<Integer> list : dataLists) {
 			if (list.size() > bottomTextList.size()) {
 				throw new RuntimeException(
 						"dacer.LineView error: dataList.size() > bottomTextList.size() !!!");
 			}
 		}
 		int biggestData = 0;
-		for (ArrayList<Integer> list : dataLists) {
+		for (List<Integer> list : dataLists) {
 			if (autoSetDataOfGird) {
 				for (Integer i : list) {
 					if (biggestData < i) {
@@ -201,7 +196,7 @@ public class LineView extends View {
 	private int getVerticalGridlNum() {
 		int verticalGridNum = MIN_VERTICAL_GRID_NUM;
 		if (dataLists != null && !dataLists.isEmpty()) {
-			for (ArrayList<Integer> list : dataLists) {
+			for (List<Integer> list : dataLists) {
 				for (Integer integer : list) {
 					if (verticalGridNum < (integer + 1)) {
 						verticalGridNum = integer + 1;
@@ -467,7 +462,7 @@ public class LineView extends View {
 		Region r = new Region();
 		int width = backgroundGridWidth / 2;
 		if (drawDotLists != null || !drawDotLists.isEmpty()) {
-			for (ArrayList<Dot> data : drawDotLists) {
+			for (List<Dot> data : drawDotLists) {
 				for (Dot dot : data) {
 					r.set(dot.x - width, dot.y - width, dot.x + width, dot.y + width);
 					if (r.contains(point.x, point.y)
@@ -504,8 +499,12 @@ public class LineView extends View {
 		this.showPopupType = popupType;
 	}
 
-    public void setPopupResId(int resId) {
-        this.resId = resId;
+	public void setPopupResId(int resId) {
+		this.resId = resId;
+	}
+
+    public void setBackgroundGridWidth(int backgroundGridWidth) {
+        this.backgroundGridWidth = backgroundGridWidth;
     }
 
     class Dot {
