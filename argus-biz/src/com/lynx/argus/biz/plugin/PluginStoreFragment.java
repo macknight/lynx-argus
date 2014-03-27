@@ -205,11 +205,6 @@ public class PluginStoreFragment extends LFFragment {
 		public void onFail() {
 			ivOpt.clearAnimation();
 			ivOpt.setImageResource(R.drawable.plugin_opt_fail);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-
-			}
 			dismiss();
 		}
 

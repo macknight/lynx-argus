@@ -167,10 +167,10 @@ public abstract class DexLoader {
 	 * @return
 	 */
 	public boolean isAviable() {
-        File file = new File(srcPath);
-        if (!file.exists()) {
-            return false;
-        }
+//        File file = new File(srcPath);
+//        if (file.exists()) {
+//            return true;
+//        }
 		return true;
 	}
 

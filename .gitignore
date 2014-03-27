@@ -13,3 +13,8 @@ argus-plugin-parenting-alpha/gen
 argus-plugin-tools-alpha/gen
 argus-plugin-weather-alpha/gen
 argus-service/bin/
+argus-plugin-weather/gen/
+argus-plugin-timemachine/gen/
+argus-plugin-local/gen/
+argus-plugin-parenting/gen/
+argus-plugin-chat/gen/
