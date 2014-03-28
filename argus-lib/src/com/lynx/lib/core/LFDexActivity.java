@@ -39,10 +39,9 @@ public class LFDexActivity extends LFNavigationActivity {
 
 		FrameLayout rootView = new FrameLayout(this);
 		rootView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-				LayoutParams.MATCH_PARENT));
+                LayoutParams.MATCH_PARENT));
 		rootView.setId(android.R.id.primary);
 		setContentView(rootView);
-		rootView.setBackgroundColor(0xffffeed7);
 
 		Drawable drawable = ImageUtil.getImageDrawableFromAssets(this, "bg.9.png");
 		rootView.setBackgroundDrawable(drawable);
@@ -55,7 +54,7 @@ public class LFDexActivity extends LFNavigationActivity {
 			String module = getIntent().getStringExtra("module");
 
 			moduleLoader = LFApplication.instance().pluginLoader(module);
-			if (moduleLoader.isAviable()) {
+			if (!moduleLoader.isAviable()) {
 				throw new Exception(String.format("the module[%s] is unaviable",
 						moduleLoader.module()));
 			}

@@ -37,5 +37,6 @@
         <activity android:name="com.lynx.argus.app.BizTabActivity"/>
 
 		<activity android:name="com.lynx.lib.core.LFDexActivity"/>
+        <activity android:name="com.lynx.lib.core.LFLogStackActivity"/>
     </application>
 </manifest>

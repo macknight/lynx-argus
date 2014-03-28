@@ -28,8 +28,7 @@ public class FileCache implements Cache {
 
 	public FileCache(Context context) {
 		// Find the directory to save cached images
-		if (android.os.Environment.getExternalStorageState().equals(
-				android.os.Environment.MEDIA_MOUNTED)) {
+		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 			cacheDir = new File(Environment.getExternalStorageDirectory(), CACHE_DIR);
 		} else {
 			cacheDir = context.getCacheDir();

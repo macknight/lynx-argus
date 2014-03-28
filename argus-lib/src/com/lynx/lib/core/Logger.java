@@ -1,6 +1,8 @@
 package com.lynx.lib.core;
 
+import android.graphics.Point;
 import android.util.Log;
+import com.lynx.lib.util.FileUtil;
 
 /**
  * Logger控制管理app日志输出level及输出，提供三种类型log输出i(info),w(waring),e(error)
@@ -39,23 +41,41 @@ public class Logger {
 	}
 
 	public static int w(String tag, String msg) {
+		writeLog2File(tag, msg);
 		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg) : -1;
 	}
 
-	public static int w(String tag, Throwable tr) {
-		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, tr) : -1;
-	}
-
 	public static int w(String tag, String msg, Throwable tr) {
+		writeLog2File(tag, msg, tr);
 		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.w(tag, msg, tr) : -1;
 	}
 
 	public static int e(String tag, String msg) {
+		writeLog2File(tag, msg);
 		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg) : -1;
 	}
 
 	public static int e(String tag, String msg, Throwable tr) {
+		writeLog2File(tag, msg, tr);
 		return level.ordinal() >= AppLevel.TEST.ordinal() ? Log.e(tag, msg, tr) : -1;
+	}
+
+	private static void writeLog2File(String tag, String msg) {
+		writeLog2File(tag, msg, null);
+	}
+
+	private static void writeLog2File(String tag, String msg, Throwable tr) {
+		try {
+			StackTraceElement[] elements = tr.getStackTrace();
+			String stacks = String.format("[%s:%s]", tag, msg);
+			for (StackTraceElement element : elements) {
+				stacks = String.format("%s\n%s", stacks, element);
+			}
+			FileUtil.writeToExternalStoragePublic(LFApplication.instance(), "argus.log",
+					msg.getBytes());
+		} catch (Throwable t) {
+			Logger.i("logger", "logger write to file error");
+		}
 	}
 
 	public enum AppLevel {

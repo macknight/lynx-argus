@@ -6,9 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import com.lynx.argus.R;
 import com.lynx.argus.biz.widget.listview.CornerListView;
 import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.core.LFLogStackActivity;
 import com.lynx.lib.util.DisplayUtil;
 
 /**
@@ -55,6 +58,16 @@ public class MoreFragment extends LFFragment implements AdapterView.OnItemClickL
 		if (view == null) {
 			throw new Exception("页面初始化错误");
 		}
+
+        TextView tvTitle = (TextView) view.findViewById(R.id.tv_more_title);
+        tvTitle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent.setClass(tabActivity, LFLogStackActivity.class);
+                startActivity(intent);
+            }
+        });
 
 		LinearLayout cornerContainer = (LinearLayout) view.findViewById(R.id.ll_more_container);
 

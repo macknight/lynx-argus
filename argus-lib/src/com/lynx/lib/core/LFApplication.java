@@ -1,10 +1,13 @@
 package com.lynx.lib.core;
 
+import java.io.File;
 import java.util.Map;
 
 import android.app.Application;
 import android.content.res.Configuration;
+import android.os.Environment;
 
+import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.DexManager;
@@ -23,6 +26,7 @@ import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 public abstract class LFApplication extends Application {
 
 	protected static LFApplication instance;
+	private static String extFileDir;
 
 	private static HttpService httpService;
 	private static DBService dbService;
@@ -45,7 +49,18 @@ public abstract class LFApplication extends Application {
 		super.onCreate();
 		httpService = new DefaultHttpServiceImpl();
 		dbService = DBService.create(this, "argus");
-        gson = new Gson();
+		gson = new Gson();
+
+		String packageName = getPackageName();
+		extFileDir = String.format("%s/Android/data/%s/files", Environment
+				.getExternalStorageDirectory().getAbsolutePath(), packageName);
+
+		if (!TextUtils.isEmpty(extFileDir)) {
+			File file = new File(extFileDir);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+		}
 
 		initDexManager();
 	}
@@ -89,9 +104,9 @@ public abstract class LFApplication extends Application {
 		return dbService;
 	}
 
-    public Gson gson() {
-        return gson;
-    }
+	public Gson gson() {
+		return gson;
+	}
 
 	public Map<String, PluginLoader> pluginLoaders() {
 		return dexManager.pluginLoaders();
@@ -133,5 +148,9 @@ public abstract class LFApplication extends Application {
 	 */
 	public void uninstallPlugin(Plugin plugin, DexListener listener) {
 		dexManager.uninstallPlugin(plugin, listener);
+	}
+
+	public String baseExtFileDir() {
+		return extFileDir;
 	}
 }

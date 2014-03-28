@@ -142,7 +142,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 				try {
 					postResultIfNotInvoked(get());
 				} catch (InterruptedException e) {
-					Logger.w(LOG_TAG, e);
+					Logger.w(LOG_TAG, "async task interrupted", e);
 				} catch (ExecutionException e) {
 					throw new RuntimeException("An error occured while executing doInBackground()",
 							e.getCause());

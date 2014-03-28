@@ -1,8 +1,11 @@
 package com.lynx.lib.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.os.Environment;
 import android.util.Log;
+import com.lynx.lib.core.LFApplication;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -39,8 +42,7 @@ public class FileUtil {
 	}
 
 	/**
-	 * Deletes the contents of dir. Throws an IOException if any file could not be deleted, or if dir is not a readable
-	 * directory.
+	 * Deletes the contents of dir. Throws an IOException if any file could not be deleted, or if dir is not a readable directory.
 	 */
 	public static void deleteFile(File file) throws IOException {
 		if (file.exists()) {
@@ -53,11 +55,11 @@ public class FileUtil {
 					if (f.isDirectory()) {
 						deleteFile(f);
 					} else {
-                        f.delete();
-                    }
+						f.delete();
+					}
 				}
 			}
-            file.delete();
+			file.delete();
 		}
 	}
 
@@ -187,4 +189,75 @@ public class FileUtil {
 		return false;
 	}
 
+	/**
+	 * Reads a file from internal storage
+	 * 
+	 * @param filename
+	 *            - the filename to read from
+	 * @return the file contents
+	 */
+	public static byte[] readExternallStoragePublic(Context context, String filename) {
+		int len = 1024;
+		byte[] buffer = new byte[len];
+		String path = LFApplication.instance().baseExtFileDir();
+
+		if (!isExternalStorageReadOnly()) {
+			try {
+				File file = new File(path, filename);
+				FileInputStream fis = new FileInputStream(file);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				int nrb = fis.read(buffer, 0, len); // read up to len bytes
+				while (nrb != -1) {
+					baos.write(buffer, 0, nrb);
+					nrb = fis.read(buffer, 0, len);
+				}
+				buffer = baos.toByteArray();
+				fis.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return buffer;
+	}
+
+	public static void writeToExternalStoragePublic(Context context, String filename, byte[] content) {
+		// API Level 7 or lower, use getExternalStorageDirectory()
+		// to open a File that represents the root of the external
+		// storage, but writing to root is not recommended, and instead
+		// application should write to application-specific directory, as shown below.
+		String path = LFApplication.instance().baseExtFileDir();
+
+		if (isExternalStorageAvailable() && !isExternalStorageReadOnly()) {
+			try {
+				File file = new File(path, filename);
+				FileOutputStream fos = new FileOutputStream(file, true);
+				fos.write(content);
+				fos.close();
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public static boolean isExternalStorageAvailable() {
+		boolean state = false;
+		String extStorageState = Environment.getExternalStorageState();
+		if (Environment.MEDIA_MOUNTED.equals(extStorageState)) {
+			state = true;
+		}
+		return state;
+	}
+
+	public static boolean isExternalStorageReadOnly() {
+		boolean state = false;
+		String extStorageState = Environment.getExternalStorageState();
+		if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(extStorageState)) {
+			state = true;
+		}
+		return state;
+	}
 }
