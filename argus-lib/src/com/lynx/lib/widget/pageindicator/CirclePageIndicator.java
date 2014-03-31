@@ -37,6 +37,9 @@ import android.view.ViewConfiguration;
 
 /**
  * Draws circles (one for each view). The current view position is filled and others are only stroked.
+ * 
+ * @author chris.liu
+ * @version 14-1-6 下午5:05
  */
 public class CirclePageIndicator extends View implements PageIndicator {
 	private static final int INVALID_POINTER = -1;

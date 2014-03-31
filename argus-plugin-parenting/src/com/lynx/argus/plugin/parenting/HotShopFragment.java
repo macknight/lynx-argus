@@ -7,9 +7,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.lynx.argus.plugin.parenting.model.ShopInfo;
 import com.lynx.lib.misc.AsyncImageLoader;
 
+/**
+ *
+ * @author zhufeng.liu
+ * @version 14-2-24 下午4:13
+ */
 public final class HotShopFragment extends Fragment {
 	private static final String KEY_CONTENT = "HotShopFragment:Content";
 	private AsyncImageLoader imgLoader;

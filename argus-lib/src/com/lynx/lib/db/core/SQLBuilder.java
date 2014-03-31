@@ -6,11 +6,11 @@ import java.util.List;
 
 import android.text.TextUtils;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.db.table.*;
 
 /**
- * @author chris
+ * @author chris.liu
  * @version 3/12/14 7:05 PM
  */
 public class SQLBuilder {
@@ -97,7 +97,7 @@ public class SQLBuilder {
 		Object idvalue = id.getValue(entity);
 
 		if (idvalue == null) {
-			Logger.e(Tag, "getDeleteSQL:" + entity.getClass() + " id value is null");
+			LFLogger.e(Tag, "getDeleteSQL:" + entity.getClass() + " id value is null");
 			return null;
 		}
 		StringBuffer strSQL = new StringBuffer(getDeleteSqlBytableName(table.getTableName()));
@@ -115,7 +115,7 @@ public class SQLBuilder {
 		Id id = table.getId();
 
 		if (null == idValue) {
-			Logger.e(Tag, "getDeleteSQL:idValue is null");
+			LFLogger.e(Tag, "getDeleteSQL:idValue is null");
 			return null;
 		}
 
@@ -199,7 +199,7 @@ public class SQLBuilder {
 		Object idvalue = table.getId().getValue(entity);
 
 		if (null == idvalue) {// 主键值不能为null，否则不能更新
-			Logger.e(Tag, "this entity[" + entity.getClass() + "]'s id value is null");
+			LFLogger.e(Tag, "this entity[" + entity.getClass() + "]'s id value is null");
 			return null;
 		}
 
@@ -261,7 +261,7 @@ public class SQLBuilder {
 		}
 
 		if (keyValueList == null || keyValueList.size() == 0) {
-			Logger.e(Tag, "this entity[" + entity.getClass() + "] has no property");
+			LFLogger.e(Tag, "this entity[" + entity.getClass() + "] has no property");
 			return null;
 		}
 

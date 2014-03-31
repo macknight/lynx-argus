@@ -19,7 +19,6 @@ import android.widget.ImageView.ScaleType;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午4:54
  */
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,

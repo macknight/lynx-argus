@@ -1,5 +1,10 @@
 package com.lynx.argus.biz.more;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.message.BasicNameValuePair;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,15 +16,12 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.TextView;
+
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.entity.*;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author chris.liu

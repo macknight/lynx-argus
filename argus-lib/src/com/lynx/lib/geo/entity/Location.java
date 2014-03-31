@@ -1,6 +1,6 @@
 package com.lynx.lib.geo.entity;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import org.json.JSONObject;
 
 import java.io.Serializable;
@@ -8,7 +8,6 @@ import java.io.Serializable;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-27 下午5:53
  */
 public class Location implements Serializable {
@@ -39,7 +38,7 @@ public class Location implements Serializable {
 			jo.put("addr", addr.toString());
 			return jo.toString();
 		} catch (Exception e) {
-			Logger.e("Location", "location object serialized error", e);
+			LFLogger.e("Location", "location object serialized error", e);
 			return null;
 		}
 	}

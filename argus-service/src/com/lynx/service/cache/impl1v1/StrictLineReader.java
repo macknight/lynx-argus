@@ -1,14 +1,13 @@
 package com.lynx.service.cache.impl1v1;
 
-import com.lynx.lib.util.FileUtil;
-
 import java.io.*;
 import java.nio.charset.Charset;
+
+import com.lynx.lib.util.FileUtil;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 上午10:17
  */
 public class StrictLineReader implements Closeable {

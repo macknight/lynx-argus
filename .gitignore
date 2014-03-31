@@ -5,13 +5,6 @@ argus-biz/gen
 argus-service/gen
 argus-lib/gen
 argus-lib/bin
-argus-plugin-chat-alpha/gen
-argus-plugin-local-alpha/gen
-argus-plugin-local-beta/gen
-argus-plugin-news-alpha/gen
-argus-plugin-parenting-alpha/gen
-argus-plugin-tools-alpha/gen
-argus-plugin-weather-alpha/gen
 argus-service/bin/
 argus-plugin-weather/gen/
 argus-plugin-timemachine/gen/

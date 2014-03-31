@@ -24,7 +24,6 @@ import android.view.ViewConfiguration;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2014-1-22 下午5:15:48
  */
 public class ImageViewTouch extends ImageViewTouchBase {

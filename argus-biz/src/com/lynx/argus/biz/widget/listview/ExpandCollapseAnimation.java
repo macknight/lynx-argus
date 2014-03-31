@@ -3,7 +3,6 @@ package com.lynx.argus.biz.widget.listview;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
 /**
@@ -11,7 +10,6 @@ import android.widget.LinearLayout.LayoutParams;
  * will hide. It will look like it slides behind the view above.
  * 
  * @author tjerk
- * 
  * @version 6/9/12 4:58 PM
  */
 public class ExpandCollapseAnimation extends Animation {

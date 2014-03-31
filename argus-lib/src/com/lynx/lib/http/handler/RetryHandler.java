@@ -17,7 +17,6 @@ import java.util.HashSet;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午11:04:04
  */
 public class RetryHandler implements HttpRequestRetryHandler {

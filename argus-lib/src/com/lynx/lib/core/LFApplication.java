@@ -6,8 +6,8 @@ import java.util.Map;
 import android.app.Application;
 import android.content.res.Configuration;
 import android.os.Environment;
-
 import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.DexManager;
@@ -20,7 +20,6 @@ import com.lynx.lib.http.impl.DefaultHttpServiceImpl;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-10 下午2:32
  */
 public abstract class LFApplication extends Application {

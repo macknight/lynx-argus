@@ -11,7 +11,6 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * 
  * @author chris.liu
- * 
  * @version 3/18/14 7:28 PM
  */
 public class CacheManager {

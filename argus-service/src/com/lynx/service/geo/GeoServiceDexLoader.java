@@ -1,21 +1,19 @@
 package com.lynx.service.geo;
 
+import java.util.List;
+
 import android.content.Context;
-import com.lynx.lib.core.LFActivity;
+
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.service.geo.impl1v1.GeoServiceImpl;
 
-import java.util.List;
-
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-13 下午11:16
  */
 public class GeoServiceDexLoader extends ServiceLoader {

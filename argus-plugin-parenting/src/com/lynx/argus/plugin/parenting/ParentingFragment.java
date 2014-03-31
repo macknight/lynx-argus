@@ -4,8 +4,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.support.v4.app.Fragment;
-import android.widget.ImageButton;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -14,11 +12,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.lynx.argus.plugin.parenting.model.CampaignInfo;
@@ -27,7 +27,6 @@ import com.lynx.argus.plugin.parenting.model.HotShopListAdapter;
 import com.lynx.argus.plugin.parenting.model.ShopInfo;
 import com.lynx.argus.plugin.parenting.util.DataParser;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.Logger;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.widget.pageindicator.CirclePageIndicator;
 import com.lynx.lib.widget.pageindicator.PageIndicator;
@@ -38,7 +37,6 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
  * 亲子
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-22 下午4:29
  */
 public class ParentingFragment extends LFFragment {

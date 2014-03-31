@@ -11,7 +11,7 @@
 			android:gravity="center"
 			android:text="@string/sys_info_tip"
 			android:textColor="@color/Grey"
-			android:textSize="@dimen/font_size_large"/>
+            android:textSize="@dimen/font_size_xlarge"/>
 
 	<ScrollView
 			android:layout_width="match_parent"

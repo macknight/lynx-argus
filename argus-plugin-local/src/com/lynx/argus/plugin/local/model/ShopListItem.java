@@ -3,7 +3,6 @@ package com.lynx.argus.plugin.local.model;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-6 下午4:20
  */
 public class ShopListItem {

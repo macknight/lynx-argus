@@ -7,7 +7,6 @@ import android.view.VelocityTracker;
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-6 下午4:21
  */
 public class MotionDetector {

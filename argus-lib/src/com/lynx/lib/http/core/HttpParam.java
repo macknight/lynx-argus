@@ -14,7 +14,6 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午9:49:29
  */
 public class HttpParam {

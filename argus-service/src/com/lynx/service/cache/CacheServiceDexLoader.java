@@ -3,7 +3,6 @@ package com.lynx.service.cache;
 import android.content.Context;
 
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.IService;
 import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.core.dex.ServiceLoader;
@@ -12,7 +11,6 @@ import com.lynx.service.cache.impl1v1.CacheServiceImpl;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 上午10:01
  */
 public class CacheServiceDexLoader extends ServiceLoader {

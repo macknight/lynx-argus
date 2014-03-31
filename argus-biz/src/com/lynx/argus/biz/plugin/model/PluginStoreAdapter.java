@@ -19,7 +19,6 @@ import com.lynx.lib.misc.AsyncImageLoader;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-12 下午6:27
  */
 public class PluginStoreAdapter extends BaseAdapter {

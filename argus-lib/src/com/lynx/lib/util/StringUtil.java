@@ -1,7 +1,5 @@
 package com.lynx.lib.util;
 
-import android.text.TextUtils;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,10 +7,11 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 
+import android.text.TextUtils;
+
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午1:33
  */
 public class StringUtil {

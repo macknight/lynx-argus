@@ -1,6 +1,10 @@
 package com.lynx.service.geo.impl1v1;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
+
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.geo.entity.Address;
@@ -9,13 +13,9 @@ import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.geo.entity.Coord.CoordType;
 import com.lynx.lib.geo.entity.Wifi;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-29 下午11:27
  */
 public class GeoServiceImpl implements GeoService, LocationListener {

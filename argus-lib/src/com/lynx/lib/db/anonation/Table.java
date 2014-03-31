@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author chris
+ * @author chris.liu
  * @version 3/12/14 6:59 PM
  */
 @Target(ElementType.TYPE)

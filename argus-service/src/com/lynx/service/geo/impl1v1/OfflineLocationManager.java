@@ -1,13 +1,14 @@
 package com.lynx.service.geo.impl1v1;
 
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.geo.entity.Cell;
 import com.lynx.lib.geo.entity.Location;
-import org.json.JSONObject;
 
 /**
  * @author chris.liu
@@ -36,7 +37,7 @@ public class OfflineLocationManager {
 	 * @return
 	 */
 	public Location getLocation(Cell cell) {
-		Logger.i(Tag, String.format("get location from db of cell:%s", cell.toString()));
+		LFLogger.i(Tag, String.format("get location from db of cell:%s", cell.toString()));
 		Location location = null;
 		try {
 			Cursor cursor = locDBUtil.get(cell.toString());

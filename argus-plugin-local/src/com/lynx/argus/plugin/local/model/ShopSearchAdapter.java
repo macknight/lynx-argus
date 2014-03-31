@@ -1,5 +1,8 @@
 package com.lynx.argus.plugin.local.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,15 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
-import com.lynx.argus.plugin.local.R;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lynx.argus.plugin.local.R;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-6 下午4:11
  */
 public class ShopSearchAdapter extends BaseAdapter implements Filterable {

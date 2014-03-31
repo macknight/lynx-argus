@@ -6,7 +6,6 @@ import android.view.View;
  * Interface that allows PullToRefreshBase to hijack the call to AdapterView.setEmptyView()
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-15 下午1:38
  */
 public interface EmptyViewMethodAccessor {

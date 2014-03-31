@@ -2,7 +2,7 @@ package com.lynx.lib.core.dex;
 
 import android.text.TextUtils;
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.db.DBService;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
@@ -79,7 +79,7 @@ public abstract class DexLoader {
 					break;
 				}
 			} catch (Exception e) {
-				Logger.e(dexModule.getModule(), "download dex file error", e);
+				LFLogger.e(dexModule.getModule(), "download dex file error", e);
 				switch (status) {
 				case INSTALL:
 					dispatchChange(DexListener.DEX_INSTALL_FAIL);
@@ -167,10 +167,10 @@ public abstract class DexLoader {
 	 * @return
 	 */
 	public boolean isAviable() {
-        File file = new File(srcPath);
-        if (file.exists()) {
-            return true;
-        }
+		File file = new File(srcPath);
+		if (file.exists()) {
+			return true;
+		}
 		return false;
 	}
 
@@ -207,7 +207,7 @@ public abstract class DexLoader {
 					saveConfig(module);
 					dexModule = module;
 				} catch (Exception e) {
-					Logger.e(module.getModule(), "init config error", e);
+					LFLogger.e(module.getModule(), "init config error", e);
 				}
 			}
 

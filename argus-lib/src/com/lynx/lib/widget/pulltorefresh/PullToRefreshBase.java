@@ -13,12 +13,11 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午1:33
  */
 public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
@@ -408,7 +407,7 @@ public abstract class PullToRefreshBase<T extends View> extends LinearLayout {
 	public final void setMode(Mode mode) {
 		if (mode != mMode) {
 			if (DEBUG) {
-				Logger.w(LOG_TAG, "Setting mode to: " + mode);
+				LFLogger.w(LOG_TAG, "Setting mode to: " + mode);
 			}
 			mMode = mode;
 			updateUIForMode();

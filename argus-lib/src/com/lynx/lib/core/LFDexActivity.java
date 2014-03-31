@@ -6,7 +6,6 @@ import android.content.res.Resources.Theme;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout.LayoutParams;
 import com.lynx.lib.core.dex.DexModule;
@@ -39,7 +38,7 @@ public class LFDexActivity extends LFNavigationActivity {
 
 		FrameLayout rootView = new FrameLayout(this);
 		rootView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT));
+				LayoutParams.MATCH_PARENT));
 		rootView.setId(android.R.id.primary);
 		setContentView(rootView);
 
@@ -101,7 +100,7 @@ public class LFDexActivity extends LFNavigationActivity {
 				}
 			}
 		} catch (Throwable e) {
-			Logger.e(Tag, "load dex ui error", e);
+			LFLogger.e(Tag, "load dex ui error", e);
 
 			rollback();
 			if (!runOnlyOnce) {
@@ -109,7 +108,7 @@ public class LFDexActivity extends LFNavigationActivity {
 				runOnlyOnce = true;
 			}
 
-			LFFragment f = new PluginLoadErrorFragment();
+			LFFragment f = new LFLoadErrorFragment();
 			pushFragment(f);
 		}
 	}

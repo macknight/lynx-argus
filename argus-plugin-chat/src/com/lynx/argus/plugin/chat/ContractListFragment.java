@@ -1,5 +1,9 @@
 package com.lynx.argus.plugin.chat;
 
+import java.util.List;
+
+import org.jivesoftware.smack.packet.Presence;
+
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,16 +15,14 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+
 import com.lynx.argus.plugin.chat.model.Contact;
 import com.lynx.argus.plugin.chat.model.ContactListAdapter;
 import com.lynx.lib.core.LFFragment;
-import org.jivesoftware.smack.packet.Presence;
-
-import java.util.List;
 
 /**
+ *
  * @author chris.liu
- * 
  * @version 13-12-22 下午10:09
  */
 public class ContractListFragment extends LFFragment {

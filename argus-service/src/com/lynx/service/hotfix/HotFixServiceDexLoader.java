@@ -1,6 +1,5 @@
 package com.lynx.service.hotfix;
 
-import com.lynx.lib.core.dex.DexModule;
 import com.lynx.lib.core.dex.Service;
 import com.lynx.lib.core.dex.ServiceLoader;
 import com.lynx.service.hotfix.impl1v1.HotFixServiceImpl;
@@ -8,7 +7,6 @@ import com.lynx.service.hotfix.impl1v1.HotFixServiceImpl;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-12 下午1:34
  */
 public class HotFixServiceDexLoader extends ServiceLoader {

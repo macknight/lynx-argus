@@ -13,7 +13,6 @@ import com.lynx.lib.util.ViewUtil;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-26 下午3:23
  */
 public abstract class LFFragment extends Fragment {
@@ -47,7 +46,7 @@ public abstract class LFFragment extends Fragment {
 
 			return onLoadView(inflater, container, savedInstanceState);
 		} catch (Exception e) {
-			Logger.e(Tag, "onLoadView error", e);
+			LFLogger.e(Tag, "onLoadView error", e);
 			// 当加载页面错误时载入默认错误提示页面
 			return ViewUtil.createLoadErrorView(inflater);
 		}

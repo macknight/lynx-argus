@@ -8,7 +8,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  *
  * @author zhufeng.liu
- *
  * @version 14-2-22 下午3:36
  */
 public class CacheEntry {

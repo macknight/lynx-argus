@@ -11,7 +11,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * @author chris
+ * @author chris.liu
  * @version 3/7/14 3:40 PM
  */
 public class BizSplashActivity extends LFActivity {

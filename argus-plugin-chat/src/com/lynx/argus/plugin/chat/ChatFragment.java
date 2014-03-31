@@ -1,5 +1,15 @@
 package com.lynx.argus.plugin.chat;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
+import org.jivesoftware.smack.ChatManagerListener;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.packet.Message;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -9,25 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.lynx.argus.plugin.chat.model.Msg;
 import com.lynx.argus.plugin.chat.model.MsgAdapter;
 import com.lynx.argus.plugin.chat.util.XMPPUtil;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.Logger;
-import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.ChatManager;
-import org.jivesoftware.smack.ChatManagerListener;
-import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.packet.Message;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-12-7 下午6:58
  */
 public class ChatFragment extends LFFragment {
@@ -114,7 +115,7 @@ public class ChatFragment extends LFFragment {
 				msg.obj = chatMsg;
 				msg.sendToTarget();
 			} catch (Exception e) {
-				Logger.w("chat", e);
+				LFLogger.w("chat", "chat message send error", e);
 			}
 		}
 	};

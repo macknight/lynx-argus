@@ -13,7 +13,6 @@ import android.widget.ListView;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午1:33
  */
 public class PullToRefreshListView extends PullToRefreshAdapterViewBase<ListView> {

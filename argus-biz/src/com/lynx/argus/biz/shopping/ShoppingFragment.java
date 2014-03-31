@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFFragment;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-12 下午6:20
  */
 public class ShoppingFragment extends LFFragment {

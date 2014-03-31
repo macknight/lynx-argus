@@ -3,11 +3,11 @@ package com.lynx.argus.plugin.timemachine;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
 import com.lynx.argus.plugin.timemachine.R.layout;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.widget.charts.PieHelper;
@@ -15,8 +15,7 @@ import com.lynx.lib.widget.charts.PieView;
 
 /**
  *
- * @author chris
- *
+ * @author chris.liu
  * @version 3/8/14 6:34 PM
  */
 public class ClockPieFragment extends LFFragment {

@@ -3,20 +3,17 @@ package com.lynx.argus.plugin.timemachine;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
+
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.util.ImageUtil;
 import com.lynx.lib.widget.charts.BarView;
 
 /**
  * 
- * @author chris
- * 
+ * @author chris.liu
  * @version 3/8/14 6:34 PM
  */
 public class BarFragment extends LFFragment {

@@ -1,13 +1,12 @@
 package com.lynx.lib.core.dex;
 
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import dalvik.system.DexClassLoader;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午11:29
  */
 public abstract class ServiceLoader extends DexLoader {
@@ -68,7 +67,7 @@ public abstract class ServiceLoader extends DexLoader {
 			clazz = cl.loadClass(dexModule.getClazz());
 		} catch (Exception e) {
 			// TODO: roll back to the default service
-			Logger.e(dexModule.getModule(), "replace service error", e);
+			LFLogger.e(dexModule.getModule(), "replace service error", e);
 		}
 
 		loadService();

@@ -5,7 +5,7 @@ import com.lynx.lib.db.DBService;
 /**
  * 一对多延迟加载类
  * 
- * @author chris
+ * @author chris.liu
  * @version 3/12/14 7:55 PM
  * 
  * @param <O>

@@ -1,6 +1,7 @@
 package com.lynx.argus.plugin.parenting.model;
 
 /**
+ *
  * @author zhufeng.liu
  * @version 14-2-11 上午11:32
  */

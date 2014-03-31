@@ -1,17 +1,16 @@
 package com.lynx.lib.core;
 
+import java.util.Stack;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 
-import java.util.Stack;
-
 /**
  * 类似IOS NavigationController,以栈式结构管理其中Fragment
  * 
  * @author zhufeng.liu
- * 
  * @version 13-10-29 上午10:49
  */
 public abstract class LFNavigationActivity extends LFActivity {

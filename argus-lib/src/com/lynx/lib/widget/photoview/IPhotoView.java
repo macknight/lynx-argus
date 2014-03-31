@@ -22,7 +22,6 @@ import android.widget.ImageView;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午4:53
  */
 public interface IPhotoView {
@@ -43,7 +42,7 @@ public interface IPhotoView {
 
 	/**
 	 * @return The current minimum scale level. What this value represents depends on the current
-	 *         {@link android.widget.ImageView.ScaleType}.
+	 *         {@link android.widget.ImageView.ScaleType} .
 	 */
 	float getMinScale();
 
@@ -55,7 +54,7 @@ public interface IPhotoView {
 
 	/**
 	 * @return The current maximum scale level. What this value represents depends on the current
-	 *         {@link android.widget.ImageView.ScaleType}.
+	 *         {@link android.widget.ImageView.ScaleType} .
 	 */
 	float getMaxScale();
 

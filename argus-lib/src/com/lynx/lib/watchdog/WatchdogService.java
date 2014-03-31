@@ -6,7 +6,6 @@ import com.lynx.lib.core.dex.IService;
  * 线上bug fix入口
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-12 下午1:34
  */
 public interface WatchdogService extends IService {

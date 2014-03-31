@@ -1,5 +1,7 @@
 package com.lynx.argus.biz.widget.listview;
 
+import java.util.BitSet;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.SparseIntArray;
@@ -7,18 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListAdapter;
-
-import java.util.BitSet;
 
 /**
  * Wraps a ListAdapter to give it expandable list view functionality. The main thing it does is add a listener to the
  * getToggleButton which expands the getExpandableView for each list item.
  * 
  * @author tjerk
- * 
  * @version 6/9/12 4:41 PM
  */
 public abstract class AbstractSlideExpandableListAdapter extends WrapperListAdapterImpl {

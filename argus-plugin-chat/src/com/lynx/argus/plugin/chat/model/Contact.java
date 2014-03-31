@@ -5,7 +5,6 @@ import org.jivesoftware.smack.packet.Presence;
 
 /**
  * @author chris.liu
- * 
  * @version 13-12-22 下午10:09
  */
 public class Contact {

@@ -10,9 +10,9 @@ import org.json.JSONObject;
 
 import android.text.TextUtils;
 
-import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFConst;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.core.dex.DexLoader.DexStatus;
 import com.lynx.lib.db.DBService;
 import com.lynx.lib.http.HttpCallback;
@@ -23,7 +23,6 @@ import com.lynx.lib.util.FileUtil;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-17 上午1:33
  */
 public class PluginManager {
@@ -53,7 +52,7 @@ public class PluginManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Logger.w(Tag, "获取动态模块更新配置服务器返回错误");
+					LFLogger.w(Tag, "获取动态模块更新配置服务器返回错误");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
@@ -66,18 +65,18 @@ public class PluginManager {
 						// TODO: 提示用户有插件更新
 						loader.update(plugin);
 					} catch (Exception e) {
-						Logger.e(Tag, "获取动态模块更新配置内容错误", e);
+						LFLogger.e(Tag, "获取动态模块更新配置内容错误", e);
 					}
 				}
 			} catch (Exception e) {
-				Logger.e(Tag, "获取动态模块更新配置异常", e);
+				LFLogger.e(Tag, "获取动态模块更新配置异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			super.onFailure(t, strMsg);
-			Logger.e(Tag, "获取插件更新配置失败", t);
+			LFLogger.w(Tag, "获取插件更新配置失败", t);
 		}
 	};
 
@@ -102,7 +101,7 @@ public class PluginManager {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
 		param.put("app", localPlugins());
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_PLUGIN_CONFIG), param,
+		httpService.post(String.format("%s%s", LFConst.LM_API_DOMAIN, LM_API_PLUGIN_CONFIG), param,
 				callback);
 	}
 
@@ -127,7 +126,7 @@ public class PluginManager {
 			dbService.save(loader.dexModule());
 			pluginLoaders.put(loader.module(), loader);
 		} catch (Exception e) {
-			Logger.e(Tag, "add pluginloader error", e);
+			LFLogger.e(Tag, "add pluginloader error", e);
 			removePluginLoader(plugin, null);
 		}
 	}
@@ -135,7 +134,7 @@ public class PluginManager {
 	public void removePluginLoader(Plugin plugin, DexListener listener) {
 		PluginLoader loader = pluginLoaders.remove(plugin.getModule());
 		if (loader == null) {
-			Logger.e(Tag, String.format("no such pluginloader[%s] find", plugin.getModule()));
+			LFLogger.e(Tag, String.format("no such pluginloader[%s] find", plugin.getModule()));
 			return;
 		}
 
@@ -151,7 +150,7 @@ public class PluginManager {
 				listener.onStatusChanged(loader, DexListener.DEX_UNINSTALL_SUCCESS);
 			}
 		} catch (Exception e) {
-			Logger.e(Tag, "remove pluginloader error", e);
+			LFLogger.e(Tag, "remove pluginloader error", e);
 			if (listener != null) {
 				listener.onStatusChanged(loader, DexListener.DEX_UNINSTALL_FAIL);
 			}
@@ -169,7 +168,7 @@ public class PluginManager {
 				pluginLoaders.put(loader.module(), loader);
 			}
 		} catch (Exception e) {
-			Logger.e(Tag, "load local plugins error", e);
+			LFLogger.e(Tag, "load local plugins error", e);
 		}
 	}
 
@@ -196,7 +195,7 @@ public class PluginManager {
 						FileUtil.deleteFile(file);
 					}
 				} catch (Exception e) {
-					Logger.w(Tag, "删除卸载插件的残余文件异常", e);
+					LFLogger.w(Tag, "删除卸载插件的残余文件异常", e);
 				}
 			}
 		}

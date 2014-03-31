@@ -7,7 +7,6 @@ import android.view.View;
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-6 下午5:05
  */
 public class CurveView extends View {

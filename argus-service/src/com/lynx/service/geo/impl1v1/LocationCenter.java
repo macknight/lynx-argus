@@ -1,13 +1,24 @@
 package com.lynx.service.geo.impl1v1;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.widget.Toast;
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.Logger;
+
+import com.lynx.lib.core.LFConst;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.GeoService.LocationStatus;
 import com.lynx.lib.geo.entity.Address;
@@ -18,20 +29,10 @@ import com.lynx.lib.geo.entity.Wifi;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class LocationCenter {
@@ -67,7 +68,7 @@ public class LocationCenter {
 	private GeoServiceImpl geoService;
 	private HttpService httpService;
 
-	private static final String tip = Logger.level() == Logger.AppLevel.PRODUCT ? ""
+	private static final String tip = LFLogger.level() == LFLogger.AppLevel.PRODUCT ? ""
 			: ("(impl1v1)");
 
 	public LocationCenter(GeoServiceImpl geoService) {
@@ -81,13 +82,13 @@ public class LocationCenter {
 			Method getService = context.getClass().getMethod("service", String.class);
 			httpService = (HttpService) getService.invoke(context, "http");
 		} catch (Exception e) {
-			Logger.e(Tag, "location center init error", e);
+			LFLogger.e(Tag, "location center init error", e);
 		}
 	}
 
 	public void start() {
 		stop();
-		Logger.i(Tag, "start location center");
+		LFLogger.i(Tag, "start location center");
 		coords3thPart.clear();
 		timerTask = new TimerTask() {
 			@Override
@@ -123,7 +124,7 @@ public class LocationCenter {
 	 * 停止预处理阶段的task
 	 */
 	private void stopPrv() {
-		Logger.i(Tag, "stop location center");
+		LFLogger.i(Tag, "stop location center");
 		status.set(0x0000);
 		loop.set(0);
 		if (timerTask != null) {
@@ -169,7 +170,7 @@ public class LocationCenter {
 			Coord coord = new Coord(source, lat, lng, (int) location.getAccuracy(),
 					System.currentTimeMillis() - location.getTime());
 			coords3thPart.add(coord);
-			Logger.i(Tag, coord.toString());
+			LFLogger.i(Tag, coord.toString());
 		}
 
 		@Override
@@ -218,7 +219,7 @@ public class LocationCenter {
 
 							addr = new Address(province, city, region, street + tip, num);
 						} catch (Exception e) {
-							Logger.e(Tag, "cant get address now", e);
+							LFLogger.e(Tag, "cant get address now", e);
 						}
 
 						geoService.onLocationChanged(LocationStatus.SUCCESS);
@@ -232,7 +233,7 @@ public class LocationCenter {
 					return;
 				}
 			} catch (Exception e) {
-				Logger.e(Tag, "cant get location now", e);
+				LFLogger.e(Tag, "cant get location now", e);
 			}
 			geoService.onLocationChanged(LocationStatus.FAIL);
 		}
@@ -240,7 +241,7 @@ public class LocationCenter {
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			geoService.onLocationChanged(LocationStatus.FAIL);
-			Logger.e(Tag, "unknown network error " + strMsg, t);
+			LFLogger.e(Tag, "unknown network error " + strMsg, t);
 		}
 	};
 
@@ -248,7 +249,7 @@ public class LocationCenter {
 	 * 完成基站数据扫描
 	 */
 	public void cellScanFin() {
-		Logger.i(Tag, "cell scan fin");
+		LFLogger.i(Tag, "cell scan fin");
 		status.set(status.intValue() | CELL_SCAN_FIN);
 	}
 
@@ -256,7 +257,7 @@ public class LocationCenter {
 	 * 完成wifi数据扫描
 	 */
 	public void wifiScanFin() {
-		Logger.i(Tag, "wifi scan fin");
+		LFLogger.i(Tag, "wifi scan fin");
 		status.set(status.intValue() | WIFI_SCAN_FIN);
 	}
 
@@ -264,7 +265,7 @@ public class LocationCenter {
 	 * 完成百度定位
 	 */
 	public void bmapLocFin() {
-		Logger.i(Tag, "baidu map locate fin");
+		LFLogger.i(Tag, "baidu map locate fin");
 		status.set(status.intValue() | BMAP_LOC_FIN);
 	}
 
@@ -280,7 +281,7 @@ public class LocationCenter {
 		if (wifiInfoManager.wifis2str() != null) {
 			param.put("wifi", wifiInfoManager.wifis2str());
 		}
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_LOCATION), param,
+		httpService.post(String.format("%s%s", LFConst.LM_API_DOMAIN, LM_API_LOCATION), param,
 				httpCallback);
 	}
 

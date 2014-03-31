@@ -10,7 +10,6 @@ import com.lynx.argus.R;
  * no ids are given in the contructor.
  * 
  * @author tjerk
- * 
  * @version 6/13/12 8:04 AM
  */
 public class SlideExpandableListAdapter extends AbstractSlideExpandableListAdapter {

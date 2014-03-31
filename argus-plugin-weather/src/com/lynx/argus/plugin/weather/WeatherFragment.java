@@ -6,10 +6,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
-import android.widget.ImageButton;
 import org.json.JSONObject;
 
 import android.graphics.Point;
@@ -18,15 +14,21 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.lynx.argus.plugin.weather.model.WeatherInfo;
-import com.lynx.lib.core.*;
+import com.lynx.argus.plugin.weather.model.WeatherInfoBO;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.core.HttpParam;
 import com.lynx.lib.util.DateUtil;
 import com.lynx.lib.util.DisplayUtil;
 import com.lynx.lib.widget.charts.LineView;
@@ -39,27 +41,28 @@ import com.lynx.lib.widget.charts.LineView;
  */
 public class WeatherFragment extends LFFragment {
 
-	private static final String LM_API_WEATHER_FORECAST = "/weather/forecast";
+	private static final String LM_API_WEATHER_FORECAST = "http://m.weather.com.cn/data/%s.html";
 	private static final int WEATHER_UPDATE_DONE = 1;
 
 	private static final String CELSIUS = "℃";
-	private TextView tvTempMax, tvTempMin, tvWeatherDetail, tvWind;
+	private TextView tvTempMax, tvTempMin, tvWeatherDetail, tvWind, tvSuggestion;
 	private LineView lvTemp;
 
 	private Gson gson;
 	private static final SimpleDateFormat sdf = new SimpleDateFormat("MM/dd");
+	private String cityCode = "101020100";
 	private WeatherInfo weatherInfo;
 	private List<String> colors = new ArrayList<String>();
 	private Animation animRotate = new RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f,
 			Animation.RELATIVE_TO_SELF, 0.5f);
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 
-        navActivity.setPopAnimation(R.anim.slide_in_left, R.anim.slide_out_right);
-        navActivity.setPushAnimation(R.anim.slide_in_right, R.anim.slide_out_left);
-    }
+		navActivity.setPopAnimation(R.anim.slide_in_left, R.anim.slide_out_right);
+		navActivity.setPushAnimation(R.anim.slide_in_right, R.anim.slide_out_left);
+	}
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -75,19 +78,18 @@ public class WeatherFragment extends LFFragment {
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
 
-
-        ImageButton ib = (ImageButton)view.findViewById(R.id.ib_weather_addcity);
-        ib.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddCityFragment fragment = new AddCityFragment();
-                navActivity.pushFragment(fragment);
-            }
-        });
+		ImageButton ib = (ImageButton) view.findViewById(R.id.ib_weather_addcity);
+		ib.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AddCityFragment fragment = new AddCityFragment();
+				navActivity.pushFragment(fragment);
+			}
+		});
 
 		lvTemp = (LineView) view.findViewById(R.id.lv_temp);
 		Point screenSize = DisplayUtil.getScreenSize(navActivity);
-		lvTemp.setBackgroundGridWidth(screenSize.x / 5);
+		lvTemp.setBackgroundGridWidth(screenSize.x / 7);
 		lvTemp.setBottomTextList(generateBottomTips());
 		lvTemp.setDrawDotLine(true);
 		lvTemp.setShowPopup(LineView.SHOW_POPUPS_NONE);
@@ -98,6 +100,7 @@ public class WeatherFragment extends LFFragment {
 		tvTempMin = (TextView) view.findViewById(R.id.tv_weather_temp_min);
 		tvWeatherDetail = (TextView) view.findViewById(R.id.tv_weather_detail);
 		tvWind = (TextView) view.findViewById(R.id.tv_weather_wind);
+        tvSuggestion = (TextView) view.findViewById(R.id.tv_weather_suggestion);
 
 		ImageButton ibRefresh = (ImageButton) view.findViewById(R.id.ib_weather_refresh);
 		ibRefresh.setAnimation(animRotate);
@@ -107,14 +110,14 @@ public class WeatherFragment extends LFFragment {
 			public void onClick(View v) {
 				animRotate.cancel();
 				animRotate.startNow();
-				getWeather(1);
+				getWeather();
 			}
 		});
 
 		colors.add("#ffe74c3c");
 		colors.add("#ff2980b9");
 
-		getWeather(1);
+		getWeather();
 
 		return view;
 	}
@@ -124,24 +127,21 @@ public class WeatherFragment extends LFFragment {
 		public void onSuccess(Object o) {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
-				Logger.e("chris", joResult.toString());
-				if (joResult.getInt("status") == 0) {
-					JSONObject joWeatherInfo = joResult.getJSONObject("result");
-					weatherInfo = gson.fromJson(joWeatherInfo.toString(), WeatherInfo.class);
-					handler.sendEmptyMessage(WEATHER_UPDATE_DONE);
-				} else {
-					Toast.makeText(navActivity, "更新天气失败", Toast.LENGTH_SHORT).show();
-				}
+				JSONObject joWeatherInfo = joResult.getJSONObject("weatherinfo");
+				WeatherInfoBO bo = gson.fromJson(joWeatherInfo.toString(), WeatherInfoBO.class);
+				bo2vo(bo);
+				Toast.makeText(navActivity, "更新天气成功", Toast.LENGTH_SHORT).show();
 			} catch (Exception e) {
-
+				LFLogger.e("chris", "weather respone error", e);
+				Toast.makeText(navActivity, "更新天气失败", Toast.LENGTH_SHORT).show();
 			}
-
+			handler.sendEmptyMessage(WEATHER_UPDATE_DONE);
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			handler.sendEmptyMessage(WEATHER_UPDATE_DONE);
-			Logger.e("chris", strMsg, t);
+			LFLogger.e("chris", strMsg, t);
 			Toast.makeText(navActivity, "更新天气失败", Toast.LENGTH_SHORT).show();
 		}
 	};
@@ -158,21 +158,18 @@ public class WeatherFragment extends LFFragment {
 		}
 	};
 
-	private void getWeather(int cityId) {
-		HttpParam param = new HttpParam();
-		param.put("ua", LFEnvironment.userAgent());
-		Logger.e("chris", LFEnvironment.userAgent());
-		param.put("cityId", String.valueOf(cityId));
-		String url = String.format("%s%s", Const.LM_API_DOMAIN, LM_API_WEATHER_FORECAST);
-		httpService.post(url, null, forecastCallback);
+	private void getWeather() {
+		String url = String.format(LM_API_WEATHER_FORECAST, cityCode);
+		httpService.get(url, forecastCallback);
 	}
 
 	private void updateWeather() {
 		try {
-			tvTempMax.setText(String.format("%s%s", CELSIUS, weatherInfo.getMaxTemp()[0]));
-			tvTempMin.setText(String.format("%s%s", CELSIUS, weatherInfo.getMinTemp()[0]));
+			tvTempMax.setText(String.format("%s%s", weatherInfo.getMaxTemp()[0], CELSIUS));
+			tvTempMin.setText(String.format("%s%s", weatherInfo.getMinTemp()[0], CELSIUS));
 			tvWeatherDetail.setText(weatherInfo.getWeather()[0]);
 			tvWind.setText(weatherInfo.getWind()[0]);
+            tvSuggestion.setText(weatherInfo.getSuggestion());
 			tempSet();
 		} catch (Exception e) {
 
@@ -182,7 +179,7 @@ public class WeatherFragment extends LFFragment {
 	private List<String> generateBottomTips() {
 		List<String> bottomTips = new ArrayList<String>();
 		Date today = new Date();
-		for (int i = 0; i <= 4; ++i) {
+		for (int i = 0; i <= 5; ++i) {
 			Date date = DateUtil.dateOffset(today, i);
 			String tip = String.format("%s %s", sdf.format(date), DateUtil.getWeekOfDate(date));
 			bottomTips.add(tip);
@@ -197,5 +194,16 @@ public class WeatherFragment extends LFFragment {
 		dataLists.add(maxTemp);
 		dataLists.add(minTemp);
 		lvTemp.setDataList(dataLists);
+	}
+
+	private void bo2vo(WeatherInfoBO bo) {
+		weatherInfo = new WeatherInfo();
+		weatherInfo.setTemp(new String[] { bo.temp1, bo.temp2, bo.temp3, bo.temp4, bo.temp5,
+				bo.temp6 });
+		weatherInfo.setWeather(new String[] { bo.weather1, bo.weather2, bo.weather3, bo.weather4,
+				bo.weather5, bo.weather6 });
+		weatherInfo.setWind(new String[] { bo.wind1, bo.wind2, bo.wind3, bo.wind4, bo.wind5,
+				bo.wind6 });
+		weatherInfo.setSuggestion(bo.index_d);
 	}
 }

@@ -4,19 +4,19 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.lynx.lib.core.Const;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFConst;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.http.core.HttpParam;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-17 上午1:32
  */
 public abstract class ServiceManager {
@@ -52,7 +52,7 @@ public abstract class ServiceManager {
 			try {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") != 200) {
-					Logger.w(Tag, "获取服务更新配置服务器返回错误");
+					LFLogger.w(Tag, "获取服务更新配置服务器返回错误");
 					return;
 				}
 				JSONArray jaPlugin = joResult.getJSONArray("data");
@@ -66,21 +66,21 @@ public abstract class ServiceManager {
 							ServiceLoader loader = serviceLoaders.get(service.getModule());
 							if (loader != null) {
 								// service 有新的动态更新
-                                loader.update(service);
+								loader.update(service);
 							}
 						}
 					} catch (Exception e) {
-						Logger.e(Tag, "服务更新配置数据解析异常", e);
+						LFLogger.e(Tag, "服务更新配置数据解析异常", e);
 					}
 				}
 			} catch (Exception e) {
-				Logger.e(Tag, "服务更新配置数据解析异常", e);
+				LFLogger.e(Tag, "服务更新配置数据解析异常", e);
 			}
 		}
 
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
-			Logger.w(Tag, "获取服务更新配置失败", t);
+			LFLogger.w(Tag, "获取服务更新配置失败", t);
 		}
 	};
 
@@ -90,8 +90,8 @@ public abstract class ServiceManager {
 	public void updateCheck() {
 		HttpParam param = new HttpParam();
 		param.put("ua", "android");
-		httpService.post(String.format("%s%s", Const.LM_API_DOMAIN, LM_API_SERVICE_CONFIG), param,
-				callback);
+		httpService.post(String.format("%s%s", LFConst.LM_API_DOMAIN, LM_API_SERVICE_CONFIG),
+				param, callback);
 	}
 
 	public IService service(String name) {

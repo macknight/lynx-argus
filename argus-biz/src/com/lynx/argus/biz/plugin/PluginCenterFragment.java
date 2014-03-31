@@ -27,7 +27,6 @@ import com.lynx.lib.core.dex.Plugin;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-12 下午6:18
  */
 public class PluginCenterFragment extends LFFragment {

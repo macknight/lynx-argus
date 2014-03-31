@@ -1,15 +1,17 @@
 package com.lynx.argus.plugin.parenting.util;
 
-import com.lynx.argus.plugin.parenting.model.CampaignInfo;
-import com.lynx.argus.plugin.parenting.model.ShopInfo;
-import com.lynx.lib.geo.entity.GeoPoint;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.lynx.argus.plugin.parenting.model.CampaignInfo;
+import com.lynx.argus.plugin.parenting.model.ShopInfo;
+import com.lynx.lib.geo.entity.GeoPoint;
+
 /**
+ *
  * @author zhufeng.liu
  * @version 14-2-17 下午7:17
  */

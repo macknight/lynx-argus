@@ -10,7 +10,6 @@ import android.view.inputmethod.InputMethodManager;
  * 支持UI动态加载
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-26 下午3:06
  */
 public abstract class LFActivity extends FragmentActivity {

@@ -6,7 +6,6 @@ import android.view.View;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午4:55
  */
 @TargetApi(16)

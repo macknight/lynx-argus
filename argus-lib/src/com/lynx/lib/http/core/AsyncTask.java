@@ -2,7 +2,7 @@ package com.lynx.lib.http.core;
 
 import android.os.Handler;
 import android.os.Message;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 
 import java.util.ArrayDeque;
 import java.util.concurrent.*;
@@ -12,8 +12,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-27 下午5:52
+ * 
  * @param <Params>
  * @param <Progress>
  * @param <Result>
@@ -142,7 +142,7 @@ public abstract class AsyncTask<Params, Progress, Result> {
 				try {
 					postResultIfNotInvoked(get());
 				} catch (InterruptedException e) {
-					Logger.w(LOG_TAG, "async task interrupted", e);
+					LFLogger.w(LOG_TAG, "async task interrupted", e);
 				} catch (ExecutionException e) {
 					throw new RuntimeException("An error occured while executing doInBackground()",
 							e.getCause());

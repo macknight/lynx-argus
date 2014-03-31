@@ -1,12 +1,10 @@
 package com.lynx.lib.cache;
 
 import com.lynx.lib.core.dex.IService;
-import com.lynx.lib.core.dex.Service;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 下午10:02
  */
 public interface CacheService extends IService {

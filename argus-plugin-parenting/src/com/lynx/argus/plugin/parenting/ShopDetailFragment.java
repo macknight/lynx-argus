@@ -3,7 +3,6 @@ package com.lynx.argus.plugin.parenting;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.lynx.argus.plugin.parenting.model.GoodsInfo;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -17,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lynx.argus.plugin.parenting.model.GoodsInfo;
 import com.lynx.argus.plugin.parenting.model.ShopInfo;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpCallback;
@@ -24,7 +24,6 @@ import com.lynx.lib.http.HttpCallback;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-1-29 上午10:13
  */
 public class ShopDetailFragment extends LFFragment {

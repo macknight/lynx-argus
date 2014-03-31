@@ -1,5 +1,7 @@
 package com.lynx.argus.plugin.weather;
 
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,14 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-import com.lynx.lib.core.Const;
+
+import com.lynx.lib.core.LFConst;
 import com.lynx.lib.core.LFEnvironment;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpCallback;
 import com.lynx.lib.http.core.HttpParam;
-import org.json.JSONObject;
 
 /**
+ *
  * @author chris.liu
  * @version 3/25/14 9:04 PM
  */
@@ -70,7 +73,7 @@ public class AddCityFragment extends LFFragment {
 	private void getCityList() {
 		HttpParam param = new HttpParam();
 		param.put("ua", LFEnvironment.userAgent());
-		String url = String.format("%s%s", Const.LM_API_DOMAIN, LM_API_WEATHER_CITYS);
+		String url = String.format("%s%s", LFConst.LM_API_DOMAIN, LM_API_WEATHER_CITYS);
 		httpService.post(url, null, cityListCallback);
 	}
 

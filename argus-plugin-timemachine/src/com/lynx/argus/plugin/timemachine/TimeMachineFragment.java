@@ -12,8 +12,7 @@ import com.lynx.lib.core.LFFragment;
 /**
  * 时光机
  * 
- * @author chris
- * 
+ * @author chris.liu
  * @version 3/7/14 4:24 PM
  */
 public class TimeMachineFragment extends LFFragment {

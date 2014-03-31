@@ -14,7 +14,6 @@ import android.widget.ListAdapter;
  * buttons are pressed.
  * 
  * @author tjerk
- * 
  * @version 6/26/12 7:01 PM
  */
 public class ActionSlideExpandableListView extends SlideExpandableListView {

@@ -1,15 +1,5 @@
 package com.lynx.service.geo.impl1v1;
 
-import android.content.Context;
-import android.telephony.CellLocation;
-import android.telephony.NeighboringCellInfo;
-import android.telephony.TelephonyManager;
-import android.telephony.gsm.GsmCellLocation;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.geo.entity.CDMACell;
-import com.lynx.lib.geo.entity.Cell;
-import com.lynx.lib.geo.entity.GSMCell;
-
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +7,20 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.content.Context;
+import android.telephony.CellLocation;
+import android.telephony.NeighboringCellInfo;
+import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
+
+import com.lynx.lib.core.LFLogger;
+import com.lynx.lib.geo.entity.CDMACell;
+import com.lynx.lib.geo.entity.Cell;
+import com.lynx.lib.geo.entity.GSMCell;
+
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class CellInfoManager {
@@ -48,7 +48,7 @@ public class CellInfoManager {
 	}
 
 	public void start() {
-		Logger.i(Tag, "start cell info scan");
+		LFLogger.i(Tag, "start cell info scan");
 		stop();
 		timerTask = new TimerTask() {
 			@Override
@@ -71,7 +71,7 @@ public class CellInfoManager {
 	}
 
 	public void stop() {
-		Logger.i(Tag, "stop cell info scan");
+		LFLogger.i(Tag, "stop cell info scan");
 		// 还原状态
 		loop.set(0);
 		if (timerTask != null) {

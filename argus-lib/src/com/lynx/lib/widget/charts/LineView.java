@@ -14,6 +14,7 @@ import com.lynx.lib.util.DisplayUtil;
 import com.lynx.lib.util.ImageUtil;
 
 /**
+ * 
  * @author zhufeng.liu
  * @version 14-3-15 4:24 pm
  */
@@ -379,7 +380,7 @@ public class LineView extends View {
 	private void drawBackgroundLines(Canvas canvas) {
 		Paint paint = new Paint();
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(DisplayUtil.dip2px(getContext(), 1f));
+		paint.setStrokeWidth(DisplayUtil.dip2px(getContext(), 0.5f));
 		paint.setColor(BACKGROUND_LINE_COLOR);
 		PathEffect effects = new DashPathEffect(new float[] { 10, 5, 10, 5 }, 1);
 
@@ -503,11 +504,11 @@ public class LineView extends View {
 		this.resId = resId;
 	}
 
-    public void setBackgroundGridWidth(int backgroundGridWidth) {
-        this.backgroundGridWidth = backgroundGridWidth;
-    }
+	public void setBackgroundGridWidth(int backgroundGridWidth) {
+		this.backgroundGridWidth = backgroundGridWidth;
+	}
 
-    class Dot {
+	class Dot {
 		int x;
 		int y;
 		int data;

@@ -1,20 +1,19 @@
 package com.lynx.lib.core;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-14 上午10:32
  */
 public class LFEnvironment {
@@ -165,7 +164,7 @@ public class LFEnvironment {
 	}
 
 	public static boolean isDebug() {
-		return Logger.level() != Logger.AppLevel.PRODUCT;
+		return LFLogger.level() != LFLogger.AppLevel.PRODUCT;
 	}
 
 	public static PackageInfo pkgInfo() {

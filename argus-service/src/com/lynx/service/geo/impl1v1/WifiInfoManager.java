@@ -1,24 +1,24 @@
 package com.lynx.service.geo.impl1v1;
 
-import android.content.Context;
-import android.net.DhcpInfo;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiInfo;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.geo.entity.Wifi;
-import com.lynx.lib.http.NetworkManager;
-import com.lynx.lib.http.NetworkManager.NetworkState;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import android.content.Context;
+import android.net.DhcpInfo;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
+
+import com.lynx.lib.core.LFLogger;
+import com.lynx.lib.geo.entity.Wifi;
+import com.lynx.lib.http.NetworkManager;
+import com.lynx.lib.http.NetworkManager.NetworkState;
+
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class WifiInfoManager {
@@ -50,7 +50,7 @@ public class WifiInfoManager {
 	}
 
 	public void start() {
-		Logger.i(Tag, "start wifi info scan");
+		LFLogger.i(Tag, "start wifi info scan");
 		stop();
 		timerTask = new TimerTask() {
 			@Override
@@ -74,7 +74,7 @@ public class WifiInfoManager {
 	}
 
 	public void stop() {
-		Logger.i(Tag, "stop wifi info scan");
+		LFLogger.i(Tag, "stop wifi info scan");
 		loop.set(0);
 		if (timerTask != null) {
 			timerTask.cancel();

@@ -1,5 +1,13 @@
 package com.lynx.argus.plugin.local;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,24 +15,14 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lynx.lib.core.LFConst;
+import com.lynx.lib.core.LFFragment;
+import com.lynx.lib.http.HttpCallback;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends LFFragment {
@@ -95,12 +93,12 @@ public class ShopDetailFragment extends LFFragment {
 
 	private void getShopDetail(String shopId) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
+		params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
 		params.add(new BasicNameValuePair("output", "json"));
 		params.add(new BasicNameValuePair("uid", shopId));
 		params.add(new BasicNameValuePair("scope", 2 + ""));
 		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s", Const.BMAP_API_PLACE, BMAP_API_PLACE_SHOP_DETAIL,
+		String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE, BMAP_API_PLACE_SHOP_DETAIL,
 				param);
 		httpService.get(url, null, httpCallback);
 	}

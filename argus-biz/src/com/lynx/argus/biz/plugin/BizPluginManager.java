@@ -12,8 +12,8 @@ import org.json.JSONObject;
 import android.widget.Toast;
 
 import com.lynx.argus.app.BizApplication;
-import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.LFConst;
 import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.DexLoader;
 import com.lynx.lib.core.dex.Plugin;
@@ -23,7 +23,6 @@ import com.lynx.lib.http.HttpService;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-14 下午2:37
  */
 public class BizPluginManager {
@@ -113,7 +112,7 @@ public class BizPluginManager {
 				dispatchMessage(MSG_STORE_UPDATE_FIN);
 				return;
 			}
-			String url = String.format("%s%s", Const.LM_API_DOMAIN, LM_API_ALL_PLUGIN);
+			String url = String.format("%s%s", LFConst.LM_API_DOMAIN, LM_API_ALL_PLUGIN);
 			httpService.post(url, storeUpdateCallback);
 		} catch (Exception e) {
 			dispatchMessage(MSG_STORE_UPDATE_FIN);

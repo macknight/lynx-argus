@@ -1,21 +1,21 @@
 package com.lynx.argus.plugin.chat.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.lynx.argus.plugin.chat.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import com.lynx.argus.plugin.chat.R;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-12-8 下午7:43
  */
 public class ChatAdapter extends BaseAdapter {

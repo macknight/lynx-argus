@@ -3,7 +3,6 @@ package com.lynx.argus.plugin.chat.model;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-12-7 下午8:06
  */
 public class Msg {

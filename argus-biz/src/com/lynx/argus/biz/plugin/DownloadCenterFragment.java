@@ -12,7 +12,6 @@ import com.lynx.lib.core.LFFragment;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-18 下午8:00
  */
 public class DownloadCenterFragment extends LFFragment {

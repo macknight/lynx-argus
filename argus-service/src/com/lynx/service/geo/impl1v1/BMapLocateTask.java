@@ -1,9 +1,8 @@
 package com.lynx.service.geo.impl1v1;
 
-import android.util.Log;
-import com.lynx.lib.core.LFEnvironment;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.geo.entity.*;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -14,13 +13,13 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.lynx.lib.core.LFEnvironment;
+import com.lynx.lib.core.LFLogger;
+import com.lynx.lib.geo.entity.*;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class BMapLocateTask {
@@ -68,13 +67,13 @@ public class BMapLocateTask {
 							lng = LocationUtil.format(lng, 5);
 							int acc = (int) json.getJSONObject("content").getDouble("radius");
 							Coord coord = new Coord(Coord.CoordSource.BMAP, lat, lng, acc, elapse);
-							Logger.i(Tag, String.format("get coord form Baidu(%f, %f, %d)",
+							LFLogger.i(Tag, String.format("get coord form Baidu(%f, %f, %d)",
 									coord.lat(), coord.lng(), coord.acc()));
 							// coords3thPart.add(coord);
 						}
 					}
 				} catch (Exception e) {
-					Logger.e(Tag, "gao de locate request error", e);
+					LFLogger.e(Tag, "gao de locate request error", e);
 				} finally {
 					if (httpPost != null) {
 						httpPost.abort();
@@ -82,7 +81,7 @@ public class BMapLocateTask {
 					if (httpClient != null) {
 						httpClient.getConnectionManager().shutdown();
 					}
-					Logger.i(Tag, "get coord(%s) from Baidu done!");
+					LFLogger.i(Tag, "get coord(%s) from Baidu done!");
 				}
 			}
 		}.start();
@@ -122,10 +121,9 @@ public class BMapLocateTask {
 
 		if (wifis != null && wifis.size() != 0) {
 			tmp += "&wf=";
-            for (Wifi wifi : wifis) {
-                tmp += wifi.mac().replaceAll(":", "") + ";" + Math.abs(wifi.dBm())
-                        + ";|";
-            }
+			for (Wifi wifi : wifis) {
+				tmp += wifi.mac().replaceAll(":", "") + ";" + Math.abs(wifi.dBm()) + ";|";
+			}
 			tmp = tmp.substring(0, tmp.length() - 1);
 		}
 		tmp += "&addr=detail&coor=gcj02&os=android&prod=default&im=";

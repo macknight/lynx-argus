@@ -10,7 +10,6 @@ import java.util.Random;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午10:52:25
  */
 public class MultiPartEntity implements HttpEntity {

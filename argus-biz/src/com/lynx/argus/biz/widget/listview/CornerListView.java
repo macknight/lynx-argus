@@ -5,10 +5,14 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
 import com.lynx.argus.R;
 
 /**
  * 圆角ListView
+ * 
+ * @author chris.liu
+ * @version 13-11-19 下午3:55
  */
 public class CornerListView extends ListView {
 

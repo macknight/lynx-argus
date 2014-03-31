@@ -13,12 +13,11 @@ import android.widget.TextView;
 import com.lynx.argus.R;
 import com.lynx.lib.core.LFEnvironment;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-20 上午11:53
  */
 public class AboutFragment extends LFFragment {
@@ -44,7 +43,7 @@ public class AboutFragment extends LFFragment {
 				version = pinfo.versionName;
 			}
 		} catch (Exception e) {
-			Logger.e(Tag, "load resource from assert error", e);
+			LFLogger.e(Tag, "load resource from assert error", e);
 		}
 
 		tvVersion.setText(version);

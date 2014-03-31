@@ -3,7 +3,6 @@ package com.lynx.lib.core.dex;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-17 上午12:37
  */
 public abstract class DexModule {

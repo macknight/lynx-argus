@@ -22,7 +22,6 @@ import android.graphics.RectF;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2014-1-22 下午5:15:48
  */
 class RotateBitmap {

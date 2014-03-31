@@ -4,7 +4,6 @@ package com.lynx.lib.core.dex;
  * 插件安装、更新回调
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-21 下午8:30
  */
 public interface DexListener {

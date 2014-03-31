@@ -1,14 +1,13 @@
 package com.lynx.argus.plugin.parenting.model;
 
-import com.lynx.lib.geo.entity.GeoPoint;
-
 import java.io.Serializable;
+
+import com.lynx.lib.geo.entity.GeoPoint;
 
 /**
  * 商户信息
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-11 下午4:45
  */
 public class ShopInfo implements Serializable {

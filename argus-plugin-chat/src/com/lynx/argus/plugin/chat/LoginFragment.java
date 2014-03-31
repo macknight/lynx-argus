@@ -1,5 +1,12 @@
 package com.lynx.argus.plugin.chat;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
+import org.jivesoftware.smack.*;
+import org.jivesoftware.smack.packet.Presence;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,21 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
 import com.lynx.argus.plugin.chat.model.Contact;
 import com.lynx.argus.plugin.chat.util.XMPPService;
 import com.lynx.argus.plugin.chat.util.XMPPUtil;
 import com.lynx.lib.core.LFFragment;
-import org.jivesoftware.smack.*;
-import org.jivesoftware.smack.packet.Presence;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 
 /**
  * 
  * @author chris.liu
- * 
  * @version 13-12-15 下午12:09
  */
 public class LoginFragment extends LFFragment {

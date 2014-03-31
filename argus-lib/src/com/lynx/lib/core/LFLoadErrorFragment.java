@@ -13,8 +13,8 @@ import com.lynx.lib.util.ViewUtil;
  * @author zhufeng.liu
  * @version 13-9-26 下午3:23
  */
-public class PluginLoadErrorFragment extends LFFragment {
-	private static final String Tag = "PluginLoadErrorFragment";
+public class LFLoadErrorFragment extends LFFragment {
+	private static final String Tag = "LFLoadErrorFragment";
 
 	private String message; // 加载失败提示
 

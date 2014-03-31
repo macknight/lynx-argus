@@ -1,14 +1,13 @@
 package com.lynx.service.geo.impl1v1;
 
-import com.lynx.lib.geo.entity.Coord;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import com.lynx.lib.geo.entity.Coord;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class LocationUtil {

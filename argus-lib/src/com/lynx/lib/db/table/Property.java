@@ -7,7 +7,8 @@ import java.lang.reflect.Method;
 import java.util.Date;
 
 /**
- * @author chris
+ * 
+ * @author chris.liu
  * @version 3/12/14 7:05 PM
  */
 public class Property {

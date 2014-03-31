@@ -12,7 +12,7 @@ import com.lynx.lib.db.table.Property;
 import com.lynx.lib.db.table.TableInfo;
 
 /**
- * @author chris
+ * @author chris.liu
  * @version 3/12/14 7:05 PM
  */
 public class CursorUtil {

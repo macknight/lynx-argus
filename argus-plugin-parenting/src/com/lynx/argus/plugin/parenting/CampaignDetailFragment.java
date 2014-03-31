@@ -1,24 +1,25 @@
 package com.lynx.argus.plugin.parenting;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpCallback;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-11 下午6:51
  */
 public class CampaignDetailFragment extends LFFragment {

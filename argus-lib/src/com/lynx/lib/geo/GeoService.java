@@ -12,7 +12,6 @@ import com.lynx.lib.geo.entity.Wifi;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-27 下午5:52
  */
 public interface GeoService extends IService {

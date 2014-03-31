@@ -14,13 +14,18 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.db.core.*;
 import com.lynx.lib.db.table.KeyValue;
 import com.lynx.lib.db.table.ManyToOne;
 import com.lynx.lib.db.table.OneToMany;
 import com.lynx.lib.db.table.TableInfo;
 
+/**
+ * 
+ * @author chris.liu
+ * @version 3/12/14 7:08 PM
+ */
 public class DBService {
 
 	private static final String Tag = "DBService";
@@ -260,7 +265,8 @@ public class DBService {
 				cv.put(kv.getKey(), kv.getValue().toString());
 			}
 		} else {
-			Logger.w(Tag, "insertContentValues: List<KeyValue> is empty or ContentValues is empty!");
+			LFLogger.w(Tag,
+					"insertContentValues: List<KeyValue> is empty or ContentValues is empty!");
 		}
 
 	}
@@ -373,7 +379,7 @@ public class DBService {
 			debugSql(SQLInfo.getSql());
 			db.execSQL(SQLInfo.getSql(), SQLInfo.getBindArgsAsArray());
 		} else {
-			Logger.e(Tag, "sava error:SQLInfo is null");
+			LFLogger.e(Tag, "sava error:SQLInfo is null");
 		}
 	}
 
@@ -820,7 +826,7 @@ public class DBService {
 					return SQLiteDatabase.openOrCreateDatabase(dbf, null);
 				}
 			} catch (IOException ioex) {
-				Logger.e(Tag, "数据库文件创建失败", ioex);
+				LFLogger.e(Tag, "数据库文件创建失败", ioex);
 				return null;
 			}
 		} else {

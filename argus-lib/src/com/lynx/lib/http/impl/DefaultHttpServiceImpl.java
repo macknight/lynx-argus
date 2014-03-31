@@ -44,7 +44,6 @@ import java.util.zip.GZIPInputStream;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午11:26:48
  */
 public class DefaultHttpServiceImpl implements HttpService {

@@ -4,32 +4,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.Toast;
+
 import com.lynx.argus.R;
 import com.lynx.argus.biz.search.model.SuggestionAdapter;
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFFragment;
-import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-10-27 下午9:29
  */
 public class SearchFragment extends LFFragment {

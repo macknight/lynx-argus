@@ -4,10 +4,8 @@ import java.util.Map;
 
 /**
  * 负责所有动态更新模块(包括ui module和service)的更新管理
- * <p/>
  * 
  * @author zhufeng.liu
- * 
  * @version 13-10-28 下午5:39
  */
 public abstract class DexManager {

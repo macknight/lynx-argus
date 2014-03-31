@@ -5,7 +5,6 @@ import android.content.Context;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-18 上午10:29
  */
 public class DBCache implements Cache {

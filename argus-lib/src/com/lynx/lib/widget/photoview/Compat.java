@@ -7,7 +7,6 @@ import android.view.View;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午4:53
  */
 public class Compat {

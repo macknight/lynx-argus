@@ -13,7 +13,6 @@ import android.view.ViewConfiguration;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-22 下午4:54
  */
 public abstract class VersionedGestureDetector {

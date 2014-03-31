@@ -1,6 +1,7 @@
 package com.lynx.argus.biz.misc;
 
 /**
+ *
  * @author zhufeng.liu
  * @version 14-2-10 下午6:20
  */

@@ -1,11 +1,11 @@
 package com.lynx.lib.widget.charts;
 
 /**
+ * 
  * @author zhufeng.liu
  * @version 14-3-15 3:54 pm
  */
 public class PieHelper {
-
 	private float start;
 	private float end;
 	private float targetStart;

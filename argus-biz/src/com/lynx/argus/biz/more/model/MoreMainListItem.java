@@ -3,7 +3,6 @@ package com.lynx.argus.biz.more.model;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-1-29 上午11:22
  */
 public class MoreMainListItem {

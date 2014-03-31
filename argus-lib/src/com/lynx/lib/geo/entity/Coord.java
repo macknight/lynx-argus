@@ -7,7 +7,6 @@ import java.io.Serializable;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-27 下午5:53
  */
 public class Coord implements Serializable {

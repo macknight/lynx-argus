@@ -14,8 +14,7 @@ import com.lynx.lib.widget.charts.LineView;
 
 /**
  *
- * @author chris
- *
+ * @author chris.liu
  * @version 3/8/14 6:34 PM
  */
 public class LineFragment extends LFFragment {

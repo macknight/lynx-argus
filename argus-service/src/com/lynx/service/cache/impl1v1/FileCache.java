@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.ref.SoftReference;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.content.Context;
 import android.os.Environment;
@@ -18,7 +15,6 @@ import com.lynx.lib.util.FileUtil;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 下午3:36
  */
 public class FileCache implements Cache {

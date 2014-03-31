@@ -4,12 +4,13 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.db.core.ClassUtil;
 import com.lynx.lib.db.core.FieldUtil;
 
 /**
- * @author chris
+ * 
+ * @author chris.liu
  * @version 3/12/14 7:05 PM
  */
 public class TableInfo {
@@ -55,7 +56,7 @@ public class TableInfo {
 
 				tableInfo.setId(id);
 			} else {
-				Logger.e(Tag, String.format("the class[%s]'s idField is null", clazz));
+				LFLogger.e(Tag, String.format("the class[%s]'s idField is null", clazz));
 				return null;
 			}
 
@@ -87,7 +88,7 @@ public class TableInfo {
 		}
 
 		if (tableInfo == null) {
-			Logger.e(Tag, String.format("the class[%s]'s table is null", clazz));
+			LFLogger.e(Tag, String.format("the class[%s]'s table is null", clazz));
 			return null;
 		}
 

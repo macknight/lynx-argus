@@ -7,7 +7,6 @@ import com.lynx.lib.db.anonation.Table;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-17 上午12:39
  */
 @Table(name = "my_plugin")

@@ -9,7 +9,6 @@ import java.io.InputStream;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午10:51:03
  */
 public class StringEntityHandler {

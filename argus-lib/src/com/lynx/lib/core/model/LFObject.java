@@ -5,7 +5,6 @@ import java.io.Serializable;
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-28 上午10:46
  */
 public abstract class LFObject implements Serializable {

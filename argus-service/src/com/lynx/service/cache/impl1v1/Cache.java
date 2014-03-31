@@ -3,7 +3,6 @@ package com.lynx.service.cache.impl1v1;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-18 上午10:32
  */
 public interface Cache {

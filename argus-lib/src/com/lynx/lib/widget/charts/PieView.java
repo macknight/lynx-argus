@@ -6,14 +6,15 @@ import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.lynx.lib.util.DisplayUtil;
 
 /**
+ * 
  * @author zhufeng.liu
  * @version 14-3-15 3:44 pm
  */
 public class PieView extends View {
-
 	private Paint textPaint;
 	private Paint redPaint;
 	private Paint linePaint;

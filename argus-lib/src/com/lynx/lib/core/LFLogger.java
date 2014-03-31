@@ -1,22 +1,23 @@
 package com.lynx.lib.core;
 
-import android.graphics.Point;
 import android.util.Log;
+
 import com.lynx.lib.util.FileUtil;
+
+import java.util.Date;
 
 /**
  * Logger控制管理app日志输出level及输出，提供三种类型log输出i(info),w(waring),e(error)
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-25 下午2:35
  */
-public class Logger {
+public class LFLogger {
 
 	// app 所处模式,默认为PRODUCT
 	private static AppLevel level = AppLevel.PRODUCT;
 
-	private Logger() {
+	private LFLogger() {
 		throw new AssertionError("this class shouldn't be instanced");
 	}
 
@@ -30,10 +31,6 @@ public class Logger {
 
 	public static int i(String tag, String msg) {
 		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, msg) : -1;
-	}
-
-	public static int i(String tag, Throwable tr) {
-		return level.ordinal() >= AppLevel.DEBUG.ordinal() ? Log.i(tag, "", tr) : -1;
 	}
 
 	public static int i(String tag, String msg, Throwable tr) {
@@ -67,14 +64,13 @@ public class Logger {
 	private static void writeLog2File(String tag, String msg, Throwable tr) {
 		try {
 			StackTraceElement[] elements = tr.getStackTrace();
-			String stacks = String.format("[%s:%s]", tag, msg);
+			String stacks = String.format("[%s:%s:%s]", new Date(), tag, msg);
 			for (StackTraceElement element : elements) {
 				stacks = String.format("%s\n%s", stacks, element);
 			}
-			FileUtil.writeToExternalStoragePublic(LFApplication.instance(), "argus.log",
-					msg.getBytes());
+			FileUtil.writeToExternalStoragePublic("argus.log", stacks.getBytes(LFConst.DEF_CHARSET));
 		} catch (Throwable t) {
-			Logger.i("logger", "logger write to file error");
+			LFLogger.i("logger", "logger write to file error");
 		}
 	}
 

@@ -5,7 +5,6 @@ import com.lynx.lib.watchdog.WatchdogService;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-17 下午7:34
  */
 public class HotFixServiceImpl implements WatchdogService {

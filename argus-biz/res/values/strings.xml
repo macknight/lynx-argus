@@ -13,6 +13,8 @@
 	<string name="plugin_store_title">插件市场</string>
 	<string name="plugin_download_title">下载管理</string>
 
+    <string name="log_stack_title">日志栈</string>
+
 	<string name="more_about">关于我们</string>
 	<string name="more_about_subject">百眼巨人\n   Argus</string>
 	<string name="more_about_desc">一起来制作属于您的私人定制App！</string>

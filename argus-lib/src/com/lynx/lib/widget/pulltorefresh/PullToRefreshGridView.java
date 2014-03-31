@@ -9,7 +9,6 @@ import android.widget.GridView;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午1:33
  */
 public class PullToRefreshGridView extends PullToRefreshAdapterViewBase<GridView> {

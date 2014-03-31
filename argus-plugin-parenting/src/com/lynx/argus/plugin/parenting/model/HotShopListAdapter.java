@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.lynx.argus.plugin.parenting.HotShopFragment;
 
 /**
+ *
  * @author zhufeng.liu
  * @version 14-2-13 下午5:08
  */

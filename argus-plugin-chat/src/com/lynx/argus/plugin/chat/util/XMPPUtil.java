@@ -7,7 +7,6 @@ import org.jivesoftware.smack.XMPPException;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-12-12 下午9:20
  */
 public class XMPPUtil {

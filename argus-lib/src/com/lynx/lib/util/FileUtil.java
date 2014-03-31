@@ -22,6 +22,7 @@ import java.util.jar.JarFile;
 public class FileUtil {
 	public static final Charset US_ASCII = Charset.forName("US-ASCII");
 	public static final Charset UTF_8 = Charset.forName("UTF-8");
+	private static final int MAX_LOG_FILE_SIZE = 1024 * 1024 * 1;
 
 	private FileUtil() {
 		throw new AssertionError("FileUtil shouldn't be instanced");
@@ -42,7 +43,8 @@ public class FileUtil {
 	}
 
 	/**
-	 * Deletes the contents of dir. Throws an IOException if any file could not be deleted, or if dir is not a readable directory.
+	 * Deletes the contents of dir. Throws an IOException if any file could not be deleted, or if dir is not a readable
+	 * directory.
 	 */
 	public static void deleteFile(File file) throws IOException {
 		if (file.exists()) {
@@ -196,7 +198,7 @@ public class FileUtil {
 	 *            - the filename to read from
 	 * @return the file contents
 	 */
-	public static byte[] readExternallStoragePublic(Context context, String filename) {
+	public static byte[] readExternallStoragePublic(String filename) {
 		int len = 1024;
 		byte[] buffer = new byte[len];
 		String path = LFApplication.instance().baseExtFileDir();
@@ -222,18 +224,17 @@ public class FileUtil {
 		return buffer;
 	}
 
-	public static void writeToExternalStoragePublic(Context context, String filename, byte[] content) {
-		// API Level 7 or lower, use getExternalStorageDirectory()
-		// to open a File that represents the root of the external
-		// storage, but writing to root is not recommended, and instead
-		// application should write to application-specific directory, as shown below.
+	public static void writeToExternalStoragePublic(String filename, byte[] content) {
 		String path = LFApplication.instance().baseExtFileDir();
-
 		if (isExternalStorageAvailable() && !isExternalStorageReadOnly()) {
 			try {
 				File file = new File(path, filename);
+				if (file.length() > MAX_LOG_FILE_SIZE) {
+					file.delete();
+				}
 				FileOutputStream fos = new FileOutputStream(file, true);
 				fos.write(content);
+				fos.flush();
 				fos.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

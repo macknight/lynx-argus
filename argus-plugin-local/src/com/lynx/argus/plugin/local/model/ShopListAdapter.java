@@ -1,18 +1,18 @@
 package com.lynx.argus.plugin.local.model;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import com.lynx.argus.plugin.local.R;
 
-import java.util.List;
+import com.lynx.argus.plugin.local.R;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-6 下午4:24
  */
 public class ShopListAdapter extends BaseAdapter {

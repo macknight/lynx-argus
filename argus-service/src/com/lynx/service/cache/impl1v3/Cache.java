@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 
 /**
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午5:19
  */
 public class Cache {

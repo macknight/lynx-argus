@@ -1,16 +1,7 @@
 package com.lynx.argus.plugin.chat.util;
 
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
-import com.lynx.argus.plugin.chat.ChatFragment;
-import com.lynx.argus.plugin.chat.LoginFragment;
-import com.lynx.argus.plugin.chat.R;
+import java.util.Collection;
+
 import org.jivesoftware.smack.*;
 import org.jivesoftware.smack.filter.MessageTypeFilter;
 import org.jivesoftware.smack.filter.PacketFilter;
@@ -19,12 +10,22 @@ import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 
-import java.util.Collection;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+
+import com.lynx.argus.plugin.chat.ChatFragment;
+import com.lynx.argus.plugin.chat.LoginFragment;
+import com.lynx.argus.plugin.chat.R;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-12-23 下午1:20
  */
 public class XMPPService extends Service {

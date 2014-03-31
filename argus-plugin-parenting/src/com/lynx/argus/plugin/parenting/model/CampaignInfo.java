@@ -3,7 +3,6 @@ package com.lynx.argus.plugin.parenting.model;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-22 下午5:00
  */
 public class CampaignInfo {

@@ -3,10 +3,11 @@ package com.lynx.lib.core;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-10-6 下午8:26
  */
-public class Const {
+public class LFConst {
+
+	public static final String DEF_CHARSET = "UTF-8";
 
 	// 线上环境域名
 	public static String LM_API_DOMAIN = "http://m.maskerliu.eu.cloudbees.net/";
@@ -16,7 +17,7 @@ public class Const {
 	public static String BMAP_API_DIRECT = "http://api.map.baidu.com/direction/v1";
 	public static String BMAP_API_TELEMATIC = "http://api.map.baidu.com/telematics/v3";
 
-	private Const() {
+	private LFConst() {
 		throw new AssertionError("this class shouldn't be instanced");
 	}
 

@@ -1,22 +1,24 @@
 package com.lynx.argus.biz.search.model;
 
-import android.app.Activity;
-import android.widget.ArrayAdapter;
-import android.widget.Filter;
-import android.widget.Toast;
-import com.lynx.argus.R;
-import com.lynx.lib.core.Const;
-import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
-import com.lynx.lib.http.HttpService;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
+import android.app.Activity;
+import android.widget.ArrayAdapter;
+import android.widget.Filter;
+import android.widget.Toast;
+
+import com.lynx.argus.R;
+import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.LFConst;
+import com.lynx.lib.core.LFLogger;
+import com.lynx.lib.http.HttpService;
 
 /**
  * @author zhufeng.liu
@@ -81,12 +83,12 @@ public class SuggestionAdapter extends ArrayAdapter<String> {
 
 	private List<SuggestionItem> getSuggestion(String query, String city) {
 		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
+		params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
 		params.add(new BasicNameValuePair("output", "json"));
 		params.add(new BasicNameValuePair("query", query));
 		params.add(new BasicNameValuePair("region", city));
 		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s", Const.BMAP_API_PLACE, BMAP_API_PLACE_SUGGESSTION,
+		String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE, BMAP_API_PLACE_SUGGESSTION,
 				param);
 
 		try {
@@ -99,7 +101,7 @@ public class SuggestionAdapter extends ArrayAdapter<String> {
 				Toast.makeText(getContext(), "刷新失败", Toast.LENGTH_SHORT).show();
 			}
 		} catch (Exception e) {
-			Logger.e(Tag, "get suggestion error", e);
+			LFLogger.e(Tag, "get suggestion error", e);
 			e.printStackTrace();
 		}
 		return null;

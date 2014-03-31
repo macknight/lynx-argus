@@ -28,7 +28,6 @@ import android.widget.ImageView;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2014-1-22 下午5:15:48
  */
 public class ImageViewTouchBase extends ImageView {

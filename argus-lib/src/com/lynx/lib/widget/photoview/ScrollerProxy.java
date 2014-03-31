@@ -10,7 +10,6 @@ import android.widget.Scroller;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 14-2-24 下午4:50
  */
 public abstract class ScrollerProxy {

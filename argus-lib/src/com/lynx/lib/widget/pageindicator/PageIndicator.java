@@ -21,6 +21,9 @@ import android.support.v4.view.ViewPager;
 
 /**
  * A PageIndicator is responsible to show an visual indicator on the total views number and the current visible view.
+ * 
+ * @author chris.liu
+ * @version 14-1-6 下午5:05
  */
 public interface PageIndicator extends ViewPager.OnPageChangeListener {
 	/**
@@ -39,14 +42,11 @@ public interface PageIndicator extends ViewPager.OnPageChangeListener {
 	void setViewPager(ViewPager view, int initialPosition);
 
 	/**
-	 * <p>
-	 * Set the current page of both the ViewPager and indicator.
-	 * </p>
 	 * 
-	 * <p>
+	 * Set the current page of both the ViewPager and indicator.
+	 * 
 	 * This <strong>must</strong> be used if you need to set the page before the views are drawn on screen (e.g.,
 	 * default start page).
-	 * </p>
 	 * 
 	 * @param item
 	 */

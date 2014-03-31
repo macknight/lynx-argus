@@ -12,7 +12,6 @@ import com.lynx.lib.widget.AsyncImageView;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-10-27-下午9:29.
  */
 public class MyFragment extends LFFragment {

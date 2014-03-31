@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.List;
 
 import android.content.Context;
 import android.graphics.*;
@@ -13,12 +11,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.NinePatchDrawable;
 
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-15 下午1:38
  */
 public class ImageUtil {
@@ -57,7 +54,7 @@ public class ImageUtil {
 		try {
 			return BitmapFactory.decodeStream(stream);
 		} catch (Exception e) {
-			Logger.e(Tag, "bitmap convert error", e);
+			LFLogger.e(Tag, "bitmap convert error", e);
 		}
 
 		return null;
@@ -193,7 +190,7 @@ public class ImageUtil {
 				return bitmap2Drawable(bitmap);
 			}
 		} catch (Exception e) {
-			Logger.e(Tag, "get drawable from assets error", e);
+			LFLogger.e(Tag, "get drawable from assets error", e);
 			return null;
 		}
 	}

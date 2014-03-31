@@ -2,7 +2,6 @@ package com.lynx.lib.util;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import com.lynx.lib.core.Logger;
 
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-13 上午11:49
  */
 public class ViewUtil {

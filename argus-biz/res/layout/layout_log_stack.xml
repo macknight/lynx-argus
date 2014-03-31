@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/tool_bar">
+        <TextView
+                android:id="@+id/tv_logstack_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:textColor="@color/Grey"
+                android:textSize="@dimen/font_size_xlarge"
+                android:text="@string/log_stack_title"/>
+    </RelativeLayout>
+
+    <TextView
+            android:id="@+id/tv_logstack_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"
+            android:textSize="@dimen/font_size_small"
+            android:textColor="@color/DeepSkyBlue"/>
+</LinearLayout>

@@ -3,7 +3,6 @@ package com.lynx.lib.http;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2013-4-17 下午10:52:48
  */
 public abstract class HttpCallback<T> {

@@ -1,14 +1,13 @@
 package com.lynx.service.cache.impl1v1;
 
-import android.text.TextUtils;
-
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import android.text.TextUtils;
+
 /**
- * 
+ *
  * @author zhufeng.liu
- * 
  * @version 13-9-17 下午3:36
  */
 public class MemoryCache {

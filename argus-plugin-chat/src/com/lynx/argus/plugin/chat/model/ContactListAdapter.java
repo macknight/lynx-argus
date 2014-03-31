@@ -1,5 +1,7 @@
 package com.lynx.argus.plugin.chat.model;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.lynx.argus.plugin.chat.R;
 
-import java.util.List;
+import com.lynx.argus.plugin.chat.R;
 
 /**
  * @author chris.liu
- * 
  * @version 13-12-22 下午10:09
  */
 public class ContactListAdapter extends BaseAdapter {

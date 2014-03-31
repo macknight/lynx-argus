@@ -1,18 +1,18 @@
 package com.lynx.service.geo.impl1v1;
 
+import java.util.Date;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import com.lynx.lib.geo.entity.Location;
 
-import java.util.Date;
+import com.lynx.lib.geo.entity.Location;
 
 /**
  * 
  * @author chris.liu
- * 
  * @version 14-1-28 上午10:38
  */
 public class LocationDBUtil extends SQLiteOpenHelper {

@@ -6,7 +6,6 @@ import java.security.MessageDigest;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-8 下午5:01
  */
 public class BMapDigester {

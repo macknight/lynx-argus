@@ -11,6 +11,7 @@ import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.widget.photoview.PhotoView;
 
 /**
+ *
  * @author zhufeng.liu
  * @version 14-2-24 下午5:07
  */

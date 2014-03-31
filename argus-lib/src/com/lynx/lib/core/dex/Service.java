@@ -3,7 +3,7 @@ package com.lynx.lib.core.dex;
 import com.google.gson.annotations.Expose;
 
 /**
- * @author chris
+ * @author chris.liu
  * @version 3/15/14 10:22 PM
  */
 public class Service extends DexModule {

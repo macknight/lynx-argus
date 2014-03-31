@@ -10,12 +10,11 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-30 下午1:33
  */
 public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extends
@@ -50,7 +49,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 			final int visibleItemCount, final int totalItemCount) {
 
 		if (DEBUG) {
-			Logger.w(LOG_TAG, "First Visible: " + firstVisibleItem + ". Visible Count: "
+			LFLogger.w(LOG_TAG, "First Visible: " + firstVisibleItem + ". Visible Count: "
 					+ visibleItemCount + ". Total Items: " + totalItemCount);
 		}
 
@@ -213,7 +212,7 @@ public abstract class PullToRefreshAdapterViewBase<T extends AbsListView> extend
 		final int lastVisiblePosition = mRefreshableView.getLastVisiblePosition();
 
 		if (DEBUG) {
-			Logger.w(LOG_TAG, "isLastItemVisible. Count: " + count + " Last Visible Pos: "
+			LFLogger.w(LOG_TAG, "isLastItemVisible. Count: " + count + " Last Visible Pos: "
 					+ lastVisiblePosition);
 		}
 

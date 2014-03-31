@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import com.lynx.lib.cache.CacheService;
 import com.lynx.lib.cache.CacheService.CacheType;
 import com.lynx.lib.core.LFApplication;
-import com.lynx.lib.core.Logger;
+import com.lynx.lib.core.LFLogger;
 import com.lynx.lib.http.HttpService;
 import com.lynx.lib.util.ImageUtil;
 import com.lynx.lib.util.StringUtil;
@@ -21,7 +21,6 @@ import com.lynx.lib.util.StringUtil;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 2014-1-22 下午5:15:48
  */
 public class AsyncImageLoader {
@@ -123,7 +122,7 @@ public class AsyncImageLoader {
 
 				@Override
 				public void onFail() {
-					Logger.i(Tag, "download fail");
+					LFLogger.i(Tag, "download fail");
 				}
 			};
 		}
@@ -143,7 +142,7 @@ public class AsyncImageLoader {
 					handler.sendMessage(msg);
 				}
 			} catch (Exception e) {
-				Logger.e(Tag, "async image load task error", e);
+				LFLogger.e(Tag, "async image load task error", e);
 			}
 		}
 

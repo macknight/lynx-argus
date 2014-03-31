@@ -6,7 +6,6 @@ import java.util.Collection;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 下午3:36
  */
 public abstract class FileCache {

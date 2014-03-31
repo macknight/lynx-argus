@@ -8,7 +8,6 @@ import com.lynx.lib.cache.CacheService;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-9-17 上午10:02
  */
 public class CacheServiceImpl implements CacheService {

@@ -9,9 +9,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
+
 import com.lynx.lib.util.DisplayUtil;
 
 /**
+ * 
  * @author zhufeng.liu
  * @version 14-3-15 4:54 pm
  */

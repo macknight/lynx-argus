@@ -3,7 +3,6 @@ package com.lynx.lib.geo.entity;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-8-27 下午5:53
  */
 public class GSMCell implements Cell {

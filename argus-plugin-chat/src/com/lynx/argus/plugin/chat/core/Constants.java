@@ -3,7 +3,6 @@ package com.lynx.argus.plugin.chat.core;
 /**
  * 
  * @author chris.liu
- * 
  * @version 13-12-23 下午7:24
  */
 public class Constants {

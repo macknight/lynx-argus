@@ -31,7 +31,6 @@ import com.lynx.lib.widget.pulltorefresh.PullToRefreshBase.OnRefreshListener;
 /**
  * 
  * @author zhufeng.liu
- * 
  * @version 13-11-16 下午10:30
  */
 public class PluginStoreFragment extends LFFragment {

@@ -1,5 +1,16 @@
 package com.lynx.argus.plugin.local;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -11,30 +22,20 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
+
 import com.lynx.argus.plugin.local.model.ShopListAdapter;
 import com.lynx.argus.plugin.local.model.ShopListItem;
 import com.lynx.argus.plugin.local.model.ShopSearchAdapter;
-import com.lynx.lib.core.Const;
 import com.lynx.lib.core.LFApplication;
+import com.lynx.lib.core.LFConst;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.geo.GeoService;
 import com.lynx.lib.geo.LocationListener;
 import com.lynx.lib.geo.entity.Address;
 import com.lynx.lib.geo.entity.Coord;
 import com.lynx.lib.http.HttpCallback;
-import com.lynx.lib.http.HttpService;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshGridView;
 import com.lynx.lib.widget.pulltorefresh.PullToRefreshListView;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 
@@ -322,15 +323,15 @@ public class ShopListFragment extends LFFragment {
 				double lat = geoService.coord().lat();
 				double lng = geoService.coord().lng();
 				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair("ak", Const.BMAP_API_KEY));
+				params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
 				params.add(new BasicNameValuePair("output", "json"));
 				params.add(new BasicNameValuePair("query", query));
 				params.add(new BasicNameValuePair("page_size", 20 + ""));
 				params.add(new BasicNameValuePair("location", lat + "," + lng));
 				params.add(new BasicNameValuePair("radius", 5000 + ""));
 				String param = URLEncodedUtils.format(params, "UTF-8");
-				String url = String.format("%s%s?%s", Const.BMAP_API_PLACE, BMAP_API_PLACE_SEARCH,
-						param);
+				String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE,
+						BMAP_API_PLACE_SEARCH, param);
 				httpService.get(url, null, httpCallback);
 
 				prgvShop.setRefreshing();
