@@ -4,229 +4,218 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-	<TextView android:id="@+id/tv_shop_detail_name"
-	          android:layout_width="match_parent"
-	          android:layout_height="45dp"
-	          android:paddingLeft="20dp"
-	          android:gravity="center_vertical"
-	          android:singleLine="true"
-	          android:ellipsize="end"
-	          android:textColor="@color/Grey"
-	          android:textSize="@dimen/font_size_xlarge"
-	          android:background="@drawable/tool_bar"
-	          android:text="@string/loading_hint"/>
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="@dimen/title_bar_height"
+                    android:background="@drawable/tool_bar">
 
-	<ScrollView android:orientation="vertical"
-	            android:layout_width="match_parent"
-	            android:layout_height="match_parent"
-	            android:scrollbars="none">
+        <ImageButton android:id="@+id/ib_shop_detail_share"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_centerVertical="true"
+                     android:layout_alignParentRight="true"
+                     android:contentDescription="@null"
+                     android:src="@drawable/share"
+                     android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ib_shop_detail_share"
+                android:contentDescription="@null"
+                android:src="@drawable/favorite_off"
+                android:background="@android:color/transparent"/>
+    </RelativeLayout>
 
-		<LinearLayout android:layout_width="match_parent"
-		              android:layout_height="wrap_content"
-		              android:orientation="vertical">
+    <ScrollView android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+            <TextView
+                    android:id="@+id/tv_shop_detail_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:paddingLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:textColor="@color/Grey"
+                    android:textSize="@dimen/font_size_xlarge"
+                    android:text="@string/loading_hint"/>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_addr_hint"/>
-				<TextView android:id="@+id/tv_shop_detail_addr"
-				          android:layout_width="match_parent"
-				          android:layout_height="wrap_content"
-				          android:layout_marginLeft="15dp"
-				          android:singleLine="true"
-				          android:ellipsize="end"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/loading_hint"/>
-			</LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp">
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+                <ImageButton
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="0.3"
+                        android:padding="20dp"
+                        android:src="@drawable/no_picture"
+                        android:scaleType="centerInside"
+                        android:background="@drawable/selector_btn"/>
+                <View android:layout_width="1dp"
+                      android:layout_height="match_parent"
+                      android:background="@drawable/divider_vertical"/>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_price_hint"/>
-				<TextView android:id="@+id/tv_shop_detail_price"
-				          android:layout_width="match_parent"
-				          android:layout_height="wrap_content"
-				          android:layout_marginLeft="15dp"
-				          android:singleLine="true"
-				          android:ellipsize="end"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/loading_hint"/>
-			</LinearLayout>
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.6"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="vertical">
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+                    <RatingBar android:id="@+id/rb_shop_detail_overall"
+                               android:layout_width="wrap_content"
+                               android:layout_height="wrap_content"
+                               android:layout_marginLeft="10dp"
+                               style="@style/overall_rating_bar"
+                               android:numStars="5"
+                               android:layout_gravity="left|center_vertical"/>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_tele_hint"/>
-				<TextView android:id="@+id/tv_shop_detail_tele"
-				          android:layout_width="match_parent"
-				          android:layout_height="wrap_content"
-				          android:layout_marginLeft="15dp"
-				          android:singleLine="true"
-				          android:ellipsize="end"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/loading_hint"/>
+                    <LinearLayout android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:padding="5dp"
+                                  android:orientation="horizontal">
+                        <TextView android:layout_width="wrap_content"
+                                  android:layout_height="wrap_content"
+                                  android:textColor="@color/Grey"
+                                  android:textSize="@dimen/font_size_default"
+                                  android:text="@string/shop_detail_price_hint"/>
+                        <TextView android:id="@+id/tv_shop_detail_price"
+                                  android:layout_width="match_parent"
+                                  android:layout_height="wrap_content"
+                                  android:layout_marginLeft="15dp"
+                                  android:singleLine="true"
+                                  android:ellipsize="end"
+                                  android:textColor="@color/Grey"
+                                  android:textSize="@dimen/font_size_default"
+                                  android:text="@string/loading_hint"/>
+                    </LinearLayout>
 
-			</LinearLayout>
+                    <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginLeft="5dp">
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+                        <TextView
+                                android:id="@+id/tv_shop_detail_taste"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="口味：7.0"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/font_size_small"/>
+                        <TextView
+                                android:id="@+id/tv_shop_detail_env"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="环境：7.0"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/font_size_small"/>
+                        <TextView
+                                android:id="@+id/tv_shop_detail_service"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="服务：7.0"
+                                android:textColor="@color/Grey"
+                                android:textSize="@dimen/font_size_small"/>
+                    </LinearLayout>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_tags_hint"/>
-				<TextView android:id="@+id/tv_shop_detail_tags"
-				          android:layout_width="match_parent"
-				          android:layout_height="wrap_content"
-				          android:layout_marginLeft="15dp"
-				          android:singleLine="true"
-				          android:ellipsize="end"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/loading_hint"/>
-			</LinearLayout>
+                </LinearLayout>
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+            </LinearLayout>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:layout_gravity="center_vertical"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_overall_rating_hint"/>
-				<RatingBar android:id="@+id/rb_shop_detail_overall"
-				           android:layout_width="wrap_content"
-				           android:layout_height="wrap_content"
-				           android:layout_marginLeft="15dp"
-				           style="@style/overall_rating_bar"
-				           android:numStars="5"
-				           android:layout_gravity="left|center_vertical"/>
-			</LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@drawable/divider_horizontal"/>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:layout_gravity="center_vertical"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_taste_rating_hint"/>
-				<RatingBar android:id="@+id/rb_shop_detail_taste"
-				           android:layout_width="wrap_content"
-				           android:layout_height="wrap_content"
-				           android:layout_marginLeft="15dp"
-				           style="@style/overall_rating_bar"
-				           android:numStars="5"
-				           android:layout_gravity="left|center_vertical"/>
-			</LinearLayout>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/selector_btn">
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:layout_gravity="center_vertical"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_service_rating_hint"/>
-				<RatingBar android:id="@+id/rb_shop_detail_service"
-				           android:layout_width="wrap_content"
-				           android:layout_height="wrap_content"
-				           android:layout_marginLeft="15dp"
-				           style="@style/overall_rating_bar"
-				           android:numStars="5"
-				           android:layout_gravity="left|center_vertical"/>
-			</LinearLayout>
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="30dp"
+                        android:layout_weight="0.1"
+                        android:textColor="@color/Grey"
+                        android:contentDescription="@null"
+                        android:src="@drawable/detail_address"
+                        android:background="@android:color/transparent"/>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:layout_gravity="center_vertical"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_service_rating_hint"/>
-				<RatingBar android:id="@+id/rb_shop_detail_env"
-				           android:layout_width="wrap_content"
-				           android:layout_height="wrap_content"
-				           android:layout_marginLeft="15dp"
-				           style="@style/overall_rating_bar"
-				           android:numStars="5"
-				           android:layout_gravity="left|center_vertical"/>
-			</LinearLayout>
+                <TextView
+                        android:id="@+id/tv_shop_detail_addr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.8"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/Grey"
+                        android:textSize="@dimen/font_size_large"
+                        android:text="@string/loading_hint"/>
 
-			<View android:layout_width="match_parent"
-			      android:layout_height="1dp"
-			      android:background="@drawable/horizontal_divider"/>
+                <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.1"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/allow_right"/>
+            </LinearLayout>
 
-			<LinearLayout android:layout_width="match_parent"
-			              android:layout_height="wrap_content"
-			              android:padding="15dp"
-			              android:orientation="horizontal">
-				<TextView android:layout_width="wrap_content"
-				          android:layout_height="wrap_content"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/shop_detail_hours_hint"/>
-				<TextView android:id="@+id/tv_shop_detail_shop_hours"
-				          android:layout_width="match_parent"
-				          android:layout_height="wrap_content"
-				          android:layout_marginLeft="15dp"
-				          android:singleLine="true"
-				          android:ellipsize="end"
-				          android:textColor="@color/Grey"
-				          android:textSize="@dimen/font_size_large"
-				          android:text="@string/loading_hint"/>
-			</LinearLayout>
-		</LinearLayout>
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@drawable/divider_horizontal"/>
 
-	</ScrollView>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/selector_btn">
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/Grey"
+                        android:contentDescription="@null"
+                        android:src="@drawable/detail_phone"
+                        android:background="@android:color/transparent"/>
+
+                <TextView
+                        android:id="@+id/tv_shop_detail_tele"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_gravity="center_vertical"
+                        android:singleLine="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/Grey"
+                        android:textSize="@dimen/font_size_large"
+                        android:text="@string/loading_hint"/>
+
+            </LinearLayout>
+
+            <View android:layout_width="match_parent"
+                  android:layout_height="1dp"
+                  android:background="@drawable/divider_horizontal"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 </LinearLayout>

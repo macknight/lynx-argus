@@ -1,8 +1,10 @@
 package com.lynx.lib.geo.entity;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import com.google.gson.annotations.Expose;
 
 /**
  * 
@@ -11,10 +13,14 @@ import java.io.Serializable;
  */
 public class Coord implements Serializable {
 	private CoordSource source;
+    @Expose
 	private double lat;
-	private double lng;
-	private int acc;
-	private long elapse;
+    @Expose
+    private double lng;
+    @Expose
+    private int acc;
+    @Expose
+    private long elapse;
 
 	public Coord() {
 

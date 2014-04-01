@@ -1,9 +1,11 @@
 package com.lynx.lib.geo.entity;
 
-import com.lynx.lib.core.LFLogger;
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
-import java.io.Serializable;
+import com.google.gson.annotations.Expose;
+import com.lynx.lib.core.LFLogger;
 
 /**
  * 
@@ -11,10 +13,13 @@ import java.io.Serializable;
  * @version 13-8-27 下午5:53
  */
 public class Location implements Serializable {
+    @Expose
 	private Coord coord;
-	private Address addr;
+	@Expose
+    private Address addr;
 
 	public Location() {
+
 	}
 
 	public Location(Coord coord, Address addr) {

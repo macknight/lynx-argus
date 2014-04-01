@@ -1,5 +1,7 @@
 package com.lynx.lib.geo.entity;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 /**
@@ -8,11 +10,16 @@ import java.io.Serializable;
  * @version 13-8-27 下午5:53
  */
 public class Address implements Serializable {
+    @Expose
 	private String province;
-	private String city;
-	private String region;
-	private String street;
-	private String more;
+    @Expose
+    private String city;
+    @Expose
+    private String region;
+    @Expose
+    private String street;
+    @Expose
+    private String more;
 
 	public Address(String province, String city, String region, String street, String more) {
 		this.province = province;

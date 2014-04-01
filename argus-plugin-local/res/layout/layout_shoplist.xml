@@ -5,8 +5,9 @@
               android:layout_height="match_parent">
 
 	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="45dp"
+	                android:layout_height="@dimen/title_bar_height"
 	                android:background="@drawable/tool_bar">
+
 		<EditText android:id="@+id/et_shop_detail_search"
 		          android:layout_width="match_parent"
 		          android:layout_height="match_parent"
@@ -34,7 +35,7 @@
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:cacheColorHint="@android:color/transparent"
-				android:divider="@drawable/horizontal_divider"
+				android:divider="@drawable/divider_horizontal"
 				android:listSelector="@android:color/transparent"
 				android:scrollbars="none"
 				android:numColumns="2"

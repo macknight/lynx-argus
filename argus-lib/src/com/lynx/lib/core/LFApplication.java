@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.lynx.lib.core.dex.DexListener;
 import com.lynx.lib.core.dex.DexManager;
 import com.lynx.lib.core.dex.Plugin;
@@ -48,7 +49,10 @@ public abstract class LFApplication extends Application {
 		super.onCreate();
 		httpService = new DefaultHttpServiceImpl();
 		dbService = DBService.create(this, "argus");
-		gson = new Gson();
+
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        gson = gsonBuilder.create();
 
 		String packageName = getPackageName();
 		extFileDir = String.format("%s/Android/data/%s/files", Environment

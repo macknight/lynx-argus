@@ -9,6 +9,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONObject;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,10 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.lynx.argus.plugin.local.model.ShopDetail;
+import com.lynx.argus.plugin.local.model.ShopInfo;
+import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFConst;
 import com.lynx.lib.core.LFFragment;
 import com.lynx.lib.http.HttpCallback;
@@ -26,12 +31,19 @@ import com.lynx.lib.http.HttpCallback;
  * @version 13-9-16 下午2:00
  */
 public class ShopDetailFragment extends LFFragment {
-	private String uid;
+	private Gson gson;
 
-	private TextView tvName, tvAddr, tvTele, tvPrice, tvTags, tvShopHours;
-	private RatingBar rbOverall, rbTaste, rbService, rbEnv;
+	private TextView tvName, tvAddr, tvTele, tvPrice;
+	private TextView tvShopEnv, tvShopService, tvShopTaste;
+	private RatingBar rbOverall;
+
+	private ShopInfo shopInfo;
 
 	private static final String BMAP_API_PLACE_SHOP_DETAIL = "/detail";
+
+	public ShopDetailFragment() {
+		gson = LFApplication.instance().gson();
+	}
 
 	@Override
 	public View onLoadView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -42,8 +54,10 @@ public class ShopDetailFragment extends LFFragment {
 		}
 
 		initUI(view);
-		uid = getArguments().getString("uid");
-		getShopDetail(uid);
+		shopInfo = getArguments().getParcelable("shop_info");
+
+		getShopDetail();
+
 		return view;
 	}
 
@@ -54,7 +68,10 @@ public class ShopDetailFragment extends LFFragment {
 				JSONObject joResult = new JSONObject(o.toString());
 				if (joResult.getInt("status") == 0) {
 					JSONObject joShop = joResult.getJSONObject("result");
-					updateUI(joShop);
+					ShopInfo info = gson.fromJson(joShop.toString(), ShopInfo.class);
+					shopInfo.detailInfo = info.detailInfo;
+
+					updateUI();
 				} else {
 					Toast.makeText(navActivity, "获取商家信息失败", Toast.LENGTH_SHORT).show();
 				}
@@ -72,121 +89,58 @@ public class ShopDetailFragment extends LFFragment {
 
 	private void initUI(View view) {
 		tvName = (TextView) view.findViewById(R.id.tv_shop_detail_name);
-		tvAddr = (TextView) view.findViewById(R.id.tv_shop_detail_addr);
-		tvTele = (TextView) view.findViewById(R.id.tv_shop_detail_tele);
-		tvPrice = (TextView) view.findViewById(R.id.tv_shop_detail_price);
-		tvTags = (TextView) view.findViewById(R.id.tv_shop_detail_tags);
-		tvShopHours = (TextView) view.findViewById(R.id.tv_shop_detail_shop_hours);
+
 		rbOverall = (RatingBar) view.findViewById(R.id.rb_shop_detail_overall);
 		rbOverall.setClickable(false);
 		rbOverall.setEnabled(false);
-		rbTaste = (RatingBar) view.findViewById(R.id.rb_shop_detail_taste);
-		rbTaste.setClickable(false);
-		rbTaste.setEnabled(false);
-		rbService = (RatingBar) view.findViewById(R.id.rb_shop_detail_service);
-		rbService.setClickable(false);
-		rbService.setEnabled(false);
-		rbEnv = (RatingBar) view.findViewById(R.id.rb_shop_detail_env);
-		rbEnv.setClickable(false);
-		rbEnv.setEnabled(false);
+
+		tvPrice = (TextView) view.findViewById(R.id.tv_shop_detail_price);
+		tvShopTaste = (TextView) view.findViewById(R.id.tv_shop_detail_taste);
+		tvShopEnv = (TextView) view.findViewById(R.id.tv_shop_detail_env);
+		tvShopService = (TextView) view.findViewById(R.id.tv_shop_detail_service);
+
+		tvAddr = (TextView) view.findViewById(R.id.tv_shop_detail_addr);
+		tvTele = (TextView) view.findViewById(R.id.tv_shop_detail_tele);
 	}
 
-	private void getShopDetail(String shopId) {
-		List<NameValuePair> params = new ArrayList<NameValuePair>();
-		params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
-		params.add(new BasicNameValuePair("output", "json"));
-		params.add(new BasicNameValuePair("uid", shopId));
-		params.add(new BasicNameValuePair("scope", 2 + ""));
-		String param = URLEncodedUtils.format(params, "UTF-8");
-		String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE, BMAP_API_PLACE_SHOP_DETAIL,
-				param);
-		httpService.get(url, null, httpCallback);
+	private void getShopDetail() {
+		if (shopInfo != null && !TextUtils.isEmpty(shopInfo.uid)) {
+			if (shopInfo.detailInfo != null) {
+				updateUI();
+			} else {
+				List<NameValuePair> params = new ArrayList<NameValuePair>();
+				params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
+				params.add(new BasicNameValuePair("output", "json"));
+				params.add(new BasicNameValuePair("uid", shopInfo.uid));
+				params.add(new BasicNameValuePair("scope", 2 + ""));
+				String param = URLEncodedUtils.format(params, "UTF-8");
+				String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE,
+						BMAP_API_PLACE_SHOP_DETAIL, param);
+				httpService.get(url, null, httpCallback);
+			}
+		}
+
 	}
 
-	private void updateUI(JSONObject joShop) {
-		try {
-			String name = "暂未收录";
-			try {
-				name = joShop.getString("name");
-			} catch (Exception e) {
+	private void updateUI() {
+		String name = TextUtils.isEmpty(shopInfo.name) ? "暂未收录" : shopInfo.name;
+		tvName.setText(name);
 
-			}
-			tvName.setText(name);
+		String addr = TextUtils.isEmpty(shopInfo.address) ? "暂未收录" : shopInfo.address;
+		tvAddr.setText(addr);
 
-			String addr = "暂未收录";
-			try {
-				addr = joShop.getString("address");
-			} catch (Exception e) {
+		String tele = TextUtils.isEmpty(shopInfo.telephone) ? "暂未收录" : shopInfo.telephone;
+		tvTele.setText(tele);
 
-			}
-			tvAddr.setText(addr);
-
-			String tele = "暂未收录";
-			try {
-				tele = joShop.getString("telephone");
-			} catch (Exception e) {
-
-			}
-			tvTele.setText(tele);
-
-			JSONObject joDetail = joShop.getJSONObject("detail_info");
-			String tags = "暂未收录";
-			try {
-				tags = joDetail.getString("tag");
-			} catch (Exception e) {
-
-			}
-			tvTags.setText(tags);
-
-			String price = "0";
-			try {
-				price = joDetail.getString("price");
-			} catch (Exception e) {
-
-			}
+		ShopDetail detail = shopInfo.detailInfo;
+		if (detail != null) {
+			String price = TextUtils.isEmpty(detail.price) ? "0" : detail.price;
 			tvPrice.setText(price);
 
-			float overallRate = 0;
-			try {
-				overallRate = Float.parseFloat(joDetail.getString("overall_rating"));
-			} catch (Exception e) {
-			}
-			rbOverall.setRating(overallRate);
-
-			float tasteRate = 0;
-			try {
-				tasteRate = Float.parseFloat(joDetail.getString("taste_rating"));
-			} catch (Exception e) {
-
-			}
-			rbTaste.setRating(tasteRate);
-
-			float serviceRate = 0;
-			try {
-				serviceRate = Float.parseFloat(joDetail.getString("service_rating"));
-			} catch (Exception e) {
-
-			}
-			rbService.setRating(serviceRate);
-
-			float envRate = 0;
-			try {
-				envRate = Float.parseFloat(joDetail.getString("environment_rating"));
-			} catch (Exception e) {
-
-			}
-			rbEnv.setRating(envRate);
-
-			String shopHours = "暂未收录";
-			try {
-				shopHours = joDetail.getString("shop_hours");
-			} catch (Exception e) {
-
-			}
-			tvShopHours.setText(shopHours);
-
-		} catch (Exception e) {
-			e.printStackTrace();
+			rbOverall.setRating(detail.overallRating);
+            tvShopService.setText(String.format("服务：%s", detail.serviceRating));
+            tvShopTaste.setText(String.format("口味：%s", detail.tasteRating));
+            tvShopEnv.setText(String.format("环境：%s", detail.envRating));
 		}
 	}
 }

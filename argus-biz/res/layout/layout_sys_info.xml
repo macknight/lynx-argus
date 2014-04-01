@@ -6,7 +6,7 @@
 
 	<TextView
 			android:layout_width="match_parent"
-			android:layout_height="40dp"
+			android:layout_height="@dimen/title_bar_height"
 			android:background="@drawable/tool_bar"
 			android:gravity="center"
 			android:text="@string/sys_info_tip"

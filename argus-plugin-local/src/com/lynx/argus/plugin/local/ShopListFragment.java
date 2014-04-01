@@ -1,10 +1,10 @@
 package com.lynx.argus.plugin.local;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+import android.content.Intent;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -23,9 +23,10 @@ import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.*;
 
-import com.lynx.argus.plugin.local.model.ShopListAdapter;
-import com.lynx.argus.plugin.local.model.ShopListItem;
-import com.lynx.argus.plugin.local.model.ShopSearchAdapter;
+import com.google.gson.Gson;
+import com.lynx.argus.plugin.local.model.ShopInfo;
+import com.lynx.argus.plugin.local.adapter.ShopListAdapter;
+import com.lynx.argus.plugin.local.adapter.ShopSearchAdapter;
 import com.lynx.lib.core.LFApplication;
 import com.lynx.lib.core.LFConst;
 import com.lynx.lib.core.LFFragment;
@@ -51,8 +52,10 @@ public class ShopListFragment extends LFFragment {
 	public static final int MSG_LOAD_SHOP_LIST_FIN = 3;
 
 	private GeoService geoService;
+    private Gson gson;
 
-	private List<ShopListItem> shops = new ArrayList<ShopListItem>();
+    private List<ShopInfo> shopInfos = new LinkedList<ShopInfo>();
+
 	private ShopListAdapter adapter;
 	private PullToRefreshGridView prgvShop;
 
@@ -79,6 +82,10 @@ public class ShopListFragment extends LFFragment {
 		animRotate.setDuration(1500);
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
+
+
+        geoService = (GeoService)LFApplication.instance().service("geo");
+        gson = LFApplication.instance().gson();
 	}
 
 	@Override
@@ -93,7 +100,7 @@ public class ShopListFragment extends LFFragment {
 		searchPopWindowInit();
 
 		prgvShop = (PullToRefreshGridView) view.findViewById(R.id.prgv_shoplist);
-		adapter = new ShopListAdapter(navActivity, shops);
+		adapter = new ShopListAdapter(navActivity, shopInfos);
 		prgvShop.getRefreshableView().setAdapter(adapter);
 		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
 		prgvShop.setLoadingDrawable(drawable);
@@ -116,11 +123,11 @@ public class ShopListFragment extends LFFragment {
 		prgvShop.getRefreshableView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ShopListItem shop = shops.get(position);
-				if (shop != null) {
+				ShopInfo shopInfo = shopInfos.get(position);
+				if (shopInfo != null) {
 					ShopDetailFragment sdf = new ShopDetailFragment();
 					Bundle bundle = new Bundle();
-					bundle.putString("uid", shop.getUid());
+                    bundle.putParcelable("shop_info", shopInfo);
 					sdf.setArguments(bundle);
 					navActivity.pushFragment(sdf);
 				} else {
@@ -161,30 +168,13 @@ public class ShopListFragment extends LFFragment {
 					if (jaResult == null || jaResult.length() == 0) {
 						return;
 					}
-					shops.clear();
+					shopInfos.clear();
 					for (int i = 0; i < jaResult.length(); ++i) {
 						try {
-							Map<String, Object> shopInfo = new HashMap<String, Object>();
-							JSONObject joShop = jaResult.getJSONObject(i);
-
-							String name = joShop.getString("name");
-
-							String addr = "";
-							try {
-								addr = joShop.getString("address");
-							} catch (Exception e) {
-							}
-
-							String tele = "";
-							try {
-								tele = joShop.getString("telephone");
-							} catch (Exception e) {
-
-							}
-
-							String uid = joShop.getString("uid");
-							ShopListItem shop = new ShopListItem(uid, name, addr, tele);
-							shops.add(shop);
+                            ShopInfo shopInfo = gson.fromJson(jaResult.getJSONObject(i).toString(), ShopInfo.class);
+                            if (shopInfo != null) {
+                                shopInfos.add(shopInfo);
+                            }
 						} catch (Exception e) {
 
 						}
@@ -252,9 +242,10 @@ public class ShopListFragment extends LFFragment {
 				if (prgvShop.isRefreshing()) {
 					prgvShop.onRefreshComplete();
 				}
+                getLocalShopList(0, 0);
 				break;
 			case MSG_LOAD_SHOP_LIST_FIN:
-				adapter.setData(shops);
+				adapter.setData(shopInfos);
 				break;
 			}
 		}
@@ -322,18 +313,7 @@ public class ShopListFragment extends LFFragment {
 			} else {
 				double lat = geoService.coord().lat();
 				double lng = geoService.coord().lng();
-				List<NameValuePair> params = new ArrayList<NameValuePair>();
-				params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
-				params.add(new BasicNameValuePair("output", "json"));
-				params.add(new BasicNameValuePair("query", query));
-				params.add(new BasicNameValuePair("page_size", 20 + ""));
-				params.add(new BasicNameValuePair("location", lat + "," + lng));
-				params.add(new BasicNameValuePair("radius", 5000 + ""));
-				String param = URLEncodedUtils.format(params, "UTF-8");
-				String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE,
-						BMAP_API_PLACE_SEARCH, param);
-				httpService.get(url, null, httpCallback);
-
+				getLocalShopList(lat, lng);
 				prgvShop.setRefreshing();
 			}
 		} catch (Exception e) {
@@ -341,7 +321,23 @@ public class ShopListFragment extends LFFragment {
 		}
 	}
 
-	private void searchPopWindowInit() {
+    private void getLocalShopList(double lat, double lng) {
+        lat = 31.220435;
+        lng = 121.418468;
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
+        params.add(new BasicNameValuePair("output", "json"));
+        params.add(new BasicNameValuePair("query", query));
+        params.add(new BasicNameValuePair("page_size", 20 + ""));
+        params.add(new BasicNameValuePair("location", lat + "," + lng));
+        params.add(new BasicNameValuePair("radius", 5000 + ""));
+        String param = URLEncodedUtils.format(params, "UTF-8");
+        String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE,
+                BMAP_API_PLACE_SEARCH, param);
+        httpService.get(url, null, httpCallback);
+    }
+
+    private void searchPopWindowInit() {
 		// 获取要显示在PopupWindow上的窗体视图
 		LayoutInflater inflater = navActivity.getLayoutInflater();
 		View view = inflater.inflate(R.layout.layout_shop_search, null);
@@ -352,7 +348,7 @@ public class ShopListFragment extends LFFragment {
 		// 获取PopupWindow中的控件
 		lvShopSearch = (ListView) view.findViewById(R.id.lv_local_shop_search);
 
-		ShopSearchAdapter adapter = new ShopSearchAdapter(navActivity, shops);
+		ShopSearchAdapter adapter = new ShopSearchAdapter(navActivity, shopInfos);
 		lvShopSearch.setAdapter(adapter);
 
 		// 想要让PopupWindow中的控件能够使用，就必须设置PopupWindow为focusable
@@ -364,8 +360,8 @@ public class ShopListFragment extends LFFragment {
 		lvShopSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				ShopListItem shop = (ShopListItem) lvShopSearch.getItemAtPosition(position);
-				etSearch.setText(shop.getName());
+				ShopInfo shop = (ShopInfo) lvShopSearch.getItemAtPosition(position);
+				etSearch.setText(shop.name);
 				dismissSearchWindow();
 			}
 		});

@@ -1,4 +1,4 @@
-package com.lynx.argus.plugin.local.model;
+package com.lynx.argus.plugin.local.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +12,7 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.lynx.argus.plugin.local.R;
+import com.lynx.argus.plugin.local.model.ShopInfo;
 
 /**
  * 
@@ -20,11 +21,11 @@ import com.lynx.argus.plugin.local.R;
  */
 public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 	private ShopFilter filter;
-	private List<ShopListItem> data;
+	private List<ShopInfo> data;
 	private Context context;
-	private List<ShopListItem> unfilteredData;
+	private List<ShopInfo> unfilteredData;
 
-	public ShopSearchAdapter(Context context, List<ShopListItem> data) {
+	public ShopSearchAdapter(Context context, List<ShopInfo> data) {
 		this.context = context;
 		this.data = data;
 	}
@@ -59,9 +60,9 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 			holder = (ViewHolder) view.getTag();
 		}
 
-		ShopListItem item = data.get(position);
-		holder.tvName.setText(item.getName());
-		holder.tvAddr.setText(item.getAddr());
+		ShopInfo item = data.get(position);
+		holder.tvName.setText(item.name);
+		holder.tvAddr.setText(item.address);
 		return view;
 	}
 
@@ -85,25 +86,25 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 			FilterResults results = new FilterResults();
 
 			if (unfilteredData == null) {
-				unfilteredData = new ArrayList<ShopListItem>(data);
+				unfilteredData = new ArrayList<ShopInfo>(data);
 			}
 
 			if (prefix == null || prefix.length() == 0) {
-				List<ShopListItem> list = unfilteredData;
+				List<ShopInfo> list = unfilteredData;
 				results.values = list;
 				results.count = list.size();
 			} else {
 				String prefixString = prefix.toString().toLowerCase();
 
-				List<ShopListItem> unfilteredValues = unfilteredData;
+				List<ShopInfo> unfilteredValues = unfilteredData;
 				int count = unfilteredValues.size();
 
-				ArrayList<ShopListItem> newValues = new ArrayList<ShopListItem>(count);
+				ArrayList<ShopInfo> newValues = new ArrayList<ShopInfo>(count);
 
-				for (ShopListItem item : unfilteredValues) {
-					if (item.getName() != null && item.getName().startsWith(prefixString)) {
+				for (ShopInfo item : unfilteredValues) {
+					if (item.name != null && item.name.startsWith(prefixString)) {
 						newValues.add(item);
-					} else if (item.getAddr() != null && item.getAddr().startsWith(prefixString)) {
+					} else if (item.address != null && item.address.startsWith(prefixString)) {
 						newValues.add(item);
 					}
 				}
@@ -118,7 +119,7 @@ public class ShopSearchAdapter extends BaseAdapter implements Filterable {
 		@Override
 		protected void publishResults(CharSequence constraint, FilterResults results) {
 			// noinspection unchecked
-			data = (List<ShopListItem>) results.values;
+			data = (List<ShopInfo>) results.values;
 			if (results.count > 0) {
 				notifyDataSetChanged();
 			} else {

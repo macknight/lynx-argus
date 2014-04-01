@@ -1,4 +1,4 @@
-package com.lynx.argus.plugin.local.model;
+package com.lynx.argus.plugin.local.adapter;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.lynx.argus.plugin.local.R;
+import com.lynx.argus.plugin.local.model.ShopInfo;
 
 /**
  * 
@@ -17,14 +18,14 @@ import com.lynx.argus.plugin.local.R;
  */
 public class ShopListAdapter extends BaseAdapter {
 	private Context context;
-	private List<ShopListItem> data;
+	private List<ShopInfo> data;
 
-	public ShopListAdapter(Context context, List<ShopListItem> data) {
+	public ShopListAdapter(Context context, List<ShopInfo> data) {
 		this.context = context;
 		this.data = data;
 	}
 
-	public void setData(List<ShopListItem> data) {
+	public void setData(List<ShopInfo> data) {
 		this.data = data;
 		notifyDataSetChanged();
 	}
@@ -58,9 +59,9 @@ public class ShopListAdapter extends BaseAdapter {
 			view = convertView;
 			holder = (ViewHolder) view.getTag();
 		}
-		ShopListItem item = data.get(position);
-		holder.tvName.setText("" + item.getName());
-		holder.tvAddr.setText("" + item.getAddr());
+		ShopInfo item = data.get(position);
+		holder.tvName.setText("" + item.name);
+		holder.tvAddr.setText("" + item.address);
 		return view;
 	}
 
