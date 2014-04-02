@@ -22,7 +22,7 @@ import java.util.jar.JarFile;
 public class FileUtil {
 	public static final Charset US_ASCII = Charset.forName("US-ASCII");
 	public static final Charset UTF_8 = Charset.forName("UTF-8");
-	private static final int MAX_LOG_FILE_SIZE = 1024 * 1024 * 1;
+	private static final int MAX_LOG_FILE_SIZE = 1024 * 512 * 1;
 
 	private FileUtil() {
 		throw new AssertionError("FileUtil shouldn't be instanced");

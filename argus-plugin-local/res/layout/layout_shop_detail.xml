@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <RelativeLayout android:layout_width="match_parent"
-                    android:layout_height="@dimen/title_bar_height"
-                    android:background="@drawable/tool_bar">
+    <RelativeLayout
+            android:id="@+id/rl_shop_detail_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@drawable/tool_bar">
 
-        <ImageButton android:id="@+id/ib_shop_detail_share"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_centerVertical="true"
-                     android:layout_alignParentRight="true"
-                     android:contentDescription="@null"
-                     android:src="@drawable/share"
-                     android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/share"
+                android:background="@drawable/selector_btn"/>
         <ImageButton
                 android:id="@+id/ib_shop_detail_favorite"
                 android:layout_width="wrap_content"
@@ -26,10 +29,65 @@
                 android:background="@android:color/transparent"/>
     </RelativeLayout>
 
-    <ScrollView android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="none">
+    <LinearLayout
+            android:id="@+id/ll_shop_detail_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:paddingTop="2dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/tool_bar"
+            android:orientation="horizontal">
+
+        <ImageButton
+                android:id="@+id/ib_shop_detail_checkin"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/checkin"
+                android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_photo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/photo"
+                android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/comments"
+                android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_warning"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/warning"
+                android:background="@drawable/selector_btn"/>
+    </LinearLayout>
+
+    <ScrollView
+            android:id="@+id/sl_shop_detail"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/rl_shop_detail_titlebar"
+            android:layout_above="@+id/ll_shop_detail_toolbar"
+            android:scrollbars="none">
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -215,7 +273,68 @@
                   android:layout_height="1dp"
                   android:background="@drawable/divider_horizontal"/>
 
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:orientation="horizontal"
+                    android:background="@drawable/selector_btn">
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/Grey"
+                            android:contentDescription="@null"
+                            android:src="@drawable/my_tuan_fav_icon_normal"
+                            android:background="@android:color/transparent"/>
+
+                    <TextView
+                            android:id="@+id/tv_shop_detail_tuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="@color/Grey"
+                            android:textSize="@dimen/font_size_large"
+                            android:text="团购"/>
+                </LinearLayout>
+
+                <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                    <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/Grey"
+                            android:contentDescription="@null"
+                            android:src="@drawable/my_card_icon_normal"
+                            android:background="@android:color/transparent"/>
+
+                    <TextView
+                            android:id="@+id/tv_shop_detail_mycard"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:layout_gravity="center_vertical"
+                            android:singleLine="true"
+                            android:ellipsize="end"
+                            android:textColor="@color/Grey"
+                            android:textSize="@dimen/font_size_large"
+                            android:text="会员卡"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </ScrollView>
-</LinearLayout>
+
+
+</RelativeLayout>

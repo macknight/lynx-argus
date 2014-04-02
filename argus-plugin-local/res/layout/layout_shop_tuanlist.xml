@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RelativeLayout
+            android:id="@+id/rl_shop_detail_titlebar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/title_bar_height"
+            android:background="@drawable/tool_bar">
+
+        <ImageButton
+                android:id="@+id/ib_shop_detail_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@null"
+                android:src="@drawable/share"
+                android:background="@drawable/selector_btn"/>
+        <ImageButton
+                android:id="@+id/ib_shop_detail_favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/ib_shop_detail_share"
+                android:contentDescription="@null"
+                android:src="@drawable/favorite_off"
+                android:background="@android:color/transparent"/>
+    </RelativeLayout>
+
+    <com.lynx.lib.widget.pulltorefresh.PullToRefreshListView
+            android:id="@+id/prlv_shop_tuan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@drawable/divider_horizontal"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none"/>
+
+</LinearLayout>

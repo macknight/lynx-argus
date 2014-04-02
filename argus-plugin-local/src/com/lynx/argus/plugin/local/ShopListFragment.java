@@ -52,9 +52,9 @@ public class ShopListFragment extends LFFragment {
 	public static final int MSG_LOAD_SHOP_LIST_FIN = 3;
 
 	private GeoService geoService;
-    private Gson gson;
+	private Gson gson;
 
-    private List<ShopInfo> shopInfos = new LinkedList<ShopInfo>();
+	private List<ShopInfo> shopInfos = new LinkedList<ShopInfo>();
 
 	private ShopListAdapter adapter;
 	private PullToRefreshGridView prgvShop;
@@ -83,9 +83,8 @@ public class ShopListFragment extends LFFragment {
 		animRotate.setRepeatCount(-1);
 		animRotate.setRepeatMode(Animation.RESTART);
 
-
-        geoService = (GeoService)LFApplication.instance().service("geo");
-        gson = LFApplication.instance().gson();
+		geoService = (GeoService) LFApplication.instance().service("geo");
+		gson = LFApplication.instance().gson();
 	}
 
 	@Override
@@ -127,7 +126,7 @@ public class ShopListFragment extends LFFragment {
 				if (shopInfo != null) {
 					ShopDetailFragment sdf = new ShopDetailFragment();
 					Bundle bundle = new Bundle();
-                    bundle.putParcelable("shop_info", shopInfo);
+					bundle.putParcelable("shop_info", shopInfo);
 					sdf.setArguments(bundle);
 					navActivity.pushFragment(sdf);
 				} else {
@@ -171,10 +170,11 @@ public class ShopListFragment extends LFFragment {
 					shopInfos.clear();
 					for (int i = 0; i < jaResult.length(); ++i) {
 						try {
-                            ShopInfo shopInfo = gson.fromJson(jaResult.getJSONObject(i).toString(), ShopInfo.class);
-                            if (shopInfo != null) {
-                                shopInfos.add(shopInfo);
-                            }
+							ShopInfo shopInfo = gson.fromJson(jaResult.getJSONObject(i).toString(),
+									ShopInfo.class);
+							if (shopInfo != null) {
+								shopInfos.add(shopInfo);
+							}
 						} catch (Exception e) {
 
 						}
@@ -242,7 +242,9 @@ public class ShopListFragment extends LFFragment {
 				if (prgvShop.isRefreshing()) {
 					prgvShop.onRefreshComplete();
 				}
-                getLocalShopList(0, 0);
+				if (shopInfos == null || shopInfos.size() <= 0) {
+					getLocalShopList(0, 0);
+				}
 				break;
 			case MSG_LOAD_SHOP_LIST_FIN:
 				adapter.setData(shopInfos);
@@ -321,23 +323,20 @@ public class ShopListFragment extends LFFragment {
 		}
 	}
 
-    private void getLocalShopList(double lat, double lng) {
-        lat = 31.220435;
-        lng = 121.418468;
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
-        params.add(new BasicNameValuePair("output", "json"));
-        params.add(new BasicNameValuePair("query", query));
-        params.add(new BasicNameValuePair("page_size", 20 + ""));
-        params.add(new BasicNameValuePair("location", lat + "," + lng));
-        params.add(new BasicNameValuePair("radius", 5000 + ""));
-        String param = URLEncodedUtils.format(params, "UTF-8");
-        String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE,
-                BMAP_API_PLACE_SEARCH, param);
-        httpService.get(url, null, httpCallback);
-    }
+	private void getLocalShopList(double lat, double lng) {
+		List<NameValuePair> params = new ArrayList<NameValuePair>();
+		params.add(new BasicNameValuePair("ak", LFConst.BMAP_API_KEY));
+		params.add(new BasicNameValuePair("output", "json"));
+		params.add(new BasicNameValuePair("query", query));
+		params.add(new BasicNameValuePair("page_size", 20 + ""));
+		params.add(new BasicNameValuePair("location", lat + "," + lng));
+		params.add(new BasicNameValuePair("radius", 5000 + ""));
+		String param = URLEncodedUtils.format(params, "UTF-8");
+		String url = String.format("%s%s?%s", LFConst.BMAP_API_PLACE, BMAP_API_PLACE_SEARCH, param);
+		httpService.get(url, null, httpCallback);
+	}
 
-    private void searchPopWindowInit() {
+	private void searchPopWindowInit() {
 		// 获取要显示在PopupWindow上的窗体视图
 		LayoutInflater inflater = navActivity.getLayoutInflater();
 		View view = inflater.inflate(R.layout.layout_shop_search, null);

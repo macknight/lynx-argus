@@ -30,12 +30,16 @@ public class ShopInfo implements Parcelable {
 	@SerializedName("detail_info")
 	public ShopDetail detailInfo;
 
+    @Expose
+    @SerializedName("events")
+    public TuanEvent[] tuanEvents;
+
 	public ShopInfo(Parcel in) {
 		name = in.readString();
+        uid = in.readString();
 		location = in.readParcelable(ShopLocation.class.getClassLoader());
         address = in.readString();
         telephone = in.readString();
-        uid = in.readString();
         detailInfo = in.readParcelable(ShopDetail.class.getClassLoader());
 	}
 
@@ -47,10 +51,10 @@ public class ShopInfo implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel parcel, int flag) {
         parcel.writeString(name);
+        parcel.writeString(uid);
         parcel.writeParcelable(location, flag);
         parcel.writeString(address);
         parcel.writeString(telephone);
-        parcel.writeString(uid);
         parcel.writeParcelable(detailInfo, flag);
 	}
 

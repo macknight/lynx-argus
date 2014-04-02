@@ -100,7 +100,7 @@ public class WeatherFragment extends LFFragment {
 		tvTempMin = (TextView) view.findViewById(R.id.tv_weather_temp_min);
 		tvWeatherDetail = (TextView) view.findViewById(R.id.tv_weather_detail);
 		tvWind = (TextView) view.findViewById(R.id.tv_weather_wind);
-        tvSuggestion = (TextView) view.findViewById(R.id.tv_weather_suggestion);
+		tvSuggestion = (TextView) view.findViewById(R.id.tv_weather_suggestion);
 
 		ImageButton ibRefresh = (ImageButton) view.findViewById(R.id.ib_weather_refresh);
 		ibRefresh.setAnimation(animRotate);
@@ -141,7 +141,6 @@ public class WeatherFragment extends LFFragment {
 		@Override
 		public void onFailure(Throwable t, String strMsg) {
 			handler.sendEmptyMessage(WEATHER_UPDATE_DONE);
-			LFLogger.e("chris", strMsg, t);
 			Toast.makeText(navActivity, "更新天气失败", Toast.LENGTH_SHORT).show();
 		}
 	};
@@ -159,8 +158,10 @@ public class WeatherFragment extends LFFragment {
 	};
 
 	private void getWeather() {
-		String url = String.format(LM_API_WEATHER_FORECAST, cityCode);
-		httpService.get(url, forecastCallback);
+		if (weatherInfo == null) {
+			String url = String.format(LM_API_WEATHER_FORECAST, cityCode);
+			httpService.get(url, forecastCallback);
+		}
 	}
 
 	private void updateWeather() {
@@ -169,11 +170,11 @@ public class WeatherFragment extends LFFragment {
 			tvTempMin.setText(String.format("%s%s", weatherInfo.getMinTemp()[0], CELSIUS));
 			tvWeatherDetail.setText(weatherInfo.getWeather()[0]);
 			tvWind.setText(weatherInfo.getWind()[0]);
-            tvSuggestion.setText(weatherInfo.getSuggestion());
+			tvSuggestion.setText(weatherInfo.getSuggestion());
 			tempSet();
 		} catch (Exception e) {
-
-		}
+            LFLogger.e("chris", "update weather error", e);
+        }
 	}
 
 	private List<String> generateBottomTips() {
