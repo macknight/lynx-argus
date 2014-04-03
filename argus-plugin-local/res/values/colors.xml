@@ -20,4 +20,5 @@
     <color name="DarkGrey">#A9A9A9</color>
 	
 	<color name="Translucent">#66000000</color>
+    <color name="LightOrange">#ff8400</color>
 </resources>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <ImageView
+            android:layout_width="@dimen/tuan_list_item_image_width"
+            android:layout_height="@dimen/tuan_list_item_image_height"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@null"
+            android:src="@drawable/no_picture"
+            android:scaleType="fitCenter"/>
+
+    <View android:layout_width="1dp"
+          android:layout_height="match_parent"
+          android:layout_marginTop="5dp"
+          android:layout_marginBottom="5dp"
+          android:background="@drawable/divider_vertical"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+        <LinearLayout android:layout_width="match_parent"
+                      android:layout_height="match_parent"
+                      android:padding="5dp"
+                      android:orientation="horizontal">
+
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:textColor="@color/LightOrange"
+                      android:textSize="@dimen/font_size_xlarge"
+                      android:text="￥"/>
+
+            <TextView android:id="@+id/rb_shop_tuanlist_item_price"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="1dp"
+                      android:singleLine="true"
+                      android:ellipsize="end"
+                      android:textColor="@color/LightOrange"
+                      android:textSize="@dimen/font_size_xxlarge"
+                      android:text="177"/>
+
+            <TextView android:id="@+id/rb_shop_tuanlist_item_regprice"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginLeft="10dp"
+                      android:singleLine="true"
+                      android:ellipsize="end"
+                      android:textColor="@color/DarkGrey"
+                      android:textSize="@dimen/font_size_small"
+                      android:text="￥377"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="@color/Grey"
+                  android:lines="4"
+                  android:textSize="@dimen/font_size_default"
+                  android:text="【王府井】仅98元，享价值138元『南京大饭店』单人自助午餐/晚餐2选1！提供免费WiFi服务！和朋友一起找个时间一起享受美味吧！"/>
+
+    </LinearLayout>
+
+</LinearLayout>

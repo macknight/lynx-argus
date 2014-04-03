@@ -21,7 +21,7 @@ public class TuanEvent implements Parcelable {
 	public String price;
     @Expose
     @SerializedName("regular_price")
-    public String regularPrice;
+    public String regPrice;
 	@Expose
 	@SerializedName("groupon_rebate")
 	public String rebate;
@@ -46,7 +46,7 @@ public class TuanEvent implements Parcelable {
         name = in.readString();
         title = in.readString();
         price = in.readString();
-        regularPrice = in.readString();
+        regPrice = in.readString();
         rebate = in.readString();
         startTime = in.readString();
         endTime = in.readString();
@@ -65,7 +65,7 @@ public class TuanEvent implements Parcelable {
         parcel.writeString(name);
         parcel.writeString(title);
         parcel.writeString(price);
-        parcel.writeString(regularPrice);
+        parcel.writeString(regPrice);
         parcel.writeString(rebate);
         parcel.writeString(startTime);
         parcel.writeString(endTime);
