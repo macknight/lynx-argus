@@ -4,7 +4,7 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:orientation="horizontal"
-                android:background="@drawable/selector_btn">
+                android:background="@drawable/selector_btn_def">
 
 	<ImageView android:id="@+id/iv_shoplist_item_icon"
 	           android:layout_width="wrap_content"

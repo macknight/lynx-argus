@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * @author chris.liu
  * @version 4/1/14 4:28 PM
@@ -32,7 +34,7 @@ public class ShopInfo implements Parcelable {
 
     @Expose
     @SerializedName("events")
-    public TuanEvent[] tuanEvents;
+    public List<TuanEvent> tuanEvents;
 
 	public ShopInfo(Parcel in) {
 		name = in.readString();

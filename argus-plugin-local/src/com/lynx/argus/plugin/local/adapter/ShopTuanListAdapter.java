@@ -59,7 +59,7 @@ public class ShopTuanListAdapter extends BaseAdapter {
 		TuanEvent item = data.get(position);
 		holder.tvName.setText("" + item.name);
         holder.tvRegPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-		holder.tvRegPrice.setText("" + item.regularPrice);
+		holder.tvRegPrice.setText("" + item.regPrice);
 		return view;
 	}
 

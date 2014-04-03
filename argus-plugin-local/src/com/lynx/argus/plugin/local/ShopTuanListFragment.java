@@ -3,6 +3,11 @@ package com.lynx.argus.plugin.local;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
+import android.widget.AdapterView;
+import com.lynx.argus.plugin.local.adapter.ShopListAdapter;
+import com.lynx.argus.plugin.local.adapter.ShopTuanListAdapter;
+import com.lynx.argus.plugin.local.model.TuanEvent;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
@@ -35,6 +40,7 @@ public class ShopTuanListFragment extends LFFragment {
 	private HttpService httpService;
 	private Gson gson;
 	private PullToRefreshListView prlvShopTuan;
+	private ShopTuanListAdapter adapter;
 	private ShopInfo shopInfo;
 
 	public ShopTuanListFragment() {
@@ -52,6 +58,41 @@ public class ShopTuanListFragment extends LFFragment {
 
 		shopInfo = getArguments().getParcelable("shop_info");
 		prlvShopTuan = (PullToRefreshListView) view.findViewById(R.id.prlv_shop_tuan);
+
+		adapter = new ShopTuanListAdapter(navActivity, shopInfo.tuanEvents);
+		prlvShopTuan.getRefreshableView().setAdapter(adapter);
+		Drawable drawable = getResources().getDrawable(R.drawable.ptr_refresh);
+		prlvShopTuan.setLoadingDrawable(drawable);
+
+		prlvShopTuan.setOnRefreshListener(new PullToRefreshListView.OnRefreshListener() {
+			@Override
+			public void onRefresh() {
+				getShopTuanList();
+			}
+		});
+
+		prlvShopTuan.getRefreshableView().setOnItemClickListener(
+				new AdapterView.OnItemClickListener() {
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+						TuanEvent tuanEvent = shopInfo.tuanEvents.get(position);
+						if (tuanEvent != null) {
+							ShopTuanListFragment stf = new ShopTuanListFragment();
+							Bundle bundle = new Bundle();
+							bundle.putParcelable("tuan_event", tuanEvent);
+							stf.setArguments(bundle);
+							navActivity.pushFragment(stf);
+						} else {
+							Toast.makeText(navActivity, "未能正常获得商户团购信息", Toast.LENGTH_SHORT).show();
+						}
+					}
+				});
+
+		if (shopInfo.tuanEvents == null || shopInfo.tuanEvents.size() == 0) {
+            prlvShopTuan.setRefreshing();
+			getShopTuanList();
+		}
+
 		return view;
 	}
 
@@ -63,11 +104,10 @@ public class ShopTuanListFragment extends LFFragment {
 				if (joResult.getInt("status") == 0) {
 					JSONObject joShop = joResult.getJSONObject("result");
 					ShopInfo info = gson.fromJson(joShop.toString(), ShopInfo.class);
-					shopInfo.detailInfo = info.detailInfo;
-
+					shopInfo.tuanEvents = info.tuanEvents;
 					updateUI();
 				} else {
-					Toast.makeText(navActivity, "获取商家信息失败", Toast.LENGTH_SHORT).show();
+					Toast.makeText(navActivity, "获取商家团购信息失败", Toast.LENGTH_SHORT).show();
 				}
 			} catch (Exception e) {
 
@@ -81,7 +121,7 @@ public class ShopTuanListFragment extends LFFragment {
 		}
 	};
 
-	private void getShopTuan() {
+	private void getShopTuanList() {
 		if (shopInfo != null && !TextUtils.isEmpty(shopInfo.uid)) {
 			if (shopInfo.detailInfo != null) {
 				updateUI();
@@ -96,7 +136,6 @@ public class ShopTuanListFragment extends LFFragment {
 				httpService.get(url, null, httpCallback);
 			}
 		}
-
 	}
 
 	private void updateUI() {

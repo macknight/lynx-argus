@@ -15,6 +15,12 @@ public class ShopTuanDetailFragment extends LFFragment {
 	@Override
 	protected View onLoadView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) throws Exception {
-		return null;
+        View view = inflater.inflate(R.layout.layout_shop_tuan_detail, container, false);
+        if (view == null) {
+            throw new Exception("页面初始化错误");
+        }
+
+
+		return view;
 	}
 }
